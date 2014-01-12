@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<title>Thrift module: radar</title></head><body>
+<div class="container-fluid">
+<h1>Thrift module: radar</h1>
+<table class="table-bordered table-striped table-condensed"><thead><th>Module</th><th>Services</th><th>Data types</th><th>Constants</th></thead>
+<tr>
+<td>radar</td><td><a href="#Svc_Analyzer">Analyzer</a><br/>
+<ul>
+<li><a href="#Fn_Analyzer_dump">dump</a></li>
+<li><a href="#Fn_Analyzer_id">id</a></li>
+<li><a href="#Fn_Analyzer_on_each_day">on_each_day</a></li>
+<li><a href="#Fn_Analyzer_result">result</a></li>
+<li><a href="#Fn_Analyzer_resume">resume</a></li>
+</ul>
+</td>
+<td><a href="#Struct_AnalyzerOutput">AnalyzerOutput</a><br/>
+<a href="#Struct_AnalyzerOutputContent">AnalyzerOutputContent</a><br/>
+<a href="#Enum_AnalyzerOutputType">AnalyzerOutputType</a><br/>
+<a href="#Typedef_Date">Date</a><br/>
+<a href="#Struct_LineChart">LineChart</a><br/>
+<a href="#Struct_LineChartOptions">LineChartOptions</a><br/>
+<a href="#Struct_LineSeries">LineSeries</a><br/>
+<a href="#Enum_LineSeriesType">LineSeriesType</a><br/>
+<a href="#Struct_PieChart">PieChart</a><br/>
+<a href="#Struct_PieSeries">PieSeries</a><br/>
+<a href="#Struct_Point">Point</a><br/>
+<a href="#Struct_Portfolio">Portfolio</a><br/>
+<a href="#Struct_Table">Table</a><br/>
+<a href="#Struct_TableLine">TableLine</a><br/>
+<a href="#Enum_TableLineType">TableLineType</a><br/>
+</td>
+<td></code></td>
+</tr></table>
+<hr/><h2 id="Enumerations">Enumerations</h2>
+<div class="definition"><h3 id="Enum_LineSeriesType">Enumeration: LineSeriesType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>LINE</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>AREA</code></td><td><code>1</code></td><td>
+</td></tr>
+</table></div>
+<div class="definition"><h3 id="Enum_TableLineType">Enumeration: TableLineType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>HEADER</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>BODY</code></td><td><code>1</code></td><td>
+</td></tr>
+<tr><td><code>FOOTER</code></td><td><code>2</code></td><td>
+</td></tr>
+</table></div>
+<div class="definition"><h3 id="Enum_AnalyzerOutputType">Enumeration: AnalyzerOutputType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>PIE</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>LINE</code></td><td><code>1</code></td><td>
+</td></tr>
+</table></div>
+<hr/><h2 id="Typedefs">Type declarations</h2>
+<div class="definition"><h3 id="Typedef_Date">Typedef: Date</h3>
+<p><strong>Base type:</strong>&nbsp;<code>i32</code></p>
+Representação <i><a href="http://en.wikipedia.org/wiki/Unix_time">Unix time</a></i>
+no horário 00:00:00.00 UTC.
+<br/></div>
+<hr/><h2 id="Structs">Data structures</h2>
+<div class="definition"><h3 id="Struct_Point">Struct: Point</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>x</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>y</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_PieSeries">Struct: PieSeries</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_PieChart">Struct: PieChart</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="radar.html#Struct_PieSeries">PieSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_LineSeries">Struct: LineSeries</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>points</td><td><code>list&lt;<code><a href="radar.html#Struct_Point">Point</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>type</td><td><code><a href="radar.html#Enum_LineSeriesType">LineSeriesType</a></code></td><td></td><td>default</td><td>LineSeriesType.LINE</td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_LineChartOptions">Struct: LineChartOptions</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>stacked</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>compare</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_LineChart">Struct: LineChart</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="radar.html#Struct_LineSeries">LineSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>options</td><td><code><a href="radar.html#Struct_LineChartOptions">LineChartOptions</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TableLine">Struct: TableLine</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>type</td><td><code><a href="radar.html#Enum_TableLineType">TableLineType</a></code></td><td></td><td>default</td><td>TableLineType.HEADER</td></tr>
+<tr><td>2</td><td>cells</td><td><code>list&lt;<code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_Table">Struct: Table</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>lines</td><td><code>list&lt;<code><a href="radar.html#Struct_TableLine">TableLine</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_AnalyzerOutputContent">Union: AnalyzerOutputContent</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>pie</td><td><code><a href="radar.html#Struct_PieChart">PieChart</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>line</td><td><code><a href="radar.html#Struct_LineChart">LineChart</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_AnalyzerOutput">Struct: AnalyzerOutput</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>type</td><td><code><a href="radar.html#Enum_AnalyzerOutputType">AnalyzerOutputType</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>content</td><td><code><a href="radar.html#Struct_AnalyzerOutputContent">AnalyzerOutputContent</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_Portfolio">Struct: Portfolio</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><hr/><h2 id="Services">Services</h2>
+<h3 id="Svc_Analyzer">Service: Analyzer</h3>
+<div class="definition"><h4 id="Fn_Analyzer_on_each_day">Function: Analyzer.on_each_day</h4>
+<pre><code>void</code> on_each_day(<code><a href="radar.html#Struct_Portfolio">Portfolio</a></code> portfolio)
+</pre>É chamado <i>n</i> vezes durante o processamento da carteira, sendo
+<i>n</i> o número de dias processados.
+<p/>
+<code>portfolio</code> Estado da carteira no dia que está sendo processado.
+<br/></div><div class="definition"><h4 id="Fn_Analyzer_dump">Function: Analyzer.dump</h4>
+<pre><code>binary</code> dump()
+</pre>É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
+para poder restaurar nos próximos processamentos.
+<p/>
+O retorno pode ter qualquer formato, desde que seja compreendido pelo método
+<code>resume()</code>, já que posteriormente o conteúdo do retorno será
+passado como argumento para o método.
+<br/></div><div class="definition"><h4 id="Fn_Analyzer_resume">Function: Analyzer.resume</h4>
+<pre><code>void</code> resume(<code>binary</code> data)
+</pre>É chamado sempre que o Radar quiser começar a processar uma carteira à partir de
+uma imagem gerada pelo método <code>dump()</code>.
+<br/></div><div class="definition"><h4 id="Fn_Analyzer_id">Function: Analyzer.id</h4>
+<pre><code>string</code> id()
+</pre>Este método deve retornar o nome deste serviço.
+<br/></div><div class="definition"><h4 id="Fn_Analyzer_result">Function: Analyzer.result</h4>
+<pre><code><a href="radar.html#Struct_LineChart">LineChart</a></code> result()
+</pre>É chamado no fim do processamento para pegar o resultado do Analyzer.
+<br/></div></div></body></html>

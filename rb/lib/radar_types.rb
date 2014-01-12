@@ -1,0 +1,1 @@
+require 'radar/api/radar_types'
