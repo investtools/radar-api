@@ -43,6 +43,11 @@ struct LineChart {
   3: LineChartOptions options
 }
 
+struct Text {
+  1: string title
+  2: string content
+}
+
 enum TableLineType {
   HEADER, BODY, FOOTER
 }
