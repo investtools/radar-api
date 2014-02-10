@@ -78,9 +78,15 @@ struct AnalyzerOutput {
   2: AnalyzerOutputContent content
 }
 
+struct Position {
+  1: double value
+}
+
 struct Portfolio {
   1: required Date date
   2: double rentability
+  3: double nav
+  4: map<string, Position> positions
 }
 
 service Analyzer {

@@ -252,14 +252,34 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
+    class Position
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      VALUE = 1
+
+      FIELDS = {
+        VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class Portfolio
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
       RENTABILITY = 2
+      NAV = 3
+      POSITIONS = 4
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
-        RENTABILITY => {:type => ::Thrift::Types::DOUBLE, :name => 'rentability'}
+        RENTABILITY => {:type => ::Thrift::Types::DOUBLE, :name => 'rentability'},
+        NAV => {:type => ::Thrift::Types::DOUBLE, :name => 'nav'},
+        POSITIONS => {:type => ::Thrift::Types::MAP, :name => 'positions', :key => {:type => ::Thrift::Types::STRING}, :value => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::Position}}
       }
 
       def struct_fields; FIELDS; end
