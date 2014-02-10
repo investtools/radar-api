@@ -11,13 +11,13 @@ import java.util.Map;
 import java.util.HashMap;
 import org.apache.thrift.TEnum;
 
-public enum AnalyzerOutputType implements org.apache.thrift.TEnum {
-  PIE(0),
-  LINE(1);
+public enum Event implements org.apache.thrift.TEnum {
+  EACH_DAY(0),
+  FINISH(1);
 
   private final int value;
 
-  private AnalyzerOutputType(int value) {
+  private Event(int value) {
     this.value = value;
   }
 
@@ -32,12 +32,12 @@ public enum AnalyzerOutputType implements org.apache.thrift.TEnum {
    * Find a the enum type by its integer value, as defined in the Thrift IDL.
    * @return null if the value is not found.
    */
-  public static AnalyzerOutputType findByValue(int value) { 
+  public static Event findByValue(int value) { 
     switch (value) {
       case 0:
-        return PIE;
+        return EACH_DAY;
       case 1:
-        return LINE;
+        return FINISH;
       default:
         return null;
     }

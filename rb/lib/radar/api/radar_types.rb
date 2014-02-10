@@ -23,11 +23,18 @@ module Radar
       VALID_VALUES = Set.new([HEADER, BODY, FOOTER]).freeze
     end
 
-    module AnalyzerOutputType
-      PIE = 0
-      LINE = 1
-      VALUE_MAP = {0 => "PIE", 1 => "LINE"}
-      VALID_VALUES = Set.new([PIE, LINE]).freeze
+    module Event
+      EACH_DAY = 0
+      FINISH = 1
+      VALUE_MAP = {0 => "EACH_DAY", 1 => "FINISH"}
+      VALID_VALUES = Set.new([EACH_DAY, FINISH]).freeze
+    end
+
+    module ResultType
+      PIE_CHART = 0
+      LINE_CHART = 1
+      VALUE_MAP = {0 => "PIE_CHART", 1 => "LINE_CHART"}
+      VALID_VALUES = Set.new([PIE_CHART, LINE_CHART]).freeze
     end
 
     class Point
@@ -202,24 +209,24 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class AnalyzerOutputContent < ::Thrift::Union
+    class ResultContent < ::Thrift::Union
       include ::Thrift::Struct_Union
       class << self
-        def pie(val)
-          AnalyzerOutputContent.new(:pie, val)
+        def pie_chart(val)
+          ResultContent.new(:pie_chart, val)
         end
 
-        def line(val)
-          AnalyzerOutputContent.new(:line, val)
+        def line_chart(val)
+          ResultContent.new(:line_chart, val)
         end
       end
 
-      PIE = 1
-      LINE = 2
+      PIE_CHART = 1
+      LINE_CHART = 2
 
       FIELDS = {
-        PIE => {:type => ::Thrift::Types::STRUCT, :name => 'pie', :class => ::Radar::API::PieChart},
-        LINE => {:type => ::Thrift::Types::STRUCT, :name => 'line', :class => ::Radar::API::LineChart}
+        PIE_CHART => {:type => ::Thrift::Types::STRUCT, :name => 'pie_chart', :class => ::Radar::API::PieChart},
+        LINE_CHART => {:type => ::Thrift::Types::STRUCT, :name => 'line_chart', :class => ::Radar::API::LineChart}
       }
 
       def struct_fields; FIELDS; end
@@ -231,20 +238,20 @@ module Radar
       ::Thrift::Union.generate_accessors self
     end
 
-    class AnalyzerOutput
+    class Result
       include ::Thrift::Struct, ::Thrift::Struct_Union
       TYPE = 1
       CONTENT = 2
 
       FIELDS = {
-        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::API::AnalyzerOutputType},
-        CONTENT => {:type => ::Thrift::Types::STRUCT, :name => 'content', :class => ::Radar::API::AnalyzerOutputContent}
+        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::API::ResultType},
+        CONTENT => {:type => ::Thrift::Types::STRUCT, :name => 'content', :class => ::Radar::API::ResultContent}
       }
 
       def struct_fields; FIELDS; end
 
       def validate
-        unless @type.nil? || ::Radar::API::AnalyzerOutputType::VALID_VALUES.include?(@type)
+        unless @type.nil? || ::Radar::API::ResultType::VALID_VALUES.include?(@type)
           raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Invalid value of field type!')
         end
       end

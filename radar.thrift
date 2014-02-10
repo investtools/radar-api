@@ -62,20 +62,23 @@ struct Table {
   2: list<TableLine> lines
 }
 
-
-
-enum AnalyzerOutputType {
-  PIE, LINE
+enum Event {
+  EACH_DAY, FINISH
 }
 
-union AnalyzerOutputContent {
-  1: PieChart pie
-  2: LineChart line
+
+enum ResultType {
+  PIE_CHART, LINE_CHART
 }
 
-struct AnalyzerOutput {
-  1: AnalyzerOutputType type
-  2: AnalyzerOutputContent content
+union ResultContent {
+  1: PieChart pie_chart
+  2: LineChart line_chart
+}
+
+struct Result {
+  1: ResultType type
+  2: ResultContent content
 }
 
 struct Position {
@@ -97,6 +100,13 @@ service Analyzer {
    * <code>portfolio</code> Estado da carteira no dia que está sendo processado.
    */
   oneway void on_each_day(1: Portfolio portfolio)
+
+  /**
+   * É chamado ao final do processamento da carteira.
+   *
+   * <code>portfolio</code> Estado da carteira no último dia de processamento.
+   */
+  oneway void on_finish(1: Portfolio portfolio)
 
   /**
    * É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
@@ -123,5 +133,10 @@ service Analyzer {
    * É chamado no fim do processamento para pegar o resultado do Analyzer.
    */
   LineChart result()
+
+  /**
+   * Este método deve retornar um Set de eventos que este Analyzer deve receber.
+   */
+  set<Event> events()
 }
 

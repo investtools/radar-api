@@ -20,6 +20,13 @@ module Radar
         def send_on_each_day(portfolio)
           send_message('on_each_day', On_each_day_args, :portfolio => portfolio)
         end
+        def on_finish(portfolio)
+          send_on_finish(portfolio)
+        end
+
+        def send_on_finish(portfolio)
+          send_message('on_finish', On_finish_args, :portfolio => portfolio)
+        end
         def dump()
           send_dump()
           return recv_dump()
@@ -72,6 +79,21 @@ module Radar
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'result failed: unknown result')
         end
 
+        def events()
+          send_events()
+          return recv_events()
+        end
+
+        def send_events()
+          send_message('events', Events_args)
+        end
+
+        def recv_events()
+          result = receive_message(Events_result)
+          return result.success unless result.success.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'events failed: unknown result')
+        end
+
       end
 
       class Processor
@@ -80,6 +102,12 @@ module Radar
         def process_on_each_day(seqid, iprot, oprot)
           args = read_args(iprot, On_each_day_args)
           @handler.on_each_day(args.portfolio)
+          return
+        end
+
+        def process_on_finish(seqid, iprot, oprot)
+          args = read_args(iprot, On_finish_args)
+          @handler.on_finish(args.portfolio)
           return
         end
 
@@ -110,6 +138,13 @@ module Radar
           write_result(result, oprot, 'result', seqid)
         end
 
+        def process_events(seqid, iprot, oprot)
+          args = read_args(iprot, Events_args)
+          result = Events_result.new()
+          result.success = @handler.events()
+          write_result(result, oprot, 'events', seqid)
+        end
+
       end
 
       # HELPER FUNCTIONS AND STRUCTURES
@@ -131,6 +166,37 @@ module Radar
       end
 
       class On_each_day_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+
+        FIELDS = {
+
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class On_finish_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        PORTFOLIO = 1
+
+        FIELDS = {
+          PORTFOLIO => {:type => ::Thrift::Types::STRUCT, :name => 'portfolio', :class => ::Radar::API::Portfolio}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class On_finish_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
 
         FIELDS = {
@@ -259,6 +325,37 @@ module Radar
 
         FIELDS = {
           SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::API::LineChart}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Events_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+
+        FIELDS = {
+
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Events_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::SET, :name => 'success', :element => {:type => ::Thrift::Types::I32, :enum_class => ::Radar::API::Event}}
         }
 
         def struct_fields; FIELDS; end

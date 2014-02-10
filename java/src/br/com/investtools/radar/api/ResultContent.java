@@ -34,15 +34,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked"})
-public class AnalyzerOutputContent extends org.apache.thrift.TUnion<AnalyzerOutputContent, AnalyzerOutputContent._Fields> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("AnalyzerOutputContent");
-  private static final org.apache.thrift.protocol.TField PIE_FIELD_DESC = new org.apache.thrift.protocol.TField("pie", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-  private static final org.apache.thrift.protocol.TField LINE_FIELD_DESC = new org.apache.thrift.protocol.TField("line", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+public class ResultContent extends org.apache.thrift.TUnion<ResultContent, ResultContent._Fields> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("ResultContent");
+  private static final org.apache.thrift.protocol.TField PIE_CHART_FIELD_DESC = new org.apache.thrift.protocol.TField("pie_chart", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+  private static final org.apache.thrift.protocol.TField LINE_CHART_FIELD_DESC = new org.apache.thrift.protocol.TField("line_chart", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    PIE((short)1, "pie"),
-    LINE((short)2, "line");
+    PIE_CHART((short)1, "pie_chart"),
+    LINE_CHART((short)2, "line_chart");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -57,10 +57,10 @@ public class AnalyzerOutputContent extends org.apache.thrift.TUnion<AnalyzerOutp
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // PIE
-          return PIE;
-        case 2: // LINE
-          return LINE;
+        case 1: // PIE_CHART
+          return PIE_CHART;
+        case 2: // LINE_CHART
+          return LINE_CHART;
         default:
           return null;
       }
@@ -103,38 +103,38 @@ public class AnalyzerOutputContent extends org.apache.thrift.TUnion<AnalyzerOutp
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.PIE, new org.apache.thrift.meta_data.FieldMetaData("pie", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.PIE_CHART, new org.apache.thrift.meta_data.FieldMetaData("pie_chart", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, PieChart.class)));
-    tmpMap.put(_Fields.LINE, new org.apache.thrift.meta_data.FieldMetaData("line", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.LINE_CHART, new org.apache.thrift.meta_data.FieldMetaData("line_chart", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, LineChart.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(AnalyzerOutputContent.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(ResultContent.class, metaDataMap);
   }
 
-  public AnalyzerOutputContent() {
+  public ResultContent() {
     super();
   }
 
-  public AnalyzerOutputContent(_Fields setField, Object value) {
+  public ResultContent(_Fields setField, Object value) {
     super(setField, value);
   }
 
-  public AnalyzerOutputContent(AnalyzerOutputContent other) {
+  public ResultContent(ResultContent other) {
     super(other);
   }
-  public AnalyzerOutputContent deepCopy() {
-    return new AnalyzerOutputContent(this);
+  public ResultContent deepCopy() {
+    return new ResultContent(this);
   }
 
-  public static AnalyzerOutputContent pie(PieChart value) {
-    AnalyzerOutputContent x = new AnalyzerOutputContent();
-    x.setPie(value);
+  public static ResultContent pie_chart(PieChart value) {
+    ResultContent x = new ResultContent();
+    x.setPie_chart(value);
     return x;
   }
 
-  public static AnalyzerOutputContent line(LineChart value) {
-    AnalyzerOutputContent x = new AnalyzerOutputContent();
-    x.setLine(value);
+  public static ResultContent line_chart(LineChart value) {
+    ResultContent x = new ResultContent();
+    x.setLine_chart(value);
     return x;
   }
 
@@ -142,16 +142,16 @@ public class AnalyzerOutputContent extends org.apache.thrift.TUnion<AnalyzerOutp
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
     switch (setField) {
-      case PIE:
+      case PIE_CHART:
         if (value instanceof PieChart) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type PieChart for field 'pie', but got " + value.getClass().getSimpleName());
-      case LINE:
+        throw new ClassCastException("Was expecting value of type PieChart for field 'pie_chart', but got " + value.getClass().getSimpleName());
+      case LINE_CHART:
         if (value instanceof LineChart) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type LineChart for field 'line', but got " + value.getClass().getSimpleName());
+        throw new ClassCastException("Was expecting value of type LineChart for field 'line_chart', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -162,22 +162,22 @@ public class AnalyzerOutputContent extends org.apache.thrift.TUnion<AnalyzerOutp
     _Fields setField = _Fields.findByThriftId(field.id);
     if (setField != null) {
       switch (setField) {
-        case PIE:
-          if (field.type == PIE_FIELD_DESC.type) {
-            PieChart pie;
-            pie = new PieChart();
-            pie.read(iprot);
-            return pie;
+        case PIE_CHART:
+          if (field.type == PIE_CHART_FIELD_DESC.type) {
+            PieChart pie_chart;
+            pie_chart = new PieChart();
+            pie_chart.read(iprot);
+            return pie_chart;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case LINE:
-          if (field.type == LINE_FIELD_DESC.type) {
-            LineChart line;
-            line = new LineChart();
-            line.read(iprot);
-            return line;
+        case LINE_CHART:
+          if (field.type == LINE_CHART_FIELD_DESC.type) {
+            LineChart line_chart;
+            line_chart = new LineChart();
+            line_chart.read(iprot);
+            return line_chart;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -194,13 +194,13 @@ public class AnalyzerOutputContent extends org.apache.thrift.TUnion<AnalyzerOutp
   @Override
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case PIE:
-        PieChart pie = (PieChart)value_;
-        pie.write(oprot);
+      case PIE_CHART:
+        PieChart pie_chart = (PieChart)value_;
+        pie_chart.write(oprot);
         return;
-      case LINE:
-        LineChart line = (LineChart)value_;
-        line.write(oprot);
+      case LINE_CHART:
+        LineChart line_chart = (LineChart)value_;
+        line_chart.write(oprot);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -212,16 +212,16 @@ public class AnalyzerOutputContent extends org.apache.thrift.TUnion<AnalyzerOutp
     _Fields setField = _Fields.findByThriftId(fieldID);
     if (setField != null) {
       switch (setField) {
-        case PIE:
-          PieChart pie;
-          pie = new PieChart();
-          pie.read(iprot);
-          return pie;
-        case LINE:
-          LineChart line;
-          line = new LineChart();
-          line.read(iprot);
-          return line;
+        case PIE_CHART:
+          PieChart pie_chart;
+          pie_chart = new PieChart();
+          pie_chart.read(iprot);
+          return pie_chart;
+        case LINE_CHART:
+          LineChart line_chart;
+          line_chart = new LineChart();
+          line_chart.read(iprot);
+          return line_chart;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -233,13 +233,13 @@ public class AnalyzerOutputContent extends org.apache.thrift.TUnion<AnalyzerOutp
   @Override
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
-      case PIE:
-        PieChart pie = (PieChart)value_;
-        pie.write(oprot);
+      case PIE_CHART:
+        PieChart pie_chart = (PieChart)value_;
+        pie_chart.write(oprot);
         return;
-      case LINE:
-        LineChart line = (LineChart)value_;
-        line.write(oprot);
+      case LINE_CHART:
+        LineChart line_chart = (LineChart)value_;
+        line_chart.write(oprot);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -249,10 +249,10 @@ public class AnalyzerOutputContent extends org.apache.thrift.TUnion<AnalyzerOutp
   @Override
   protected org.apache.thrift.protocol.TField getFieldDesc(_Fields setField) {
     switch (setField) {
-      case PIE:
-        return PIE_FIELD_DESC;
-      case LINE:
-        return LINE_FIELD_DESC;
+      case PIE_CHART:
+        return PIE_CHART_FIELD_DESC;
+      case LINE_CHART:
+        return LINE_CHART_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -273,58 +273,58 @@ public class AnalyzerOutputContent extends org.apache.thrift.TUnion<AnalyzerOutp
   }
 
 
-  public PieChart getPie() {
-    if (getSetField() == _Fields.PIE) {
+  public PieChart getPie_chart() {
+    if (getSetField() == _Fields.PIE_CHART) {
       return (PieChart)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'pie' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'pie_chart' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setPie(PieChart value) {
+  public void setPie_chart(PieChart value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.PIE;
+    setField_ = _Fields.PIE_CHART;
     value_ = value;
   }
 
-  public LineChart getLine() {
-    if (getSetField() == _Fields.LINE) {
+  public LineChart getLine_chart() {
+    if (getSetField() == _Fields.LINE_CHART) {
       return (LineChart)getFieldValue();
     } else {
-      throw new RuntimeException("Cannot get field 'line' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new RuntimeException("Cannot get field 'line_chart' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setLine(LineChart value) {
+  public void setLine_chart(LineChart value) {
     if (value == null) throw new NullPointerException();
-    setField_ = _Fields.LINE;
+    setField_ = _Fields.LINE_CHART;
     value_ = value;
   }
 
-  public boolean isSetPie() {
-    return setField_ == _Fields.PIE;
+  public boolean isSetPie_chart() {
+    return setField_ == _Fields.PIE_CHART;
   }
 
 
-  public boolean isSetLine() {
-    return setField_ == _Fields.LINE;
+  public boolean isSetLine_chart() {
+    return setField_ == _Fields.LINE_CHART;
   }
 
 
   public boolean equals(Object other) {
-    if (other instanceof AnalyzerOutputContent) {
-      return equals((AnalyzerOutputContent)other);
+    if (other instanceof ResultContent) {
+      return equals((ResultContent)other);
     } else {
       return false;
     }
   }
 
-  public boolean equals(AnalyzerOutputContent other) {
+  public boolean equals(ResultContent other) {
     return other != null && getSetField() == other.getSetField() && getFieldValue().equals(other.getFieldValue());
   }
 
   @Override
-  public int compareTo(AnalyzerOutputContent other) {
+  public int compareTo(ResultContent other) {
     int lastComparison = org.apache.thrift.TBaseHelper.compareTo(getSetField(), other.getSetField());
     if (lastComparison == 0) {
       return org.apache.thrift.TBaseHelper.compareTo(getFieldValue(), other.getFieldValue());
