@@ -33,8 +33,9 @@ module Radar
     module ResultType
       PIE_CHART = 0
       LINE_CHART = 1
-      VALUE_MAP = {0 => "PIE_CHART", 1 => "LINE_CHART"}
-      VALID_VALUES = Set.new([PIE_CHART, LINE_CHART]).freeze
+      BAR_CHART = 2
+      VALUE_MAP = {0 => "PIE_CHART", 1 => "LINE_CHART", 2 => "BAR_CHART"}
+      VALID_VALUES = Set.new([PIE_CHART, LINE_CHART, BAR_CHART]).freeze
     end
 
     class Point

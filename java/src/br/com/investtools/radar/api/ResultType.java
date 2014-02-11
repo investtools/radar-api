@@ -13,7 +13,8 @@ import org.apache.thrift.TEnum;
 
 public enum ResultType implements org.apache.thrift.TEnum {
   PIE_CHART(0),
-  LINE_CHART(1);
+  LINE_CHART(1),
+  BAR_CHART(2);
 
   private final int value;
 
@@ -38,6 +39,8 @@ public enum ResultType implements org.apache.thrift.TEnum {
         return PIE_CHART;
       case 1:
         return LINE_CHART;
+      case 2:
+        return BAR_CHART;
       default:
         return null;
     }

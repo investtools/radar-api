@@ -78,7 +78,7 @@ enum Event {
 
 
 enum ResultType {
-  PIE_CHART, LINE_CHART
+  PIE_CHART, LINE_CHART, BAR_CHART
 }
 
 union Result {
