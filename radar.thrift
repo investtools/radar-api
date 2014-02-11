@@ -51,6 +51,7 @@ struct BarSeries {
 struct BarChart {
   1: string title
   2: list<BarSeries> series
+  3: list<string> categories
 }
 
 struct Text {

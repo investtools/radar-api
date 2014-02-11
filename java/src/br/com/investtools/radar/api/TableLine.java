@@ -457,13 +457,13 @@ public class TableLine implements org.apache.thrift.TBase<TableLine, TableLine._
           case 2: // CELLS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list40 = iprot.readListBegin();
-                struct.cells = new ArrayList<String>(_list40.size);
-                for (int _i41 = 0; _i41 < _list40.size; ++_i41)
+                org.apache.thrift.protocol.TList _list48 = iprot.readListBegin();
+                struct.cells = new ArrayList<String>(_list48.size);
+                for (int _i49 = 0; _i49 < _list48.size; ++_i49)
                 {
-                  String _elem42;
-                  _elem42 = iprot.readString();
-                  struct.cells.add(_elem42);
+                  String _elem50;
+                  _elem50 = iprot.readString();
+                  struct.cells.add(_elem50);
                 }
                 iprot.readListEnd();
               }
@@ -496,9 +496,9 @@ public class TableLine implements org.apache.thrift.TBase<TableLine, TableLine._
         oprot.writeFieldBegin(CELLS_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.cells.size()));
-          for (String _iter43 : struct.cells)
+          for (String _iter51 : struct.cells)
           {
-            oprot.writeString(_iter43);
+            oprot.writeString(_iter51);
           }
           oprot.writeListEnd();
         }
@@ -535,9 +535,9 @@ public class TableLine implements org.apache.thrift.TBase<TableLine, TableLine._
       if (struct.isSetCells()) {
         {
           oprot.writeI32(struct.cells.size());
-          for (String _iter44 : struct.cells)
+          for (String _iter52 : struct.cells)
           {
-            oprot.writeString(_iter44);
+            oprot.writeString(_iter52);
           }
         }
       }
@@ -553,13 +553,13 @@ public class TableLine implements org.apache.thrift.TBase<TableLine, TableLine._
       }
       if (incoming.get(1)) {
         {
-          org.apache.thrift.protocol.TList _list45 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-          struct.cells = new ArrayList<String>(_list45.size);
-          for (int _i46 = 0; _i46 < _list45.size; ++_i46)
+          org.apache.thrift.protocol.TList _list53 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.cells = new ArrayList<String>(_list53.size);
+          for (int _i54 = 0; _i54 < _list53.size; ++_i54)
           {
-            String _elem47;
-            _elem47 = iprot.readString();
-            struct.cells.add(_elem47);
+            String _elem55;
+            _elem55 = iprot.readString();
+            struct.cells.add(_elem55);
           }
         }
         struct.setCellsIsSet(true);

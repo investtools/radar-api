@@ -40,6 +40,7 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
 
   private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField SERIES_FIELD_DESC = new org.apache.thrift.protocol.TField("series", org.apache.thrift.protocol.TType.LIST, (short)2);
+  private static final org.apache.thrift.protocol.TField CATEGORIES_FIELD_DESC = new org.apache.thrift.protocol.TField("categories", org.apache.thrift.protocol.TType.LIST, (short)3);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -49,11 +50,13 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
 
   public String title; // required
   public List<BarSeries> series; // required
+  public List<String> categories; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     TITLE((short)1, "title"),
-    SERIES((short)2, "series");
+    SERIES((short)2, "series"),
+    CATEGORIES((short)3, "categories");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -72,6 +75,8 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
           return TITLE;
         case 2: // SERIES
           return SERIES;
+        case 3: // CATEGORIES
+          return CATEGORIES;
         default:
           return null;
       }
@@ -120,6 +125,9 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
     tmpMap.put(_Fields.SERIES, new org.apache.thrift.meta_data.FieldMetaData("series", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
             new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, BarSeries.class))));
+    tmpMap.put(_Fields.CATEGORIES, new org.apache.thrift.meta_data.FieldMetaData("categories", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(BarChart.class, metaDataMap);
   }
@@ -129,11 +137,13 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
 
   public BarChart(
     String title,
-    List<BarSeries> series)
+    List<BarSeries> series,
+    List<String> categories)
   {
     this();
     this.title = title;
     this.series = series;
+    this.categories = categories;
   }
 
   /**
@@ -150,6 +160,10 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
       }
       this.series = __this__series;
     }
+    if (other.isSetCategories()) {
+      List<String> __this__categories = new ArrayList<String>(other.categories);
+      this.categories = __this__categories;
+    }
   }
 
   public BarChart deepCopy() {
@@ -160,6 +174,7 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
   public void clear() {
     this.title = null;
     this.series = null;
+    this.categories = null;
   }
 
   public String getTitle() {
@@ -225,6 +240,45 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
     }
   }
 
+  public int getCategoriesSize() {
+    return (this.categories == null) ? 0 : this.categories.size();
+  }
+
+  public java.util.Iterator<String> getCategoriesIterator() {
+    return (this.categories == null) ? null : this.categories.iterator();
+  }
+
+  public void addToCategories(String elem) {
+    if (this.categories == null) {
+      this.categories = new ArrayList<String>();
+    }
+    this.categories.add(elem);
+  }
+
+  public List<String> getCategories() {
+    return this.categories;
+  }
+
+  public BarChart setCategories(List<String> categories) {
+    this.categories = categories;
+    return this;
+  }
+
+  public void unsetCategories() {
+    this.categories = null;
+  }
+
+  /** Returns true if field categories is set (has been assigned a value) and false otherwise */
+  public boolean isSetCategories() {
+    return this.categories != null;
+  }
+
+  public void setCategoriesIsSet(boolean value) {
+    if (!value) {
+      this.categories = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case TITLE:
@@ -243,6 +297,14 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
       }
       break;
 
+    case CATEGORIES:
+      if (value == null) {
+        unsetCategories();
+      } else {
+        setCategories((List<String>)value);
+      }
+      break;
+
     }
   }
 
@@ -253,6 +315,9 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
 
     case SERIES:
       return getSeries();
+
+    case CATEGORIES:
+      return getCategories();
 
     }
     throw new IllegalStateException();
@@ -269,6 +334,8 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
       return isSetTitle();
     case SERIES:
       return isSetSeries();
+    case CATEGORIES:
+      return isSetCategories();
     }
     throw new IllegalStateException();
   }
@@ -304,6 +371,15 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
         return false;
     }
 
+    boolean this_present_categories = true && this.isSetCategories();
+    boolean that_present_categories = true && that.isSetCategories();
+    if (this_present_categories || that_present_categories) {
+      if (!(this_present_categories && that_present_categories))
+        return false;
+      if (!this.categories.equals(that.categories))
+        return false;
+    }
+
     return true;
   }
 
@@ -320,6 +396,11 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
     list.add(present_series);
     if (present_series)
       list.add(series);
+
+    boolean present_categories = true && (isSetCategories());
+    list.add(present_categories);
+    if (present_categories)
+      list.add(categories);
 
     return list.hashCode();
   }
@@ -348,6 +429,16 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
     }
     if (isSetSeries()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.series, other.series);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetCategories()).compareTo(other.isSetCategories());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetCategories()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.categories, other.categories);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -385,6 +476,14 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
       sb.append("null");
     } else {
       sb.append(this.series);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("categories:");
+    if (this.categories == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.categories);
     }
     first = false;
     sb.append(")");
@@ -457,6 +556,24 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 3: // CATEGORIES
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list35 = iprot.readListBegin();
+                struct.categories = new ArrayList<String>(_list35.size);
+                for (int _i36 = 0; _i36 < _list35.size; ++_i36)
+                {
+                  String _elem37;
+                  _elem37 = iprot.readString();
+                  struct.categories.add(_elem37);
+                }
+                iprot.readListEnd();
+              }
+              struct.setCategoriesIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -481,9 +598,21 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
         oprot.writeFieldBegin(SERIES_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.series.size()));
-          for (BarSeries _iter35 : struct.series)
+          for (BarSeries _iter38 : struct.series)
           {
-            _iter35.write(oprot);
+            _iter38.write(oprot);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      if (struct.categories != null) {
+        oprot.writeFieldBegin(CATEGORIES_FIELD_DESC);
+        {
+          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.categories.size()));
+          for (String _iter39 : struct.categories)
+          {
+            oprot.writeString(_iter39);
           }
           oprot.writeListEnd();
         }
@@ -513,16 +642,28 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
       if (struct.isSetSeries()) {
         optionals.set(1);
       }
-      oprot.writeBitSet(optionals, 2);
+      if (struct.isSetCategories()) {
+        optionals.set(2);
+      }
+      oprot.writeBitSet(optionals, 3);
       if (struct.isSetTitle()) {
         oprot.writeString(struct.title);
       }
       if (struct.isSetSeries()) {
         {
           oprot.writeI32(struct.series.size());
-          for (BarSeries _iter36 : struct.series)
+          for (BarSeries _iter40 : struct.series)
           {
-            _iter36.write(oprot);
+            _iter40.write(oprot);
+          }
+        }
+      }
+      if (struct.isSetCategories()) {
+        {
+          oprot.writeI32(struct.categories.size());
+          for (String _iter41 : struct.categories)
+          {
+            oprot.writeString(_iter41);
           }
         }
       }
@@ -531,24 +672,37 @@ public class BarChart implements org.apache.thrift.TBase<BarChart, BarChart._Fie
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, BarChart struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(2);
+      BitSet incoming = iprot.readBitSet(3);
       if (incoming.get(0)) {
         struct.title = iprot.readString();
         struct.setTitleIsSet(true);
       }
       if (incoming.get(1)) {
         {
-          org.apache.thrift.protocol.TList _list37 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.series = new ArrayList<BarSeries>(_list37.size);
-          for (int _i38 = 0; _i38 < _list37.size; ++_i38)
+          org.apache.thrift.protocol.TList _list42 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.series = new ArrayList<BarSeries>(_list42.size);
+          for (int _i43 = 0; _i43 < _list42.size; ++_i43)
           {
-            BarSeries _elem39;
-            _elem39 = new BarSeries();
-            _elem39.read(iprot);
-            struct.series.add(_elem39);
+            BarSeries _elem44;
+            _elem44 = new BarSeries();
+            _elem44.read(iprot);
+            struct.series.add(_elem44);
           }
         }
         struct.setSeriesIsSet(true);
+      }
+      if (incoming.get(2)) {
+        {
+          org.apache.thrift.protocol.TList _list45 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.categories = new ArrayList<String>(_list45.size);
+          for (int _i46 = 0; _i46 < _list45.size; ++_i46)
+          {
+            String _elem47;
+            _elem47 = iprot.readString();
+            struct.categories.add(_elem47);
+          }
+        }
+        struct.setCategoriesIsSet(true);
       }
     }
   }

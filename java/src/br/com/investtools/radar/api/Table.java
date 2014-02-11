@@ -441,14 +441,14 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
           case 2: // LINES
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list48 = iprot.readListBegin();
-                struct.lines = new ArrayList<TableLine>(_list48.size);
-                for (int _i49 = 0; _i49 < _list48.size; ++_i49)
+                org.apache.thrift.protocol.TList _list56 = iprot.readListBegin();
+                struct.lines = new ArrayList<TableLine>(_list56.size);
+                for (int _i57 = 0; _i57 < _list56.size; ++_i57)
                 {
-                  TableLine _elem50;
-                  _elem50 = new TableLine();
-                  _elem50.read(iprot);
-                  struct.lines.add(_elem50);
+                  TableLine _elem58;
+                  _elem58 = new TableLine();
+                  _elem58.read(iprot);
+                  struct.lines.add(_elem58);
                 }
                 iprot.readListEnd();
               }
@@ -481,9 +481,9 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
         oprot.writeFieldBegin(LINES_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.lines.size()));
-          for (TableLine _iter51 : struct.lines)
+          for (TableLine _iter59 : struct.lines)
           {
-            _iter51.write(oprot);
+            _iter59.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -520,9 +520,9 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
       if (struct.isSetLines()) {
         {
           oprot.writeI32(struct.lines.size());
-          for (TableLine _iter52 : struct.lines)
+          for (TableLine _iter60 : struct.lines)
           {
-            _iter52.write(oprot);
+            _iter60.write(oprot);
           }
         }
       }
@@ -538,14 +538,14 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
       }
       if (incoming.get(1)) {
         {
-          org.apache.thrift.protocol.TList _list53 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.lines = new ArrayList<TableLine>(_list53.size);
-          for (int _i54 = 0; _i54 < _list53.size; ++_i54)
+          org.apache.thrift.protocol.TList _list61 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.lines = new ArrayList<TableLine>(_list61.size);
+          for (int _i62 = 0; _i62 < _list61.size; ++_i62)
           {
-            TableLine _elem55;
-            _elem55 = new TableLine();
-            _elem55.read(iprot);
-            struct.lines.add(_elem55);
+            TableLine _elem63;
+            _elem63 = new TableLine();
+            _elem63.read(iprot);
+            struct.lines.add(_elem63);
           }
         }
         struct.setLinesIsSet(true);

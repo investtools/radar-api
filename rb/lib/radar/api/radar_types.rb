@@ -176,10 +176,12 @@ module Radar
       include ::Thrift::Struct, ::Thrift::Struct_Union
       TITLE = 1
       SERIES = 2
+      CATEGORIES = 3
 
       FIELDS = {
         TITLE => {:type => ::Thrift::Types::STRING, :name => 'title'},
-        SERIES => {:type => ::Thrift::Types::LIST, :name => 'series', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::BarSeries}}
+        SERIES => {:type => ::Thrift::Types::LIST, :name => 'series', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::BarSeries}},
+        CATEGORIES => {:type => ::Thrift::Types::LIST, :name => 'categories', :element => {:type => ::Thrift::Types::STRING}}
       }
 
       def struct_fields; FIELDS; end
