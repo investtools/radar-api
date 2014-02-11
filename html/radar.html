@@ -36,8 +36,8 @@
 <a href="#Struct_Result">Result</a><br/>
 <a href="#Enum_ResultType">ResultType</a><br/>
 <a href="#Struct_Table">Table</a><br/>
-<a href="#Struct_TableLine">TableLine</a><br/>
-<a href="#Enum_TableLineType">TableLineType</a><br/>
+<a href="#Struct_TableCell">TableCell</a><br/>
+<a href="#Struct_TableRow">TableRow</a><br/>
 <a href="#Struct_Text">Text</a><br/>
 </td>
 <td></code></td>
@@ -48,15 +48,6 @@
 <tr><td><code>LINE</code></td><td><code>0</code></td><td>
 </td></tr>
 <tr><td><code>AREA</code></td><td><code>1</code></td><td>
-</td></tr>
-</table></div>
-<div class="definition"><h3 id="Enum_TableLineType">Enumeration: TableLineType</h3>
-<br/><table class="table-bordered table-striped table-condensed">
-<tr><td><code>HEADER</code></td><td><code>0</code></td><td>
-</td></tr>
-<tr><td><code>BODY</code></td><td><code>1</code></td><td>
-</td></tr>
-<tr><td><code>FOOTER</code></td><td><code>2</code></td><td>
 </td></tr>
 </table></div>
 <div class="definition"><h3 id="Enum_Event">Enumeration: Event</h3>
@@ -70,11 +61,13 @@
 </table></div>
 <div class="definition"><h3 id="Enum_ResultType">Enumeration: ResultType</h3>
 <br/><table class="table-bordered table-striped table-condensed">
-<tr><td><code>PIE_CHART</code></td><td><code>0</code></td><td>
+<tr><td><code>TABLE</code></td><td><code>0</code></td><td>
 </td></tr>
-<tr><td><code>LINE_CHART</code></td><td><code>1</code></td><td>
+<tr><td><code>PIE_CHART</code></td><td><code>1</code></td><td>
 </td></tr>
-<tr><td><code>BAR_CHART</code></td><td><code>2</code></td><td>
+<tr><td><code>LINE_CHART</code></td><td><code>2</code></td><td>
+</td></tr>
+<tr><td><code>BAR_CHART</code></td><td><code>3</code></td><td>
 </td></tr>
 </table></div>
 <hr/><h2 id="Typedefs">Type declarations</h2>
@@ -123,14 +116,20 @@ no horário 00:00:00.00 UTC.
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>content</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-</table><br/></div><div class="definition"><h3 id="Struct_TableLine">Struct: TableLine</h3>
+</table><br/></div><div class="definition"><h3 id="Struct_TableCell">Union: TableCell</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>type</td><td><code><a href="radar.html#Enum_TableLineType">TableLineType</a></code></td><td></td><td>default</td><td>TableLineType.HEADER</td></tr>
-<tr><td>2</td><td>cells</td><td><code>list&lt;<code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>1</td><td>text</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>percent</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>currency</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TableRow">Struct: TableRow</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>cells</td><td><code>list&lt;<code><a href="radar.html#Struct_TableCell">TableCell</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Table">Struct: Table</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>lines</td><td><code>list&lt;<code><a href="radar.html#Struct_TableLine">TableLine</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>header</td><td><code>list&lt;<code><a href="radar.html#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>body</td><td><code>list&lt;<code><a href="radar.html#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>footer</td><td><code>list&lt;<code><a href="radar.html#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Result">Union: Result</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>pie_chart</td><td><code><a href="radar.html#Struct_PieChart">PieChart</a></code></td><td></td><td>default</td><td></td></tr>

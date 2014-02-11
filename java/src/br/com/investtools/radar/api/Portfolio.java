@@ -619,16 +619,16 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
           case 4: // POSITIONS
             if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
               {
-                org.apache.thrift.protocol.TMap _map64 = iprot.readMapBegin();
-                struct.positions = new HashMap<String,Position>(2*_map64.size);
-                for (int _i65 = 0; _i65 < _map64.size; ++_i65)
+                org.apache.thrift.protocol.TMap _map80 = iprot.readMapBegin();
+                struct.positions = new HashMap<String,Position>(2*_map80.size);
+                for (int _i81 = 0; _i81 < _map80.size; ++_i81)
                 {
-                  String _key66;
-                  Position _val67;
-                  _key66 = iprot.readString();
-                  _val67 = new Position();
-                  _val67.read(iprot);
-                  struct.positions.put(_key66, _val67);
+                  String _key82;
+                  Position _val83;
+                  _key82 = iprot.readString();
+                  _val83 = new Position();
+                  _val83.read(iprot);
+                  struct.positions.put(_key82, _val83);
                 }
                 iprot.readMapEnd();
               }
@@ -668,10 +668,10 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
         oprot.writeFieldBegin(POSITIONS_FIELD_DESC);
         {
           oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRUCT, struct.positions.size()));
-          for (Map.Entry<String, Position> _iter68 : struct.positions.entrySet())
+          for (Map.Entry<String, Position> _iter84 : struct.positions.entrySet())
           {
-            oprot.writeString(_iter68.getKey());
-            _iter68.getValue().write(oprot);
+            oprot.writeString(_iter84.getKey());
+            _iter84.getValue().write(oprot);
           }
           oprot.writeMapEnd();
         }
@@ -715,10 +715,10 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
       if (struct.isSetPositions()) {
         {
           oprot.writeI32(struct.positions.size());
-          for (Map.Entry<String, Position> _iter69 : struct.positions.entrySet())
+          for (Map.Entry<String, Position> _iter85 : struct.positions.entrySet())
           {
-            oprot.writeString(_iter69.getKey());
-            _iter69.getValue().write(oprot);
+            oprot.writeString(_iter85.getKey());
+            _iter85.getValue().write(oprot);
           }
         }
       }
@@ -740,16 +740,16 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
       }
       if (incoming.get(2)) {
         {
-          org.apache.thrift.protocol.TMap _map70 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.positions = new HashMap<String,Position>(2*_map70.size);
-          for (int _i71 = 0; _i71 < _map70.size; ++_i71)
+          org.apache.thrift.protocol.TMap _map86 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.positions = new HashMap<String,Position>(2*_map86.size);
+          for (int _i87 = 0; _i87 < _map86.size; ++_i87)
           {
-            String _key72;
-            Position _val73;
-            _key72 = iprot.readString();
-            _val73 = new Position();
-            _val73.read(iprot);
-            struct.positions.put(_key72, _val73);
+            String _key88;
+            Position _val89;
+            _key88 = iprot.readString();
+            _val89 = new Position();
+            _val89.read(iprot);
+            struct.positions.put(_key88, _val89);
           }
         }
         struct.setPositionsIsSet(true);

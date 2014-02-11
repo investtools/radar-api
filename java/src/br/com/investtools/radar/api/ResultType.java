@@ -12,9 +12,10 @@ import java.util.HashMap;
 import org.apache.thrift.TEnum;
 
 public enum ResultType implements org.apache.thrift.TEnum {
-  PIE_CHART(0),
-  LINE_CHART(1),
-  BAR_CHART(2);
+  TABLE(0),
+  PIE_CHART(1),
+  LINE_CHART(2),
+  BAR_CHART(3);
 
   private final int value;
 
@@ -36,10 +37,12 @@ public enum ResultType implements org.apache.thrift.TEnum {
   public static ResultType findByValue(int value) { 
     switch (value) {
       case 0:
-        return PIE_CHART;
+        return TABLE;
       case 1:
-        return LINE_CHART;
+        return PIE_CHART;
       case 2:
+        return LINE_CHART;
+      case 3:
         return BAR_CHART;
       default:
         return null;

@@ -39,7 +39,9 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Table");
 
   private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField LINES_FIELD_DESC = new org.apache.thrift.protocol.TField("lines", org.apache.thrift.protocol.TType.LIST, (short)2);
+  private static final org.apache.thrift.protocol.TField HEADER_FIELD_DESC = new org.apache.thrift.protocol.TField("header", org.apache.thrift.protocol.TType.LIST, (short)2);
+  private static final org.apache.thrift.protocol.TField BODY_FIELD_DESC = new org.apache.thrift.protocol.TField("body", org.apache.thrift.protocol.TType.LIST, (short)3);
+  private static final org.apache.thrift.protocol.TField FOOTER_FIELD_DESC = new org.apache.thrift.protocol.TField("footer", org.apache.thrift.protocol.TType.LIST, (short)4);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -48,12 +50,16 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
   }
 
   public String title; // required
-  public List<TableLine> lines; // required
+  public List<TableRow> header; // required
+  public List<TableRow> body; // required
+  public List<TableRow> footer; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     TITLE((short)1, "title"),
-    LINES((short)2, "lines");
+    HEADER((short)2, "header"),
+    BODY((short)3, "body"),
+    FOOTER((short)4, "footer");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -70,8 +76,12 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
       switch(fieldId) {
         case 1: // TITLE
           return TITLE;
-        case 2: // LINES
-          return LINES;
+        case 2: // HEADER
+          return HEADER;
+        case 3: // BODY
+          return BODY;
+        case 4: // FOOTER
+          return FOOTER;
         default:
           return null;
       }
@@ -117,9 +127,15 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.LINES, new org.apache.thrift.meta_data.FieldMetaData("lines", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.HEADER, new org.apache.thrift.meta_data.FieldMetaData("header", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TableLine.class))));
+            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TableRow.class))));
+    tmpMap.put(_Fields.BODY, new org.apache.thrift.meta_data.FieldMetaData("body", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TableRow.class))));
+    tmpMap.put(_Fields.FOOTER, new org.apache.thrift.meta_data.FieldMetaData("footer", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TableRow.class))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Table.class, metaDataMap);
   }
@@ -129,11 +145,15 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
 
   public Table(
     String title,
-    List<TableLine> lines)
+    List<TableRow> header,
+    List<TableRow> body,
+    List<TableRow> footer)
   {
     this();
     this.title = title;
-    this.lines = lines;
+    this.header = header;
+    this.body = body;
+    this.footer = footer;
   }
 
   /**
@@ -143,12 +163,26 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     if (other.isSetTitle()) {
       this.title = other.title;
     }
-    if (other.isSetLines()) {
-      List<TableLine> __this__lines = new ArrayList<TableLine>(other.lines.size());
-      for (TableLine other_element : other.lines) {
-        __this__lines.add(new TableLine(other_element));
+    if (other.isSetHeader()) {
+      List<TableRow> __this__header = new ArrayList<TableRow>(other.header.size());
+      for (TableRow other_element : other.header) {
+        __this__header.add(new TableRow(other_element));
       }
-      this.lines = __this__lines;
+      this.header = __this__header;
+    }
+    if (other.isSetBody()) {
+      List<TableRow> __this__body = new ArrayList<TableRow>(other.body.size());
+      for (TableRow other_element : other.body) {
+        __this__body.add(new TableRow(other_element));
+      }
+      this.body = __this__body;
+    }
+    if (other.isSetFooter()) {
+      List<TableRow> __this__footer = new ArrayList<TableRow>(other.footer.size());
+      for (TableRow other_element : other.footer) {
+        __this__footer.add(new TableRow(other_element));
+      }
+      this.footer = __this__footer;
     }
   }
 
@@ -159,7 +193,9 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
   @Override
   public void clear() {
     this.title = null;
-    this.lines = null;
+    this.header = null;
+    this.body = null;
+    this.footer = null;
   }
 
   public String getTitle() {
@@ -186,42 +222,120 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     }
   }
 
-  public int getLinesSize() {
-    return (this.lines == null) ? 0 : this.lines.size();
+  public int getHeaderSize() {
+    return (this.header == null) ? 0 : this.header.size();
   }
 
-  public java.util.Iterator<TableLine> getLinesIterator() {
-    return (this.lines == null) ? null : this.lines.iterator();
+  public java.util.Iterator<TableRow> getHeaderIterator() {
+    return (this.header == null) ? null : this.header.iterator();
   }
 
-  public void addToLines(TableLine elem) {
-    if (this.lines == null) {
-      this.lines = new ArrayList<TableLine>();
+  public void addToHeader(TableRow elem) {
+    if (this.header == null) {
+      this.header = new ArrayList<TableRow>();
     }
-    this.lines.add(elem);
+    this.header.add(elem);
   }
 
-  public List<TableLine> getLines() {
-    return this.lines;
+  public List<TableRow> getHeader() {
+    return this.header;
   }
 
-  public Table setLines(List<TableLine> lines) {
-    this.lines = lines;
+  public Table setHeader(List<TableRow> header) {
+    this.header = header;
     return this;
   }
 
-  public void unsetLines() {
-    this.lines = null;
+  public void unsetHeader() {
+    this.header = null;
   }
 
-  /** Returns true if field lines is set (has been assigned a value) and false otherwise */
-  public boolean isSetLines() {
-    return this.lines != null;
+  /** Returns true if field header is set (has been assigned a value) and false otherwise */
+  public boolean isSetHeader() {
+    return this.header != null;
   }
 
-  public void setLinesIsSet(boolean value) {
+  public void setHeaderIsSet(boolean value) {
     if (!value) {
-      this.lines = null;
+      this.header = null;
+    }
+  }
+
+  public int getBodySize() {
+    return (this.body == null) ? 0 : this.body.size();
+  }
+
+  public java.util.Iterator<TableRow> getBodyIterator() {
+    return (this.body == null) ? null : this.body.iterator();
+  }
+
+  public void addToBody(TableRow elem) {
+    if (this.body == null) {
+      this.body = new ArrayList<TableRow>();
+    }
+    this.body.add(elem);
+  }
+
+  public List<TableRow> getBody() {
+    return this.body;
+  }
+
+  public Table setBody(List<TableRow> body) {
+    this.body = body;
+    return this;
+  }
+
+  public void unsetBody() {
+    this.body = null;
+  }
+
+  /** Returns true if field body is set (has been assigned a value) and false otherwise */
+  public boolean isSetBody() {
+    return this.body != null;
+  }
+
+  public void setBodyIsSet(boolean value) {
+    if (!value) {
+      this.body = null;
+    }
+  }
+
+  public int getFooterSize() {
+    return (this.footer == null) ? 0 : this.footer.size();
+  }
+
+  public java.util.Iterator<TableRow> getFooterIterator() {
+    return (this.footer == null) ? null : this.footer.iterator();
+  }
+
+  public void addToFooter(TableRow elem) {
+    if (this.footer == null) {
+      this.footer = new ArrayList<TableRow>();
+    }
+    this.footer.add(elem);
+  }
+
+  public List<TableRow> getFooter() {
+    return this.footer;
+  }
+
+  public Table setFooter(List<TableRow> footer) {
+    this.footer = footer;
+    return this;
+  }
+
+  public void unsetFooter() {
+    this.footer = null;
+  }
+
+  /** Returns true if field footer is set (has been assigned a value) and false otherwise */
+  public boolean isSetFooter() {
+    return this.footer != null;
+  }
+
+  public void setFooterIsSet(boolean value) {
+    if (!value) {
+      this.footer = null;
     }
   }
 
@@ -235,11 +349,27 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
       }
       break;
 
-    case LINES:
+    case HEADER:
       if (value == null) {
-        unsetLines();
+        unsetHeader();
       } else {
-        setLines((List<TableLine>)value);
+        setHeader((List<TableRow>)value);
+      }
+      break;
+
+    case BODY:
+      if (value == null) {
+        unsetBody();
+      } else {
+        setBody((List<TableRow>)value);
+      }
+      break;
+
+    case FOOTER:
+      if (value == null) {
+        unsetFooter();
+      } else {
+        setFooter((List<TableRow>)value);
       }
       break;
 
@@ -251,8 +381,14 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     case TITLE:
       return getTitle();
 
-    case LINES:
-      return getLines();
+    case HEADER:
+      return getHeader();
+
+    case BODY:
+      return getBody();
+
+    case FOOTER:
+      return getFooter();
 
     }
     throw new IllegalStateException();
@@ -267,8 +403,12 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     switch (field) {
     case TITLE:
       return isSetTitle();
-    case LINES:
-      return isSetLines();
+    case HEADER:
+      return isSetHeader();
+    case BODY:
+      return isSetBody();
+    case FOOTER:
+      return isSetFooter();
     }
     throw new IllegalStateException();
   }
@@ -295,12 +435,30 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
         return false;
     }
 
-    boolean this_present_lines = true && this.isSetLines();
-    boolean that_present_lines = true && that.isSetLines();
-    if (this_present_lines || that_present_lines) {
-      if (!(this_present_lines && that_present_lines))
+    boolean this_present_header = true && this.isSetHeader();
+    boolean that_present_header = true && that.isSetHeader();
+    if (this_present_header || that_present_header) {
+      if (!(this_present_header && that_present_header))
         return false;
-      if (!this.lines.equals(that.lines))
+      if (!this.header.equals(that.header))
+        return false;
+    }
+
+    boolean this_present_body = true && this.isSetBody();
+    boolean that_present_body = true && that.isSetBody();
+    if (this_present_body || that_present_body) {
+      if (!(this_present_body && that_present_body))
+        return false;
+      if (!this.body.equals(that.body))
+        return false;
+    }
+
+    boolean this_present_footer = true && this.isSetFooter();
+    boolean that_present_footer = true && that.isSetFooter();
+    if (this_present_footer || that_present_footer) {
+      if (!(this_present_footer && that_present_footer))
+        return false;
+      if (!this.footer.equals(that.footer))
         return false;
     }
 
@@ -316,10 +474,20 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     if (present_title)
       list.add(title);
 
-    boolean present_lines = true && (isSetLines());
-    list.add(present_lines);
-    if (present_lines)
-      list.add(lines);
+    boolean present_header = true && (isSetHeader());
+    list.add(present_header);
+    if (present_header)
+      list.add(header);
+
+    boolean present_body = true && (isSetBody());
+    list.add(present_body);
+    if (present_body)
+      list.add(body);
+
+    boolean present_footer = true && (isSetFooter());
+    list.add(present_footer);
+    if (present_footer)
+      list.add(footer);
 
     return list.hashCode();
   }
@@ -342,12 +510,32 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetLines()).compareTo(other.isSetLines());
+    lastComparison = Boolean.valueOf(isSetHeader()).compareTo(other.isSetHeader());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetLines()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.lines, other.lines);
+    if (isSetHeader()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.header, other.header);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetBody()).compareTo(other.isSetBody());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetBody()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.body, other.body);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetFooter()).compareTo(other.isSetFooter());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetFooter()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.footer, other.footer);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -380,11 +568,27 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("lines:");
-    if (this.lines == null) {
+    sb.append("header:");
+    if (this.header == null) {
       sb.append("null");
     } else {
-      sb.append(this.lines);
+      sb.append(this.header);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("body:");
+    if (this.body == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.body);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("footer:");
+    if (this.footer == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.footer);
     }
     first = false;
     sb.append(")");
@@ -438,21 +642,59 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // LINES
+          case 2: // HEADER
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
                 org.apache.thrift.protocol.TList _list56 = iprot.readListBegin();
-                struct.lines = new ArrayList<TableLine>(_list56.size);
+                struct.header = new ArrayList<TableRow>(_list56.size);
                 for (int _i57 = 0; _i57 < _list56.size; ++_i57)
                 {
-                  TableLine _elem58;
-                  _elem58 = new TableLine();
+                  TableRow _elem58;
+                  _elem58 = new TableRow();
                   _elem58.read(iprot);
-                  struct.lines.add(_elem58);
+                  struct.header.add(_elem58);
                 }
                 iprot.readListEnd();
               }
-              struct.setLinesIsSet(true);
+              struct.setHeaderIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 3: // BODY
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list59 = iprot.readListBegin();
+                struct.body = new ArrayList<TableRow>(_list59.size);
+                for (int _i60 = 0; _i60 < _list59.size; ++_i60)
+                {
+                  TableRow _elem61;
+                  _elem61 = new TableRow();
+                  _elem61.read(iprot);
+                  struct.body.add(_elem61);
+                }
+                iprot.readListEnd();
+              }
+              struct.setBodyIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 4: // FOOTER
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list62 = iprot.readListBegin();
+                struct.footer = new ArrayList<TableRow>(_list62.size);
+                for (int _i63 = 0; _i63 < _list62.size; ++_i63)
+                {
+                  TableRow _elem64;
+                  _elem64 = new TableRow();
+                  _elem64.read(iprot);
+                  struct.footer.add(_elem64);
+                }
+                iprot.readListEnd();
+              }
+              struct.setFooterIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -477,13 +719,37 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
         oprot.writeString(struct.title);
         oprot.writeFieldEnd();
       }
-      if (struct.lines != null) {
-        oprot.writeFieldBegin(LINES_FIELD_DESC);
+      if (struct.header != null) {
+        oprot.writeFieldBegin(HEADER_FIELD_DESC);
         {
-          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.lines.size()));
-          for (TableLine _iter59 : struct.lines)
+          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.header.size()));
+          for (TableRow _iter65 : struct.header)
           {
-            _iter59.write(oprot);
+            _iter65.write(oprot);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      if (struct.body != null) {
+        oprot.writeFieldBegin(BODY_FIELD_DESC);
+        {
+          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.body.size()));
+          for (TableRow _iter66 : struct.body)
+          {
+            _iter66.write(oprot);
+          }
+          oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      if (struct.footer != null) {
+        oprot.writeFieldBegin(FOOTER_FIELD_DESC);
+        {
+          oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.footer.size()));
+          for (TableRow _iter67 : struct.footer)
+          {
+            _iter67.write(oprot);
           }
           oprot.writeListEnd();
         }
@@ -510,19 +776,43 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
       if (struct.isSetTitle()) {
         optionals.set(0);
       }
-      if (struct.isSetLines()) {
+      if (struct.isSetHeader()) {
         optionals.set(1);
       }
-      oprot.writeBitSet(optionals, 2);
+      if (struct.isSetBody()) {
+        optionals.set(2);
+      }
+      if (struct.isSetFooter()) {
+        optionals.set(3);
+      }
+      oprot.writeBitSet(optionals, 4);
       if (struct.isSetTitle()) {
         oprot.writeString(struct.title);
       }
-      if (struct.isSetLines()) {
+      if (struct.isSetHeader()) {
         {
-          oprot.writeI32(struct.lines.size());
-          for (TableLine _iter60 : struct.lines)
+          oprot.writeI32(struct.header.size());
+          for (TableRow _iter68 : struct.header)
           {
-            _iter60.write(oprot);
+            _iter68.write(oprot);
+          }
+        }
+      }
+      if (struct.isSetBody()) {
+        {
+          oprot.writeI32(struct.body.size());
+          for (TableRow _iter69 : struct.body)
+          {
+            _iter69.write(oprot);
+          }
+        }
+      }
+      if (struct.isSetFooter()) {
+        {
+          oprot.writeI32(struct.footer.size());
+          for (TableRow _iter70 : struct.footer)
+          {
+            _iter70.write(oprot);
           }
         }
       }
@@ -531,24 +821,52 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Table struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(2);
+      BitSet incoming = iprot.readBitSet(4);
       if (incoming.get(0)) {
         struct.title = iprot.readString();
         struct.setTitleIsSet(true);
       }
       if (incoming.get(1)) {
         {
-          org.apache.thrift.protocol.TList _list61 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.lines = new ArrayList<TableLine>(_list61.size);
-          for (int _i62 = 0; _i62 < _list61.size; ++_i62)
+          org.apache.thrift.protocol.TList _list71 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.header = new ArrayList<TableRow>(_list71.size);
+          for (int _i72 = 0; _i72 < _list71.size; ++_i72)
           {
-            TableLine _elem63;
-            _elem63 = new TableLine();
-            _elem63.read(iprot);
-            struct.lines.add(_elem63);
+            TableRow _elem73;
+            _elem73 = new TableRow();
+            _elem73.read(iprot);
+            struct.header.add(_elem73);
           }
         }
-        struct.setLinesIsSet(true);
+        struct.setHeaderIsSet(true);
+      }
+      if (incoming.get(2)) {
+        {
+          org.apache.thrift.protocol.TList _list74 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.body = new ArrayList<TableRow>(_list74.size);
+          for (int _i75 = 0; _i75 < _list74.size; ++_i75)
+          {
+            TableRow _elem76;
+            _elem76 = new TableRow();
+            _elem76.read(iprot);
+            struct.body.add(_elem76);
+          }
+        }
+        struct.setBodyIsSet(true);
+      }
+      if (incoming.get(3)) {
+        {
+          org.apache.thrift.protocol.TList _list77 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.footer = new ArrayList<TableRow>(_list77.size);
+          for (int _i78 = 0; _i78 < _list77.size; ++_i78)
+          {
+            TableRow _elem79;
+            _elem79 = new TableRow();
+            _elem79.read(iprot);
+            struct.footer.add(_elem79);
+          }
+        }
+        struct.setFooterIsSet(true);
       }
     }
   }

@@ -59,18 +59,21 @@ struct Text {
   2: string content
 }
 
-enum TableLineType {
-  HEADER, BODY, FOOTER
+union TableCell {
+  1: string text
+  2: double percent
+  3: double currency
 }
 
-struct TableLine {
-  1: TableLineType type = TableLineType.HEADER
-  2: list<string> cells
+struct TableRow {
+  1: list<TableCell> cells
 }
 
 struct Table {
   1: string title
-  2: list<TableLine> lines
+  2: list<TableRow> header
+  3: list<TableRow> body
+  4: list<TableRow> footer
 }
 
 enum Event {
@@ -79,7 +82,7 @@ enum Event {
 
 
 enum ResultType {
-  PIE_CHART, LINE_CHART, BAR_CHART
+  TABLE, PIE_CHART, LINE_CHART, BAR_CHART
 }
 
 union Result {

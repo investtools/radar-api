@@ -15,14 +15,6 @@ module Radar
       VALID_VALUES = Set.new([LINE, AREA]).freeze
     end
 
-    module TableLineType
-      HEADER = 0
-      BODY = 1
-      FOOTER = 2
-      VALUE_MAP = {0 => "HEADER", 1 => "BODY", 2 => "FOOTER"}
-      VALID_VALUES = Set.new([HEADER, BODY, FOOTER]).freeze
-    end
-
     module Event
       EACH_DAY = 0
       EACH_MONTH = 1
@@ -32,11 +24,12 @@ module Radar
     end
 
     module ResultType
-      PIE_CHART = 0
-      LINE_CHART = 1
-      BAR_CHART = 2
-      VALUE_MAP = {0 => "PIE_CHART", 1 => "LINE_CHART", 2 => "BAR_CHART"}
-      VALID_VALUES = Set.new([PIE_CHART, LINE_CHART, BAR_CHART]).freeze
+      TABLE = 0
+      PIE_CHART = 1
+      LINE_CHART = 2
+      BAR_CHART = 3
+      VALUE_MAP = {0 => "TABLE", 1 => "PIE_CHART", 2 => "LINE_CHART", 3 => "BAR_CHART"}
+      VALID_VALUES = Set.new([TABLE, PIE_CHART, LINE_CHART, BAR_CHART]).freeze
     end
 
     class Point
@@ -210,22 +203,52 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class TableLine
-      include ::Thrift::Struct, ::Thrift::Struct_Union
-      TYPE = 1
-      CELLS = 2
+    class TableCell < ::Thrift::Union
+      include ::Thrift::Struct_Union
+      class << self
+        def text(val)
+          TableCell.new(:text, val)
+        end
+
+        def percent(val)
+          TableCell.new(:percent, val)
+        end
+
+        def currency(val)
+          TableCell.new(:currency, val)
+        end
+      end
+
+      TEXT = 1
+      PERCENT = 2
+      CURRENCY = 3
 
       FIELDS = {
-        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :default =>         0, :enum_class => ::Radar::API::TableLineType},
-        CELLS => {:type => ::Thrift::Types::LIST, :name => 'cells', :element => {:type => ::Thrift::Types::STRING}}
+        TEXT => {:type => ::Thrift::Types::STRING, :name => 'text'},
+        PERCENT => {:type => ::Thrift::Types::DOUBLE, :name => 'percent'},
+        CURRENCY => {:type => ::Thrift::Types::DOUBLE, :name => 'currency'}
       }
 
       def struct_fields; FIELDS; end
 
       def validate
-        unless @type.nil? || ::Radar::API::TableLineType::VALID_VALUES.include?(@type)
-          raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Invalid value of field type!')
-        end
+        raise(StandardError, 'Union fields are not set.') if get_set_field.nil? || get_value.nil?
+      end
+
+      ::Thrift::Union.generate_accessors self
+    end
+
+    class TableRow
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      CELLS = 1
+
+      FIELDS = {
+        CELLS => {:type => ::Thrift::Types::LIST, :name => 'cells', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::TableCell}}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
       end
 
       ::Thrift::Struct.generate_accessors self
@@ -234,11 +257,15 @@ module Radar
     class Table
       include ::Thrift::Struct, ::Thrift::Struct_Union
       TITLE = 1
-      LINES = 2
+      HEADER = 2
+      BODY = 3
+      FOOTER = 4
 
       FIELDS = {
         TITLE => {:type => ::Thrift::Types::STRING, :name => 'title'},
-        LINES => {:type => ::Thrift::Types::LIST, :name => 'lines', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::TableLine}}
+        HEADER => {:type => ::Thrift::Types::LIST, :name => 'header', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::TableRow}},
+        BODY => {:type => ::Thrift::Types::LIST, :name => 'body', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::TableRow}},
+        FOOTER => {:type => ::Thrift::Types::LIST, :name => 'footer', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::TableRow}}
       }
 
       def struct_fields; FIELDS; end
