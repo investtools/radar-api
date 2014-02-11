@@ -27,6 +27,21 @@ module Radar
         def send_on_finish(portfolio)
           send_message('on_finish', On_finish_args, :portfolio => portfolio)
         end
+        def handshake()
+          send_handshake()
+          return recv_handshake()
+        end
+
+        def send_handshake()
+          send_message('handshake', Handshake_args)
+        end
+
+        def recv_handshake()
+          result = receive_message(Handshake_result)
+          return result.success unless result.success.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'handshake failed: unknown result')
+        end
+
         def dump()
           send_dump()
           return recv_dump()
@@ -79,21 +94,6 @@ module Radar
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'result failed: unknown result')
         end
 
-        def events()
-          send_events()
-          return recv_events()
-        end
-
-        def send_events()
-          send_message('events', Events_args)
-        end
-
-        def recv_events()
-          result = receive_message(Events_result)
-          return result.success unless result.success.nil?
-          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'events failed: unknown result')
-        end
-
       end
 
       class Processor
@@ -109,6 +109,13 @@ module Radar
           args = read_args(iprot, On_finish_args)
           @handler.on_finish(args.portfolio)
           return
+        end
+
+        def process_handshake(seqid, iprot, oprot)
+          args = read_args(iprot, Handshake_args)
+          result = Handshake_result.new()
+          result.success = @handler.handshake()
+          write_result(result, oprot, 'handshake', seqid)
         end
 
         def process_dump(seqid, iprot, oprot)
@@ -136,13 +143,6 @@ module Radar
           result = Result_result.new()
           result.success = @handler.result()
           write_result(result, oprot, 'result', seqid)
-        end
-
-        def process_events(seqid, iprot, oprot)
-          args = read_args(iprot, Events_args)
-          result = Events_result.new()
-          result.success = @handler.events()
-          write_result(result, oprot, 'events', seqid)
         end
 
       end
@@ -201,6 +201,37 @@ module Radar
 
         FIELDS = {
 
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Handshake_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+
+        FIELDS = {
+
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Handshake_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::API::AnalyzerConfig}
         }
 
         def struct_fields; FIELDS; end
@@ -325,37 +356,6 @@ module Radar
 
         FIELDS = {
           SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::API::LineChart}
-        }
-
-        def struct_fields; FIELDS; end
-
-        def validate
-        end
-
-        ::Thrift::Struct.generate_accessors self
-      end
-
-      class Events_args
-        include ::Thrift::Struct, ::Thrift::Struct_Union
-
-        FIELDS = {
-
-        }
-
-        def struct_fields; FIELDS; end
-
-        def validate
-        end
-
-        ::Thrift::Struct.generate_accessors self
-      end
-
-      class Events_result
-        include ::Thrift::Struct, ::Thrift::Struct_Union
-        SUCCESS = 0
-
-        FIELDS = {
-          SUCCESS => {:type => ::Thrift::Types::SET, :name => 'success', :element => {:type => ::Thrift::Types::I32, :enum_class => ::Radar::API::Event}}
         }
 
         def struct_fields; FIELDS; end

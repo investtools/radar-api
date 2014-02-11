@@ -209,15 +209,15 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class ResultContent < ::Thrift::Union
+    class Result < ::Thrift::Union
       include ::Thrift::Struct_Union
       class << self
         def pie_chart(val)
-          ResultContent.new(:pie_chart, val)
+          Result.new(:pie_chart, val)
         end
 
         def line_chart(val)
-          ResultContent.new(:line_chart, val)
+          Result.new(:line_chart, val)
         end
       end
 
@@ -236,27 +236,6 @@ module Radar
       end
 
       ::Thrift::Union.generate_accessors self
-    end
-
-    class Result
-      include ::Thrift::Struct, ::Thrift::Struct_Union
-      TYPE = 1
-      CONTENT = 2
-
-      FIELDS = {
-        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::API::ResultType},
-        CONTENT => {:type => ::Thrift::Types::STRUCT, :name => 'content', :class => ::Radar::API::ResultContent}
-      }
-
-      def struct_fields; FIELDS; end
-
-      def validate
-        unless @type.nil? || ::Radar::API::ResultType::VALID_VALUES.include?(@type)
-          raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Invalid value of field type!')
-        end
-      end
-
-      ::Thrift::Struct.generate_accessors self
     end
 
     class Position
@@ -293,6 +272,29 @@ module Radar
 
       def validate
         raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field date is unset!') unless @date
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class AnalyzerConfig
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      RESULT_TYPE = 1
+      ACCEPTED_EVENTS = 2
+
+      FIELDS = {
+        RESULT_TYPE => {:type => ::Thrift::Types::I32, :name => 'result_type', :enum_class => ::Radar::API::ResultType},
+        ACCEPTED_EVENTS => {:type => ::Thrift::Types::SET, :name => 'accepted_events', :element => {:type => ::Thrift::Types::I32, :enum_class => ::Radar::API::Event}}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+        raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field result_type is unset!') unless @result_type
+        raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field accepted_events is unset!') unless @accepted_events
+        unless @result_type.nil? || ::Radar::API::ResultType::VALID_VALUES.include?(@result_type)
+          raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Invalid value of field result_type!')
+        end
       end
 
       ::Thrift::Struct.generate_accessors self

@@ -12,7 +12,7 @@
 <td>radar</td><td><a href="#Svc_Analyzer">Analyzer</a><br/>
 <ul>
 <li><a href="#Fn_Analyzer_dump">dump</a></li>
-<li><a href="#Fn_Analyzer_events">events</a></li>
+<li><a href="#Fn_Analyzer_handshake">handshake</a></li>
 <li><a href="#Fn_Analyzer_id">id</a></li>
 <li><a href="#Fn_Analyzer_on_each_day">on_each_day</a></li>
 <li><a href="#Fn_Analyzer_on_finish">on_finish</a></li>
@@ -20,7 +20,8 @@
 <li><a href="#Fn_Analyzer_resume">resume</a></li>
 </ul>
 </td>
-<td><a href="#Typedef_Date">Date</a><br/>
+<td><a href="#Struct_AnalyzerConfig">AnalyzerConfig</a><br/>
+<a href="#Typedef_Date">Date</a><br/>
 <a href="#Enum_Event">Event</a><br/>
 <a href="#Struct_LineChart">LineChart</a><br/>
 <a href="#Struct_LineChartOptions">LineChartOptions</a><br/>
@@ -32,7 +33,6 @@
 <a href="#Struct_Portfolio">Portfolio</a><br/>
 <a href="#Struct_Position">Position</a><br/>
 <a href="#Struct_Result">Result</a><br/>
-<a href="#Struct_ResultContent">ResultContent</a><br/>
 <a href="#Enum_ResultType">ResultType</a><br/>
 <a href="#Struct_Table">Table</a><br/>
 <a href="#Struct_TableLine">TableLine</a><br/>
@@ -117,14 +117,10 @@ no horário 00:00:00.00 UTC.
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>lines</td><td><code>list&lt;<code><a href="radar.html#Struct_TableLine">TableLine</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-</table><br/></div><div class="definition"><h3 id="Struct_ResultContent">Union: ResultContent</h3>
+</table><br/></div><div class="definition"><h3 id="Struct_Result">Union: Result</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>pie_chart</td><td><code><a href="radar.html#Struct_PieChart">PieChart</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>line_chart</td><td><code><a href="radar.html#Struct_LineChart">LineChart</a></code></td><td></td><td>default</td><td></td></tr>
-</table><br/></div><div class="definition"><h3 id="Struct_Result">Struct: Result</h3>
-<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>type</td><td><code><a href="radar.html#Enum_ResultType">ResultType</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>content</td><td><code><a href="radar.html#Struct_ResultContent">ResultContent</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Position">Struct: Position</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
@@ -134,6 +130,10 @@ no horário 00:00:00.00 UTC.
 <tr><td>2</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>nav</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>positions</td><td><code>map&lt;<code>string</code>, <code><a href="radar.html#Struct_Position">Position</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_AnalyzerConfig">Struct: AnalyzerConfig</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>result_type</td><td><code><a href="radar.html#Enum_ResultType">ResultType</a></code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>accepted_events</td><td><code>set&lt;<code><a href="radar.html#Enum_Event">Event</a></code>&gt;</code></td><td></td><td>required</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_Analyzer">Service: Analyzer</h3>
 <div class="definition"><h4 id="Fn_Analyzer_on_each_day">Function: Analyzer.on_each_day</h4>
@@ -147,6 +147,9 @@ no horário 00:00:00.00 UTC.
 </pre>É chamado ao final do processamento da carteira.
 <p/>
 <code>portfolio</code> Estado da carteira no último dia de processamento.
+<br/></div><div class="definition"><h4 id="Fn_Analyzer_handshake">Function: Analyzer.handshake</h4>
+<pre><code><a href="radar.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code> handshake()
+</pre>É chamado antes do processamento para o Radar receber as configurações do analyzer.
 <br/></div><div class="definition"><h4 id="Fn_Analyzer_dump">Function: Analyzer.dump</h4>
 <pre><code>binary</code> dump()
 </pre>É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
@@ -165,7 +168,4 @@ uma imagem gerada pelo método <code>dump()</code>.
 <br/></div><div class="definition"><h4 id="Fn_Analyzer_result">Function: Analyzer.result</h4>
 <pre><code><a href="radar.html#Struct_LineChart">LineChart</a></code> result()
 </pre>É chamado no fim do processamento para pegar o resultado do Analyzer.
-<br/></div><div class="definition"><h4 id="Fn_Analyzer_events">Function: Analyzer.events</h4>
-<pre><code>set&lt;<code><a href="radar.html#Enum_Event">Event</a></code>&gt;</code> events()
-</pre>Este método deve retornar um Set de eventos que este Analyzer deve receber.
 <br/></div></div></body></html>
