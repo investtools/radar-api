@@ -43,6 +43,16 @@ struct LineChart {
   3: LineChartOptions options
 }
 
+struct BarSeries {
+  1: string name
+  2: list<double> data
+}
+
+struct BarChart {
+  1: string title
+  2: list<BarSeries> series
+}
+
 struct Text {
   1: string title
   2: string content

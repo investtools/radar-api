@@ -556,13 +556,13 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
           case 3: // ACCEPTED_EVENTS
             if (schemeField.type == org.apache.thrift.protocol.TType.SET) {
               {
-                org.apache.thrift.protocol.TSet _set50 = iprot.readSetBegin();
-                struct.accepted_events = new HashSet<Event>(2*_set50.size);
-                for (int _i51 = 0; _i51 < _set50.size; ++_i51)
+                org.apache.thrift.protocol.TSet _set66 = iprot.readSetBegin();
+                struct.accepted_events = new HashSet<Event>(2*_set66.size);
+                for (int _i67 = 0; _i67 < _set66.size; ++_i67)
                 {
-                  Event _elem52;
-                  _elem52 = Event.findByValue(iprot.readI32());
-                  struct.accepted_events.add(_elem52);
+                  Event _elem68;
+                  _elem68 = Event.findByValue(iprot.readI32());
+                  struct.accepted_events.add(_elem68);
                 }
                 iprot.readSetEnd();
               }
@@ -600,9 +600,9 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
         oprot.writeFieldBegin(ACCEPTED_EVENTS_FIELD_DESC);
         {
           oprot.writeSetBegin(new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I32, struct.accepted_events.size()));
-          for (Event _iter53 : struct.accepted_events)
+          for (Event _iter69 : struct.accepted_events)
           {
-            oprot.writeI32(_iter53.getValue());
+            oprot.writeI32(_iter69.getValue());
           }
           oprot.writeSetEnd();
         }
@@ -629,9 +629,9 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
       oprot.writeI32(struct.result_type.getValue());
       {
         oprot.writeI32(struct.accepted_events.size());
-        for (Event _iter54 : struct.accepted_events)
+        for (Event _iter70 : struct.accepted_events)
         {
-          oprot.writeI32(_iter54.getValue());
+          oprot.writeI32(_iter70.getValue());
         }
       }
     }
@@ -644,13 +644,13 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
       struct.result_type = ResultType.findByValue(iprot.readI32());
       struct.setResult_typeIsSet(true);
       {
-        org.apache.thrift.protocol.TSet _set55 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I32, iprot.readI32());
-        struct.accepted_events = new HashSet<Event>(2*_set55.size);
-        for (int _i56 = 0; _i56 < _set55.size; ++_i56)
+        org.apache.thrift.protocol.TSet _set71 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I32, iprot.readI32());
+        struct.accepted_events = new HashSet<Event>(2*_set71.size);
+        for (int _i72 = 0; _i72 < _set71.size; ++_i72)
         {
-          Event _elem57;
-          _elem57 = Event.findByValue(iprot.readI32());
-          struct.accepted_events.add(_elem57);
+          Event _elem73;
+          _elem73 = Event.findByValue(iprot.readI32());
+          struct.accepted_events.add(_elem73);
         }
       }
       struct.setAccepted_eventsIsSet(true);

@@ -152,6 +152,42 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
+    class BarSeries
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      NAME = 1
+      DATA = 2
+
+      FIELDS = {
+        NAME => {:type => ::Thrift::Types::STRING, :name => 'name'},
+        DATA => {:type => ::Thrift::Types::LIST, :name => 'data', :element => {:type => ::Thrift::Types::DOUBLE}}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class BarChart
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      TITLE = 1
+      SERIES = 2
+
+      FIELDS = {
+        TITLE => {:type => ::Thrift::Types::STRING, :name => 'title'},
+        SERIES => {:type => ::Thrift::Types::LIST, :name => 'series', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::BarSeries}}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class Text
       include ::Thrift::Struct, ::Thrift::Struct_Union
       TITLE = 1
