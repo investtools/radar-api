@@ -73,7 +73,7 @@ struct Table {
 }
 
 enum Event {
-  EACH_DAY, FINISH
+  EACH_DAY, EACH_MONTH, FINISH
 }
 
 
@@ -84,6 +84,7 @@ enum ResultType {
 union Result {
   1: PieChart pie_chart
   2: LineChart line_chart
+  3: BarChart bar_chart
 }
 
 struct Position {

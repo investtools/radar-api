@@ -38,11 +38,13 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Result");
   private static final org.apache.thrift.protocol.TField PIE_CHART_FIELD_DESC = new org.apache.thrift.protocol.TField("pie_chart", org.apache.thrift.protocol.TType.STRUCT, (short)1);
   private static final org.apache.thrift.protocol.TField LINE_CHART_FIELD_DESC = new org.apache.thrift.protocol.TField("line_chart", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField BAR_CHART_FIELD_DESC = new org.apache.thrift.protocol.TField("bar_chart", org.apache.thrift.protocol.TType.STRUCT, (short)3);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     PIE_CHART((short)1, "pie_chart"),
-    LINE_CHART((short)2, "line_chart");
+    LINE_CHART((short)2, "line_chart"),
+    BAR_CHART((short)3, "bar_chart");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -61,6 +63,8 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
           return PIE_CHART;
         case 2: // LINE_CHART
           return LINE_CHART;
+        case 3: // BAR_CHART
+          return BAR_CHART;
         default:
           return null;
       }
@@ -107,6 +111,8 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, PieChart.class)));
     tmpMap.put(_Fields.LINE_CHART, new org.apache.thrift.meta_data.FieldMetaData("line_chart", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, LineChart.class)));
+    tmpMap.put(_Fields.BAR_CHART, new org.apache.thrift.meta_data.FieldMetaData("bar_chart", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, BarChart.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Result.class, metaDataMap);
   }
@@ -138,6 +144,12 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
     return x;
   }
 
+  public static Result bar_chart(BarChart value) {
+    Result x = new Result();
+    x.setBar_chart(value);
+    return x;
+  }
+
 
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
@@ -152,6 +164,11 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
           break;
         }
         throw new ClassCastException("Was expecting value of type LineChart for field 'line_chart', but got " + value.getClass().getSimpleName());
+      case BAR_CHART:
+        if (value instanceof BarChart) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type BarChart for field 'bar_chart', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -182,6 +199,16 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
+        case BAR_CHART:
+          if (field.type == BAR_CHART_FIELD_DESC.type) {
+            BarChart bar_chart;
+            bar_chart = new BarChart();
+            bar_chart.read(iprot);
+            return bar_chart;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -201,6 +228,10 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
       case LINE_CHART:
         LineChart line_chart = (LineChart)value_;
         line_chart.write(oprot);
+        return;
+      case BAR_CHART:
+        BarChart bar_chart = (BarChart)value_;
+        bar_chart.write(oprot);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -222,6 +253,11 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
           line_chart = new LineChart();
           line_chart.read(iprot);
           return line_chart;
+        case BAR_CHART:
+          BarChart bar_chart;
+          bar_chart = new BarChart();
+          bar_chart.read(iprot);
+          return bar_chart;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -241,6 +277,10 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
         LineChart line_chart = (LineChart)value_;
         line_chart.write(oprot);
         return;
+      case BAR_CHART:
+        BarChart bar_chart = (BarChart)value_;
+        bar_chart.write(oprot);
+        return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
     }
@@ -253,6 +293,8 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
         return PIE_CHART_FIELD_DESC;
       case LINE_CHART:
         return LINE_CHART_FIELD_DESC;
+      case BAR_CHART:
+        return BAR_CHART_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -301,6 +343,20 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
     value_ = value;
   }
 
+  public BarChart getBar_chart() {
+    if (getSetField() == _Fields.BAR_CHART) {
+      return (BarChart)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'bar_chart' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setBar_chart(BarChart value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.BAR_CHART;
+    value_ = value;
+  }
+
   public boolean isSetPie_chart() {
     return setField_ == _Fields.PIE_CHART;
   }
@@ -308,6 +364,11 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
 
   public boolean isSetLine_chart() {
     return setField_ == _Fields.LINE_CHART;
+  }
+
+
+  public boolean isSetBar_chart() {
+    return setField_ == _Fields.BAR_CHART;
   }
 
 

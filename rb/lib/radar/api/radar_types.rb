@@ -25,9 +25,10 @@ module Radar
 
     module Event
       EACH_DAY = 0
-      FINISH = 1
-      VALUE_MAP = {0 => "EACH_DAY", 1 => "FINISH"}
-      VALID_VALUES = Set.new([EACH_DAY, FINISH]).freeze
+      EACH_MONTH = 1
+      FINISH = 2
+      VALUE_MAP = {0 => "EACH_DAY", 1 => "EACH_MONTH", 2 => "FINISH"}
+      VALID_VALUES = Set.new([EACH_DAY, EACH_MONTH, FINISH]).freeze
     end
 
     module ResultType
@@ -256,14 +257,20 @@ module Radar
         def line_chart(val)
           Result.new(:line_chart, val)
         end
+
+        def bar_chart(val)
+          Result.new(:bar_chart, val)
+        end
       end
 
       PIE_CHART = 1
       LINE_CHART = 2
+      BAR_CHART = 3
 
       FIELDS = {
         PIE_CHART => {:type => ::Thrift::Types::STRUCT, :name => 'pie_chart', :class => ::Radar::API::PieChart},
-        LINE_CHART => {:type => ::Thrift::Types::STRUCT, :name => 'line_chart', :class => ::Radar::API::LineChart}
+        LINE_CHART => {:type => ::Thrift::Types::STRUCT, :name => 'line_chart', :class => ::Radar::API::LineChart},
+        BAR_CHART => {:type => ::Thrift::Types::STRUCT, :name => 'bar_chart', :class => ::Radar::API::BarChart}
       }
 
       def struct_fields; FIELDS; end

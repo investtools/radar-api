@@ -13,7 +13,8 @@ import org.apache.thrift.TEnum;
 
 public enum Event implements org.apache.thrift.TEnum {
   EACH_DAY(0),
-  FINISH(1);
+  EACH_MONTH(1),
+  FINISH(2);
 
   private final int value;
 
@@ -37,6 +38,8 @@ public enum Event implements org.apache.thrift.TEnum {
       case 0:
         return EACH_DAY;
       case 1:
+        return EACH_MONTH;
+      case 2:
         return FINISH;
       default:
         return null;
