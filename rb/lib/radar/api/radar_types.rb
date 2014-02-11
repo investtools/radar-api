@@ -279,10 +279,12 @@ module Radar
 
     class AnalyzerConfig
       include ::Thrift::Struct, ::Thrift::Struct_Union
-      RESULT_TYPE = 1
-      ACCEPTED_EVENTS = 2
+      ID = 1
+      RESULT_TYPE = 2
+      ACCEPTED_EVENTS = 3
 
       FIELDS = {
+        ID => {:type => ::Thrift::Types::STRING, :name => 'id'},
         RESULT_TYPE => {:type => ::Thrift::Types::I32, :name => 'result_type', :enum_class => ::Radar::API::ResultType},
         ACCEPTED_EVENTS => {:type => ::Thrift::Types::SET, :name => 'accepted_events', :element => {:type => ::Thrift::Types::I32, :enum_class => ::Radar::API::Event}}
       }
@@ -290,6 +292,7 @@ module Radar
       def struct_fields; FIELDS; end
 
       def validate
+        raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field id is unset!') unless @id
         raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field result_type is unset!') unless @result_type
         raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field accepted_events is unset!') unless @accepted_events
         unless @result_type.nil? || ::Radar::API::ResultType::VALID_VALUES.include?(@result_type)

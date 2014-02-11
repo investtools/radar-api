@@ -13,7 +13,6 @@
 <ul>
 <li><a href="#Fn_Analyzer_dump">dump</a></li>
 <li><a href="#Fn_Analyzer_handshake">handshake</a></li>
-<li><a href="#Fn_Analyzer_id">id</a></li>
 <li><a href="#Fn_Analyzer_on_each_day">on_each_day</a></li>
 <li><a href="#Fn_Analyzer_on_finish">on_finish</a></li>
 <li><a href="#Fn_Analyzer_result">result</a></li>
@@ -132,8 +131,9 @@ no horário 00:00:00.00 UTC.
 <tr><td>4</td><td>positions</td><td><code>map&lt;<code>string</code>, <code><a href="radar.html#Struct_Position">Position</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_AnalyzerConfig">Struct: AnalyzerConfig</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>result_type</td><td><code><a href="radar.html#Enum_ResultType">ResultType</a></code></td><td></td><td>required</td><td></td></tr>
-<tr><td>2</td><td>accepted_events</td><td><code>set&lt;<code><a href="radar.html#Enum_Event">Event</a></code>&gt;</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>1</td><td>id</td><td><code>string</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>result_type</td><td><code><a href="radar.html#Enum_ResultType">ResultType</a></code></td><td></td><td>required</td><td></td></tr>
+<tr><td>3</td><td>accepted_events</td><td><code>set&lt;<code><a href="radar.html#Enum_Event">Event</a></code>&gt;</code></td><td></td><td>required</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_Analyzer">Service: Analyzer</h3>
 <div class="definition"><h4 id="Fn_Analyzer_on_each_day">Function: Analyzer.on_each_day</h4>
@@ -162,9 +162,6 @@ passado como argumento para o método.
 <pre><code>void</code> resume(<code>binary</code> data)
 </pre>É chamado sempre que o Radar quiser começar a processar uma carteira à partir de
 uma imagem gerada pelo método <code>dump()</code>.
-<br/></div><div class="definition"><h4 id="Fn_Analyzer_id">Function: Analyzer.id</h4>
-<pre><code>string</code> id()
-</pre>Este método deve retornar o nome deste serviço.
 <br/></div><div class="definition"><h4 id="Fn_Analyzer_result">Function: Analyzer.result</h4>
 <pre><code><a href="radar.html#Struct_LineChart">LineChart</a></code> result()
 </pre>É chamado no fim do processamento para pegar o resultado do Analyzer.

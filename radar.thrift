@@ -88,8 +88,9 @@ struct Portfolio {
 }
 
 struct AnalyzerConfig {
-  1: required ResultType result_type
-  2: required set<Event> accepted_events
+  1: required string id
+  2: required ResultType result_type
+  3: required set<Event> accepted_events
 }
 
 service Analyzer {
@@ -128,11 +129,6 @@ service Analyzer {
    * uma imagem gerada pelo método <code>dump()</code>.
    */
   oneway void resume(1: binary data)
-
-  /**
-   * Este método deve retornar o nome deste serviço.
-   */
-  string id()
 
   /**
    * É chamado no fim do processamento para pegar o resultado do Analyzer.

@@ -64,21 +64,6 @@ module Radar
         def send_resume(data)
           send_message('resume', Resume_args, :data => data)
         end
-        def id()
-          send_id()
-          return recv_id()
-        end
-
-        def send_id()
-          send_message('id', Id_args)
-        end
-
-        def recv_id()
-          result = receive_message(Id_result)
-          return result.success unless result.success.nil?
-          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'id failed: unknown result')
-        end
-
         def result()
           send_result()
           return recv_result()
@@ -129,13 +114,6 @@ module Radar
           args = read_args(iprot, Resume_args)
           @handler.resume(args.data)
           return
-        end
-
-        def process_id(seqid, iprot, oprot)
-          args = read_args(iprot, Id_args)
-          result = Id_result.new()
-          result.success = @handler.id()
-          write_result(result, oprot, 'id', seqid)
         end
 
         def process_result(seqid, iprot, oprot)
@@ -294,37 +272,6 @@ module Radar
 
         FIELDS = {
 
-        }
-
-        def struct_fields; FIELDS; end
-
-        def validate
-        end
-
-        ::Thrift::Struct.generate_accessors self
-      end
-
-      class Id_args
-        include ::Thrift::Struct, ::Thrift::Struct_Union
-
-        FIELDS = {
-
-        }
-
-        def struct_fields; FIELDS; end
-
-        def validate
-        end
-
-        ::Thrift::Struct.generate_accessors self
-      end
-
-      class Id_result
-        include ::Thrift::Struct, ::Thrift::Struct_Union
-        SUCCESS = 0
-
-        FIELDS = {
-          SUCCESS => {:type => ::Thrift::Types::STRING, :name => 'success'}
         }
 
         def struct_fields; FIELDS; end

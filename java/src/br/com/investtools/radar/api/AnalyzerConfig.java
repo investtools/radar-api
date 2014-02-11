@@ -38,8 +38,9 @@ import org.slf4j.LoggerFactory;
 public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, AnalyzerConfig._Fields>, java.io.Serializable, Cloneable, Comparable<AnalyzerConfig> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("AnalyzerConfig");
 
-  private static final org.apache.thrift.protocol.TField RESULT_TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("result_type", org.apache.thrift.protocol.TType.I32, (short)1);
-  private static final org.apache.thrift.protocol.TField ACCEPTED_EVENTS_FIELD_DESC = new org.apache.thrift.protocol.TField("accepted_events", org.apache.thrift.protocol.TType.SET, (short)2);
+  private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField RESULT_TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("result_type", org.apache.thrift.protocol.TType.I32, (short)2);
+  private static final org.apache.thrift.protocol.TField ACCEPTED_EVENTS_FIELD_DESC = new org.apache.thrift.protocol.TField("accepted_events", org.apache.thrift.protocol.TType.SET, (short)3);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -47,6 +48,7 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
     schemes.put(TupleScheme.class, new AnalyzerConfigTupleSchemeFactory());
   }
 
+  public String id; // required
   /**
    * 
    * @see ResultType
@@ -56,12 +58,13 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+    ID((short)1, "id"),
     /**
      * 
      * @see ResultType
      */
-    RESULT_TYPE((short)1, "result_type"),
-    ACCEPTED_EVENTS((short)2, "accepted_events");
+    RESULT_TYPE((short)2, "result_type"),
+    ACCEPTED_EVENTS((short)3, "accepted_events");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -76,9 +79,11 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // RESULT_TYPE
+        case 1: // ID
+          return ID;
+        case 2: // RESULT_TYPE
           return RESULT_TYPE;
-        case 2: // ACCEPTED_EVENTS
+        case 3: // ACCEPTED_EVENTS
           return ACCEPTED_EVENTS;
         default:
           return null;
@@ -123,6 +128,8 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+    tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.RESULT_TYPE, new org.apache.thrift.meta_data.FieldMetaData("result_type", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.EnumMetaData(org.apache.thrift.protocol.TType.ENUM, ResultType.class)));
     tmpMap.put(_Fields.ACCEPTED_EVENTS, new org.apache.thrift.meta_data.FieldMetaData("accepted_events", org.apache.thrift.TFieldRequirementType.REQUIRED, 
@@ -136,10 +143,12 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
   }
 
   public AnalyzerConfig(
+    String id,
     ResultType result_type,
     Set<Event> accepted_events)
   {
     this();
+    this.id = id;
     this.result_type = result_type;
     this.accepted_events = accepted_events;
   }
@@ -148,6 +157,9 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
    * Performs a deep copy on <i>other</i>.
    */
   public AnalyzerConfig(AnalyzerConfig other) {
+    if (other.isSetId()) {
+      this.id = other.id;
+    }
     if (other.isSetResult_type()) {
       this.result_type = other.result_type;
     }
@@ -166,8 +178,33 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
 
   @Override
   public void clear() {
+    this.id = null;
     this.result_type = null;
     this.accepted_events = null;
+  }
+
+  public String getId() {
+    return this.id;
+  }
+
+  public AnalyzerConfig setId(String id) {
+    this.id = id;
+    return this;
+  }
+
+  public void unsetId() {
+    this.id = null;
+  }
+
+  /** Returns true if field id is set (has been assigned a value) and false otherwise */
+  public boolean isSetId() {
+    return this.id != null;
+  }
+
+  public void setIdIsSet(boolean value) {
+    if (!value) {
+      this.id = null;
+    }
   }
 
   /**
@@ -243,6 +280,14 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
+    case ID:
+      if (value == null) {
+        unsetId();
+      } else {
+        setId((String)value);
+      }
+      break;
+
     case RESULT_TYPE:
       if (value == null) {
         unsetResult_type();
@@ -264,6 +309,9 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
+    case ID:
+      return getId();
+
     case RESULT_TYPE:
       return getResult_type();
 
@@ -281,6 +329,8 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
     }
 
     switch (field) {
+    case ID:
+      return isSetId();
     case RESULT_TYPE:
       return isSetResult_type();
     case ACCEPTED_EVENTS:
@@ -301,6 +351,15 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
   public boolean equals(AnalyzerConfig that) {
     if (that == null)
       return false;
+
+    boolean this_present_id = true && this.isSetId();
+    boolean that_present_id = true && that.isSetId();
+    if (this_present_id || that_present_id) {
+      if (!(this_present_id && that_present_id))
+        return false;
+      if (!this.id.equals(that.id))
+        return false;
+    }
 
     boolean this_present_result_type = true && this.isSetResult_type();
     boolean that_present_result_type = true && that.isSetResult_type();
@@ -327,6 +386,11 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
   public int hashCode() {
     List<Object> list = new ArrayList<Object>();
 
+    boolean present_id = true && (isSetId());
+    list.add(present_id);
+    if (present_id)
+      list.add(id);
+
     boolean present_result_type = true && (isSetResult_type());
     list.add(present_result_type);
     if (present_result_type)
@@ -348,6 +412,16 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
 
     int lastComparison = 0;
 
+    lastComparison = Boolean.valueOf(isSetId()).compareTo(other.isSetId());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetId()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.id, other.id);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     lastComparison = Boolean.valueOf(isSetResult_type()).compareTo(other.isSetResult_type());
     if (lastComparison != 0) {
       return lastComparison;
@@ -388,6 +462,14 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
     StringBuilder sb = new StringBuilder("AnalyzerConfig(");
     boolean first = true;
 
+    sb.append("id:");
+    if (this.id == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.id);
+    }
+    first = false;
+    if (!first) sb.append(", ");
     sb.append("result_type:");
     if (this.result_type == null) {
       sb.append("null");
@@ -409,6 +491,9 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
 
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
+    if (id == null) {
+      throw new org.apache.thrift.protocol.TProtocolException("Required field 'id' was not present! Struct: " + toString());
+    }
     if (result_type == null) {
       throw new org.apache.thrift.protocol.TProtocolException("Required field 'result_type' was not present! Struct: " + toString());
     }
@@ -452,7 +537,15 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
           break;
         }
         switch (schemeField.id) {
-          case 1: // RESULT_TYPE
+          case 1: // ID
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.id = iprot.readString();
+              struct.setIdIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 2: // RESULT_TYPE
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
               struct.result_type = ResultType.findByValue(iprot.readI32());
               struct.setResult_typeIsSet(true);
@@ -460,7 +553,7 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // ACCEPTED_EVENTS
+          case 3: // ACCEPTED_EVENTS
             if (schemeField.type == org.apache.thrift.protocol.TType.SET) {
               {
                 org.apache.thrift.protocol.TSet _set50 = iprot.readSetBegin();
@@ -493,6 +586,11 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
+      if (struct.id != null) {
+        oprot.writeFieldBegin(ID_FIELD_DESC);
+        oprot.writeString(struct.id);
+        oprot.writeFieldEnd();
+      }
       if (struct.result_type != null) {
         oprot.writeFieldBegin(RESULT_TYPE_FIELD_DESC);
         oprot.writeI32(struct.result_type.getValue());
@@ -527,6 +625,7 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
     @Override
     public void write(org.apache.thrift.protocol.TProtocol prot, AnalyzerConfig struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
+      oprot.writeString(struct.id);
       oprot.writeI32(struct.result_type.getValue());
       {
         oprot.writeI32(struct.accepted_events.size());
@@ -540,6 +639,8 @@ public class AnalyzerConfig implements org.apache.thrift.TBase<AnalyzerConfig, A
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, AnalyzerConfig struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
+      struct.id = iprot.readString();
+      struct.setIdIsSet(true);
       struct.result_type = ResultType.findByValue(iprot.readI32());
       struct.setResult_typeIsSet(true);
       {
