@@ -86,9 +86,10 @@ enum ResultType {
 }
 
 union Result {
-  1: PieChart pie_chart
-  2: LineChart line_chart
-  3: BarChart bar_chart
+  1: Table table
+  2: PieChart pie_chart
+  3: LineChart line_chart
+  4: BarChart bar_chart
 }
 
 struct Position {

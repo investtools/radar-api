@@ -36,15 +36,17 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked"})
 public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Result");
-  private static final org.apache.thrift.protocol.TField PIE_CHART_FIELD_DESC = new org.apache.thrift.protocol.TField("pie_chart", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-  private static final org.apache.thrift.protocol.TField LINE_CHART_FIELD_DESC = new org.apache.thrift.protocol.TField("line_chart", org.apache.thrift.protocol.TType.STRUCT, (short)2);
-  private static final org.apache.thrift.protocol.TField BAR_CHART_FIELD_DESC = new org.apache.thrift.protocol.TField("bar_chart", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+  private static final org.apache.thrift.protocol.TField TABLE_FIELD_DESC = new org.apache.thrift.protocol.TField("table", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+  private static final org.apache.thrift.protocol.TField PIE_CHART_FIELD_DESC = new org.apache.thrift.protocol.TField("pie_chart", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField LINE_CHART_FIELD_DESC = new org.apache.thrift.protocol.TField("line_chart", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+  private static final org.apache.thrift.protocol.TField BAR_CHART_FIELD_DESC = new org.apache.thrift.protocol.TField("bar_chart", org.apache.thrift.protocol.TType.STRUCT, (short)4);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    PIE_CHART((short)1, "pie_chart"),
-    LINE_CHART((short)2, "line_chart"),
-    BAR_CHART((short)3, "bar_chart");
+    TABLE((short)1, "table"),
+    PIE_CHART((short)2, "pie_chart"),
+    LINE_CHART((short)3, "line_chart"),
+    BAR_CHART((short)4, "bar_chart");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -59,11 +61,13 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // PIE_CHART
+        case 1: // TABLE
+          return TABLE;
+        case 2: // PIE_CHART
           return PIE_CHART;
-        case 2: // LINE_CHART
+        case 3: // LINE_CHART
           return LINE_CHART;
-        case 3: // BAR_CHART
+        case 4: // BAR_CHART
           return BAR_CHART;
         default:
           return null;
@@ -107,6 +111,8 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+    tmpMap.put(_Fields.TABLE, new org.apache.thrift.meta_data.FieldMetaData("table", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Table.class)));
     tmpMap.put(_Fields.PIE_CHART, new org.apache.thrift.meta_data.FieldMetaData("pie_chart", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, PieChart.class)));
     tmpMap.put(_Fields.LINE_CHART, new org.apache.thrift.meta_data.FieldMetaData("line_chart", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -132,6 +138,12 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
     return new Result(this);
   }
 
+  public static Result table(Table value) {
+    Result x = new Result();
+    x.setTable(value);
+    return x;
+  }
+
   public static Result pie_chart(PieChart value) {
     Result x = new Result();
     x.setPie_chart(value);
@@ -154,6 +166,11 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
     switch (setField) {
+      case TABLE:
+        if (value instanceof Table) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type Table for field 'table', but got " + value.getClass().getSimpleName());
       case PIE_CHART:
         if (value instanceof PieChart) {
           break;
@@ -179,6 +196,16 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
     _Fields setField = _Fields.findByThriftId(field.id);
     if (setField != null) {
       switch (setField) {
+        case TABLE:
+          if (field.type == TABLE_FIELD_DESC.type) {
+            Table table;
+            table = new Table();
+            table.read(iprot);
+            return table;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
         case PIE_CHART:
           if (field.type == PIE_CHART_FIELD_DESC.type) {
             PieChart pie_chart;
@@ -221,6 +248,10 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
   @Override
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
+      case TABLE:
+        Table table = (Table)value_;
+        table.write(oprot);
+        return;
       case PIE_CHART:
         PieChart pie_chart = (PieChart)value_;
         pie_chart.write(oprot);
@@ -243,6 +274,11 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
     _Fields setField = _Fields.findByThriftId(fieldID);
     if (setField != null) {
       switch (setField) {
+        case TABLE:
+          Table table;
+          table = new Table();
+          table.read(iprot);
+          return table;
         case PIE_CHART:
           PieChart pie_chart;
           pie_chart = new PieChart();
@@ -269,6 +305,10 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
   @Override
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
+      case TABLE:
+        Table table = (Table)value_;
+        table.write(oprot);
+        return;
       case PIE_CHART:
         PieChart pie_chart = (PieChart)value_;
         pie_chart.write(oprot);
@@ -289,6 +329,8 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
   @Override
   protected org.apache.thrift.protocol.TField getFieldDesc(_Fields setField) {
     switch (setField) {
+      case TABLE:
+        return TABLE_FIELD_DESC;
       case PIE_CHART:
         return PIE_CHART_FIELD_DESC;
       case LINE_CHART:
@@ -314,6 +356,20 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
     return _Fields.findByThriftId(fieldId);
   }
 
+
+  public Table getTable() {
+    if (getSetField() == _Fields.TABLE) {
+      return (Table)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'table' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setTable(Table value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.TABLE;
+    value_ = value;
+  }
 
   public PieChart getPie_chart() {
     if (getSetField() == _Fields.PIE_CHART) {
@@ -356,6 +412,11 @@ public class Result extends org.apache.thrift.TUnion<Result, Result._Fields> {
     setField_ = _Fields.BAR_CHART;
     value_ = value;
   }
+
+  public boolean isSetTable() {
+    return setField_ == _Fields.TABLE;
+  }
+
 
   public boolean isSetPie_chart() {
     return setField_ == _Fields.PIE_CHART;

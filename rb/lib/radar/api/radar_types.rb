@@ -279,6 +279,10 @@ module Radar
     class Result < ::Thrift::Union
       include ::Thrift::Struct_Union
       class << self
+        def table(val)
+          Result.new(:table, val)
+        end
+
         def pie_chart(val)
           Result.new(:pie_chart, val)
         end
@@ -292,11 +296,13 @@ module Radar
         end
       end
 
-      PIE_CHART = 1
-      LINE_CHART = 2
-      BAR_CHART = 3
+      TABLE = 1
+      PIE_CHART = 2
+      LINE_CHART = 3
+      BAR_CHART = 4
 
       FIELDS = {
+        TABLE => {:type => ::Thrift::Types::STRUCT, :name => 'table', :class => ::Radar::API::Table},
         PIE_CHART => {:type => ::Thrift::Types::STRUCT, :name => 'pie_chart', :class => ::Radar::API::PieChart},
         LINE_CHART => {:type => ::Thrift::Types::STRUCT, :name => 'line_chart', :class => ::Radar::API::LineChart},
         BAR_CHART => {:type => ::Thrift::Types::STRUCT, :name => 'bar_chart', :class => ::Radar::API::BarChart}
