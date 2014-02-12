@@ -185,6 +185,24 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
+    class Text
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      TITLE = 1
+      CONTENT = 2
+
+      FIELDS = {
+        TITLE => {:type => ::Thrift::Types::STRING, :name => 'title'},
+        CONTENT => {:type => ::Thrift::Types::STRING, :name => 'content'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class TableCell < ::Thrift::Union
       include ::Thrift::Struct_Union
       class << self

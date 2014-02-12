@@ -54,6 +54,11 @@ struct BarChart {
   3: list<string> categories
 }
 
+struct Text {
+  1: string title
+  2: string content
+}
+
 union TableCell {
   1: string text
   2: double percent
