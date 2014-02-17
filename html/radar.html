@@ -24,6 +24,9 @@
 <a href="#Struct_BarSeries">BarSeries</a><br/>
 <a href="#Typedef_Date">Date</a><br/>
 <a href="#Enum_Event">Event</a><br/>
+<a href="#Struct_FundId">FundId</a><br/>
+<a href="#Struct_IndexId">IndexId</a><br/>
+<a href="#Struct_IndexLinkedBondId">IndexLinkedBondId</a><br/>
 <a href="#Struct_LineChart">LineChart</a><br/>
 <a href="#Struct_LineChartOptions">LineChartOptions</a><br/>
 <a href="#Struct_LineSeries">LineSeries</a><br/>
@@ -35,6 +38,8 @@
 <a href="#Struct_Position">Position</a><br/>
 <a href="#Struct_Result">Result</a><br/>
 <a href="#Enum_ResultType">ResultType</a><br/>
+<a href="#Struct_SecurityId">SecurityId</a><br/>
+<a href="#Struct_StockId">StockId</a><br/>
 <a href="#Struct_Table">Table</a><br/>
 <a href="#Struct_TableCell">TableCell</a><br/>
 <a href="#Struct_TableRow">TableRow</a><br/>
@@ -77,7 +82,25 @@ Representação <i><a href="http://en.wikipedia.org/wiki/Unix_time">Unix time</a
 no horário 00:00:00.00 UTC.
 <br/></div>
 <hr/><h2 id="Structs">Data structures</h2>
-<div class="definition"><h3 id="Struct_Point">Struct: Point</h3>
+<div class="definition"><h3 id="Struct_StockId">Struct: StockId</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>symbol</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_IndexId">Struct: IndexId</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>symbol</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_FundId">Struct: FundId</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>cnpj</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_IndexLinkedBondId">Struct: IndexLinkedBondId</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>index</td><td><code><a href="radar.html#Struct_IndexId">IndexId</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>fator</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_SecurityId">Union: SecurityId</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>stock</td><td><code><a href="radar.html#Struct_StockId">StockId</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>fund</td><td><code><a href="radar.html#Struct_FundId">FundId</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>index_linked_bond</td><td><code><a href="radar.html#Struct_IndexLinkedBondId">IndexLinkedBondId</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_Point">Struct: Point</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>x</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>y</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
@@ -138,8 +161,9 @@ no horário 00:00:00.00 UTC.
 <tr><td>4</td><td>bar_chart</td><td><code><a href="radar.html#Struct_BarChart">BarChart</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Position">Struct: Position</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>1</td><td>id</td><td><code><a href="radar.html#Struct_SecurityId">SecurityId</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Portfolio">Struct: Portfolio</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>required</td><td></td></tr>

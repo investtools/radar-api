@@ -32,6 +32,107 @@ module Radar
       VALID_VALUES = Set.new([TABLE, PIE_CHART, LINE_CHART, BAR_CHART]).freeze
     end
 
+    class StockId
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      SYMBOL = 1
+
+      FIELDS = {
+        SYMBOL => {:type => ::Thrift::Types::STRING, :name => 'symbol'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class IndexId
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      SYMBOL = 1
+
+      FIELDS = {
+        SYMBOL => {:type => ::Thrift::Types::STRING, :name => 'symbol'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class FundId
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      CNPJ = 1
+
+      FIELDS = {
+        CNPJ => {:type => ::Thrift::Types::STRING, :name => 'cnpj'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class IndexLinkedBondId
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      INDEX = 1
+      FATOR = 2
+
+      FIELDS = {
+        INDEX => {:type => ::Thrift::Types::STRUCT, :name => 'index', :class => ::Radar::API::IndexId},
+        FATOR => {:type => ::Thrift::Types::DOUBLE, :name => 'fator'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class SecurityId < ::Thrift::Union
+      include ::Thrift::Struct_Union
+      class << self
+        def stock(val)
+          SecurityId.new(:stock, val)
+        end
+
+        def fund(val)
+          SecurityId.new(:fund, val)
+        end
+
+        def index_linked_bond(val)
+          SecurityId.new(:index_linked_bond, val)
+        end
+      end
+
+      STOCK = 1
+      FUND = 2
+      INDEX_LINKED_BOND = 3
+
+      FIELDS = {
+        STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::API::StockId},
+        FUND => {:type => ::Thrift::Types::STRUCT, :name => 'fund', :class => ::Radar::API::FundId},
+        INDEX_LINKED_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'index_linked_bond', :class => ::Radar::API::IndexLinkedBondId}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+        raise(StandardError, 'Union fields are not set.') if get_set_field.nil? || get_value.nil?
+      end
+
+      ::Thrift::Union.generate_accessors self
+    end
+
     class Point
       include ::Thrift::Struct, ::Thrift::Struct_Union
       X = 1
@@ -319,10 +420,12 @@ module Radar
 
     class Position
       include ::Thrift::Struct, ::Thrift::Struct_Union
-      VALUE = 1
-      RENTABILITY = 2
+      ID = 1
+      VALUE = 2
+      RENTABILITY = 3
 
       FIELDS = {
+        ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::API::SecurityId},
         VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'},
         RENTABILITY => {:type => ::Thrift::Types::DOUBLE, :name => 'rentability'}
       }

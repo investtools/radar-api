@@ -7,6 +7,29 @@ namespace java br.com.investtools.radar.api
  */
 typedef i32 Date
 
+struct StockId {
+  1: string symbol
+}
+
+struct IndexId {
+  1: string symbol
+}
+
+struct FundId {
+  1: string cnpj
+}
+
+struct IndexLinkedBondId {
+  1: IndexId index
+  2: double fator
+}
+
+union SecurityId {
+  1: StockId stock
+  2: FundId fund
+  3: IndexLinkedBondId index_linked_bond
+}
+
 struct Point {
   1: Date x
   2: double y
@@ -93,8 +116,9 @@ union Result {
 }
 
 struct Position {
-  1: double value
-  2: double rentability
+  1: SecurityId id
+  2: double value
+  3: double rentability
 }
 
 struct Portfolio {
