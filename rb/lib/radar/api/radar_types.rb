@@ -304,8 +304,22 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class TableCellContent
-      include ::Thrift::Struct, ::Thrift::Struct_Union
+    class TableCellContent < ::Thrift::Union
+      include ::Thrift::Struct_Union
+      class << self
+        def text(val)
+          TableCellContent.new(:text, val)
+        end
+
+        def percent(val)
+          TableCellContent.new(:percent, val)
+        end
+
+        def currency(val)
+          TableCellContent.new(:currency, val)
+        end
+      end
+
       TEXT = 1
       PERCENT = 2
       CURRENCY = 3
@@ -319,9 +333,10 @@ module Radar
       def struct_fields; FIELDS; end
 
       def validate
+        raise(StandardError, 'Union fields are not set.') if get_set_field.nil? || get_value.nil?
       end
 
-      ::Thrift::Struct.generate_accessors self
+      ::Thrift::Union.generate_accessors self
     end
 
     class TableCellFormat

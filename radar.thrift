@@ -92,7 +92,7 @@ struct Text {
   2: string content
 }
 
-struct TableCellContent {
+union TableCellContent {
   1: string text
   2: double percent
   3: double currency

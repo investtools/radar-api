@@ -374,9 +374,6 @@ public class TableCell implements org.apache.thrift.TBase<TableCell, TableCell._
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
     // check for sub-struct validity
-    if (content != null) {
-      content.validate();
-    }
     if (format != null) {
       format.validate();
     }
