@@ -304,22 +304,8 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class TableCell < ::Thrift::Union
-      include ::Thrift::Struct_Union
-      class << self
-        def text(val)
-          TableCell.new(:text, val)
-        end
-
-        def percent(val)
-          TableCell.new(:percent, val)
-        end
-
-        def currency(val)
-          TableCell.new(:currency, val)
-        end
-      end
-
+    class TableCellContent
+      include ::Thrift::Struct, ::Thrift::Struct_Union
       TEXT = 1
       PERCENT = 2
       CURRENCY = 3
@@ -333,10 +319,51 @@ module Radar
       def struct_fields; FIELDS; end
 
       def validate
-        raise(StandardError, 'Union fields are not set.') if get_set_field.nil? || get_value.nil?
       end
 
-      ::Thrift::Union.generate_accessors self
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class TableCellFormat
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      BOLD = 1
+      ITALIC = 2
+      COLOR = 3
+      COLSPAN = 4
+      ROWSPAN = 5
+
+      FIELDS = {
+        BOLD => {:type => ::Thrift::Types::BOOL, :name => 'bold'},
+        ITALIC => {:type => ::Thrift::Types::BOOL, :name => 'italic'},
+        COLOR => {:type => ::Thrift::Types::I32, :name => 'color'},
+        COLSPAN => {:type => ::Thrift::Types::I16, :name => 'colspan'},
+        ROWSPAN => {:type => ::Thrift::Types::I16, :name => 'rowspan'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class TableCell
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      CONTENT = 1
+      FORMAT = 2
+
+      FIELDS = {
+        CONTENT => {:type => ::Thrift::Types::STRUCT, :name => 'content', :class => ::Radar::API::TableCellContent},
+        FORMAT => {:type => ::Thrift::Types::STRUCT, :name => 'format', :class => ::Radar::API::TableCellFormat}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
     end
 
     class TableRow

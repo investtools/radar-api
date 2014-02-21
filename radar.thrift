@@ -7,6 +7,16 @@ namespace java br.com.investtools.radar.api
  */
 typedef i32 Date
 
+/**
+ * Representação <i><a href="http://en.wikipedia.org/wiki/RGB_color_model">RGB</a></i>
+ * de 24 bits.
+ *
+ * Exemplo: Vermelho = <code>#FF0000</code> =
+ * <code>11111111 00000000 00000000</code> =
+ * (255 × 2¹⁶) + (0 × 2⁸) + (0 × 2⁰) = 167.11.680
+ */
+typedef i32 Color
+
 struct StockId {
   1: string symbol
 }
@@ -82,10 +92,23 @@ struct Text {
   2: string content
 }
 
-union TableCell {
+struct TableCellContent {
   1: string text
   2: double percent
   3: double currency
+}
+
+struct TableCellFormat {
+  1: bool bold
+  2: bool italic
+  3: Color color
+  4: i16 colspan
+  5: i16 rowspan
+}
+
+struct TableCell {
+  1: TableCellContent content
+  2: TableCellFormat format
 }
 
 struct TableRow {
