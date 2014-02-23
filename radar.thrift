@@ -102,8 +102,8 @@ struct TableCellFormat {
   1: bool bold
   2: bool italic
   3: Color color
-  4: i16 colspan
-  5: i16 rowspan
+  4: i16 colspan = 1
+  5: i16 rowspan = 1
 }
 
 struct TableCell {

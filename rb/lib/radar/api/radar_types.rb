@@ -351,8 +351,8 @@ module Radar
         BOLD => {:type => ::Thrift::Types::BOOL, :name => 'bold'},
         ITALIC => {:type => ::Thrift::Types::BOOL, :name => 'italic'},
         COLOR => {:type => ::Thrift::Types::I32, :name => 'color'},
-        COLSPAN => {:type => ::Thrift::Types::I16, :name => 'colspan'},
-        ROWSPAN => {:type => ::Thrift::Types::I16, :name => 'rowspan'}
+        COLSPAN => {:type => ::Thrift::Types::I16, :name => 'colspan', :default => 1},
+        ROWSPAN => {:type => ::Thrift::Types::I16, :name => 'rowspan', :default => 1}
       }
 
       def struct_fields; FIELDS; end
