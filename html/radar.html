@@ -9,7 +9,11 @@
 <h1>Thrift module: radar</h1>
 <table class="table-bordered table-striped table-condensed"><thead><th>Module</th><th>Services</th><th>Data types</th><th>Constants</th></thead>
 <tr>
-<td>radar</td><td><a href="#Svc_Analyzer">Analyzer</a><br/>
+<td>radar</td><td><a href="#Svc_FundService">FundService</a><br/>
+<ul>
+<li><a href="#Fn_FundService_name">name</a></li>
+</ul>
+<a href="#Svc_Analyzer">Analyzer</a><br/>
 <ul>
 <li><a href="#Fn_Analyzer_dump">dump</a></li>
 <li><a href="#Fn_Analyzer_handshake">handshake</a></li>
@@ -199,7 +203,10 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <tr><td>2</td><td>result_type</td><td><code><a href="radar.html#Enum_ResultType">ResultType</a></code></td><td></td><td>required</td><td></td></tr>
 <tr><td>3</td><td>accepted_events</td><td><code>set&lt;<code><a href="radar.html#Enum_Event">Event</a></code>&gt;</code></td><td></td><td>required</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
-<h3 id="Svc_Analyzer">Service: Analyzer</h3>
+<h3 id="Svc_FundService">Service: FundService</h3>
+<div class="definition"><h4 id="Fn_FundService_name">Function: FundService.name</h4>
+<pre><code>string</code> name(<code><a href="radar.html#Struct_FundId">FundId</a></code> id)
+</pre></div><h3 id="Svc_Analyzer">Service: Analyzer</h3>
 <div class="definition"><h4 id="Fn_Analyzer_on_each_day">Function: Analyzer.on_each_day</h4>
 <pre><code>void</code> on_each_day(<code><a href="radar.html#Struct_Portfolio">Portfolio</a></code> portfolio)
 </pre>É chamado <i>n</i> vezes durante o processamento da carteira, sendo

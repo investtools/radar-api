@@ -157,6 +157,10 @@ struct AnalyzerConfig {
   3: required set<Event> accepted_events
 }
 
+service FundService {
+  string name(FundId id)
+}
+
 service Analyzer {
   /**
    * É chamado <i>n</i> vezes durante o processamento da carteira, sendo
