@@ -201,6 +201,6 @@ service Analyzer {
   /**
    * É chamado no fim do processamento para pegar o resultado do Analyzer.
    */
-  LineChart result()
+  Result result()
 }
 

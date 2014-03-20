@@ -84,7 +84,7 @@ public class Analyzer {
     /**
      * É chamado no fim do processamento para pegar o resultado do Analyzer.
      */
-    public LineChart result() throws org.apache.thrift.TException;
+    public Result result() throws org.apache.thrift.TException;
 
   }
 
@@ -204,7 +204,7 @@ public class Analyzer {
       sendBase("resume", args);
     }
 
-    public LineChart result() throws org.apache.thrift.TException
+    public Result result() throws org.apache.thrift.TException
     {
       send_result();
       return recv_result();
@@ -216,7 +216,7 @@ public class Analyzer {
       sendBase("result", args);
     }
 
-    public LineChart recv_result() throws org.apache.thrift.TException
+    public Result recv_result() throws org.apache.thrift.TException
     {
       result_result result = new result_result();
       receiveBase(result, "result");
@@ -414,7 +414,7 @@ public class Analyzer {
         prot.writeMessageEnd();
       }
 
-      public LineChart getResult() throws org.apache.thrift.TException {
+      public Result getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -771,7 +771,7 @@ public class Analyzer {
       }
     }
 
-    public static class result<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, result_args, LineChart> {
+    public static class result<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, result_args, Result> {
       public result() {
         super("result");
       }
@@ -780,10 +780,10 @@ public class Analyzer {
         return new result_args();
       }
 
-      public AsyncMethodCallback<LineChart> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+      public AsyncMethodCallback<Result> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new AsyncMethodCallback<LineChart>() { 
-          public void onComplete(LineChart o) {
+        return new AsyncMethodCallback<Result>() { 
+          public void onComplete(Result o) {
             result_result result = new result_result();
             result.success = o;
             try {
@@ -817,7 +817,7 @@ public class Analyzer {
         return false;
       }
 
-      public void start(I iface, result_args args, org.apache.thrift.async.AsyncMethodCallback<LineChart> resultHandler) throws TException {
+      public void start(I iface, result_args args, org.apache.thrift.async.AsyncMethodCallback<Result> resultHandler) throws TException {
         iface.result(resultHandler);
       }
     }
@@ -3419,7 +3419,7 @@ public class Analyzer {
       schemes.put(TupleScheme.class, new result_resultTupleSchemeFactory());
     }
 
-    public LineChart success; // required
+    public Result success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -3484,7 +3484,7 @@ public class Analyzer {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, LineChart.class)));
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Result.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(result_result.class, metaDataMap);
     }
@@ -3493,7 +3493,7 @@ public class Analyzer {
     }
 
     public result_result(
-      LineChart success)
+      Result success)
     {
       this();
       this.success = success;
@@ -3504,7 +3504,7 @@ public class Analyzer {
      */
     public result_result(result_result other) {
       if (other.isSetSuccess()) {
-        this.success = new LineChart(other.success);
+        this.success = new Result(other.success);
       }
     }
 
@@ -3517,11 +3517,11 @@ public class Analyzer {
       this.success = null;
     }
 
-    public LineChart getSuccess() {
+    public Result getSuccess() {
       return this.success;
     }
 
-    public result_result setSuccess(LineChart success) {
+    public result_result setSuccess(Result success) {
       this.success = success;
       return this;
     }
@@ -3547,7 +3547,7 @@ public class Analyzer {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((LineChart)value);
+          setSuccess((Result)value);
         }
         break;
 
@@ -3665,9 +3665,6 @@ public class Analyzer {
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
-      if (success != null) {
-        success.validate();
-      }
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -3706,7 +3703,7 @@ public class Analyzer {
           switch (schemeField.id) {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.success = new LineChart();
+                struct.success = new Result();
                 struct.success.read(iprot);
                 struct.setSuccessIsSet(true);
               } else { 
@@ -3765,7 +3762,7 @@ public class Analyzer {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.success = new LineChart();
+          struct.success = new Result();
           struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }

@@ -302,7 +302,7 @@ module Radar
         SUCCESS = 0
 
         FIELDS = {
-          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::API::LineChart}
+          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::API::Result}
         }
 
         def struct_fields; FIELDS; end
