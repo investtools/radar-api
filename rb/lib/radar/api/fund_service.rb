@@ -46,7 +46,7 @@ module Radar
 
       class Name_args
         include ::Thrift::Struct, ::Thrift::Struct_Union
-        ID = -1
+        ID = 1
 
         FIELDS = {
           ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::API::FundId}

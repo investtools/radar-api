@@ -252,7 +252,7 @@ public class FundService {
   public static class name_args implements org.apache.thrift.TBase<name_args, name_args._Fields>, java.io.Serializable, Cloneable, Comparable<name_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("name_args");
 
-    private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRUCT, (short)-1);
+    private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -264,7 +264,7 @@ public class FundService {
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      ID((short)-1, "id");
+      ID((short)1, "id");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -279,7 +279,7 @@ public class FundService {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case -1: // ID
+          case 1: // ID
             return ID;
           default:
             return null;
@@ -545,7 +545,7 @@ public class FundService {
             break;
           }
           switch (schemeField.id) {
-            case -1: // ID
+            case 1: // ID
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
                 struct.id = new FundId();
                 struct.id.read(iprot);

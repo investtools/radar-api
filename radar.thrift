@@ -158,7 +158,7 @@ struct AnalyzerConfig {
 }
 
 service FundService {
-  string name(FundId id)
+  string name(1: FundId id)
 }
 
 service Analyzer {
