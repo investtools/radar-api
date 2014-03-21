@@ -27,13 +27,13 @@ module Radar
         def send_on_finish(session_id, portfolio)
           send_message('on_finish', On_finish_args, :session_id => session_id, :portfolio => portfolio)
         end
-        def create_session(session_id)
-          send_create_session(session_id)
+        def create_session(session_id, analyzer_id)
+          send_create_session(session_id, analyzer_id)
           return recv_create_session()
         end
 
-        def send_create_session(session_id)
-          send_message('create_session', Create_session_args, :session_id => session_id)
+        def send_create_session(session_id, analyzer_id)
+          send_message('create_session', Create_session_args, :session_id => session_id, :analyzer_id => analyzer_id)
         end
 
         def recv_create_session()
@@ -106,7 +106,7 @@ module Radar
         def process_create_session(seqid, iprot, oprot)
           args = read_args(iprot, Create_session_args)
           result = Create_session_result.new()
-          result.success = @handler.create_session(args.session_id)
+          result.success = @handler.create_session(args.session_id, args.analyzer_id)
           write_result(result, oprot, 'create_session', seqid)
         end
 
@@ -209,9 +209,11 @@ module Radar
       class Create_session_args
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SESSION_ID = 1
+        ANALYZER_ID = 2
 
         FIELDS = {
-          SESSION_ID => {:type => ::Thrift::Types::I32, :name => 'session_id'}
+          SESSION_ID => {:type => ::Thrift::Types::I32, :name => 'session_id'},
+          ANALYZER_ID => {:type => ::Thrift::Types::STRING, :name => 'analyzer_id'}
         }
 
         def struct_fields; FIELDS; end

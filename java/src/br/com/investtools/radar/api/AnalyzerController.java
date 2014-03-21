@@ -64,8 +64,9 @@ public class AnalyzerController {
      * É chamado antes do processamento para o Radar receber as configurações do analyzer.
      * 
      * @param session_id
+     * @param analyzer_id
      */
-    public AnalyzerConfig create_session(int session_id) throws org.apache.thrift.TException;
+    public AnalyzerConfig create_session(int session_id, String analyzer_id) throws org.apache.thrift.TException;
 
     /**
      * É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
@@ -105,7 +106,7 @@ public class AnalyzerController {
 
     public void on_finish(int session_id, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void create_session(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void create_session(int session_id, String analyzer_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
     public void dump(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
@@ -163,16 +164,17 @@ public class AnalyzerController {
       sendBase("on_finish", args);
     }
 
-    public AnalyzerConfig create_session(int session_id) throws org.apache.thrift.TException
+    public AnalyzerConfig create_session(int session_id, String analyzer_id) throws org.apache.thrift.TException
     {
-      send_create_session(session_id);
+      send_create_session(session_id, analyzer_id);
       return recv_create_session();
     }
 
-    public void send_create_session(int session_id) throws org.apache.thrift.TException
+    public void send_create_session(int session_id, String analyzer_id) throws org.apache.thrift.TException
     {
       create_session_args args = new create_session_args();
       args.setSession_id(session_id);
+      args.setAnalyzer_id(analyzer_id);
       sendBase("create_session", args);
     }
 
@@ -343,24 +345,27 @@ public class AnalyzerController {
       }
     }
 
-    public void create_session(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void create_session(int session_id, String analyzer_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      create_session_call method_call = new create_session_call(session_id, resultHandler, this, ___protocolFactory, ___transport);
+      create_session_call method_call = new create_session_call(session_id, analyzer_id, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     public static class create_session_call extends org.apache.thrift.async.TAsyncMethodCall {
       private int session_id;
-      public create_session_call(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private String analyzer_id;
+      public create_session_call(int session_id, String analyzer_id, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.session_id = session_id;
+        this.analyzer_id = analyzer_id;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("create_session", org.apache.thrift.protocol.TMessageType.CALL, 0));
         create_session_args args = new create_session_args();
         args.setSession_id(session_id);
+        args.setAnalyzer_id(analyzer_id);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -580,7 +585,7 @@ public class AnalyzerController {
 
       public create_session_result getResult(I iface, create_session_args args) throws org.apache.thrift.TException {
         create_session_result result = new create_session_result();
-        result.success = iface.create_session(args.session_id);
+        result.success = iface.create_session(args.session_id, args.analyzer_id);
         return result;
       }
     }
@@ -789,7 +794,7 @@ public class AnalyzerController {
       }
 
       public void start(I iface, create_session_args args, org.apache.thrift.async.AsyncMethodCallback<AnalyzerConfig> resultHandler) throws TException {
-        iface.create_session(args.session_id,resultHandler);
+        iface.create_session(args.session_id, args.analyzer_id,resultHandler);
       }
     }
 
@@ -1895,6 +1900,7 @@ public class AnalyzerController {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("create_session_args");
 
     private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I32, (short)1);
+    private static final org.apache.thrift.protocol.TField ANALYZER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("analyzer_id", org.apache.thrift.protocol.TType.STRING, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -1903,10 +1909,12 @@ public class AnalyzerController {
     }
 
     public int session_id; // required
+    public String analyzer_id; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SESSION_ID((short)1, "session_id");
+      SESSION_ID((short)1, "session_id"),
+      ANALYZER_ID((short)2, "analyzer_id");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -1923,6 +1931,8 @@ public class AnalyzerController {
         switch(fieldId) {
           case 1: // SESSION_ID
             return SESSION_ID;
+          case 2: // ANALYZER_ID
+            return ANALYZER_ID;
           default:
             return null;
         }
@@ -1970,6 +1980,8 @@ public class AnalyzerController {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SESSION_ID, new org.apache.thrift.meta_data.FieldMetaData("session_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "SessionId")));
+      tmpMap.put(_Fields.ANALYZER_ID, new org.apache.thrift.meta_data.FieldMetaData("analyzer_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(create_session_args.class, metaDataMap);
     }
@@ -1978,11 +1990,13 @@ public class AnalyzerController {
     }
 
     public create_session_args(
-      int session_id)
+      int session_id,
+      String analyzer_id)
     {
       this();
       this.session_id = session_id;
       setSession_idIsSet(true);
+      this.analyzer_id = analyzer_id;
     }
 
     /**
@@ -1991,6 +2005,9 @@ public class AnalyzerController {
     public create_session_args(create_session_args other) {
       __isset_bitfield = other.__isset_bitfield;
       this.session_id = other.session_id;
+      if (other.isSetAnalyzer_id()) {
+        this.analyzer_id = other.analyzer_id;
+      }
     }
 
     public create_session_args deepCopy() {
@@ -2001,6 +2018,7 @@ public class AnalyzerController {
     public void clear() {
       setSession_idIsSet(false);
       this.session_id = 0;
+      this.analyzer_id = null;
     }
 
     public int getSession_id() {
@@ -2026,6 +2044,30 @@ public class AnalyzerController {
       __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __SESSION_ID_ISSET_ID, value);
     }
 
+    public String getAnalyzer_id() {
+      return this.analyzer_id;
+    }
+
+    public create_session_args setAnalyzer_id(String analyzer_id) {
+      this.analyzer_id = analyzer_id;
+      return this;
+    }
+
+    public void unsetAnalyzer_id() {
+      this.analyzer_id = null;
+    }
+
+    /** Returns true if field analyzer_id is set (has been assigned a value) and false otherwise */
+    public boolean isSetAnalyzer_id() {
+      return this.analyzer_id != null;
+    }
+
+    public void setAnalyzer_idIsSet(boolean value) {
+      if (!value) {
+        this.analyzer_id = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
       case SESSION_ID:
@@ -2036,6 +2078,14 @@ public class AnalyzerController {
         }
         break;
 
+      case ANALYZER_ID:
+        if (value == null) {
+          unsetAnalyzer_id();
+        } else {
+          setAnalyzer_id((String)value);
+        }
+        break;
+
       }
     }
 
@@ -2043,6 +2093,9 @@ public class AnalyzerController {
       switch (field) {
       case SESSION_ID:
         return Integer.valueOf(getSession_id());
+
+      case ANALYZER_ID:
+        return getAnalyzer_id();
 
       }
       throw new IllegalStateException();
@@ -2057,6 +2110,8 @@ public class AnalyzerController {
       switch (field) {
       case SESSION_ID:
         return isSetSession_id();
+      case ANALYZER_ID:
+        return isSetAnalyzer_id();
       }
       throw new IllegalStateException();
     }
@@ -2083,6 +2138,15 @@ public class AnalyzerController {
           return false;
       }
 
+      boolean this_present_analyzer_id = true && this.isSetAnalyzer_id();
+      boolean that_present_analyzer_id = true && that.isSetAnalyzer_id();
+      if (this_present_analyzer_id || that_present_analyzer_id) {
+        if (!(this_present_analyzer_id && that_present_analyzer_id))
+          return false;
+        if (!this.analyzer_id.equals(that.analyzer_id))
+          return false;
+      }
+
       return true;
     }
 
@@ -2094,6 +2158,11 @@ public class AnalyzerController {
       list.add(present_session_id);
       if (present_session_id)
         list.add(session_id);
+
+      boolean present_analyzer_id = true && (isSetAnalyzer_id());
+      list.add(present_analyzer_id);
+      if (present_analyzer_id)
+        list.add(analyzer_id);
 
       return list.hashCode();
     }
@@ -2112,6 +2181,16 @@ public class AnalyzerController {
       }
       if (isSetSession_id()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.session_id, other.session_id);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetAnalyzer_id()).compareTo(other.isSetAnalyzer_id());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAnalyzer_id()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.analyzer_id, other.analyzer_id);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -2138,6 +2217,14 @@ public class AnalyzerController {
 
       sb.append("session_id:");
       sb.append(this.session_id);
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("analyzer_id:");
+      if (this.analyzer_id == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.analyzer_id);
+      }
       first = false;
       sb.append(")");
       return sb.toString();
@@ -2192,6 +2279,14 @@ public class AnalyzerController {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 2: // ANALYZER_ID
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.analyzer_id = iprot.readString();
+                struct.setAnalyzer_idIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -2210,6 +2305,11 @@ public class AnalyzerController {
         oprot.writeFieldBegin(SESSION_ID_FIELD_DESC);
         oprot.writeI32(struct.session_id);
         oprot.writeFieldEnd();
+        if (struct.analyzer_id != null) {
+          oprot.writeFieldBegin(ANALYZER_ID_FIELD_DESC);
+          oprot.writeString(struct.analyzer_id);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -2231,19 +2331,29 @@ public class AnalyzerController {
         if (struct.isSetSession_id()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetAnalyzer_id()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetSession_id()) {
           oprot.writeI32(struct.session_id);
+        }
+        if (struct.isSetAnalyzer_id()) {
+          oprot.writeString(struct.analyzer_id);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, create_session_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(1);
+        BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           struct.session_id = iprot.readI32();
           struct.setSession_idIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.analyzer_id = iprot.readString();
+          struct.setAnalyzer_idIsSet(true);
         }
       }
     }

@@ -182,7 +182,7 @@ service AnalyzerController {
   /**
    * É chamado antes do processamento para o Radar receber as configurações do analyzer.
    */
-  AnalyzerConfig create_session(1: SessionId session_id)
+  AnalyzerConfig create_session(1: SessionId session_id, 2: string analyzer_id)
 
   /**
    * É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
