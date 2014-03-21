@@ -13,14 +13,15 @@
 <ul>
 <li><a href="#Fn_FundService_name">name</a></li>
 </ul>
-<a href="#Svc_Analyzer">Analyzer</a><br/>
+<a href="#Svc_AnalyzerController">AnalyzerController</a><br/>
 <ul>
-<li><a href="#Fn_Analyzer_dump">dump</a></li>
-<li><a href="#Fn_Analyzer_handshake">handshake</a></li>
-<li><a href="#Fn_Analyzer_on_each_day">on_each_day</a></li>
-<li><a href="#Fn_Analyzer_on_finish">on_finish</a></li>
-<li><a href="#Fn_Analyzer_result">result</a></li>
-<li><a href="#Fn_Analyzer_resume">resume</a></li>
+<li><a href="#Fn_AnalyzerController_create_session">create_session</a></li>
+<li><a href="#Fn_AnalyzerController_destroy_session">destroy_session</a></li>
+<li><a href="#Fn_AnalyzerController_dump">dump</a></li>
+<li><a href="#Fn_AnalyzerController_on_each_day">on_each_day</a></li>
+<li><a href="#Fn_AnalyzerController_on_finish">on_finish</a></li>
+<li><a href="#Fn_AnalyzerController_result">result</a></li>
+<li><a href="#Fn_AnalyzerController_resume">resume</a></li>
 </ul>
 </td>
 <td><a href="#Struct_AnalyzerConfig">AnalyzerConfig</a><br/>
@@ -44,6 +45,7 @@
 <a href="#Struct_Result">Result</a><br/>
 <a href="#Enum_ResultType">ResultType</a><br/>
 <a href="#Struct_SecurityId">SecurityId</a><br/>
+<a href="#Typedef_SessionId">SessionId</a><br/>
 <a href="#Struct_StockId">StockId</a><br/>
 <a href="#Struct_Table">Table</a><br/>
 <a href="#Struct_TableCell">TableCell</a><br/>
@@ -97,6 +99,9 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <code>11111111 00000000 00000000</code> =
 (255 × 2¹⁶) + (0 × 2⁸) + (0 × 2⁰) = 167.11.680
 <br/></div>
+<div class="definition"><h3 id="Typedef_SessionId">Typedef: SessionId</h3>
+<p><strong>Base type:</strong>&nbsp;<code>i32</code></p>
+</div>
 <hr/><h2 id="Structs">Data structures</h2>
 <div class="definition"><h3 id="Struct_StockId">Struct: StockId</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
@@ -206,34 +211,39 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <h3 id="Svc_FundService">Service: FundService</h3>
 <div class="definition"><h4 id="Fn_FundService_name">Function: FundService.name</h4>
 <pre><code>string</code> name(<code><a href="radar.html#Struct_FundId">FundId</a></code> id)
-</pre></div><h3 id="Svc_Analyzer">Service: Analyzer</h3>
-<div class="definition"><h4 id="Fn_Analyzer_on_each_day">Function: Analyzer.on_each_day</h4>
-<pre><code>void</code> on_each_day(<code><a href="radar.html#Struct_Portfolio">Portfolio</a></code> portfolio)
+</pre></div><h3 id="Svc_AnalyzerController">Service: AnalyzerController</h3>
+<div class="definition"><h4 id="Fn_AnalyzerController_on_each_day">Function: AnalyzerController.on_each_day</h4>
+<pre><code>void</code> on_each_day(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> sessionid,
+                 <code><a href="radar.html#Struct_Portfolio">Portfolio</a></code> portfolio)
 </pre>É chamado <i>n</i> vezes durante o processamento da carteira, sendo
 <i>n</i> o número de dias processados.
 <p/>
 <code>portfolio</code> Estado da carteira no dia que está sendo processado.
-<br/></div><div class="definition"><h4 id="Fn_Analyzer_on_finish">Function: Analyzer.on_finish</h4>
-<pre><code>void</code> on_finish(<code><a href="radar.html#Struct_Portfolio">Portfolio</a></code> portfolio)
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_finish">Function: AnalyzerController.on_finish</h4>
+<pre><code>void</code> on_finish(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id,
+               <code><a href="radar.html#Struct_Portfolio">Portfolio</a></code> portfolio)
 </pre>É chamado ao final do processamento da carteira.
 <p/>
 <code>portfolio</code> Estado da carteira no último dia de processamento.
-<br/></div><div class="definition"><h4 id="Fn_Analyzer_handshake">Function: Analyzer.handshake</h4>
-<pre><code><a href="radar.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code> handshake()
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_create_session">Function: AnalyzerController.create_session</h4>
+<pre><code><a href="radar.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code> create_session(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id)
 </pre>É chamado antes do processamento para o Radar receber as configurações do analyzer.
-<br/></div><div class="definition"><h4 id="Fn_Analyzer_dump">Function: Analyzer.dump</h4>
-<pre><code>binary</code> dump()
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_dump">Function: AnalyzerController.dump</h4>
+<pre><code>binary</code> dump(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id)
 </pre>É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
 para poder restaurar nos próximos processamentos.
 <p/>
 O retorno pode ter qualquer formato, desde que seja compreendido pelo método
 <code>resume()</code>, já que posteriormente o conteúdo do retorno será
 passado como argumento para o método.
-<br/></div><div class="definition"><h4 id="Fn_Analyzer_resume">Function: Analyzer.resume</h4>
-<pre><code>void</code> resume(<code>binary</code> data)
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_resume">Function: AnalyzerController.resume</h4>
+<pre><code>void</code> resume(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id,
+            <code>binary</code> data)
 </pre>É chamado sempre que o Radar quiser começar a processar uma carteira à partir de
 uma imagem gerada pelo método <code>dump()</code>.
-<br/></div><div class="definition"><h4 id="Fn_Analyzer_result">Function: Analyzer.result</h4>
-<pre><code><a href="radar.html#Struct_Result">Result</a></code> result()
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_result">Function: AnalyzerController.result</h4>
+<pre><code><a href="radar.html#Struct_Result">Result</a></code> result(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id)
 </pre>É chamado no fim do processamento para pegar o resultado do Analyzer.
-<br/></div></div></body></html>
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_destroy_session">Function: AnalyzerController.destroy_session</h4>
+<pre><code>void</code> destroy_session(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id)
+</pre></div></div></body></html>

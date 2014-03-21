@@ -17,6 +17,8 @@ typedef i32 Date
  */
 typedef i32 Color
 
+typedef i32 SessionId
+
 struct StockId {
   1: string symbol
 }
@@ -161,26 +163,26 @@ service FundService {
   string name(1: FundId id)
 }
 
-service Analyzer {
+service AnalyzerController {
   /**
    * É chamado <i>n</i> vezes durante o processamento da carteira, sendo
    * <i>n</i> o número de dias processados.
    *
    * <code>portfolio</code> Estado da carteira no dia que está sendo processado.
    */
-  oneway void on_each_day(1: Portfolio portfolio)
+  oneway void on_each_day(1: SessionId sessionid, 2: Portfolio portfolio)
 
   /**
    * É chamado ao final do processamento da carteira.
    *
    * <code>portfolio</code> Estado da carteira no último dia de processamento.
    */
-  oneway void on_finish(1: Portfolio portfolio)
+  oneway void on_finish(1: SessionId session_id, 2: Portfolio portfolio)
 
   /**
    * É chamado antes do processamento para o Radar receber as configurações do analyzer.
    */
-  AnalyzerConfig handshake()
+  AnalyzerConfig create_session(1: SessionId session_id)
 
   /**
    * É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
@@ -190,17 +192,19 @@ service Analyzer {
    * <code>resume()</code>, já que posteriormente o conteúdo do retorno será
    * passado como argumento para o método.
    */
-  binary dump()
+  binary dump(1: SessionId session_id)
 
   /**
    * É chamado sempre que o Radar quiser começar a processar uma carteira à partir de
    * uma imagem gerada pelo método <code>dump()</code>.
    */
-  oneway void resume(1: binary data)
+  oneway void resume(1: SessionId session_id, 2: binary data)
 
   /**
    * É chamado no fim do processamento para pegar o resultado do Analyzer.
    */
-  Result result()
+  Result result(1: SessionId session_id)
+
+  oneway void destroy_session(1: SessionId session_id)
 }
 
