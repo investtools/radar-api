@@ -147,15 +147,17 @@ struct Position {
 }
 
 struct Portfolio {
-  1: required Date date
+  1: Date date
   2: double rentability
   3: double nav
   4: map<string, Position> positions
 }
 
 struct AnalyzerConfig {
-  1: required ResultType result_type
-  2: required set<Event> accepted_events
+  1: string id
+  2: string name
+  3: ResultType result_type
+  4: set<Event> accepted_events
 }
 
 service FundService {
@@ -163,6 +165,13 @@ service FundService {
 }
 
 service AnalyzerController {
+
+  /**
+   * É chamado quando
+   *
+   */
+  list<AnalyzerConfig> analyzers()
+
   /**
    * É chamado <i>n</i> vezes durante o processamento da carteira, sendo
    * <i>n</i> o número de dias processados.
@@ -181,7 +190,7 @@ service AnalyzerController {
   /**
    * É chamado antes do processamento para o Radar receber as configurações do analyzer.
    */
-  AnalyzerConfig create_session(1: SessionId session_id, 2: string analyzer_id)
+  oneway void create_session(1: SessionId session_id, 2: string analyzer_id)
 
   /**
    * É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço

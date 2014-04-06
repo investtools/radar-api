@@ -15,6 +15,7 @@
 </ul>
 <a href="#Svc_AnalyzerController">AnalyzerController</a><br/>
 <ul>
+<li><a href="#Fn_AnalyzerController_analyzers">analyzers</a></li>
 <li><a href="#Fn_AnalyzerController_create_session">create_session</a></li>
 <li><a href="#Fn_AnalyzerController_destroy_session">destroy_session</a></li>
 <li><a href="#Fn_AnalyzerController_dump">dump</a></li>
@@ -198,20 +199,26 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <tr><td>3</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Portfolio">Struct: Portfolio</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>required</td><td></td></tr>
+<tr><td>1</td><td>date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>nav</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>positions</td><td><code>map&lt;<code>string</code>, <code><a href="radar.html#Struct_Position">Position</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_AnalyzerConfig">Struct: AnalyzerConfig</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>result_type</td><td><code><a href="radar.html#Enum_ResultType">ResultType</a></code></td><td></td><td>required</td><td></td></tr>
-<tr><td>2</td><td>accepted_events</td><td><code>set&lt;<code><a href="radar.html#Enum_Event">Event</a></code>&gt;</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>1</td><td>id</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>result_type</td><td><code><a href="radar.html#Enum_ResultType">ResultType</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>accepted_events</td><td><code>set&lt;<code><a href="radar.html#Enum_Event">Event</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_FundService">Service: FundService</h3>
 <div class="definition"><h4 id="Fn_FundService_name">Function: FundService.name</h4>
 <pre><code>string</code> name(<code><a href="radar.html#Struct_FundId">FundId</a></code> id)
 </pre></div><h3 id="Svc_AnalyzerController">Service: AnalyzerController</h3>
-<div class="definition"><h4 id="Fn_AnalyzerController_on_each_day">Function: AnalyzerController.on_each_day</h4>
+<div class="definition"><h4 id="Fn_AnalyzerController_analyzers">Function: AnalyzerController.analyzers</h4>
+<pre><code>list&lt;<code><a href="radar.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code>&gt;</code> analyzers()
+</pre>É chamado quando
+<p/>
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_each_day">Function: AnalyzerController.on_each_day</h4>
 <pre><code>void</code> on_each_day(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> sessionid,
                  <code><a href="radar.html#Struct_Portfolio">Portfolio</a></code> portfolio)
 </pre>É chamado <i>n</i> vezes durante o processamento da carteira, sendo
