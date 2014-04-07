@@ -199,7 +199,7 @@ module Radar
         PORTFOLIO = 2
 
         FIELDS = {
-          SESSIONID => {:type => ::Thrift::Types::I32, :name => 'sessionid'},
+          SESSIONID => {:type => ::Thrift::Types::I16, :name => 'sessionid'},
           PORTFOLIO => {:type => ::Thrift::Types::STRUCT, :name => 'portfolio', :class => ::Radar::API::Portfolio}
         }
 
@@ -232,7 +232,7 @@ module Radar
         PORTFOLIO = 2
 
         FIELDS = {
-          SESSION_ID => {:type => ::Thrift::Types::I32, :name => 'session_id'},
+          SESSION_ID => {:type => ::Thrift::Types::I16, :name => 'session_id'},
           PORTFOLIO => {:type => ::Thrift::Types::STRUCT, :name => 'portfolio', :class => ::Radar::API::Portfolio}
         }
 
@@ -265,7 +265,7 @@ module Radar
         ANALYZER_ID = 2
 
         FIELDS = {
-          SESSION_ID => {:type => ::Thrift::Types::I32, :name => 'session_id'},
+          SESSION_ID => {:type => ::Thrift::Types::I16, :name => 'session_id'},
           ANALYZER_ID => {:type => ::Thrift::Types::STRING, :name => 'analyzer_id'}
         }
 
@@ -298,7 +298,7 @@ module Radar
         SESSION_ID = 1
 
         FIELDS = {
-          SESSION_ID => {:type => ::Thrift::Types::I32, :name => 'session_id'}
+          SESSION_ID => {:type => ::Thrift::Types::I16, :name => 'session_id'}
         }
 
         def struct_fields; FIELDS; end
@@ -331,7 +331,7 @@ module Radar
         DATA = 2
 
         FIELDS = {
-          SESSION_ID => {:type => ::Thrift::Types::I32, :name => 'session_id'},
+          SESSION_ID => {:type => ::Thrift::Types::I16, :name => 'session_id'},
           DATA => {:type => ::Thrift::Types::STRING, :name => 'data', :binary => true}
         }
 
@@ -363,7 +363,7 @@ module Radar
         SESSION_ID = 1
 
         FIELDS = {
-          SESSION_ID => {:type => ::Thrift::Types::I32, :name => 'session_id'}
+          SESSION_ID => {:type => ::Thrift::Types::I16, :name => 'session_id'}
         }
 
         def struct_fields; FIELDS; end
@@ -395,7 +395,7 @@ module Radar
         SESSION_ID = 1
 
         FIELDS = {
-          SESSION_ID => {:type => ::Thrift::Types::I32, :name => 'session_id'}
+          SESSION_ID => {:type => ::Thrift::Types::I16, :name => 'session_id'}
         }
 
         def struct_fields; FIELDS; end

@@ -54,7 +54,7 @@ public class AnalyzerController {
      * @param sessionid
      * @param portfolio
      */
-    public void on_each_day(int sessionid, Portfolio portfolio) throws org.apache.thrift.TException;
+    public void on_each_day(short sessionid, Portfolio portfolio) throws org.apache.thrift.TException;
 
     /**
      * É chamado ao final do processamento da carteira.
@@ -64,7 +64,7 @@ public class AnalyzerController {
      * @param session_id
      * @param portfolio
      */
-    public void on_finish(int session_id, Portfolio portfolio) throws org.apache.thrift.TException;
+    public void on_finish(short session_id, Portfolio portfolio) throws org.apache.thrift.TException;
 
     /**
      * É chamado antes do processamento para o Radar receber as configurações do analyzer.
@@ -72,7 +72,7 @@ public class AnalyzerController {
      * @param session_id
      * @param analyzer_id
      */
-    public AnalyzerConfig create_session(int session_id, String analyzer_id) throws org.apache.thrift.TException;
+    public AnalyzerConfig create_session(short session_id, String analyzer_id) throws org.apache.thrift.TException;
 
     /**
      * É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
@@ -84,7 +84,7 @@ public class AnalyzerController {
      * 
      * @param session_id
      */
-    public ByteBuffer dump(int session_id) throws org.apache.thrift.TException;
+    public ByteBuffer dump(short session_id) throws org.apache.thrift.TException;
 
     /**
      * É chamado sempre que o Radar quiser começar a processar uma carteira à partir de
@@ -93,16 +93,16 @@ public class AnalyzerController {
      * @param session_id
      * @param data
      */
-    public void resume(int session_id, ByteBuffer data) throws org.apache.thrift.TException;
+    public void resume(short session_id, ByteBuffer data) throws org.apache.thrift.TException;
 
     /**
      * É chamado no fim do processamento para pegar o resultado do Analyzer.
      * 
      * @param session_id
      */
-    public Result result(int session_id) throws org.apache.thrift.TException;
+    public Result result(short session_id) throws org.apache.thrift.TException;
 
-    public void destroy_session(int session_id) throws org.apache.thrift.TException;
+    public void destroy_session(short session_id) throws org.apache.thrift.TException;
 
   }
 
@@ -110,19 +110,19 @@ public class AnalyzerController {
 
     public void analyzers(org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void on_each_day(int sessionid, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void on_each_day(short sessionid, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void on_finish(int session_id, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void on_finish(short session_id, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void create_session(int session_id, String analyzer_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void create_session(short session_id, String analyzer_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void dump(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void dump(short session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void resume(int session_id, ByteBuffer data, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void resume(short session_id, ByteBuffer data, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void result(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void result(short session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void destroy_session(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void destroy_session(short session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -168,12 +168,12 @@ public class AnalyzerController {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "analyzers failed: unknown result");
     }
 
-    public void on_each_day(int sessionid, Portfolio portfolio) throws org.apache.thrift.TException
+    public void on_each_day(short sessionid, Portfolio portfolio) throws org.apache.thrift.TException
     {
       send_on_each_day(sessionid, portfolio);
     }
 
-    public void send_on_each_day(int sessionid, Portfolio portfolio) throws org.apache.thrift.TException
+    public void send_on_each_day(short sessionid, Portfolio portfolio) throws org.apache.thrift.TException
     {
       on_each_day_args args = new on_each_day_args();
       args.setSessionid(sessionid);
@@ -181,12 +181,12 @@ public class AnalyzerController {
       sendBase("on_each_day", args);
     }
 
-    public void on_finish(int session_id, Portfolio portfolio) throws org.apache.thrift.TException
+    public void on_finish(short session_id, Portfolio portfolio) throws org.apache.thrift.TException
     {
       send_on_finish(session_id, portfolio);
     }
 
-    public void send_on_finish(int session_id, Portfolio portfolio) throws org.apache.thrift.TException
+    public void send_on_finish(short session_id, Portfolio portfolio) throws org.apache.thrift.TException
     {
       on_finish_args args = new on_finish_args();
       args.setSession_id(session_id);
@@ -194,13 +194,13 @@ public class AnalyzerController {
       sendBase("on_finish", args);
     }
 
-    public AnalyzerConfig create_session(int session_id, String analyzer_id) throws org.apache.thrift.TException
+    public AnalyzerConfig create_session(short session_id, String analyzer_id) throws org.apache.thrift.TException
     {
       send_create_session(session_id, analyzer_id);
       return recv_create_session();
     }
 
-    public void send_create_session(int session_id, String analyzer_id) throws org.apache.thrift.TException
+    public void send_create_session(short session_id, String analyzer_id) throws org.apache.thrift.TException
     {
       create_session_args args = new create_session_args();
       args.setSession_id(session_id);
@@ -218,13 +218,13 @@ public class AnalyzerController {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "create_session failed: unknown result");
     }
 
-    public ByteBuffer dump(int session_id) throws org.apache.thrift.TException
+    public ByteBuffer dump(short session_id) throws org.apache.thrift.TException
     {
       send_dump(session_id);
       return recv_dump();
     }
 
-    public void send_dump(int session_id) throws org.apache.thrift.TException
+    public void send_dump(short session_id) throws org.apache.thrift.TException
     {
       dump_args args = new dump_args();
       args.setSession_id(session_id);
@@ -241,12 +241,12 @@ public class AnalyzerController {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "dump failed: unknown result");
     }
 
-    public void resume(int session_id, ByteBuffer data) throws org.apache.thrift.TException
+    public void resume(short session_id, ByteBuffer data) throws org.apache.thrift.TException
     {
       send_resume(session_id, data);
     }
 
-    public void send_resume(int session_id, ByteBuffer data) throws org.apache.thrift.TException
+    public void send_resume(short session_id, ByteBuffer data) throws org.apache.thrift.TException
     {
       resume_args args = new resume_args();
       args.setSession_id(session_id);
@@ -254,13 +254,13 @@ public class AnalyzerController {
       sendBase("resume", args);
     }
 
-    public Result result(int session_id) throws org.apache.thrift.TException
+    public Result result(short session_id) throws org.apache.thrift.TException
     {
       send_result(session_id);
       return recv_result();
     }
 
-    public void send_result(int session_id) throws org.apache.thrift.TException
+    public void send_result(short session_id) throws org.apache.thrift.TException
     {
       result_args args = new result_args();
       args.setSession_id(session_id);
@@ -277,12 +277,12 @@ public class AnalyzerController {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "result failed: unknown result");
     }
 
-    public void destroy_session(int session_id) throws org.apache.thrift.TException
+    public void destroy_session(short session_id) throws org.apache.thrift.TException
     {
       send_destroy_session(session_id);
     }
 
-    public void send_destroy_session(int session_id) throws org.apache.thrift.TException
+    public void send_destroy_session(short session_id) throws org.apache.thrift.TException
     {
       destroy_session_args args = new destroy_session_args();
       args.setSession_id(session_id);
@@ -336,7 +336,7 @@ public class AnalyzerController {
       }
     }
 
-    public void on_each_day(int sessionid, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void on_each_day(short sessionid, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       on_each_day_call method_call = new on_each_day_call(sessionid, portfolio, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -344,9 +344,9 @@ public class AnalyzerController {
     }
 
     public static class on_each_day_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private int sessionid;
+      private short sessionid;
       private Portfolio portfolio;
-      public on_each_day_call(int sessionid, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public on_each_day_call(short sessionid, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, true);
         this.sessionid = sessionid;
         this.portfolio = portfolio;
@@ -370,7 +370,7 @@ public class AnalyzerController {
       }
     }
 
-    public void on_finish(int session_id, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void on_finish(short session_id, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       on_finish_call method_call = new on_finish_call(session_id, portfolio, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -378,9 +378,9 @@ public class AnalyzerController {
     }
 
     public static class on_finish_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private int session_id;
+      private short session_id;
       private Portfolio portfolio;
-      public on_finish_call(int session_id, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public on_finish_call(short session_id, Portfolio portfolio, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, true);
         this.session_id = session_id;
         this.portfolio = portfolio;
@@ -404,7 +404,7 @@ public class AnalyzerController {
       }
     }
 
-    public void create_session(int session_id, String analyzer_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void create_session(short session_id, String analyzer_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       create_session_call method_call = new create_session_call(session_id, analyzer_id, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -412,9 +412,9 @@ public class AnalyzerController {
     }
 
     public static class create_session_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private int session_id;
+      private short session_id;
       private String analyzer_id;
-      public create_session_call(int session_id, String analyzer_id, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public create_session_call(short session_id, String analyzer_id, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.session_id = session_id;
         this.analyzer_id = analyzer_id;
@@ -439,7 +439,7 @@ public class AnalyzerController {
       }
     }
 
-    public void dump(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void dump(short session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       dump_call method_call = new dump_call(session_id, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -447,8 +447,8 @@ public class AnalyzerController {
     }
 
     public static class dump_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private int session_id;
-      public dump_call(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private short session_id;
+      public dump_call(short session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.session_id = session_id;
       }
@@ -471,7 +471,7 @@ public class AnalyzerController {
       }
     }
 
-    public void resume(int session_id, ByteBuffer data, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void resume(short session_id, ByteBuffer data, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       resume_call method_call = new resume_call(session_id, data, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -479,9 +479,9 @@ public class AnalyzerController {
     }
 
     public static class resume_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private int session_id;
+      private short session_id;
       private ByteBuffer data;
-      public resume_call(int session_id, ByteBuffer data, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public resume_call(short session_id, ByteBuffer data, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, true);
         this.session_id = session_id;
         this.data = data;
@@ -505,7 +505,7 @@ public class AnalyzerController {
       }
     }
 
-    public void result(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void result(short session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       result_call method_call = new result_call(session_id, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -513,8 +513,8 @@ public class AnalyzerController {
     }
 
     public static class result_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private int session_id;
-      public result_call(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private short session_id;
+      public result_call(short session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.session_id = session_id;
       }
@@ -537,7 +537,7 @@ public class AnalyzerController {
       }
     }
 
-    public void destroy_session(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void destroy_session(short session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       destroy_session_call method_call = new destroy_session_call(session_id, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -545,8 +545,8 @@ public class AnalyzerController {
     }
 
     public static class destroy_session_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private int session_id;
-      public destroy_session_call(int session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private short session_id;
+      public destroy_session_call(short session_id, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, true);
         this.session_id = session_id;
       }
@@ -1756,7 +1756,7 @@ public class AnalyzerController {
   public static class on_each_day_args implements org.apache.thrift.TBase<on_each_day_args, on_each_day_args._Fields>, java.io.Serializable, Cloneable, Comparable<on_each_day_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("on_each_day_args");
 
-    private static final org.apache.thrift.protocol.TField SESSIONID_FIELD_DESC = new org.apache.thrift.protocol.TField("sessionid", org.apache.thrift.protocol.TType.I32, (short)1);
+    private static final org.apache.thrift.protocol.TField SESSIONID_FIELD_DESC = new org.apache.thrift.protocol.TField("sessionid", org.apache.thrift.protocol.TType.I16, (short)1);
     private static final org.apache.thrift.protocol.TField PORTFOLIO_FIELD_DESC = new org.apache.thrift.protocol.TField("portfolio", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -1765,7 +1765,7 @@ public class AnalyzerController {
       schemes.put(TupleScheme.class, new on_each_day_argsTupleSchemeFactory());
     }
 
-    public int sessionid; // required
+    public short sessionid; // required
     public Portfolio portfolio; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
@@ -1836,7 +1836,7 @@ public class AnalyzerController {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SESSIONID, new org.apache.thrift.meta_data.FieldMetaData("sessionid", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "SessionId")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16          , "SessionId")));
       tmpMap.put(_Fields.PORTFOLIO, new org.apache.thrift.meta_data.FieldMetaData("portfolio", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Portfolio.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -1847,7 +1847,7 @@ public class AnalyzerController {
     }
 
     public on_each_day_args(
-      int sessionid,
+      short sessionid,
       Portfolio portfolio)
     {
       this();
@@ -1878,11 +1878,11 @@ public class AnalyzerController {
       this.portfolio = null;
     }
 
-    public int getSessionid() {
+    public short getSessionid() {
       return this.sessionid;
     }
 
-    public on_each_day_args setSessionid(int sessionid) {
+    public on_each_day_args setSessionid(short sessionid) {
       this.sessionid = sessionid;
       setSessionidIsSet(true);
       return this;
@@ -1931,7 +1931,7 @@ public class AnalyzerController {
         if (value == null) {
           unsetSessionid();
         } else {
-          setSessionid((Integer)value);
+          setSessionid((Short)value);
         }
         break;
 
@@ -1949,7 +1949,7 @@ public class AnalyzerController {
     public Object getFieldValue(_Fields field) {
       switch (field) {
       case SESSIONID:
-        return Integer.valueOf(getSessionid());
+        return Short.valueOf(getSessionid());
 
       case PORTFOLIO:
         return getPortfolio();
@@ -2132,8 +2132,8 @@ public class AnalyzerController {
           }
           switch (schemeField.id) {
             case 1: // SESSIONID
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.sessionid = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I16) {
+                struct.sessionid = iprot.readI16();
                 struct.setSessionidIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -2164,7 +2164,7 @@ public class AnalyzerController {
 
         oprot.writeStructBegin(STRUCT_DESC);
         oprot.writeFieldBegin(SESSIONID_FIELD_DESC);
-        oprot.writeI32(struct.sessionid);
+        oprot.writeI16(struct.sessionid);
         oprot.writeFieldEnd();
         if (struct.portfolio != null) {
           oprot.writeFieldBegin(PORTFOLIO_FIELD_DESC);
@@ -2197,7 +2197,7 @@ public class AnalyzerController {
         }
         oprot.writeBitSet(optionals, 2);
         if (struct.isSetSessionid()) {
-          oprot.writeI32(struct.sessionid);
+          oprot.writeI16(struct.sessionid);
         }
         if (struct.isSetPortfolio()) {
           struct.portfolio.write(oprot);
@@ -2209,7 +2209,7 @@ public class AnalyzerController {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
-          struct.sessionid = iprot.readI32();
+          struct.sessionid = iprot.readI16();
           struct.setSessionidIsSet(true);
         }
         if (incoming.get(1)) {
@@ -2225,7 +2225,7 @@ public class AnalyzerController {
   public static class on_finish_args implements org.apache.thrift.TBase<on_finish_args, on_finish_args._Fields>, java.io.Serializable, Cloneable, Comparable<on_finish_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("on_finish_args");
 
-    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I32, (short)1);
+    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I16, (short)1);
     private static final org.apache.thrift.protocol.TField PORTFOLIO_FIELD_DESC = new org.apache.thrift.protocol.TField("portfolio", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -2234,7 +2234,7 @@ public class AnalyzerController {
       schemes.put(TupleScheme.class, new on_finish_argsTupleSchemeFactory());
     }
 
-    public int session_id; // required
+    public short session_id; // required
     public Portfolio portfolio; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
@@ -2305,7 +2305,7 @@ public class AnalyzerController {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SESSION_ID, new org.apache.thrift.meta_data.FieldMetaData("session_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "SessionId")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16          , "SessionId")));
       tmpMap.put(_Fields.PORTFOLIO, new org.apache.thrift.meta_data.FieldMetaData("portfolio", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Portfolio.class)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -2316,7 +2316,7 @@ public class AnalyzerController {
     }
 
     public on_finish_args(
-      int session_id,
+      short session_id,
       Portfolio portfolio)
     {
       this();
@@ -2347,11 +2347,11 @@ public class AnalyzerController {
       this.portfolio = null;
     }
 
-    public int getSession_id() {
+    public short getSession_id() {
       return this.session_id;
     }
 
-    public on_finish_args setSession_id(int session_id) {
+    public on_finish_args setSession_id(short session_id) {
       this.session_id = session_id;
       setSession_idIsSet(true);
       return this;
@@ -2400,7 +2400,7 @@ public class AnalyzerController {
         if (value == null) {
           unsetSession_id();
         } else {
-          setSession_id((Integer)value);
+          setSession_id((Short)value);
         }
         break;
 
@@ -2418,7 +2418,7 @@ public class AnalyzerController {
     public Object getFieldValue(_Fields field) {
       switch (field) {
       case SESSION_ID:
-        return Integer.valueOf(getSession_id());
+        return Short.valueOf(getSession_id());
 
       case PORTFOLIO:
         return getPortfolio();
@@ -2601,8 +2601,8 @@ public class AnalyzerController {
           }
           switch (schemeField.id) {
             case 1: // SESSION_ID
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.session_id = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I16) {
+                struct.session_id = iprot.readI16();
                 struct.setSession_idIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -2633,7 +2633,7 @@ public class AnalyzerController {
 
         oprot.writeStructBegin(STRUCT_DESC);
         oprot.writeFieldBegin(SESSION_ID_FIELD_DESC);
-        oprot.writeI32(struct.session_id);
+        oprot.writeI16(struct.session_id);
         oprot.writeFieldEnd();
         if (struct.portfolio != null) {
           oprot.writeFieldBegin(PORTFOLIO_FIELD_DESC);
@@ -2666,7 +2666,7 @@ public class AnalyzerController {
         }
         oprot.writeBitSet(optionals, 2);
         if (struct.isSetSession_id()) {
-          oprot.writeI32(struct.session_id);
+          oprot.writeI16(struct.session_id);
         }
         if (struct.isSetPortfolio()) {
           struct.portfolio.write(oprot);
@@ -2678,7 +2678,7 @@ public class AnalyzerController {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
-          struct.session_id = iprot.readI32();
+          struct.session_id = iprot.readI16();
           struct.setSession_idIsSet(true);
         }
         if (incoming.get(1)) {
@@ -2694,7 +2694,7 @@ public class AnalyzerController {
   public static class create_session_args implements org.apache.thrift.TBase<create_session_args, create_session_args._Fields>, java.io.Serializable, Cloneable, Comparable<create_session_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("create_session_args");
 
-    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I32, (short)1);
+    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I16, (short)1);
     private static final org.apache.thrift.protocol.TField ANALYZER_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("analyzer_id", org.apache.thrift.protocol.TType.STRING, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -2703,7 +2703,7 @@ public class AnalyzerController {
       schemes.put(TupleScheme.class, new create_session_argsTupleSchemeFactory());
     }
 
-    public int session_id; // required
+    public short session_id; // required
     public String analyzer_id; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
@@ -2774,7 +2774,7 @@ public class AnalyzerController {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SESSION_ID, new org.apache.thrift.meta_data.FieldMetaData("session_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "SessionId")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16          , "SessionId")));
       tmpMap.put(_Fields.ANALYZER_ID, new org.apache.thrift.meta_data.FieldMetaData("analyzer_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -2785,7 +2785,7 @@ public class AnalyzerController {
     }
 
     public create_session_args(
-      int session_id,
+      short session_id,
       String analyzer_id)
     {
       this();
@@ -2816,11 +2816,11 @@ public class AnalyzerController {
       this.analyzer_id = null;
     }
 
-    public int getSession_id() {
+    public short getSession_id() {
       return this.session_id;
     }
 
-    public create_session_args setSession_id(int session_id) {
+    public create_session_args setSession_id(short session_id) {
       this.session_id = session_id;
       setSession_idIsSet(true);
       return this;
@@ -2869,7 +2869,7 @@ public class AnalyzerController {
         if (value == null) {
           unsetSession_id();
         } else {
-          setSession_id((Integer)value);
+          setSession_id((Short)value);
         }
         break;
 
@@ -2887,7 +2887,7 @@ public class AnalyzerController {
     public Object getFieldValue(_Fields field) {
       switch (field) {
       case SESSION_ID:
-        return Integer.valueOf(getSession_id());
+        return Short.valueOf(getSession_id());
 
       case ANALYZER_ID:
         return getAnalyzer_id();
@@ -3067,8 +3067,8 @@ public class AnalyzerController {
           }
           switch (schemeField.id) {
             case 1: // SESSION_ID
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.session_id = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I16) {
+                struct.session_id = iprot.readI16();
                 struct.setSession_idIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -3098,7 +3098,7 @@ public class AnalyzerController {
 
         oprot.writeStructBegin(STRUCT_DESC);
         oprot.writeFieldBegin(SESSION_ID_FIELD_DESC);
-        oprot.writeI32(struct.session_id);
+        oprot.writeI16(struct.session_id);
         oprot.writeFieldEnd();
         if (struct.analyzer_id != null) {
           oprot.writeFieldBegin(ANALYZER_ID_FIELD_DESC);
@@ -3131,7 +3131,7 @@ public class AnalyzerController {
         }
         oprot.writeBitSet(optionals, 2);
         if (struct.isSetSession_id()) {
-          oprot.writeI32(struct.session_id);
+          oprot.writeI16(struct.session_id);
         }
         if (struct.isSetAnalyzer_id()) {
           oprot.writeString(struct.analyzer_id);
@@ -3143,7 +3143,7 @@ public class AnalyzerController {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
-          struct.session_id = iprot.readI32();
+          struct.session_id = iprot.readI16();
           struct.setSession_idIsSet(true);
         }
         if (incoming.get(1)) {
@@ -3524,7 +3524,7 @@ public class AnalyzerController {
   public static class dump_args implements org.apache.thrift.TBase<dump_args, dump_args._Fields>, java.io.Serializable, Cloneable, Comparable<dump_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("dump_args");
 
-    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I32, (short)1);
+    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I16, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -3532,7 +3532,7 @@ public class AnalyzerController {
       schemes.put(TupleScheme.class, new dump_argsTupleSchemeFactory());
     }
 
-    public int session_id; // required
+    public short session_id; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -3599,7 +3599,7 @@ public class AnalyzerController {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SESSION_ID, new org.apache.thrift.meta_data.FieldMetaData("session_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "SessionId")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16          , "SessionId")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(dump_args.class, metaDataMap);
     }
@@ -3608,7 +3608,7 @@ public class AnalyzerController {
     }
 
     public dump_args(
-      int session_id)
+      short session_id)
     {
       this();
       this.session_id = session_id;
@@ -3633,11 +3633,11 @@ public class AnalyzerController {
       this.session_id = 0;
     }
 
-    public int getSession_id() {
+    public short getSession_id() {
       return this.session_id;
     }
 
-    public dump_args setSession_id(int session_id) {
+    public dump_args setSession_id(short session_id) {
       this.session_id = session_id;
       setSession_idIsSet(true);
       return this;
@@ -3662,7 +3662,7 @@ public class AnalyzerController {
         if (value == null) {
           unsetSession_id();
         } else {
-          setSession_id((Integer)value);
+          setSession_id((Short)value);
         }
         break;
 
@@ -3672,7 +3672,7 @@ public class AnalyzerController {
     public Object getFieldValue(_Fields field) {
       switch (field) {
       case SESSION_ID:
-        return Integer.valueOf(getSession_id());
+        return Short.valueOf(getSession_id());
 
       }
       throw new IllegalStateException();
@@ -3815,8 +3815,8 @@ public class AnalyzerController {
           }
           switch (schemeField.id) {
             case 1: // SESSION_ID
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.session_id = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I16) {
+                struct.session_id = iprot.readI16();
                 struct.setSession_idIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -3838,7 +3838,7 @@ public class AnalyzerController {
 
         oprot.writeStructBegin(STRUCT_DESC);
         oprot.writeFieldBegin(SESSION_ID_FIELD_DESC);
-        oprot.writeI32(struct.session_id);
+        oprot.writeI16(struct.session_id);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -3863,7 +3863,7 @@ public class AnalyzerController {
         }
         oprot.writeBitSet(optionals, 1);
         if (struct.isSetSession_id()) {
-          oprot.writeI32(struct.session_id);
+          oprot.writeI16(struct.session_id);
         }
       }
 
@@ -3872,7 +3872,7 @@ public class AnalyzerController {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.session_id = iprot.readI32();
+          struct.session_id = iprot.readI16();
           struct.setSession_idIsSet(true);
         }
       }
@@ -4254,7 +4254,7 @@ public class AnalyzerController {
   public static class resume_args implements org.apache.thrift.TBase<resume_args, resume_args._Fields>, java.io.Serializable, Cloneable, Comparable<resume_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("resume_args");
 
-    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I32, (short)1);
+    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I16, (short)1);
     private static final org.apache.thrift.protocol.TField DATA_FIELD_DESC = new org.apache.thrift.protocol.TField("data", org.apache.thrift.protocol.TType.STRING, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -4263,7 +4263,7 @@ public class AnalyzerController {
       schemes.put(TupleScheme.class, new resume_argsTupleSchemeFactory());
     }
 
-    public int session_id; // required
+    public short session_id; // required
     public ByteBuffer data; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
@@ -4334,7 +4334,7 @@ public class AnalyzerController {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SESSION_ID, new org.apache.thrift.meta_data.FieldMetaData("session_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "SessionId")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16          , "SessionId")));
       tmpMap.put(_Fields.DATA, new org.apache.thrift.meta_data.FieldMetaData("data", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING          , true)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -4345,7 +4345,7 @@ public class AnalyzerController {
     }
 
     public resume_args(
-      int session_id,
+      short session_id,
       ByteBuffer data)
     {
       this();
@@ -4376,11 +4376,11 @@ public class AnalyzerController {
       this.data = null;
     }
 
-    public int getSession_id() {
+    public short getSession_id() {
       return this.session_id;
     }
 
-    public resume_args setSession_id(int session_id) {
+    public resume_args setSession_id(short session_id) {
       this.session_id = session_id;
       setSession_idIsSet(true);
       return this;
@@ -4439,7 +4439,7 @@ public class AnalyzerController {
         if (value == null) {
           unsetSession_id();
         } else {
-          setSession_id((Integer)value);
+          setSession_id((Short)value);
         }
         break;
 
@@ -4457,7 +4457,7 @@ public class AnalyzerController {
     public Object getFieldValue(_Fields field) {
       switch (field) {
       case SESSION_ID:
-        return Integer.valueOf(getSession_id());
+        return Short.valueOf(getSession_id());
 
       case DATA:
         return getData();
@@ -4637,8 +4637,8 @@ public class AnalyzerController {
           }
           switch (schemeField.id) {
             case 1: // SESSION_ID
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.session_id = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I16) {
+                struct.session_id = iprot.readI16();
                 struct.setSession_idIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -4668,7 +4668,7 @@ public class AnalyzerController {
 
         oprot.writeStructBegin(STRUCT_DESC);
         oprot.writeFieldBegin(SESSION_ID_FIELD_DESC);
-        oprot.writeI32(struct.session_id);
+        oprot.writeI16(struct.session_id);
         oprot.writeFieldEnd();
         if (struct.data != null) {
           oprot.writeFieldBegin(DATA_FIELD_DESC);
@@ -4701,7 +4701,7 @@ public class AnalyzerController {
         }
         oprot.writeBitSet(optionals, 2);
         if (struct.isSetSession_id()) {
-          oprot.writeI32(struct.session_id);
+          oprot.writeI16(struct.session_id);
         }
         if (struct.isSetData()) {
           oprot.writeBinary(struct.data);
@@ -4713,7 +4713,7 @@ public class AnalyzerController {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
-          struct.session_id = iprot.readI32();
+          struct.session_id = iprot.readI16();
           struct.setSession_idIsSet(true);
         }
         if (incoming.get(1)) {
@@ -4728,7 +4728,7 @@ public class AnalyzerController {
   public static class result_args implements org.apache.thrift.TBase<result_args, result_args._Fields>, java.io.Serializable, Cloneable, Comparable<result_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("result_args");
 
-    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I32, (short)1);
+    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I16, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -4736,7 +4736,7 @@ public class AnalyzerController {
       schemes.put(TupleScheme.class, new result_argsTupleSchemeFactory());
     }
 
-    public int session_id; // required
+    public short session_id; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -4803,7 +4803,7 @@ public class AnalyzerController {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SESSION_ID, new org.apache.thrift.meta_data.FieldMetaData("session_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "SessionId")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16          , "SessionId")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(result_args.class, metaDataMap);
     }
@@ -4812,7 +4812,7 @@ public class AnalyzerController {
     }
 
     public result_args(
-      int session_id)
+      short session_id)
     {
       this();
       this.session_id = session_id;
@@ -4837,11 +4837,11 @@ public class AnalyzerController {
       this.session_id = 0;
     }
 
-    public int getSession_id() {
+    public short getSession_id() {
       return this.session_id;
     }
 
-    public result_args setSession_id(int session_id) {
+    public result_args setSession_id(short session_id) {
       this.session_id = session_id;
       setSession_idIsSet(true);
       return this;
@@ -4866,7 +4866,7 @@ public class AnalyzerController {
         if (value == null) {
           unsetSession_id();
         } else {
-          setSession_id((Integer)value);
+          setSession_id((Short)value);
         }
         break;
 
@@ -4876,7 +4876,7 @@ public class AnalyzerController {
     public Object getFieldValue(_Fields field) {
       switch (field) {
       case SESSION_ID:
-        return Integer.valueOf(getSession_id());
+        return Short.valueOf(getSession_id());
 
       }
       throw new IllegalStateException();
@@ -5019,8 +5019,8 @@ public class AnalyzerController {
           }
           switch (schemeField.id) {
             case 1: // SESSION_ID
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.session_id = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I16) {
+                struct.session_id = iprot.readI16();
                 struct.setSession_idIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -5042,7 +5042,7 @@ public class AnalyzerController {
 
         oprot.writeStructBegin(STRUCT_DESC);
         oprot.writeFieldBegin(SESSION_ID_FIELD_DESC);
-        oprot.writeI32(struct.session_id);
+        oprot.writeI16(struct.session_id);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -5067,7 +5067,7 @@ public class AnalyzerController {
         }
         oprot.writeBitSet(optionals, 1);
         if (struct.isSetSession_id()) {
-          oprot.writeI32(struct.session_id);
+          oprot.writeI16(struct.session_id);
         }
       }
 
@@ -5076,7 +5076,7 @@ public class AnalyzerController {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.session_id = iprot.readI32();
+          struct.session_id = iprot.readI16();
           struct.setSession_idIsSet(true);
         }
       }
@@ -5450,7 +5450,7 @@ public class AnalyzerController {
   public static class destroy_session_args implements org.apache.thrift.TBase<destroy_session_args, destroy_session_args._Fields>, java.io.Serializable, Cloneable, Comparable<destroy_session_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("destroy_session_args");
 
-    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I32, (short)1);
+    private static final org.apache.thrift.protocol.TField SESSION_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("session_id", org.apache.thrift.protocol.TType.I16, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -5458,7 +5458,7 @@ public class AnalyzerController {
       schemes.put(TupleScheme.class, new destroy_session_argsTupleSchemeFactory());
     }
 
-    public int session_id; // required
+    public short session_id; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -5525,7 +5525,7 @@ public class AnalyzerController {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SESSION_ID, new org.apache.thrift.meta_data.FieldMetaData("session_id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "SessionId")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16          , "SessionId")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(destroy_session_args.class, metaDataMap);
     }
@@ -5534,7 +5534,7 @@ public class AnalyzerController {
     }
 
     public destroy_session_args(
-      int session_id)
+      short session_id)
     {
       this();
       this.session_id = session_id;
@@ -5559,11 +5559,11 @@ public class AnalyzerController {
       this.session_id = 0;
     }
 
-    public int getSession_id() {
+    public short getSession_id() {
       return this.session_id;
     }
 
-    public destroy_session_args setSession_id(int session_id) {
+    public destroy_session_args setSession_id(short session_id) {
       this.session_id = session_id;
       setSession_idIsSet(true);
       return this;
@@ -5588,7 +5588,7 @@ public class AnalyzerController {
         if (value == null) {
           unsetSession_id();
         } else {
-          setSession_id((Integer)value);
+          setSession_id((Short)value);
         }
         break;
 
@@ -5598,7 +5598,7 @@ public class AnalyzerController {
     public Object getFieldValue(_Fields field) {
       switch (field) {
       case SESSION_ID:
-        return Integer.valueOf(getSession_id());
+        return Short.valueOf(getSession_id());
 
       }
       throw new IllegalStateException();
@@ -5741,8 +5741,8 @@ public class AnalyzerController {
           }
           switch (schemeField.id) {
             case 1: // SESSION_ID
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.session_id = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I16) {
+                struct.session_id = iprot.readI16();
                 struct.setSession_idIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -5764,7 +5764,7 @@ public class AnalyzerController {
 
         oprot.writeStructBegin(STRUCT_DESC);
         oprot.writeFieldBegin(SESSION_ID_FIELD_DESC);
-        oprot.writeI32(struct.session_id);
+        oprot.writeI16(struct.session_id);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -5789,7 +5789,7 @@ public class AnalyzerController {
         }
         oprot.writeBitSet(optionals, 1);
         if (struct.isSetSession_id()) {
-          oprot.writeI32(struct.session_id);
+          oprot.writeI16(struct.session_id);
         }
       }
 
@@ -5798,7 +5798,7 @@ public class AnalyzerController {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.session_id = iprot.readI32();
+          struct.session_id = iprot.readI16();
           struct.setSession_idIsSet(true);
         }
       }

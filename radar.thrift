@@ -17,7 +17,7 @@ typedef i32 Date
  */
 typedef i32 Color
 
-typedef i32 SessionId
+typedef i16 SessionId
 
 struct StockId {
   1: string symbol
