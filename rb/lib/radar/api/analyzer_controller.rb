@@ -44,11 +44,19 @@ module Radar
         end
         def create_session(session_id, analyzer_id)
           send_create_session(session_id, analyzer_id)
+          return recv_create_session()
         end
 
         def send_create_session(session_id, analyzer_id)
           send_message('create_session', Create_session_args, :session_id => session_id, :analyzer_id => analyzer_id)
         end
+
+        def recv_create_session()
+          result = receive_message(Create_session_result)
+          return result.success unless result.success.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'create_session failed: unknown result')
+        end
+
         def dump(session_id)
           send_dump(session_id)
           return recv_dump()
@@ -119,8 +127,9 @@ module Radar
 
         def process_create_session(seqid, iprot, oprot)
           args = read_args(iprot, Create_session_args)
-          @handler.create_session(args.session_id, args.analyzer_id)
-          return
+          result = Create_session_result.new()
+          result.success = @handler.create_session(args.session_id, args.analyzer_id)
+          write_result(result, oprot, 'create_session', seqid)
         end
 
         def process_dump(seqid, iprot, oprot)
@@ -270,9 +279,10 @@ module Radar
 
       class Create_session_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
 
         FIELDS = {
-
+          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::API::AnalyzerConfig}
         }
 
         def struct_fields; FIELDS; end
