@@ -9,17 +9,17 @@ require 'radar_types'
 
 module Radar
   module API
-    module SecurityService
+    module IndexService
       class Client
         include ::Thrift::Client
 
-        def prices(id, start_date, end_date)
-          send_prices(id, start_date, end_date)
+        def prices(symbol, start_date, end_date)
+          send_prices(symbol, start_date, end_date)
           return recv_prices()
         end
 
-        def send_prices(id, start_date, end_date)
-          send_message('prices', Prices_args, :id => id, :start_date => start_date, :end_date => end_date)
+        def send_prices(symbol, start_date, end_date)
+          send_message('prices', Prices_args, :symbol => symbol, :start_date => start_date, :end_date => end_date)
         end
 
         def recv_prices()
@@ -28,13 +28,13 @@ module Radar
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'prices failed: unknown result')
         end
 
-        def price(id, date)
-          send_price(id, date)
+        def price(symbol, date)
+          send_price(symbol, date)
           return recv_price()
         end
 
-        def send_price(id, date)
-          send_message('price', Price_args, :id => id, :date => date)
+        def send_price(symbol, date)
+          send_message('price', Price_args, :symbol => symbol, :date => date)
         end
 
         def recv_price()
@@ -51,14 +51,14 @@ module Radar
         def process_prices(seqid, iprot, oprot)
           args = read_args(iprot, Prices_args)
           result = Prices_result.new()
-          result.success = @handler.prices(args.id, args.start_date, args.end_date)
+          result.success = @handler.prices(args.symbol, args.start_date, args.end_date)
           write_result(result, oprot, 'prices', seqid)
         end
 
         def process_price(seqid, iprot, oprot)
           args = read_args(iprot, Price_args)
           result = Price_result.new()
-          result.success = @handler.price(args.id, args.date)
+          result.success = @handler.price(args.symbol, args.date)
           write_result(result, oprot, 'price', seqid)
         end
 
@@ -68,12 +68,12 @@ module Radar
 
       class Prices_args
         include ::Thrift::Struct, ::Thrift::Struct_Union
-        ID = 1
+        SYMBOL = 1
         START_DATE = 2
         END_DATE = 3
 
         FIELDS = {
-          ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::API::SecurityId},
+          SYMBOL => {:type => ::Thrift::Types::STRING, :name => 'symbol'},
           START_DATE => {:type => ::Thrift::Types::I32, :name => 'start_date'},
           END_DATE => {:type => ::Thrift::Types::I32, :name => 'end_date'}
         }
@@ -104,11 +104,11 @@ module Radar
 
       class Price_args
         include ::Thrift::Struct, ::Thrift::Struct_Union
-        ID = 1
+        SYMBOL = 1
         DATE = 2
 
         FIELDS = {
-          ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::API::SecurityId},
+          SYMBOL => {:type => ::Thrift::Types::STRING, :name => 'symbol'},
           DATE => {:type => ::Thrift::Types::I32, :name => 'date'}
         }
 

@@ -15,7 +15,13 @@
 </ul>
 <a href="#Svc_SecurityService">SecurityService</a><br/>
 <ul>
+<li><a href="#Fn_SecurityService_price">price</a></li>
 <li><a href="#Fn_SecurityService_prices">prices</a></li>
+</ul>
+<a href="#Svc_IndexService">IndexService</a><br/>
+<ul>
+<li><a href="#Fn_IndexService_price">price</a></li>
+<li><a href="#Fn_IndexService_prices">prices</a></li>
 </ul>
 <a href="#Svc_AnalyzerController">AnalyzerController</a><br/>
 <ul>
@@ -227,6 +233,17 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <pre><code>list&lt;<code><a href="radar.html#Struct_Price">Price</a></code>&gt;</code> prices(<code><a href="radar.html#Struct_SecurityId">SecurityId</a></code> id,
                    <code><a href="radar.html#Typedef_Date">Date</a></code> start_date,
                    <code><a href="radar.html#Typedef_Date">Date</a></code> end_date)
+</pre></div><div class="definition"><h4 id="Fn_SecurityService_price">Function: SecurityService.price</h4>
+<pre><code>double</code> price(<code><a href="radar.html#Struct_SecurityId">SecurityId</a></code> id,
+             <code><a href="radar.html#Typedef_Date">Date</a></code> date)
+</pre></div><h3 id="Svc_IndexService">Service: IndexService</h3>
+<div class="definition"><h4 id="Fn_IndexService_prices">Function: IndexService.prices</h4>
+<pre><code>list&lt;<code><a href="radar.html#Struct_Price">Price</a></code>&gt;</code> prices(<code>string</code> symbol,
+                   <code><a href="radar.html#Typedef_Date">Date</a></code> start_date,
+                   <code><a href="radar.html#Typedef_Date">Date</a></code> end_date)
+</pre></div><div class="definition"><h4 id="Fn_IndexService_price">Function: IndexService.price</h4>
+<pre><code>double</code> price(<code>string</code> symbol,
+             <code><a href="radar.html#Typedef_Date">Date</a></code> date)
 </pre></div><h3 id="Svc_AnalyzerController">Service: AnalyzerController</h3>
 <div class="definition"><h4 id="Fn_AnalyzerController_analyzers">Function: AnalyzerController.analyzers</h4>
 <pre><code>list&lt;<code><a href="radar.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code>&gt;</code> analyzers()

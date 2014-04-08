@@ -171,6 +171,12 @@ service FundService {
 
 service SecurityService {
   list<Price> prices(1: SecurityId id, 2: Date start_date, 3: Date end_date)
+  double price(1: SecurityId id, 2: Date date)
+}
+
+service IndexService {
+  list<Price> prices(1: string symbol, 2: Date start_date, 3: Date end_date)
+  double price(1: string symbol, 2: Date date)
 }
 
 service AnalyzerController {
