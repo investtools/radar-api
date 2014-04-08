@@ -527,5 +527,23 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
+    class Price
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DATE = 1
+      CLOSE = 2
+
+      FIELDS = {
+        DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        CLOSE => {:type => ::Thrift::Types::DOUBLE, :name => 'close'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
   end
 end

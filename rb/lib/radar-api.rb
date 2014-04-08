@@ -1,5 +1,6 @@
 require 'radar/api/version'
 require 'radar/api/analyzer_controller'
+require 'radar/api/security_service'
 require 'radar/api/fund_service'
 require 'radar/api/radar_constants'
 require 'radar/api/radar_types'
