@@ -13,6 +13,10 @@
 <ul>
 <li><a href="#Fn_FundService_name">name</a></li>
 </ul>
+<a href="#Svc_SecurityService">SecurityService</a><br/>
+<ul>
+<li><a href="#Fn_SecurityService_prices">prices</a></li>
+</ul>
 <a href="#Svc_AnalyzerController">AnalyzerController</a><br/>
 <ul>
 <li><a href="#Fn_AnalyzerController_analyzers">analyzers</a></li>
@@ -43,6 +47,7 @@
 <a href="#Struct_Point">Point</a><br/>
 <a href="#Struct_Portfolio">Portfolio</a><br/>
 <a href="#Struct_Position">Position</a><br/>
+<a href="#Struct_Price">Price</a><br/>
 <a href="#Struct_Result">Result</a><br/>
 <a href="#Enum_ResultType">ResultType</a><br/>
 <a href="#Struct_SecurityId">SecurityId</a><br/>
@@ -209,10 +214,19 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <tr><td>2</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>result_type</td><td><code><a href="radar.html#Enum_ResultType">ResultType</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>accepted_events</td><td><code>set&lt;<code><a href="radar.html#Enum_Event">Event</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_Price">Struct: Price</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>close</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_FundService">Service: FundService</h3>
 <div class="definition"><h4 id="Fn_FundService_name">Function: FundService.name</h4>
 <pre><code>string</code> name(<code><a href="radar.html#Struct_FundId">FundId</a></code> id)
+</pre></div><h3 id="Svc_SecurityService">Service: SecurityService</h3>
+<div class="definition"><h4 id="Fn_SecurityService_prices">Function: SecurityService.prices</h4>
+<pre><code>list&lt;<code><a href="radar.html#Struct_Price">Price</a></code>&gt;</code> prices(<code><a href="radar.html#Struct_SecurityId">SecurityId</a></code> id,
+                   <code><a href="radar.html#Typedef_Date">Date</a></code> start_date,
+                   <code><a href="radar.html#Typedef_Date">Date</a></code> end_date)
 </pre></div><h3 id="Svc_AnalyzerController">Service: AnalyzerController</h3>
 <div class="definition"><h4 id="Fn_AnalyzerController_analyzers">Function: AnalyzerController.analyzers</h4>
 <pre><code>list&lt;<code><a href="radar.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code>&gt;</code> analyzers()

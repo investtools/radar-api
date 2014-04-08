@@ -160,8 +160,17 @@ struct AnalyzerConfig {
   4: set<Event> accepted_events
 }
 
+struct Price {
+  1: Date date
+  2: double close
+}
+
 service FundService {
   string name(1: FundId id)
+}
+
+service SecurityService {
+  list<Price> prices(1: SecurityId id, 2: Date start_date, 3: Date end_date)
 }
 
 service AnalyzerController {
