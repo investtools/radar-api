@@ -98,6 +98,7 @@ union TableCellContent {
   1: string text
   2: double percent
   3: double currency
+  4: double number
 }
 
 struct TableCellFormat {

@@ -318,16 +318,22 @@ module Radar
         def currency(val)
           TableCellContent.new(:currency, val)
         end
+
+        def number(val)
+          TableCellContent.new(:number, val)
+        end
       end
 
       TEXT = 1
       PERCENT = 2
       CURRENCY = 3
+      NUMBER = 4
 
       FIELDS = {
         TEXT => {:type => ::Thrift::Types::STRING, :name => 'text'},
         PERCENT => {:type => ::Thrift::Types::DOUBLE, :name => 'percent'},
-        CURRENCY => {:type => ::Thrift::Types::DOUBLE, :name => 'currency'}
+        CURRENCY => {:type => ::Thrift::Types::DOUBLE, :name => 'currency'},
+        NUMBER => {:type => ::Thrift::Types::DOUBLE, :name => 'number'}
       }
 
       def struct_fields; FIELDS; end
