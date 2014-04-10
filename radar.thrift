@@ -172,11 +172,15 @@ service FundService {
 service SecurityService {
   list<Price> prices(1: SecurityId id, 2: Date start_date, 3: Date end_date)
   double price(1: SecurityId id, 2: Date date)
+  double price_change(1: SecurityId id, 2: Date start_date, 3: Date end_date)
+  list<double> price_changes(1: SecurityId id, 2: Date start_date, 3: Date end_date)
+  double price_volatility(1: SecurityId id, 2: Date start_date, 3: Date end_date)
 }
 
 service IndexService {
   list<Price> prices(1: string symbol, 2: Date start_date, 3: Date end_date)
   double price(1: string symbol, 2: Date date)
+  double price_change(1: string symbol, 2: Date start_date, 3: Date end_date)
 }
 
 service AnalyzerController {
@@ -194,6 +198,13 @@ service AnalyzerController {
    * <code>portfolio</code> Estado da carteira no dia que está sendo processado.
    */
   oneway void on_each_day(1: SessionId sessionid, 2: Portfolio portfolio)
+
+  /**
+   * É chamado no final de cada mes durante o processamento da carteira.
+   *
+   * <code>portfolio</code> Estado da carteira no último dia do mes.
+   */
+  oneway void on_each_month(1: SessionId sessionid, 2: Portfolio portfolio)
 
   /**
    * É chamado ao final do processamento da carteira.

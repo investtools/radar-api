@@ -43,6 +43,51 @@ module Radar
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'price failed: unknown result')
         end
 
+        def price_change(id, start_date, end_date)
+          send_price_change(id, start_date, end_date)
+          return recv_price_change()
+        end
+
+        def send_price_change(id, start_date, end_date)
+          send_message('price_change', Price_change_args, :id => id, :start_date => start_date, :end_date => end_date)
+        end
+
+        def recv_price_change()
+          result = receive_message(Price_change_result)
+          return result.success unless result.success.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'price_change failed: unknown result')
+        end
+
+        def price_changes(id, start_date, end_date)
+          send_price_changes(id, start_date, end_date)
+          return recv_price_changes()
+        end
+
+        def send_price_changes(id, start_date, end_date)
+          send_message('price_changes', Price_changes_args, :id => id, :start_date => start_date, :end_date => end_date)
+        end
+
+        def recv_price_changes()
+          result = receive_message(Price_changes_result)
+          return result.success unless result.success.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'price_changes failed: unknown result')
+        end
+
+        def price_volatility(id, start_date, end_date)
+          send_price_volatility(id, start_date, end_date)
+          return recv_price_volatility()
+        end
+
+        def send_price_volatility(id, start_date, end_date)
+          send_message('price_volatility', Price_volatility_args, :id => id, :start_date => start_date, :end_date => end_date)
+        end
+
+        def recv_price_volatility()
+          result = receive_message(Price_volatility_result)
+          return result.success unless result.success.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'price_volatility failed: unknown result')
+        end
+
       end
 
       class Processor
@@ -60,6 +105,27 @@ module Radar
           result = Price_result.new()
           result.success = @handler.price(args.id, args.date)
           write_result(result, oprot, 'price', seqid)
+        end
+
+        def process_price_change(seqid, iprot, oprot)
+          args = read_args(iprot, Price_change_args)
+          result = Price_change_result.new()
+          result.success = @handler.price_change(args.id, args.start_date, args.end_date)
+          write_result(result, oprot, 'price_change', seqid)
+        end
+
+        def process_price_changes(seqid, iprot, oprot)
+          args = read_args(iprot, Price_changes_args)
+          result = Price_changes_result.new()
+          result.success = @handler.price_changes(args.id, args.start_date, args.end_date)
+          write_result(result, oprot, 'price_changes', seqid)
+        end
+
+        def process_price_volatility(seqid, iprot, oprot)
+          args = read_args(iprot, Price_volatility_args)
+          result = Price_volatility_result.new()
+          result.success = @handler.price_volatility(args.id, args.start_date, args.end_date)
+          write_result(result, oprot, 'price_volatility', seqid)
         end
 
       end
@@ -121,6 +187,114 @@ module Radar
       end
 
       class Price_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::DOUBLE, :name => 'success'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Price_change_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        ID = 1
+        START_DATE = 2
+        END_DATE = 3
+
+        FIELDS = {
+          ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::API::SecurityId},
+          START_DATE => {:type => ::Thrift::Types::I32, :name => 'start_date'},
+          END_DATE => {:type => ::Thrift::Types::I32, :name => 'end_date'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Price_change_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::DOUBLE, :name => 'success'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Price_changes_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        ID = 1
+        START_DATE = 2
+        END_DATE = 3
+
+        FIELDS = {
+          ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::API::SecurityId},
+          START_DATE => {:type => ::Thrift::Types::I32, :name => 'start_date'},
+          END_DATE => {:type => ::Thrift::Types::I32, :name => 'end_date'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Price_changes_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::DOUBLE}}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Price_volatility_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        ID = 1
+        START_DATE = 2
+        END_DATE = 3
+
+        FIELDS = {
+          ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::API::SecurityId},
+          START_DATE => {:type => ::Thrift::Types::I32, :name => 'start_date'},
+          END_DATE => {:type => ::Thrift::Types::I32, :name => 'end_date'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Price_volatility_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
 

@@ -16,11 +16,15 @@
 <a href="#Svc_SecurityService">SecurityService</a><br/>
 <ul>
 <li><a href="#Fn_SecurityService_price">price</a></li>
+<li><a href="#Fn_SecurityService_price_change">price_change</a></li>
+<li><a href="#Fn_SecurityService_price_changes">price_changes</a></li>
+<li><a href="#Fn_SecurityService_price_volatility">price_volatility</a></li>
 <li><a href="#Fn_SecurityService_prices">prices</a></li>
 </ul>
 <a href="#Svc_IndexService">IndexService</a><br/>
 <ul>
 <li><a href="#Fn_IndexService_price">price</a></li>
+<li><a href="#Fn_IndexService_price_change">price_change</a></li>
 <li><a href="#Fn_IndexService_prices">prices</a></li>
 </ul>
 <a href="#Svc_AnalyzerController">AnalyzerController</a><br/>
@@ -30,6 +34,7 @@
 <li><a href="#Fn_AnalyzerController_destroy_session">destroy_session</a></li>
 <li><a href="#Fn_AnalyzerController_dump">dump</a></li>
 <li><a href="#Fn_AnalyzerController_on_each_day">on_each_day</a></li>
+<li><a href="#Fn_AnalyzerController_on_each_month">on_each_month</a></li>
 <li><a href="#Fn_AnalyzerController_on_finish">on_finish</a></li>
 <li><a href="#Fn_AnalyzerController_result">result</a></li>
 <li><a href="#Fn_AnalyzerController_resume">resume</a></li>
@@ -236,6 +241,18 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 </pre></div><div class="definition"><h4 id="Fn_SecurityService_price">Function: SecurityService.price</h4>
 <pre><code>double</code> price(<code><a href="radar.html#Struct_SecurityId">SecurityId</a></code> id,
              <code><a href="radar.html#Typedef_Date">Date</a></code> date)
+</pre></div><div class="definition"><h4 id="Fn_SecurityService_price_change">Function: SecurityService.price_change</h4>
+<pre><code>double</code> price_change(<code><a href="radar.html#Struct_SecurityId">SecurityId</a></code> id,
+                    <code><a href="radar.html#Typedef_Date">Date</a></code> start_date,
+                    <code><a href="radar.html#Typedef_Date">Date</a></code> end_date)
+</pre></div><div class="definition"><h4 id="Fn_SecurityService_price_changes">Function: SecurityService.price_changes</h4>
+<pre><code>list&lt;<code>double</code>&gt;</code> price_changes(<code><a href="radar.html#Struct_SecurityId">SecurityId</a></code> id,
+                           <code><a href="radar.html#Typedef_Date">Date</a></code> start_date,
+                           <code><a href="radar.html#Typedef_Date">Date</a></code> end_date)
+</pre></div><div class="definition"><h4 id="Fn_SecurityService_price_volatility">Function: SecurityService.price_volatility</h4>
+<pre><code>double</code> price_volatility(<code><a href="radar.html#Struct_SecurityId">SecurityId</a></code> id,
+                        <code><a href="radar.html#Typedef_Date">Date</a></code> start_date,
+                        <code><a href="radar.html#Typedef_Date">Date</a></code> end_date)
 </pre></div><h3 id="Svc_IndexService">Service: IndexService</h3>
 <div class="definition"><h4 id="Fn_IndexService_prices">Function: IndexService.prices</h4>
 <pre><code>list&lt;<code><a href="radar.html#Struct_Price">Price</a></code>&gt;</code> prices(<code>string</code> symbol,
@@ -244,6 +261,10 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 </pre></div><div class="definition"><h4 id="Fn_IndexService_price">Function: IndexService.price</h4>
 <pre><code>double</code> price(<code>string</code> symbol,
              <code><a href="radar.html#Typedef_Date">Date</a></code> date)
+</pre></div><div class="definition"><h4 id="Fn_IndexService_price_change">Function: IndexService.price_change</h4>
+<pre><code>double</code> price_change(<code>string</code> symbol,
+                    <code><a href="radar.html#Typedef_Date">Date</a></code> start_date,
+                    <code><a href="radar.html#Typedef_Date">Date</a></code> end_date)
 </pre></div><h3 id="Svc_AnalyzerController">Service: AnalyzerController</h3>
 <div class="definition"><h4 id="Fn_AnalyzerController_analyzers">Function: AnalyzerController.analyzers</h4>
 <pre><code>list&lt;<code><a href="radar.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code>&gt;</code> analyzers()
@@ -256,6 +277,12 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <i>n</i> o número de dias processados.
 <p/>
 <code>portfolio</code> Estado da carteira no dia que está sendo processado.
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_each_month">Function: AnalyzerController.on_each_month</h4>
+<pre><code>void</code> on_each_month(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> sessionid,
+                   <code><a href="radar.html#Struct_Portfolio">Portfolio</a></code> portfolio)
+</pre>É chamado no final de cada mes durante o processamento da carteira.
+<p/>
+<code>portfolio</code> Estado da carteira no último dia do mes.
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_finish">Function: AnalyzerController.on_finish</h4>
 <pre><code>void</code> on_finish(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id,
                <code><a href="radar.html#Struct_Portfolio">Portfolio</a></code> portfolio)

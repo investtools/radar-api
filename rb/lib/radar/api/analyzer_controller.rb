@@ -35,6 +35,13 @@ module Radar
         def send_on_each_day(sessionid, portfolio)
           send_message('on_each_day', On_each_day_args, :sessionid => sessionid, :portfolio => portfolio)
         end
+        def on_each_month(sessionid, portfolio)
+          send_on_each_month(sessionid, portfolio)
+        end
+
+        def send_on_each_month(sessionid, portfolio)
+          send_message('on_each_month', On_each_month_args, :sessionid => sessionid, :portfolio => portfolio)
+        end
         def on_finish(session_id, portfolio)
           send_on_finish(session_id, portfolio)
         end
@@ -116,6 +123,12 @@ module Radar
         def process_on_each_day(seqid, iprot, oprot)
           args = read_args(iprot, On_each_day_args)
           @handler.on_each_day(args.sessionid, args.portfolio)
+          return
+        end
+
+        def process_on_each_month(seqid, iprot, oprot)
+          args = read_args(iprot, On_each_month_args)
+          @handler.on_each_month(args.sessionid, args.portfolio)
           return
         end
 
@@ -212,6 +225,39 @@ module Radar
       end
 
       class On_each_day_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+
+        FIELDS = {
+
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class On_each_month_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SESSIONID = 1
+        PORTFOLIO = 2
+
+        FIELDS = {
+          SESSIONID => {:type => ::Thrift::Types::I16, :name => 'sessionid'},
+          PORTFOLIO => {:type => ::Thrift::Types::STRUCT, :name => 'portfolio', :class => ::Radar::API::Portfolio}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class On_each_month_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
 
         FIELDS = {
