@@ -101,6 +101,20 @@ module Radar
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'result failed: unknown result')
         end
 
+        def example_result(session_id)
+          send_example_result(session_id)
+          recv_example_result()
+        end
+
+        def send_example_result(session_id)
+          send_message('example_result', Example_result_args, :session_id => session_id)
+        end
+
+        def recv_example_result()
+          result = receive_message(Example_result_result)
+          return
+        end
+
         def destroy_session(session_id)
           send_destroy_session(session_id)
         end
@@ -163,6 +177,13 @@ module Radar
           result = Result_result.new()
           result.success = @handler.result(args.session_id)
           write_result(result, oprot, 'result', seqid)
+        end
+
+        def process_example_result(seqid, iprot, oprot)
+          args = read_args(iprot, Example_result_args)
+          result = Example_result_result.new()
+          @handler.example_result(args.session_id)
+          write_result(result, oprot, 'example_result', seqid)
         end
 
         def process_destroy_session(seqid, iprot, oprot)
@@ -426,6 +447,37 @@ module Radar
 
         FIELDS = {
           SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::API::Result}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Example_result_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SESSION_ID = 1
+
+        FIELDS = {
+          SESSION_ID => {:type => ::Thrift::Types::I16, :name => 'session_id'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Example_result_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+
+        FIELDS = {
+
         }
 
         def struct_fields; FIELDS; end

@@ -240,6 +240,11 @@ service AnalyzerController {
    */
   Result result(1: SessionId session_id)
 
+  /**
+   * É chamado no preview para exibir um exemplo de resultado do Analyzer.
+   */
+  void example_result(1: SessionId session_id)
+
   oneway void destroy_session(1: SessionId session_id)
 }
 
