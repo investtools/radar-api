@@ -20,6 +20,7 @@
 <li><a href="#Fn_SecurityService_price_changes">price_changes</a></li>
 <li><a href="#Fn_SecurityService_price_volatility">price_volatility</a></li>
 <li><a href="#Fn_SecurityService_prices">prices</a></li>
+<li><a href="#Fn_SecurityService_short_name">short_name</a></li>
 </ul>
 <a href="#Svc_IndexService">IndexService</a><br/>
 <ul>
@@ -33,6 +34,7 @@
 <li><a href="#Fn_AnalyzerController_create_session">create_session</a></li>
 <li><a href="#Fn_AnalyzerController_destroy_session">destroy_session</a></li>
 <li><a href="#Fn_AnalyzerController_dump">dump</a></li>
+<li><a href="#Fn_AnalyzerController_example_result">example_result</a></li>
 <li><a href="#Fn_AnalyzerController_on_each_day">on_each_day</a></li>
 <li><a href="#Fn_AnalyzerController_on_each_month">on_each_month</a></li>
 <li><a href="#Fn_AnalyzerController_on_finish">on_finish</a></li>
@@ -182,6 +184,7 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <tr><td>1</td><td>text</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>percent</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>currency</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>number</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_TableCellFormat">Struct: TableCellFormat</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>bold</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
@@ -234,7 +237,9 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <div class="definition"><h4 id="Fn_FundService_name">Function: FundService.name</h4>
 <pre><code>string</code> name(<code><a href="radar.html#Struct_FundId">FundId</a></code> id)
 </pre></div><h3 id="Svc_SecurityService">Service: SecurityService</h3>
-<div class="definition"><h4 id="Fn_SecurityService_prices">Function: SecurityService.prices</h4>
+<div class="definition"><h4 id="Fn_SecurityService_short_name">Function: SecurityService.short_name</h4>
+<pre><code>string</code> short_name(<code><a href="radar.html#Struct_SecurityId">SecurityId</a></code> id)
+</pre></div><div class="definition"><h4 id="Fn_SecurityService_prices">Function: SecurityService.prices</h4>
 <pre><code>list&lt;<code><a href="radar.html#Struct_Price">Price</a></code>&gt;</code> prices(<code><a href="radar.html#Struct_SecurityId">SecurityId</a></code> id,
                    <code><a href="radar.html#Typedef_Date">Date</a></code> start_date,
                    <code><a href="radar.html#Typedef_Date">Date</a></code> end_date)
@@ -309,6 +314,9 @@ uma imagem gerada pelo método <code>dump()</code>.
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_result">Function: AnalyzerController.result</h4>
 <pre><code><a href="radar.html#Struct_Result">Result</a></code> result(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id)
 </pre>É chamado no fim do processamento para pegar o resultado do Analyzer.
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_example_result">Function: AnalyzerController.example_result</h4>
+<pre><code>void</code> example_result(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id)
+</pre>É chamado no preview para exibir um exemplo de resultado do Analyzer.
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_destroy_session">Function: AnalyzerController.destroy_session</h4>
 <pre><code>void</code> destroy_session(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id)
 </pre></div></div></body></html>

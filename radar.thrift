@@ -171,6 +171,7 @@ service FundService {
 }
 
 service SecurityService {
+  string short_name(1: SecurityId id)
   list<Price> prices(1: SecurityId id, 2: Date start_date, 3: Date end_date)
   double price(1: SecurityId id, 2: Date date)
   double price_change(1: SecurityId id, 2: Date start_date, 3: Date end_date)

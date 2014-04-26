@@ -13,6 +13,21 @@ module Radar
       class Client
         include ::Thrift::Client
 
+        def short_name(id)
+          send_short_name(id)
+          return recv_short_name()
+        end
+
+        def send_short_name(id)
+          send_message('short_name', Short_name_args, :id => id)
+        end
+
+        def recv_short_name()
+          result = receive_message(Short_name_result)
+          return result.success unless result.success.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'short_name failed: unknown result')
+        end
+
         def prices(id, start_date, end_date)
           send_prices(id, start_date, end_date)
           return recv_prices()
@@ -93,6 +108,13 @@ module Radar
       class Processor
         include ::Thrift::Processor
 
+        def process_short_name(seqid, iprot, oprot)
+          args = read_args(iprot, Short_name_args)
+          result = Short_name_result.new()
+          result.success = @handler.short_name(args.id)
+          write_result(result, oprot, 'short_name', seqid)
+        end
+
         def process_prices(seqid, iprot, oprot)
           args = read_args(iprot, Prices_args)
           result = Prices_result.new()
@@ -131,6 +153,38 @@ module Radar
       end
 
       # HELPER FUNCTIONS AND STRUCTURES
+
+      class Short_name_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        ID = 1
+
+        FIELDS = {
+          ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::API::SecurityId}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Short_name_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::STRING, :name => 'success'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
 
       class Prices_args
         include ::Thrift::Struct, ::Thrift::Struct_Union

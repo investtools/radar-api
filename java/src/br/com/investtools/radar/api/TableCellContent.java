@@ -39,12 +39,14 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
   private static final org.apache.thrift.protocol.TField TEXT_FIELD_DESC = new org.apache.thrift.protocol.TField("text", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField PERCENT_FIELD_DESC = new org.apache.thrift.protocol.TField("percent", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
   private static final org.apache.thrift.protocol.TField CURRENCY_FIELD_DESC = new org.apache.thrift.protocol.TField("currency", org.apache.thrift.protocol.TType.DOUBLE, (short)3);
+  private static final org.apache.thrift.protocol.TField NUMBER_FIELD_DESC = new org.apache.thrift.protocol.TField("number", org.apache.thrift.protocol.TType.DOUBLE, (short)4);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     TEXT((short)1, "text"),
     PERCENT((short)2, "percent"),
-    CURRENCY((short)3, "currency");
+    CURRENCY((short)3, "currency"),
+    NUMBER((short)4, "number");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -65,6 +67,8 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
           return PERCENT;
         case 3: // CURRENCY
           return CURRENCY;
+        case 4: // NUMBER
+          return NUMBER;
         default:
           return null;
       }
@@ -113,6 +117,8 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     tmpMap.put(_Fields.CURRENCY, new org.apache.thrift.meta_data.FieldMetaData("currency", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
+    tmpMap.put(_Fields.NUMBER, new org.apache.thrift.meta_data.FieldMetaData("number", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(TableCellContent.class, metaDataMap);
   }
@@ -150,6 +156,12 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
     return x;
   }
 
+  public static TableCellContent number(double value) {
+    TableCellContent x = new TableCellContent();
+    x.setNumber(value);
+    return x;
+  }
+
 
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
@@ -169,6 +181,11 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
           break;
         }
         throw new ClassCastException("Was expecting value of type Double for field 'currency', but got " + value.getClass().getSimpleName());
+      case NUMBER:
+        if (value instanceof Double) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type Double for field 'number', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -206,6 +223,15 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
+        case NUMBER:
+          if (field.type == NUMBER_FIELD_DESC.type) {
+            Double number;
+            number = iprot.readDouble();
+            return number;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -230,6 +256,10 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
         Double currency = (Double)value_;
         oprot.writeDouble(currency);
         return;
+      case NUMBER:
+        Double number = (Double)value_;
+        oprot.writeDouble(number);
+        return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
     }
@@ -252,6 +282,10 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
           Double currency;
           currency = iprot.readDouble();
           return currency;
+        case NUMBER:
+          Double number;
+          number = iprot.readDouble();
+          return number;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -275,6 +309,10 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
         Double currency = (Double)value_;
         oprot.writeDouble(currency);
         return;
+      case NUMBER:
+        Double number = (Double)value_;
+        oprot.writeDouble(number);
+        return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
     }
@@ -289,6 +327,8 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
         return PERCENT_FIELD_DESC;
       case CURRENCY:
         return CURRENCY_FIELD_DESC;
+      case NUMBER:
+        return NUMBER_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -349,6 +389,19 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
     value_ = value;
   }
 
+  public double getNumber() {
+    if (getSetField() == _Fields.NUMBER) {
+      return (Double)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'number' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setNumber(double value) {
+    setField_ = _Fields.NUMBER;
+    value_ = value;
+  }
+
   public boolean isSetText() {
     return setField_ == _Fields.TEXT;
   }
@@ -361,6 +414,11 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
 
   public boolean isSetCurrency() {
     return setField_ == _Fields.CURRENCY;
+  }
+
+
+  public boolean isSetNumber() {
+    return setField_ == _Fields.NUMBER;
   }
 
 
