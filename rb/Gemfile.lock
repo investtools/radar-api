@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    radar-api (0.1.4)
+    radar-api (0.1.5)
       thrift (= 0.9.1)
 
 GEM
