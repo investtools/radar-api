@@ -18,9 +18,10 @@ module Radar
     module Event
       EACH_DAY = 0
       EACH_MONTH = 1
-      FINISH = 2
-      VALUE_MAP = {0 => "EACH_DAY", 1 => "EACH_MONTH", 2 => "FINISH"}
-      VALID_VALUES = Set.new([EACH_DAY, EACH_MONTH, FINISH]).freeze
+      CASH_FLOW = 2
+      FINISH = 3
+      VALUE_MAP = {0 => "EACH_DAY", 1 => "EACH_MONTH", 2 => "CASH_FLOW", 3 => "FINISH"}
+      VALID_VALUES = Set.new([EACH_DAY, EACH_MONTH, CASH_FLOW, FINISH]).freeze
     end
 
     module ResultType
@@ -30,6 +31,15 @@ module Radar
       BAR_CHART = 3
       VALUE_MAP = {0 => "TABLE", 1 => "PIE_CHART", 2 => "LINE_CHART", 3 => "BAR_CHART"}
       VALID_VALUES = Set.new([TABLE, PIE_CHART, LINE_CHART, BAR_CHART]).freeze
+    end
+
+    module CashFlowType
+      DIVIDEND = 0
+      INTEREST_ON_OWN_CAPITAL = 1
+      DEPOSIT = 2
+      WITHDRAWAL = 3
+      VALUE_MAP = {0 => "DIVIDEND", 1 => "INTEREST_ON_OWN_CAPITAL", 2 => "DEPOSIT", 3 => "WITHDRAWAL"}
+      VALID_VALUES = Set.new([DIVIDEND, INTEREST_ON_OWN_CAPITAL, DEPOSIT, WITHDRAWAL]).freeze
     end
 
     class StockId
@@ -83,11 +93,15 @@ module Radar
     class IndexLinkedBondId
       include ::Thrift::Struct, ::Thrift::Struct_Union
       INDEX = 1
-      FATOR = 2
+      FACTOR = 2
+      BASE_DATE = 3
+      MATURITY_DATE = 4
 
       FIELDS = {
         INDEX => {:type => ::Thrift::Types::STRUCT, :name => 'index', :class => ::Radar::API::IndexId},
-        FATOR => {:type => ::Thrift::Types::DOUBLE, :name => 'fator'}
+        FACTOR => {:type => ::Thrift::Types::DOUBLE, :name => 'factor'},
+        BASE_DATE => {:type => ::Thrift::Types::I32, :name => 'base_date'},
+        MATURITY_DATE => {:type => ::Thrift::Types::I32, :name => 'maturity_date'}
       }
 
       def struct_fields; FIELDS; end
@@ -471,11 +485,15 @@ module Radar
       ID = 1
       VALUE = 2
       RENTABILITY = 3
+      AVG_PRICE = 4
+      SHARES = 5
 
       FIELDS = {
         ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::API::SecurityId},
         VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'},
-        RENTABILITY => {:type => ::Thrift::Types::DOUBLE, :name => 'rentability'}
+        RENTABILITY => {:type => ::Thrift::Types::DOUBLE, :name => 'rentability'},
+        AVG_PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'avg_price'},
+        SHARES => {:type => ::Thrift::Types::DOUBLE, :name => 'shares'}
       }
 
       def struct_fields; FIELDS; end
@@ -489,15 +507,17 @@ module Radar
     class Portfolio
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
-      RENTABILITY = 2
-      NAV = 3
-      POSITIONS = 4
+      POSITIONS = 2
+      RENTABILITY = 3
+      NAV = 4
+      CASH = 5
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        POSITIONS => {:type => ::Thrift::Types::MAP, :name => 'positions', :key => {:type => ::Thrift::Types::STRING}, :value => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::Position}},
         RENTABILITY => {:type => ::Thrift::Types::DOUBLE, :name => 'rentability'},
         NAV => {:type => ::Thrift::Types::DOUBLE, :name => 'nav'},
-        POSITIONS => {:type => ::Thrift::Types::MAP, :name => 'positions', :key => {:type => ::Thrift::Types::STRING}, :value => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::Position}}
+        CASH => {:type => ::Thrift::Types::DOUBLE, :name => 'cash'}
       }
 
       def struct_fields; FIELDS; end
@@ -541,6 +561,51 @@ module Radar
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
         CLOSE => {:type => ::Thrift::Types::DOUBLE, :name => 'close'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class CashFlow
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DATE = 1
+      VALUE = 2
+      BALANCE = 3
+      TYPE = 4
+
+      FIELDS = {
+        DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'},
+        BALANCE => {:type => ::Thrift::Types::DOUBLE, :name => 'balance'},
+        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::API::CashFlowType}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+        unless @type.nil? || ::Radar::API::CashFlowType::VALID_VALUES.include?(@type)
+          raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Invalid value of field type!')
+        end
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class DailyFundData
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      PRICE = 1
+      DATE = 2
+      NAV = 3
+
+      FIELDS = {
+        PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'},
+        DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        NAV => {:type => ::Thrift::Types::DOUBLE, :name => 'nav'}
       }
 
       def struct_fields; FIELDS; end

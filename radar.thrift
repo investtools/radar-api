@@ -33,7 +33,9 @@ struct FundId {
 
 struct IndexLinkedBondId {
   1: IndexId index
-  2: double fator
+  2: double factor
+  3: Date base_date
+  4: Date maturity_date
 }
 
 union SecurityId {
@@ -126,7 +128,7 @@ struct Table {
 }
 
 enum Event {
-  EACH_DAY, EACH_MONTH, FINISH
+  EACH_DAY, EACH_MONTH, CASH_FLOW, FINISH
 }
 
 
@@ -145,13 +147,16 @@ struct Position {
   1: SecurityId id
   2: double value
   3: double rentability
+  4: double avg_price
+  5: double shares
 }
 
 struct Portfolio {
   1: Date date
-  2: double rentability
-  3: double nav
-  4: map<string, Position> positions
+  2: map<string, Position> positions
+  3: double rentability
+  4: double nav
+  5: double cash
 }
 
 struct AnalyzerConfig {
@@ -166,8 +171,27 @@ struct Price {
   2: double close
 }
 
+enum CashFlowType {
+  DIVIDEND, INTEREST_ON_OWN_CAPITAL, DEPOSIT, WITHDRAWAL
+}
+
+struct CashFlow {
+  1: Date date
+  2: double value
+  3: double balance
+  4: CashFlowType type
+}
+
+struct DailyFundData {
+  1: double price
+  2: Date date
+  3: double nav
+}
+
 service FundService {
   string name(1: FundId id)
+  string short_name(1: FundId id)
+  DailyFundData daily_data(1: FundId id, 2: Date date)
 }
 
 service SecurityService {
@@ -214,6 +238,8 @@ service AnalyzerController {
    * <code>portfolio</code> Estado da carteira no último dia de processamento.
    */
   oneway void on_finish(1: SessionId session_id, 2: Portfolio portfolio)
+
+  oneway void on_cash_flow(1: SessionId session_id, 2: CashFlow cash_flow)
 
   /**
    * É chamado antes do processamento para o Radar receber as configurações do analyzer.

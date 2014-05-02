@@ -11,15 +11,15 @@ import java.util.Map;
 import java.util.HashMap;
 import org.apache.thrift.TEnum;
 
-public enum Event implements org.apache.thrift.TEnum {
-  EACH_DAY(0),
-  EACH_MONTH(1),
-  CASH_FLOW(2),
-  FINISH(3);
+public enum CashFlowType implements org.apache.thrift.TEnum {
+  DIVIDEND(0),
+  INTEREST_ON_OWN_CAPITAL(1),
+  DEPOSIT(2),
+  WITHDRAWAL(3);
 
   private final int value;
 
-  private Event(int value) {
+  private CashFlowType(int value) {
     this.value = value;
   }
 
@@ -34,16 +34,16 @@ public enum Event implements org.apache.thrift.TEnum {
    * Find a the enum type by its integer value, as defined in the Thrift IDL.
    * @return null if the value is not found.
    */
-  public static Event findByValue(int value) { 
+  public static CashFlowType findByValue(int value) { 
     switch (value) {
       case 0:
-        return EACH_DAY;
+        return DIVIDEND;
       case 1:
-        return EACH_MONTH;
+        return INTEREST_ON_OWN_CAPITAL;
       case 2:
-        return CASH_FLOW;
+        return DEPOSIT;
       case 3:
-        return FINISH;
+        return WITHDRAWAL;
       default:
         return null;
     }

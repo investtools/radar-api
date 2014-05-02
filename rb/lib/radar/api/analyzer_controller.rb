@@ -49,6 +49,13 @@ module Radar
         def send_on_finish(session_id, portfolio)
           send_message('on_finish', On_finish_args, :session_id => session_id, :portfolio => portfolio)
         end
+        def on_cash_flow(session_id, cash_flow)
+          send_on_cash_flow(session_id, cash_flow)
+        end
+
+        def send_on_cash_flow(session_id, cash_flow)
+          send_message('on_cash_flow', On_cash_flow_args, :session_id => session_id, :cash_flow => cash_flow)
+        end
         def create_session(session_id, analyzer_id)
           send_create_session(session_id, analyzer_id)
           return recv_create_session()
@@ -149,6 +156,12 @@ module Radar
         def process_on_finish(seqid, iprot, oprot)
           args = read_args(iprot, On_finish_args)
           @handler.on_finish(args.session_id, args.portfolio)
+          return
+        end
+
+        def process_on_cash_flow(seqid, iprot, oprot)
+          args = read_args(iprot, On_cash_flow_args)
+          @handler.on_cash_flow(args.session_id, args.cash_flow)
           return
         end
 
@@ -312,6 +325,39 @@ module Radar
       end
 
       class On_finish_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+
+        FIELDS = {
+
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class On_cash_flow_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SESSION_ID = 1
+        CASH_FLOW = 2
+
+        FIELDS = {
+          SESSION_ID => {:type => ::Thrift::Types::I16, :name => 'session_id'},
+          CASH_FLOW => {:type => ::Thrift::Types::STRUCT, :name => 'cash_flow', :class => ::Radar::API::CashFlow}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class On_cash_flow_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
 
         FIELDS = {

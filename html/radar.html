@@ -11,7 +11,9 @@
 <tr>
 <td>radar</td><td><a href="#Svc_FundService">FundService</a><br/>
 <ul>
+<li><a href="#Fn_FundService_daily_data">daily_data</a></li>
 <li><a href="#Fn_FundService_name">name</a></li>
+<li><a href="#Fn_FundService_short_name">short_name</a></li>
 </ul>
 <a href="#Svc_SecurityService">SecurityService</a><br/>
 <ul>
@@ -35,6 +37,7 @@
 <li><a href="#Fn_AnalyzerController_destroy_session">destroy_session</a></li>
 <li><a href="#Fn_AnalyzerController_dump">dump</a></li>
 <li><a href="#Fn_AnalyzerController_example_result">example_result</a></li>
+<li><a href="#Fn_AnalyzerController_on_cash_flow">on_cash_flow</a></li>
 <li><a href="#Fn_AnalyzerController_on_each_day">on_each_day</a></li>
 <li><a href="#Fn_AnalyzerController_on_each_month">on_each_month</a></li>
 <li><a href="#Fn_AnalyzerController_on_finish">on_finish</a></li>
@@ -45,7 +48,10 @@
 <td><a href="#Struct_AnalyzerConfig">AnalyzerConfig</a><br/>
 <a href="#Struct_BarChart">BarChart</a><br/>
 <a href="#Struct_BarSeries">BarSeries</a><br/>
+<a href="#Struct_CashFlow">CashFlow</a><br/>
+<a href="#Enum_CashFlowType">CashFlowType</a><br/>
 <a href="#Typedef_Color">Color</a><br/>
+<a href="#Struct_DailyFundData">DailyFundData</a><br/>
 <a href="#Typedef_Date">Date</a><br/>
 <a href="#Enum_Event">Event</a><br/>
 <a href="#Struct_FundId">FundId</a><br/>
@@ -89,7 +95,9 @@
 </td></tr>
 <tr><td><code>EACH_MONTH</code></td><td><code>1</code></td><td>
 </td></tr>
-<tr><td><code>FINISH</code></td><td><code>2</code></td><td>
+<tr><td><code>CASH_FLOW</code></td><td><code>2</code></td><td>
+</td></tr>
+<tr><td><code>FINISH</code></td><td><code>3</code></td><td>
 </td></tr>
 </table></div>
 <div class="definition"><h3 id="Enum_ResultType">Enumeration: ResultType</h3>
@@ -101,6 +109,17 @@
 <tr><td><code>LINE_CHART</code></td><td><code>2</code></td><td>
 </td></tr>
 <tr><td><code>BAR_CHART</code></td><td><code>3</code></td><td>
+</td></tr>
+</table></div>
+<div class="definition"><h3 id="Enum_CashFlowType">Enumeration: CashFlowType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>DIVIDEND</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>INTEREST_ON_OWN_CAPITAL</code></td><td><code>1</code></td><td>
+</td></tr>
+<tr><td><code>DEPOSIT</code></td><td><code>2</code></td><td>
+</td></tr>
+<tr><td><code>WITHDRAWAL</code></td><td><code>3</code></td><td>
 </td></tr>
 </table></div>
 <hr/><h2 id="Typedefs">Type declarations</h2>
@@ -134,7 +153,9 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 </table><br/></div><div class="definition"><h3 id="Struct_IndexLinkedBondId">Struct: IndexLinkedBondId</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>index</td><td><code><a href="radar.html#Struct_IndexId">IndexId</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>fator</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>factor</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>base_date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>maturity_date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_SecurityId">Union: SecurityId</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>stock</td><td><code><a href="radar.html#Struct_StockId">StockId</a></code></td><td></td><td>default</td><td></td></tr>
@@ -216,12 +237,15 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <tr><td>1</td><td>id</td><td><code><a href="radar.html#Struct_SecurityId">SecurityId</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>avg_price</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>shares</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Portfolio">Struct: Portfolio</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>3</td><td>nav</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>4</td><td>positions</td><td><code>map&lt;<code>string</code>, <code><a href="radar.html#Struct_Position">Position</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>positions</td><td><code>map&lt;<code>string</code>, <code><a href="radar.html#Struct_Position">Position</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>nav</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>cash</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_AnalyzerConfig">Struct: AnalyzerConfig</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>id</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
@@ -232,10 +256,26 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>close</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_CashFlow">Struct: CashFlow</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>balance</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>type</td><td><code><a href="radar.html#Enum_CashFlowType">CashFlowType</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_DailyFundData">Struct: DailyFundData</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>price</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>nav</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_FundService">Service: FundService</h3>
 <div class="definition"><h4 id="Fn_FundService_name">Function: FundService.name</h4>
 <pre><code>string</code> name(<code><a href="radar.html#Struct_FundId">FundId</a></code> id)
+</pre></div><div class="definition"><h4 id="Fn_FundService_short_name">Function: FundService.short_name</h4>
+<pre><code>string</code> short_name(<code><a href="radar.html#Struct_FundId">FundId</a></code> id)
+</pre></div><div class="definition"><h4 id="Fn_FundService_daily_data">Function: FundService.daily_data</h4>
+<pre><code><a href="radar.html#Struct_DailyFundData">DailyFundData</a></code> daily_data(<code><a href="radar.html#Struct_FundId">FundId</a></code> id,
+                         <code><a href="radar.html#Typedef_Date">Date</a></code> date)
 </pre></div><h3 id="Svc_SecurityService">Service: SecurityService</h3>
 <div class="definition"><h4 id="Fn_SecurityService_short_name">Function: SecurityService.short_name</h4>
 <pre><code>string</code> short_name(<code><a href="radar.html#Struct_SecurityId">SecurityId</a></code> id)
@@ -294,7 +334,10 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 </pre>É chamado ao final do processamento da carteira.
 <p/>
 <code>portfolio</code> Estado da carteira no último dia de processamento.
-<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_create_session">Function: AnalyzerController.create_session</h4>
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_cash_flow">Function: AnalyzerController.on_cash_flow</h4>
+<pre><code>void</code> on_cash_flow(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id,
+                  <code><a href="radar.html#Struct_CashFlow">CashFlow</a></code> cash_flow)
+</pre></div><div class="definition"><h4 id="Fn_AnalyzerController_create_session">Function: AnalyzerController.create_session</h4>
 <pre><code><a href="radar.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code> create_session(<code><a href="radar.html#Typedef_SessionId">SessionId</a></code> session_id,
                               <code>string</code> analyzer_id)
 </pre>É chamado antes do processamento para o Radar receber as configurações do analyzer.
