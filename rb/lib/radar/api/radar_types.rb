@@ -514,7 +514,7 @@ module Radar
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
-        POSITIONS => {:type => ::Thrift::Types::MAP, :name => 'positions', :key => {:type => ::Thrift::Types::STRING}, :value => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::Position}},
+        POSITIONS => {:type => ::Thrift::Types::LIST, :name => 'positions', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::Position}},
         RENTABILITY => {:type => ::Thrift::Types::DOUBLE, :name => 'rentability'},
         NAV => {:type => ::Thrift::Types::DOUBLE, :name => 'nav'},
         CASH => {:type => ::Thrift::Types::DOUBLE, :name => 'cash'}

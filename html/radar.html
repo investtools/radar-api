@@ -242,7 +242,7 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 </table><br/></div><div class="definition"><h3 id="Struct_Portfolio">Struct: Portfolio</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>date</td><td><code><a href="radar.html#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>positions</td><td><code>map&lt;<code>string</code>, <code><a href="radar.html#Struct_Position">Position</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>positions</td><td><code>list&lt;<code><a href="radar.html#Struct_Position">Position</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>nav</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>5</td><td>cash</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
@@ -311,7 +311,28 @@ Exemplo: Vermelho = <code>#FF0000</code> =
                     <code><a href="radar.html#Typedef_Date">Date</a></code> start_date,
                     <code><a href="radar.html#Typedef_Date">Date</a></code> end_date)
 </pre></div><h3 id="Svc_AnalyzerController">Service: AnalyzerController</h3>
-<div class="definition"><h4 id="Fn_AnalyzerController_analyzers">Function: AnalyzerController.analyzers</h4>
+<p/>
+O AnalyzerController deve ser implementado pela app e seus métodos são chamados pelo Radar.
+<p/>
+Suas funções principais são registrar os analyzers, controlar o ciclo de vida das sessões dos analyzers e repassar os eventos para os mesmos.
+<p/>
+Método que registra os analyzers: <a href="#Fn_AnalyzerController_analyzers">analyzers</a>
+<p/>
+Métodos que controlam o ciclo de vida da sessão:
+<a href="#Fn_AnalyzerController_create_session">create_session</a> (criação),
+<a href="#Fn_AnalyzerController_result">result</a> (destruição)
+<p/>
+Métodos que devem repassar o controle para os analyzers:
+<a href="#Fn_AnalyzerController_create_session">on_each_day</a>,
+<a href="#Fn_AnalyzerController_on_each_month">on_each_month</a>,
+<a href="#Fn_AnalyzerController_on_finish">on_finish</a>,
+<a href="#Fn_AnalyzerController_on_cash_flow">on_cash_flow</a>,
+<a href="#Fn_AnalyzerController_dump">dump</a>,
+<a href="#Fn_AnalyzerController_resume">resume</a>,
+<a href="#Fn_AnalyzerController_result">result</a>,
+<a href="#Fn_AnalyzerController_example_result">example_result</a>
+<p/>
+<br/><div class="definition"><h4 id="Fn_AnalyzerController_analyzers">Function: AnalyzerController.analyzers</h4>
 <pre><code>list&lt;<code><a href="radar.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code>&gt;</code> analyzers()
 </pre>É chamado quando
 <p/>

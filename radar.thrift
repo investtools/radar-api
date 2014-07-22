@@ -153,7 +153,7 @@ struct Position {
 
 struct Portfolio {
   1: Date date
-  2: map<string, Position> positions
+  2: list<Position> positions
   3: double rentability
   4: double nav
   5: double cash
@@ -209,6 +209,29 @@ service IndexService {
   double price_change(1: string symbol, 2: Date start_date, 3: Date end_date)
 }
 
+/**
+ *
+ * O AnalyzerController deve ser implementado pela app e seus métodos são chamados pelo Radar.
+ *
+ * Suas funções principais são registrar os analyzers, controlar o ciclo de vida das sessões dos analyzers e repassar os eventos para os mesmos.
+ *
+ * Método que registra os analyzers: <a href="#Fn_AnalyzerController_analyzers">analyzers</a>
+ *
+ * Métodos que controlam o ciclo de vida da sessão:
+ * <a href="#Fn_AnalyzerController_create_session">create_session</a> (criação),
+ * <a href="#Fn_AnalyzerController_result">result</a> (destruição)
+ *
+ * Métodos que devem repassar o controle para os analyzers:
+ * <a href="#Fn_AnalyzerController_create_session">on_each_day</a>,
+ * <a href="#Fn_AnalyzerController_on_each_month">on_each_month</a>,
+ * <a href="#Fn_AnalyzerController_on_finish">on_finish</a>,
+ * <a href="#Fn_AnalyzerController_on_cash_flow">on_cash_flow</a>,
+ * <a href="#Fn_AnalyzerController_dump">dump</a>,
+ * <a href="#Fn_AnalyzerController_resume">resume</a>,
+ * <a href="#Fn_AnalyzerController_result">result</a>,
+ * <a href="#Fn_AnalyzerController_example_result">example_result</a>
+ *
+ */
 service AnalyzerController {
 
   /**
