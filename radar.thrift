@@ -151,12 +151,33 @@ struct Position {
   5: double shares
 }
 
+/**
+ * Criado na versão 0.2.1
+ */
+union Settlement {
+  1: Date date
+  2: i16 period
+}
+
+/**
+ * Criado na versão 0.2.1
+ */
+struct Provision {
+  1: double value
+  2: string description
+  3: Settlement settlement
+}
+
 struct Portfolio {
   1: Date date
   2: list<Position> positions
   3: double rentability
   4: double nav
   5: double cash
+  /**
+   * Criado na versão 0.2.1
+   */
+  6: list<Provision> provisions
 }
 
 struct AnalyzerConfig {

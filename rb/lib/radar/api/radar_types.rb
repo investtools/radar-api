@@ -504,6 +504,57 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
+    # Criado na versão 0.2.1
+    class Settlement < ::Thrift::Union
+      include ::Thrift::Struct_Union
+      class << self
+        def date(val)
+          Settlement.new(:date, val)
+        end
+
+        def period(val)
+          Settlement.new(:period, val)
+        end
+      end
+
+      DATE = 1
+      PERIOD = 2
+
+      FIELDS = {
+        DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        PERIOD => {:type => ::Thrift::Types::I16, :name => 'period'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+        raise(StandardError, 'Union fields are not set.') if get_set_field.nil? || get_value.nil?
+      end
+
+      ::Thrift::Union.generate_accessors self
+    end
+
+    # Criado na versão 0.2.1
+    class Provision
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      VALUE = 1
+      DESCRIPTION = 2
+      SETTLEMENT = 3
+
+      FIELDS = {
+        VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'},
+        DESCRIPTION => {:type => ::Thrift::Types::STRING, :name => 'description'},
+        SETTLEMENT => {:type => ::Thrift::Types::STRUCT, :name => 'settlement', :class => ::Radar::API::Settlement}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class Portfolio
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
@@ -511,13 +562,16 @@ module Radar
       RENTABILITY = 3
       NAV = 4
       CASH = 5
+      PROVISIONS = 6
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
         POSITIONS => {:type => ::Thrift::Types::LIST, :name => 'positions', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::Position}},
         RENTABILITY => {:type => ::Thrift::Types::DOUBLE, :name => 'rentability'},
         NAV => {:type => ::Thrift::Types::DOUBLE, :name => 'nav'},
-        CASH => {:type => ::Thrift::Types::DOUBLE, :name => 'cash'}
+        CASH => {:type => ::Thrift::Types::DOUBLE, :name => 'cash'},
+        # Criado na versão 0.2.1
+        PROVISIONS => {:type => ::Thrift::Types::LIST, :name => 'provisions', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::Provision}}
       }
 
       def struct_fields; FIELDS; end
