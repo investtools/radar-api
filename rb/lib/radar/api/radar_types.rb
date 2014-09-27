@@ -266,10 +266,36 @@ module Radar
       include ::Thrift::Struct, ::Thrift::Struct_Union
       NAME = 1
       DATA = 2
+      STACK_NAME = 3
 
       FIELDS = {
         NAME => {:type => ::Thrift::Types::STRING, :name => 'name'},
-        DATA => {:type => ::Thrift::Types::LIST, :name => 'data', :element => {:type => ::Thrift::Types::DOUBLE}}
+        DATA => {:type => ::Thrift::Types::LIST, :name => 'data', :element => {:type => ::Thrift::Types::DOUBLE}},
+        # Criado na versão 0.2.2.
+# 
+# Só é necessário se <code>BarChart.options.stacked = true</code> e a intenção for agrupar as pilhas.
+        STACK_NAME => {:type => ::Thrift::Types::STRING, :name => 'stack_name', :optional => true}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    # Criado na versão 0.2.2.
+    class BarChartOptions
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      STACKED = 1
+      PERCENT = 2
+      Y_AXIS_TITLE = 4
+
+      FIELDS = {
+        STACKED => {:type => ::Thrift::Types::BOOL, :name => 'stacked', :default => false},
+        PERCENT => {:type => ::Thrift::Types::BOOL, :name => 'percent', :default => false},
+        Y_AXIS_TITLE => {:type => ::Thrift::Types::STRING, :name => 'y_axis_title', :optional => true}
       }
 
       def struct_fields; FIELDS; end
@@ -285,11 +311,14 @@ module Radar
       TITLE = 1
       SERIES = 2
       CATEGORIES = 3
+      OPTIONS = 4
 
       FIELDS = {
         TITLE => {:type => ::Thrift::Types::STRING, :name => 'title'},
         SERIES => {:type => ::Thrift::Types::LIST, :name => 'series', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::API::BarSeries}},
-        CATEGORIES => {:type => ::Thrift::Types::LIST, :name => 'categories', :element => {:type => ::Thrift::Types::STRING}}
+        CATEGORIES => {:type => ::Thrift::Types::LIST, :name => 'categories', :element => {:type => ::Thrift::Types::STRING}},
+        # Criado na versão 0.2.2.
+        OPTIONS => {:type => ::Thrift::Types::STRUCT, :name => 'options', :class => ::Radar::API::BarChartOptions}
       }
 
       def struct_fields; FIELDS; end

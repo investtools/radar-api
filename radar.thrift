@@ -83,12 +83,31 @@ struct LineChart {
 struct BarSeries {
   1: string name
   2: list<double> data
+  /**
+   * Criado na versão 0.2.2.
+   *
+   * Só é necessário se <code>BarChart.options.stacked = true</code> e a intenção for agrupar as pilhas.
+   */
+  3: optional string stack_name
+}
+
+/**
+ * Criado na versão 0.2.2.
+ */
+struct BarChartOptions {
+  1: bool stacked = false
+  2: bool percent = false
+  4: optional string y_axis_title
 }
 
 struct BarChart {
   1: string title
   2: list<BarSeries> series
   3: list<string> categories
+  /**
+   * Criado na versão 0.2.2.
+   */
+  4: BarChartOptions options
 }
 
 struct Text {

@@ -47,6 +47,7 @@
 </td>
 <td><a href="#Struct_AnalyzerConfig">AnalyzerConfig</a><br/>
 <a href="#Struct_BarChart">BarChart</a><br/>
+<a href="#Struct_BarChartOptions">BarChartOptions</a><br/>
 <a href="#Struct_BarSeries">BarSeries</a><br/>
 <a href="#Struct_CashFlow">CashFlow</a><br/>
 <a href="#Enum_CashFlowType">CashFlowType</a><br/>
@@ -193,11 +194,23 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>data</td><td><code>list&lt;<code>double</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-</table><br/></div><div class="definition"><h3 id="Struct_BarChart">Struct: BarChart</h3>
+<tr><td>3</td><td>stack_name</td><td><code>string</code></td><td>Criado na versão 0.2.2.
+
+Só é necessário se <code>BarChart.options.stacked = true</code> e a intenção for agrupar as pilhas.
+</td><td>optional</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_BarChartOptions">Struct: BarChartOptions</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>stacked</td><td><code>bool</code></td><td></td><td>default</td><td>0</td></tr>
+<tr><td>2</td><td>percent</td><td><code>bool</code></td><td></td><td>default</td><td>0</td></tr>
+<tr><td>4</td><td>y_axis_title</td><td><code>string</code></td><td></td><td>optional</td><td></td></tr>
+</table><br/>Criado na versão 0.2.2.
+<br/></div><div class="definition"><h3 id="Struct_BarChart">Struct: BarChart</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="radar.html#Struct_BarSeries">BarSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>categories</td><td><code>list&lt;<code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>options</td><td><code><a href="radar.html#Struct_BarChartOptions">BarChartOptions</a></code></td><td>Criado na versão 0.2.2.
+</td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Text">Struct: Text</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
