@@ -2,8 +2,8 @@ box: wercker/default
 
 deploy:
   steps:
-    - akelmanson/bundle-install:
-        working-dir: rb
+    - bundle-install:
+        cwd: rb/
     - script:
         name: define rubygems credentials
         code: 'mkdir ~/.gem && printf -- "---\n:rubygems_api_key: $RUBYGEMS_API_KEY" > ~/.gem/credentials'
