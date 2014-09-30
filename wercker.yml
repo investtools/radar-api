@@ -1,0 +1,20 @@
+deploy:
+  steps:
+    - script:
+      name: define rubygems credentials
+      code: 'mkdir ~/.gem && printf "---\n:rubygems_api_key: $RUBYGEMS_API_KEY" > ~/.gem/credentials'
+    - script:
+      name: release ruby gem
+      code: 'cd rb && rake release'
+    - script:
+      name: update documentation
+      code: |
+        TMP_DIR=`mktemp -d`
+        cp -R html/* "$TMP_DIR"
+        git checkout gh-pages
+        find . -not -path "./.git/*" -not -name ".git" -delete
+        mv $TMP_DIR/* .
+        rm -rf "$TMP_DIR"
+        git add -A .
+        git commit -m 'Documentation update'
+        git push git@github.com:investtools/radar-api.git gh-pages
