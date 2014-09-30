@@ -1,5 +1,10 @@
 box: wercker/default
 
+build:
+  steps:
+    - akelmanson/bundle-install:
+        working-dir: rb
+
 deploy:
   steps:
     - script:
@@ -7,7 +12,7 @@ deploy:
         code: 'mkdir ~/.gem && printf -- "---\n:rubygems_api_key: $RUBYGEMS_API_KEY" > ~/.gem/credentials'
     - script:
         name: release ruby gem
-        code: 'cd rb && bundle install && bundle exec rake release'
+        code: 'cd rb && bundle exec rake release'
     - script:
         name: update documentation
         code: |
