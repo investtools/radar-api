@@ -7,7 +7,7 @@ deploy:
         code: 'mkdir ~/.gem && printf -- "---\n:rubygems_api_key: $RUBYGEMS_API_KEY" > ~/.gem/credentials'
     - script:
         name: release ruby gem
-        code: 'cd rb && rake release'
+        code: 'cd rb && bundle install && bundle exec rake release'
     - script:
         name: update documentation
         code: |
