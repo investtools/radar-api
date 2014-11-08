@@ -1,4 +1,5 @@
 namespace rb Radar.API
+namespace js Radar.API
 namespace java br.com.investtools.radar.api
 
 /**
