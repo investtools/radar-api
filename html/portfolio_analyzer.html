@@ -1,0 +1,299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<title>Thrift module: portfolio_analyzer</title></head><body>
+<div class="container-fluid">
+<h1>Thrift module: portfolio_analyzer</h1>
+<table class="table-bordered table-striped table-condensed"><thead><th>Module</th><th>Services</th><th>Data types</th><th>Constants</th></thead>
+<tr>
+<td>portfolio_analyzer</td><td><a href="#Svc_AnalyzerController">AnalyzerController</a><br/>
+<ul>
+<li><a href="#Fn_AnalyzerController_analyzers">analyzers</a></li>
+<li><a href="#Fn_AnalyzerController_create_session">create_session</a></li>
+<li><a href="#Fn_AnalyzerController_destroy_session">destroy_session</a></li>
+<li><a href="#Fn_AnalyzerController_dump">dump</a></li>
+<li><a href="#Fn_AnalyzerController_example_result">example_result</a></li>
+<li><a href="#Fn_AnalyzerController_on_cash_flow">on_cash_flow</a></li>
+<li><a href="#Fn_AnalyzerController_on_each_day">on_each_day</a></li>
+<li><a href="#Fn_AnalyzerController_on_each_month">on_each_month</a></li>
+<li><a href="#Fn_AnalyzerController_on_finish">on_finish</a></li>
+<li><a href="#Fn_AnalyzerController_result">result</a></li>
+<li><a href="#Fn_AnalyzerController_resume">resume</a></li>
+</ul>
+</td>
+<td><a href="#Struct_AnalyzerConfig">AnalyzerConfig</a><br/>
+<a href="#Struct_BarChart">BarChart</a><br/>
+<a href="#Struct_BarChartOptions">BarChartOptions</a><br/>
+<a href="#Struct_BarSeries">BarSeries</a><br/>
+<a href="#Struct_CashFlow">CashFlow</a><br/>
+<a href="#Enum_CashFlowType">CashFlowType</a><br/>
+<a href="#Enum_Event">Event</a><br/>
+<a href="#Struct_LineChart">LineChart</a><br/>
+<a href="#Struct_LineChartOptions">LineChartOptions</a><br/>
+<a href="#Struct_LineSeries">LineSeries</a><br/>
+<a href="#Enum_LineSeriesType">LineSeriesType</a><br/>
+<a href="#Struct_PieChart">PieChart</a><br/>
+<a href="#Struct_PieSeries">PieSeries</a><br/>
+<a href="#Struct_Point">Point</a><br/>
+<a href="#Struct_Portfolio">Portfolio</a><br/>
+<a href="#Struct_Position">Position</a><br/>
+<a href="#Struct_Provision">Provision</a><br/>
+<a href="#Struct_Result">Result</a><br/>
+<a href="#Enum_ResultType">ResultType</a><br/>
+<a href="#Typedef_SessionId">SessionId</a><br/>
+<a href="#Struct_Settlement">Settlement</a><br/>
+<a href="#Struct_Table">Table</a><br/>
+<a href="#Struct_TableCell">TableCell</a><br/>
+<a href="#Struct_TableCellContent">TableCellContent</a><br/>
+<a href="#Struct_TableCellFormat">TableCellFormat</a><br/>
+<a href="#Struct_TableRow">TableRow</a><br/>
+<a href="#Struct_Text">Text</a><br/>
+</td>
+<td></code></td>
+</tr></table>
+<hr/><h2 id="Enumerations">Enumerations</h2>
+<div class="definition"><h3 id="Enum_LineSeriesType">Enumeration: LineSeriesType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>LINE</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>AREA</code></td><td><code>1</code></td><td>
+</td></tr>
+</table></div>
+<div class="definition"><h3 id="Enum_Event">Enumeration: Event</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>EACH_DAY</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>EACH_MONTH</code></td><td><code>1</code></td><td>
+</td></tr>
+<tr><td><code>CASH_FLOW</code></td><td><code>2</code></td><td>
+</td></tr>
+<tr><td><code>FINISH</code></td><td><code>3</code></td><td>
+</td></tr>
+</table></div>
+<div class="definition"><h3 id="Enum_ResultType">Enumeration: ResultType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>TABLE</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>PIE_CHART</code></td><td><code>1</code></td><td>
+</td></tr>
+<tr><td><code>LINE_CHART</code></td><td><code>2</code></td><td>
+</td></tr>
+<tr><td><code>BAR_CHART</code></td><td><code>3</code></td><td>
+</td></tr>
+</table></div>
+<div class="definition"><h3 id="Enum_CashFlowType">Enumeration: CashFlowType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>DIVIDEND</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>INTEREST_ON_OWN_CAPITAL</code></td><td><code>1</code></td><td>
+</td></tr>
+<tr><td><code>DEPOSIT</code></td><td><code>2</code></td><td>
+</td></tr>
+<tr><td><code>WITHDRAWAL</code></td><td><code>3</code></td><td>
+</td></tr>
+</table></div>
+<hr/><h2 id="Typedefs">Type declarations</h2>
+<div class="definition"><h3 id="Typedef_SessionId">Typedef: SessionId</h3>
+<p><strong>Base type:</strong>&nbsp;<code>i16</code></p>
+</div>
+<hr/><h2 id="Structs">Data structures</h2>
+<div class="definition"><h3 id="Struct_Point">Struct: Point</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>x</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>y</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_PieSeries">Struct: PieSeries</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_PieChart">Struct: PieChart</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_PieSeries">PieSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_LineSeries">Struct: LineSeries</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>points</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_Point">Point</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>type</td><td><code><a href="portfolio_analyzer.html#Enum_LineSeriesType">LineSeriesType</a></code></td><td></td><td>default</td><td><code><code><a href="#Const_LineSeriesType.LINE">LineSeriesType.LINE</a></code></code></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_LineChartOptions">Struct: LineChartOptions</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>stacked</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>compare</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_LineChart">Struct: LineChart</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_LineSeries">LineSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>options</td><td><code><a href="portfolio_analyzer.html#Struct_LineChartOptions">LineChartOptions</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_BarSeries">Struct: BarSeries</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>data</td><td><code>list&lt;<code>double</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>stack_name</td><td><code>string</code></td><td>Criado na versão 0.2.2.
+
+Só é necessário se <code>BarChart.options.stacked = true</code> e a intenção for agrupar as pilhas.
+</td><td>optional</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_BarChartOptions">Struct: BarChartOptions</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>stacked</td><td><code>bool</code></td><td></td><td>default</td><td><code>false</code></td></tr>
+<tr><td>2</td><td>percent</td><td><code>bool</code></td><td></td><td>default</td><td><code>false</code></td></tr>
+<tr><td>4</td><td>y_axis_title</td><td><code>string</code></td><td></td><td>optional</td><td></td></tr>
+</table><br/>Criado na versão 0.2.2.
+<br/></div><div class="definition"><h3 id="Struct_BarChart">Struct: BarChart</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_BarSeries">BarSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>categories</td><td><code>list&lt;<code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>options</td><td><code><a href="portfolio_analyzer.html#Struct_BarChartOptions">BarChartOptions</a></code></td><td>Criado na versão 0.2.2.
+</td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_Text">Struct: Text</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>content</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TableCellContent">Union: TableCellContent</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>text</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>percent</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>currency</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>number</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TableCellFormat">Struct: TableCellFormat</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>bold</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>italic</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>color</td><td><code><a href="common.html#Typedef_Color">common.Color</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>colspan</td><td><code>i16</code></td><td></td><td>default</td><td><code>1</code></td></tr>
+<tr><td>5</td><td>rowspan</td><td><code>i16</code></td><td></td><td>default</td><td><code>1</code></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TableCell">Struct: TableCell</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>content</td><td><code><a href="portfolio_analyzer.html#Struct_TableCellContent">TableCellContent</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>format</td><td><code><a href="portfolio_analyzer.html#Struct_TableCellFormat">TableCellFormat</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_TableRow">Struct: TableRow</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>cells</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_TableCell">TableCell</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_Table">Struct: Table</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>header</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>body</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>footer</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_Result">Union: Result</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>table</td><td><code><a href="portfolio_analyzer.html#Struct_Table">Table</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>pie_chart</td><td><code><a href="portfolio_analyzer.html#Struct_PieChart">PieChart</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>line_chart</td><td><code><a href="portfolio_analyzer.html#Struct_LineChart">LineChart</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>bar_chart</td><td><code><a href="portfolio_analyzer.html#Struct_BarChart">BarChart</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_Position">Struct: Position</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>id</td><td><code><a href="common.html#Struct_SecurityId">common.SecurityId</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>avg_price</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>shares</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_Settlement">Union: Settlement</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>date</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>period</td><td><code>i16</code></td><td></td><td>default</td><td></td></tr>
+</table><br/>Criado na versão 0.2.1
+<br/></div><div class="definition"><h3 id="Struct_Provision">Struct: Provision</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>description</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>settlement</td><td><code><a href="portfolio_analyzer.html#Struct_Settlement">Settlement</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/>Criado na versão 0.2.1
+<br/></div><div class="definition"><h3 id="Struct_Portfolio">Struct: Portfolio</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>date</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>positions</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_Position">Position</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>nav</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>cash</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>provisions</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_Provision">Provision</a></code>&gt;</code></td><td>Criado na versão 0.2.1
+</td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_AnalyzerConfig">Struct: AnalyzerConfig</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>id</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>result_type</td><td><code><a href="portfolio_analyzer.html#Enum_ResultType">ResultType</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>accepted_events</td><td><code>set&lt;<code><a href="portfolio_analyzer.html#Enum_Event">Event</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_CashFlow">Struct: CashFlow</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>date</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>balance</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>type</td><td><code><a href="portfolio_analyzer.html#Enum_CashFlowType">CashFlowType</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><hr/><h2 id="Services">Services</h2>
+<h3 id="Svc_AnalyzerController">Service: AnalyzerController</h3>
+
+O AnalyzerController deve ser implementado pela app e seus métodos são chamados pelo Radar.
+
+Suas funções principais são registrar os analyzers, controlar o ciclo de vida das sessões dos analyzers e repassar os eventos para os mesmos.
+
+Método que registra os analyzers: <a href="#Fn_AnalyzerController_analyzers">analyzers</a>
+
+Métodos que controlam o ciclo de vida da sessão:
+<a href="#Fn_AnalyzerController_create_session">create_session</a> (criação),
+<a href="#Fn_AnalyzerController_result">result</a> (destruição)
+
+Métodos que devem repassar o controle para os analyzers:
+<a href="#Fn_AnalyzerController_create_session">on_each_day</a>,
+<a href="#Fn_AnalyzerController_on_each_month">on_each_month</a>,
+<a href="#Fn_AnalyzerController_on_finish">on_finish</a>,
+<a href="#Fn_AnalyzerController_on_cash_flow">on_cash_flow</a>,
+<a href="#Fn_AnalyzerController_dump">dump</a>,
+<a href="#Fn_AnalyzerController_resume">resume</a>,
+<a href="#Fn_AnalyzerController_result">result</a>,
+<a href="#Fn_AnalyzerController_example_result">example_result</a>
+
+<br/><div class="definition"><h4 id="Fn_AnalyzerController_analyzers">Function: AnalyzerController.analyzers</h4>
+<pre><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code>&gt;</code> analyzers()
+</pre>É chamado quando
+
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_each_day">Function: AnalyzerController.on_each_day</h4>
+<pre><code>void</code> on_each_day(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> sessionid,
+                 <code><a href="portfolio_analyzer.html#Struct_Portfolio">Portfolio</a></code> portfolio)
+</pre>É chamado <i>n</i> vezes durante o processamento da carteira, sendo
+<i>n</i> o número de dias processados.
+
+<code>portfolio</code> Estado da carteira no dia que está sendo processado.
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_each_month">Function: AnalyzerController.on_each_month</h4>
+<pre><code>void</code> on_each_month(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> sessionid,
+                   <code><a href="portfolio_analyzer.html#Struct_Portfolio">Portfolio</a></code> portfolio)
+</pre>É chamado no final de cada mes durante o processamento da carteira.
+
+<code>portfolio</code> Estado da carteira no último dia do mes.
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_finish">Function: AnalyzerController.on_finish</h4>
+<pre><code>void</code> on_finish(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id,
+               <code><a href="portfolio_analyzer.html#Struct_Portfolio">Portfolio</a></code> portfolio)
+</pre>É chamado ao final do processamento da carteira.
+
+<code>portfolio</code> Estado da carteira no último dia de processamento.
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_cash_flow">Function: AnalyzerController.on_cash_flow</h4>
+<pre><code>void</code> on_cash_flow(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id,
+                  <code><a href="portfolio_analyzer.html#Struct_CashFlow">CashFlow</a></code> cash_flow)
+</pre></div><div class="definition"><h4 id="Fn_AnalyzerController_create_session">Function: AnalyzerController.create_session</h4>
+<pre><code><a href="portfolio_analyzer.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code> create_session(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id,
+                              <code>string</code> analyzer_id)
+</pre>É chamado antes do processamento para o Radar receber as configurações do analyzer.
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_dump">Function: AnalyzerController.dump</h4>
+<pre><code>binary</code> dump(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id)
+</pre>É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
+para poder restaurar nos próximos processamentos.
+
+O retorno pode ter qualquer formato, desde que seja compreendido pelo método
+<code>resume()</code>, já que posteriormente o conteúdo do retorno será
+passado como argumento para o método.
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_resume">Function: AnalyzerController.resume</h4>
+<pre><code>void</code> resume(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id,
+            <code>binary</code> data)
+</pre>É chamado sempre que o Radar quiser começar a processar uma carteira à partir de
+uma imagem gerada pelo método <code>dump()</code>.
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_result">Function: AnalyzerController.result</h4>
+<pre><code><a href="portfolio_analyzer.html#Struct_Result">Result</a></code> result(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id)
+</pre>É chamado no fim do processamento para pegar o resultado do Analyzer.
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_example_result">Function: AnalyzerController.example_result</h4>
+<pre><code>void</code> example_result(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id)
+</pre>É chamado no preview para exibir um exemplo de resultado do Analyzer.
+<br/></div><div class="definition"><h4 id="Fn_AnalyzerController_destroy_session">Function: AnalyzerController.destroy_session</h4>
+<pre><code>void</code> destroy_session(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id)
+</pre></div></div></body></html>

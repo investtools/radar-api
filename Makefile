@@ -3,18 +3,23 @@ SOURCE=radar.thrift
 
 all: js/lib rb/lib/radar/api java/src html
 
-js/lib: $(SOURCE)
+js/lib: *.thrift
 	rm -rf js/lib/*
-	$(THRIFT) --gen js:node  -out js/lib           $(SOURCE)
+	$(THRIFT) -r --gen js:node  -out js/lib           $(SOURCE)
 
-rb/lib/radar/api: $(SOURCE)
+rb/lib/radar/api: *.thrift 
 	rm -rf rb/lib/radar/api/*
-	$(THRIFT) --gen rb       -out rb/lib/radar/api $(SOURCE)
+	$(THRIFT) -r --gen rb       -out rb/lib/radar/api $(SOURCE)
 
-java/src: $(SOURCE)
+java/src: *.thrift 
 	rm -rf java/src/*
-	$(THRIFT) --gen java     -out java/src         $(SOURCE)
+	$(THRIFT) -r --gen java     -out java/src         $(SOURCE)
 
-html: $(SOURCE)
+html: *.thrift 
 	rm -rf html/*
-	$(THRIFT) --gen html     -out html             $(SOURCE)
+	$(THRIFT) -r --gen html     -out html             $(SOURCE)
+
+release: js/lib
+	#git diff --exit-code
+	#git diff --cached --exit-code
+	cd js && npm publish

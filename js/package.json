@@ -1,6 +1,6 @@
 {
   "name": "radar-api",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/investtools/radar-api/issues"
   },
-  "homepage": "https://github.com/investtools/radar-api"
+  "homepage": "https://github.com/investtools/radar-api",
+  "dependencies": {
+    "thrift": ">=0.9.0"
+  }
 }

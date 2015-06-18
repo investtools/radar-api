@@ -1,6 +1,6 @@
 guard :shell do
-  watch('radar.thrift') do |m|
-    success = system 'make'
+  watch(%r{\.thrift$}) do |m|
+    success = system 'make all'
     n 'Build failed!', 'radar.thrift', :failed unless success
     nil
   end

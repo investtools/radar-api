@@ -1,0 +1,1 @@
+require 'radar/api/transaction_sync_types'
