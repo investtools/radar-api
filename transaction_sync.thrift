@@ -3,13 +3,15 @@ namespace java br.com.investtools.radar.api
 
 include 'common.thrift'
 
-union Transaction {
-  1: StockBuyTransaction stock_buy
-  2: StockSellTransaction stock_sell
-}
-
 enum StockBuyTransactionType {
   REGULAR = 1, IPO = 2
+}
+
+struct StockSellTransaction {
+  1: common.Date date
+  2: common.StockId stock
+  3: i32 shares
+  4: double price
 }
 
 struct StockBuyTransaction {
@@ -20,11 +22,9 @@ struct StockBuyTransaction {
   5: StockBuyTransactionType type = 1
 }
 
-struct StockSellTransaction {
-  1: common.Date date
-  2: common.StockId stock
-  3: i32 shares
-  4: double price
+union Transaction {
+  1: StockBuyTransaction stock_buy
+  2: StockSellTransaction stock_sell
 }
 
 struct TransactionSynchronizerConfig {

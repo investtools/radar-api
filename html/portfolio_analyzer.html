@@ -111,12 +111,12 @@
 </table><br/></div><div class="definition"><h3 id="Struct_PieChart">Struct: PieChart</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_PieSeries">PieSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="#Struct_PieSeries">PieSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_LineSeries">Struct: LineSeries</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>points</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_Point">Point</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>3</td><td>type</td><td><code><a href="portfolio_analyzer.html#Enum_LineSeriesType">LineSeriesType</a></code></td><td></td><td>default</td><td><code><code><a href="#Const_LineSeriesType.LINE">LineSeriesType.LINE</a></code></code></td></tr>
+<tr><td>2</td><td>points</td><td><code>list&lt;<code><a href="#Struct_Point">Point</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>type</td><td><code><a href="#Enum_LineSeriesType">LineSeriesType</a></code></td><td></td><td>default</td><td><code><code><a href="#Const_LineSeriesType.LINE">LineSeriesType.LINE</a></code></code></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_LineChartOptions">Struct: LineChartOptions</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>stacked</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
@@ -124,8 +124,8 @@
 </table><br/></div><div class="definition"><h3 id="Struct_LineChart">Struct: LineChart</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_LineSeries">LineSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>3</td><td>options</td><td><code><a href="portfolio_analyzer.html#Struct_LineChartOptions">LineChartOptions</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="#Struct_LineSeries">LineSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>options</td><td><code><a href="#Struct_LineChartOptions">LineChartOptions</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_BarSeries">Struct: BarSeries</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
@@ -143,9 +143,9 @@ Só é necessário se <code>BarChart.options.stacked = true</code> e a intençã
 <br/></div><div class="definition"><h3 id="Struct_BarChart">Struct: BarChart</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_BarSeries">BarSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="#Struct_BarSeries">BarSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>categories</td><td><code>list&lt;<code>string</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>4</td><td>options</td><td><code><a href="portfolio_analyzer.html#Struct_BarChartOptions">BarChartOptions</a></code></td><td>Criado na versão 0.2.2.
+<tr><td>4</td><td>options</td><td><code><a href="#Struct_BarChartOptions">BarChartOptions</a></code></td><td>Criado na versão 0.2.2.
 </td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Text">Struct: Text</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
@@ -166,23 +166,23 @@ Só é necessário se <code>BarChart.options.stacked = true</code> e a intençã
 <tr><td>5</td><td>rowspan</td><td><code>i16</code></td><td></td><td>default</td><td><code>1</code></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_TableCell">Struct: TableCell</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>content</td><td><code><a href="portfolio_analyzer.html#Struct_TableCellContent">TableCellContent</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>format</td><td><code><a href="portfolio_analyzer.html#Struct_TableCellFormat">TableCellFormat</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>1</td><td>content</td><td><code><a href="#Struct_TableCellContent">TableCellContent</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>format</td><td><code><a href="#Struct_TableCellFormat">TableCellFormat</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_TableRow">Struct: TableRow</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>cells</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_TableCell">TableCell</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>1</td><td>cells</td><td><code>list&lt;<code><a href="#Struct_TableCell">TableCell</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Table">Struct: Table</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>header</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>3</td><td>body</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>4</td><td>footer</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>header</td><td><code>list&lt;<code><a href="#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>body</td><td><code>list&lt;<code><a href="#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>footer</td><td><code>list&lt;<code><a href="#Struct_TableRow">TableRow</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Result">Union: Result</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>table</td><td><code><a href="portfolio_analyzer.html#Struct_Table">Table</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>pie_chart</td><td><code><a href="portfolio_analyzer.html#Struct_PieChart">PieChart</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>3</td><td>line_chart</td><td><code><a href="portfolio_analyzer.html#Struct_LineChart">LineChart</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>4</td><td>bar_chart</td><td><code><a href="portfolio_analyzer.html#Struct_BarChart">BarChart</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>1</td><td>table</td><td><code><a href="#Struct_Table">Table</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>pie_chart</td><td><code><a href="#Struct_PieChart">PieChart</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>line_chart</td><td><code><a href="#Struct_LineChart">LineChart</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>bar_chart</td><td><code><a href="#Struct_BarChart">BarChart</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_Position">Struct: Position</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>id</td><td><code><a href="common.html#Struct_SecurityId">common.SecurityId</a></code></td><td></td><td>default</td><td></td></tr>
@@ -199,29 +199,29 @@ Só é necessário se <code>BarChart.options.stacked = true</code> e a intençã
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>description</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>3</td><td>settlement</td><td><code><a href="portfolio_analyzer.html#Struct_Settlement">Settlement</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>settlement</td><td><code><a href="#Struct_Settlement">Settlement</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/>Criado na versão 0.2.1
 <br/></div><div class="definition"><h3 id="Struct_Portfolio">Struct: Portfolio</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>date</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>positions</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_Position">Position</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>positions</td><td><code>list&lt;<code><a href="#Struct_Position">Position</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>rentability</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>nav</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>5</td><td>cash</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>6</td><td>provisions</td><td><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_Provision">Provision</a></code>&gt;</code></td><td>Criado na versão 0.2.1
+<tr><td>6</td><td>provisions</td><td><code>list&lt;<code><a href="#Struct_Provision">Provision</a></code>&gt;</code></td><td>Criado na versão 0.2.1
 </td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_AnalyzerConfig">Struct: AnalyzerConfig</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>id</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>3</td><td>result_type</td><td><code><a href="portfolio_analyzer.html#Enum_ResultType">ResultType</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>4</td><td>accepted_events</td><td><code>set&lt;<code><a href="portfolio_analyzer.html#Enum_Event">Event</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>result_type</td><td><code><a href="#Enum_ResultType">ResultType</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>accepted_events</td><td><code>set&lt;<code><a href="#Enum_Event">Event</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_CashFlow">Struct: CashFlow</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>date</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>value</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>balance</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>4</td><td>type</td><td><code><a href="portfolio_analyzer.html#Enum_CashFlowType">CashFlowType</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>type</td><td><code><a href="#Enum_CashFlowType">CashFlowType</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_AnalyzerController">Service: AnalyzerController</h3>
 
@@ -246,37 +246,37 @@ Métodos que devem repassar o controle para os analyzers:
 <a href="#Fn_AnalyzerController_example_result">example_result</a>
 
 <br/><div class="definition"><h4 id="Fn_AnalyzerController_analyzers">Function: AnalyzerController.analyzers</h4>
-<pre><code>list&lt;<code><a href="portfolio_analyzer.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code>&gt;</code> analyzers()
+<pre><code>list&lt;<code><a href="#Struct_AnalyzerConfig">AnalyzerConfig</a></code>&gt;</code> analyzers()
 </pre>É chamado quando
 
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_each_day">Function: AnalyzerController.on_each_day</h4>
-<pre><code>void</code> on_each_day(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> sessionid,
-                 <code><a href="portfolio_analyzer.html#Struct_Portfolio">Portfolio</a></code> portfolio)
+<pre><code>void</code> on_each_day(<code><a href="#Typedef_SessionId">SessionId</a></code> sessionid,
+                 <code><a href="#Struct_Portfolio">Portfolio</a></code> portfolio)
 </pre>É chamado <i>n</i> vezes durante o processamento da carteira, sendo
 <i>n</i> o número de dias processados.
 
 <code>portfolio</code> Estado da carteira no dia que está sendo processado.
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_each_month">Function: AnalyzerController.on_each_month</h4>
-<pre><code>void</code> on_each_month(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> sessionid,
-                   <code><a href="portfolio_analyzer.html#Struct_Portfolio">Portfolio</a></code> portfolio)
+<pre><code>void</code> on_each_month(<code><a href="#Typedef_SessionId">SessionId</a></code> sessionid,
+                   <code><a href="#Struct_Portfolio">Portfolio</a></code> portfolio)
 </pre>É chamado no final de cada mes durante o processamento da carteira.
 
 <code>portfolio</code> Estado da carteira no último dia do mes.
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_finish">Function: AnalyzerController.on_finish</h4>
-<pre><code>void</code> on_finish(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id,
-               <code><a href="portfolio_analyzer.html#Struct_Portfolio">Portfolio</a></code> portfolio)
+<pre><code>void</code> on_finish(<code><a href="#Typedef_SessionId">SessionId</a></code> session_id,
+               <code><a href="#Struct_Portfolio">Portfolio</a></code> portfolio)
 </pre>É chamado ao final do processamento da carteira.
 
 <code>portfolio</code> Estado da carteira no último dia de processamento.
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_cash_flow">Function: AnalyzerController.on_cash_flow</h4>
-<pre><code>void</code> on_cash_flow(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id,
-                  <code><a href="portfolio_analyzer.html#Struct_CashFlow">CashFlow</a></code> cash_flow)
+<pre><code>void</code> on_cash_flow(<code><a href="#Typedef_SessionId">SessionId</a></code> session_id,
+                  <code><a href="#Struct_CashFlow">CashFlow</a></code> cash_flow)
 </pre></div><div class="definition"><h4 id="Fn_AnalyzerController_create_session">Function: AnalyzerController.create_session</h4>
-<pre><code><a href="portfolio_analyzer.html#Struct_AnalyzerConfig">AnalyzerConfig</a></code> create_session(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id,
+<pre><code><a href="#Struct_AnalyzerConfig">AnalyzerConfig</a></code> create_session(<code><a href="#Typedef_SessionId">SessionId</a></code> session_id,
                               <code>string</code> analyzer_id)
 </pre>É chamado antes do processamento para o Radar receber as configurações do analyzer.
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_dump">Function: AnalyzerController.dump</h4>
-<pre><code>binary</code> dump(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id)
+<pre><code>binary</code> dump(<code><a href="#Typedef_SessionId">SessionId</a></code> session_id)
 </pre>É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
 para poder restaurar nos próximos processamentos.
 
@@ -284,16 +284,16 @@ O retorno pode ter qualquer formato, desde que seja compreendido pelo método
 <code>resume()</code>, já que posteriormente o conteúdo do retorno será
 passado como argumento para o método.
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_resume">Function: AnalyzerController.resume</h4>
-<pre><code>void</code> resume(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id,
+<pre><code>void</code> resume(<code><a href="#Typedef_SessionId">SessionId</a></code> session_id,
             <code>binary</code> data)
 </pre>É chamado sempre que o Radar quiser começar a processar uma carteira à partir de
 uma imagem gerada pelo método <code>dump()</code>.
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_result">Function: AnalyzerController.result</h4>
-<pre><code><a href="portfolio_analyzer.html#Struct_Result">Result</a></code> result(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id)
+<pre><code><a href="#Struct_Result">Result</a></code> result(<code><a href="#Typedef_SessionId">SessionId</a></code> session_id)
 </pre>É chamado no fim do processamento para pegar o resultado do Analyzer.
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_example_result">Function: AnalyzerController.example_result</h4>
-<pre><code>void</code> example_result(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id)
+<pre><code>void</code> example_result(<code><a href="#Typedef_SessionId">SessionId</a></code> session_id)
 </pre>É chamado no preview para exibir um exemplo de resultado do Analyzer.
 <br/></div><div class="definition"><h4 id="Fn_AnalyzerController_destroy_session">Function: AnalyzerController.destroy_session</h4>
-<pre><code>void</code> destroy_session(<code><a href="portfolio_analyzer.html#Typedef_SessionId">SessionId</a></code> session_id)
+<pre><code>void</code> destroy_session(<code><a href="#Typedef_SessionId">SessionId</a></code> session_id)
 </pre></div></div></body></html>
