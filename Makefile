@@ -2,23 +2,27 @@
 THRIFT=docker run --rm -t -i -w /radar-api -v `pwd`:/radar-api thrift thrift
 SOURCE=radar.thrift
 
-all: js/lib rb/gen java/src html
+all: js/lib csharp/src rb/gen java/src html
 
 js/lib: *.thrift
 	rm -rf js/lib/*
-	$(THRIFT) -r --gen js:node       -out js/lib   $(SOURCE)
+	$(THRIFT) -r --gen js:node       -out js/lib     $(SOURCE)
+
+csharp/src: *.thrift
+	rm -rf csharp/src/*
+	$(THRIFT) -r --gen csharp        -out csharp/src $(SOURCE)
 
 rb/gen: *.thrift 
 	rm -rf rb/gen/*
-	$(THRIFT) -r --gen rb:namespaced -out rb/gen   $(SOURCE)
+	$(THRIFT) -r --gen rb:namespaced -out rb/gen     $(SOURCE)
 
 java/src: *.thrift 
 	rm -rf java/src/*
-	$(THRIFT) -r --gen java          -out java/src $(SOURCE)
+	$(THRIFT) -r --gen java          -out java/src   $(SOURCE)
 
 html: *.thrift 
 	rm -rf html/*
-	$(THRIFT) -r --gen html          -out html     $(SOURCE)
+	$(THRIFT) -r --gen html          -out html       $(SOURCE)
 
 release: js/lib
 	#git diff --exit-code
