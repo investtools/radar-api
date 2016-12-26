@@ -36,9 +36,15 @@ struct IndexLinkedBondId {
   4: Date maturity_date
 }
 
+struct GovernmentBondId {
+  1: string name
+  2: Date maturity_date
+}
+
 union SecurityId {
   1: StockId stock
   2: FundId fund
   3: IndexLinkedBondId index_linked_bond
+  4: GovernmentBondId government_bond
 }
 

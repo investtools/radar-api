@@ -13,6 +13,7 @@
 <td><a href="#Typedef_Color">Color</a><br/>
 <a href="#Typedef_Date">Date</a><br/>
 <a href="#Struct_FundId">FundId</a><br/>
+<a href="#Struct_GovernmentBondId">GovernmentBondId</a><br/>
 <a href="#Struct_IndexId">IndexId</a><br/>
 <a href="#Struct_IndexLinkedBondId">IndexLinkedBondId</a><br/>
 <a href="#Struct_SecurityId">SecurityId</a><br/>
@@ -51,9 +52,14 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <tr><td>2</td><td>factor</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>base_date</td><td><code><a href="#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>4</td><td>maturity_date</td><td><code><a href="#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_GovernmentBondId">Struct: GovernmentBondId</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>maturity_date</td><td><code><a href="#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_SecurityId">Union: SecurityId</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>stock</td><td><code><a href="#Struct_StockId">StockId</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>fund</td><td><code><a href="#Struct_FundId">FundId</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>index_linked_bond</td><td><code><a href="#Struct_IndexLinkedBondId">IndexLinkedBondId</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>government_bond</td><td><code><a href="#Struct_GovernmentBondId">GovernmentBondId</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div></div></body></html>

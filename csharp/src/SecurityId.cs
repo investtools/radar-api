@@ -24,6 +24,7 @@ public partial class SecurityId : TBase
   private StockId _stock;
   private FundId _fund;
   private IndexLinkedBondId _index_linked_bond;
+  private GovernmentBondId _government_bond;
 
   public StockId Stock
   {
@@ -64,6 +65,19 @@ public partial class SecurityId : TBase
     }
   }
 
+  public GovernmentBondId Government_bond
+  {
+    get
+    {
+      return _government_bond;
+    }
+    set
+    {
+      __isset.government_bond = true;
+      this._government_bond = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -73,6 +87,7 @@ public partial class SecurityId : TBase
     public bool stock;
     public bool fund;
     public bool index_linked_bond;
+    public bool government_bond;
   }
 
   public SecurityId() {
@@ -113,6 +128,14 @@ public partial class SecurityId : TBase
             if (field.Type == TType.Struct) {
               Index_linked_bond = new IndexLinkedBondId();
               Index_linked_bond.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 4:
+            if (field.Type == TType.Struct) {
+              Government_bond = new GovernmentBondId();
+              Government_bond.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -162,6 +185,14 @@ public partial class SecurityId : TBase
         Index_linked_bond.Write(oprot);
         oprot.WriteFieldEnd();
       }
+      if (Government_bond != null && __isset.government_bond) {
+        field.Name = "government_bond";
+        field.Type = TType.Struct;
+        field.ID = 4;
+        oprot.WriteFieldBegin(field);
+        Government_bond.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -191,6 +222,12 @@ public partial class SecurityId : TBase
       __first = false;
       __sb.Append("Index_linked_bond: ");
       __sb.Append(Index_linked_bond== null ? "<null>" : Index_linked_bond.ToString());
+    }
+    if (Government_bond != null && __isset.government_bond) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Government_bond: ");
+      __sb.Append(Government_bond== null ? "<null>" : Government_bond.ToString());
     }
     __sb.Append(")");
     return __sb.ToString();

@@ -29,7 +29,6 @@ import java.util.Collections;
 import java.util.BitSet;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
-import javax.annotation.Generated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,12 +38,14 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
   private static final org.apache.thrift.protocol.TField STOCK_FIELD_DESC = new org.apache.thrift.protocol.TField("stock", org.apache.thrift.protocol.TType.STRUCT, (short)1);
   private static final org.apache.thrift.protocol.TField FUND_FIELD_DESC = new org.apache.thrift.protocol.TField("fund", org.apache.thrift.protocol.TType.STRUCT, (short)2);
   private static final org.apache.thrift.protocol.TField INDEX_LINKED_BOND_FIELD_DESC = new org.apache.thrift.protocol.TField("index_linked_bond", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+  private static final org.apache.thrift.protocol.TField GOVERNMENT_BOND_FIELD_DESC = new org.apache.thrift.protocol.TField("government_bond", org.apache.thrift.protocol.TType.STRUCT, (short)4);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     STOCK((short)1, "stock"),
     FUND((short)2, "fund"),
-    INDEX_LINKED_BOND((short)3, "index_linked_bond");
+    INDEX_LINKED_BOND((short)3, "index_linked_bond"),
+    GOVERNMENT_BOND((short)4, "government_bond");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -65,6 +66,8 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
           return FUND;
         case 3: // INDEX_LINKED_BOND
           return INDEX_LINKED_BOND;
+        case 4: // GOVERNMENT_BOND
+          return GOVERNMENT_BOND;
         default:
           return null;
       }
@@ -113,6 +116,8 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, FundId.class)));
     tmpMap.put(_Fields.INDEX_LINKED_BOND, new org.apache.thrift.meta_data.FieldMetaData("index_linked_bond", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, IndexLinkedBondId.class)));
+    tmpMap.put(_Fields.GOVERNMENT_BOND, new org.apache.thrift.meta_data.FieldMetaData("government_bond", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, GovernmentBondId.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(SecurityId.class, metaDataMap);
   }
@@ -150,6 +155,12 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
     return x;
   }
 
+  public static SecurityId government_bond(GovernmentBondId value) {
+    SecurityId x = new SecurityId();
+    x.setGovernment_bond(value);
+    return x;
+  }
+
 
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
@@ -169,6 +180,11 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
           break;
         }
         throw new ClassCastException("Was expecting value of type IndexLinkedBondId for field 'index_linked_bond', but got " + value.getClass().getSimpleName());
+      case GOVERNMENT_BOND:
+        if (value instanceof GovernmentBondId) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type GovernmentBondId for field 'government_bond', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -209,6 +225,16 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
+        case GOVERNMENT_BOND:
+          if (field.type == GOVERNMENT_BOND_FIELD_DESC.type) {
+            GovernmentBondId government_bond;
+            government_bond = new GovernmentBondId();
+            government_bond.read(iprot);
+            return government_bond;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -232,6 +258,10 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
       case INDEX_LINKED_BOND:
         IndexLinkedBondId index_linked_bond = (IndexLinkedBondId)value_;
         index_linked_bond.write(oprot);
+        return;
+      case GOVERNMENT_BOND:
+        GovernmentBondId government_bond = (GovernmentBondId)value_;
+        government_bond.write(oprot);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -258,6 +288,11 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
           index_linked_bond = new IndexLinkedBondId();
           index_linked_bond.read(iprot);
           return index_linked_bond;
+        case GOVERNMENT_BOND:
+          GovernmentBondId government_bond;
+          government_bond = new GovernmentBondId();
+          government_bond.read(iprot);
+          return government_bond;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -281,6 +316,10 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
         IndexLinkedBondId index_linked_bond = (IndexLinkedBondId)value_;
         index_linked_bond.write(oprot);
         return;
+      case GOVERNMENT_BOND:
+        GovernmentBondId government_bond = (GovernmentBondId)value_;
+        government_bond.write(oprot);
+        return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
     }
@@ -295,6 +334,8 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
         return FUND_FIELD_DESC;
       case INDEX_LINKED_BOND:
         return INDEX_LINKED_BOND_FIELD_DESC;
+      case GOVERNMENT_BOND:
+        return GOVERNMENT_BOND_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -357,6 +398,20 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
     value_ = value;
   }
 
+  public GovernmentBondId getGovernment_bond() {
+    if (getSetField() == _Fields.GOVERNMENT_BOND) {
+      return (GovernmentBondId)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'government_bond' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setGovernment_bond(GovernmentBondId value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.GOVERNMENT_BOND;
+    value_ = value;
+  }
+
   public boolean isSetStock() {
     return setField_ == _Fields.STOCK;
   }
@@ -369,6 +424,11 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
 
   public boolean isSetIndex_linked_bond() {
     return setField_ == _Fields.INDEX_LINKED_BOND;
+  }
+
+
+  public boolean isSetGovernment_bond() {
+    return setField_ == _Fields.GOVERNMENT_BOND;
   }
 
 

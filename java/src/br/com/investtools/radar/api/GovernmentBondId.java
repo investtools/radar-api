@@ -33,25 +33,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked"})
-public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, java.io.Serializable, Cloneable, Comparable<Point> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Point");
+public class GovernmentBondId implements org.apache.thrift.TBase<GovernmentBondId, GovernmentBondId._Fields>, java.io.Serializable, Cloneable, Comparable<GovernmentBondId> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("GovernmentBondId");
 
-  private static final org.apache.thrift.protocol.TField X_FIELD_DESC = new org.apache.thrift.protocol.TField("x", org.apache.thrift.protocol.TType.I32, (short)1);
-  private static final org.apache.thrift.protocol.TField Y_FIELD_DESC = new org.apache.thrift.protocol.TField("y", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
+  private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField MATURITY_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("maturity_date", org.apache.thrift.protocol.TType.I32, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new PointStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new PointTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new GovernmentBondIdStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new GovernmentBondIdTupleSchemeFactory());
   }
 
-  public int x; // required
-  public double y; // required
+  public String name; // required
+  public int maturity_date; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    X((short)1, "x"),
-    Y((short)2, "y");
+    NAME((short)1, "name"),
+    MATURITY_DATE((short)2, "maturity_date");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -66,10 +66,10 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // X
-          return X;
-        case 2: // Y
-          return Y;
+        case 1: // NAME
+          return NAME;
+        case 2: // MATURITY_DATE
+          return MATURITY_DATE;
         default:
           return null;
       }
@@ -110,116 +110,116 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
   }
 
   // isset id assignments
-  private static final int __X_ISSET_ID = 0;
-  private static final int __Y_ISSET_ID = 1;
+  private static final int __MATURITY_DATE_ISSET_ID = 0;
   private byte __isset_bitfield = 0;
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.X, new org.apache.thrift.meta_data.FieldMetaData("x", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.MATURITY_DATE, new org.apache.thrift.meta_data.FieldMetaData("maturity_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
-    tmpMap.put(_Fields.Y, new org.apache.thrift.meta_data.FieldMetaData("y", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Point.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(GovernmentBondId.class, metaDataMap);
   }
 
-  public Point() {
+  public GovernmentBondId() {
   }
 
-  public Point(
-    int x,
-    double y)
+  public GovernmentBondId(
+    String name,
+    int maturity_date)
   {
     this();
-    this.x = x;
-    setXIsSet(true);
-    this.y = y;
-    setYIsSet(true);
+    this.name = name;
+    this.maturity_date = maturity_date;
+    setMaturity_dateIsSet(true);
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public Point(Point other) {
+  public GovernmentBondId(GovernmentBondId other) {
     __isset_bitfield = other.__isset_bitfield;
-    this.x = other.x;
-    this.y = other.y;
+    if (other.isSetName()) {
+      this.name = other.name;
+    }
+    this.maturity_date = other.maturity_date;
   }
 
-  public Point deepCopy() {
-    return new Point(this);
+  public GovernmentBondId deepCopy() {
+    return new GovernmentBondId(this);
   }
 
   @Override
   public void clear() {
-    setXIsSet(false);
-    this.x = 0;
-    setYIsSet(false);
-    this.y = 0.0;
+    this.name = null;
+    setMaturity_dateIsSet(false);
+    this.maturity_date = 0;
   }
 
-  public int getX() {
-    return this.x;
+  public String getName() {
+    return this.name;
   }
 
-  public Point setX(int x) {
-    this.x = x;
-    setXIsSet(true);
+  public GovernmentBondId setName(String name) {
+    this.name = name;
     return this;
   }
 
-  public void unsetX() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __X_ISSET_ID);
+  public void unsetName() {
+    this.name = null;
   }
 
-  /** Returns true if field x is set (has been assigned a value) and false otherwise */
-  public boolean isSetX() {
-    return EncodingUtils.testBit(__isset_bitfield, __X_ISSET_ID);
+  /** Returns true if field name is set (has been assigned a value) and false otherwise */
+  public boolean isSetName() {
+    return this.name != null;
   }
 
-  public void setXIsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __X_ISSET_ID, value);
+  public void setNameIsSet(boolean value) {
+    if (!value) {
+      this.name = null;
+    }
   }
 
-  public double getY() {
-    return this.y;
+  public int getMaturity_date() {
+    return this.maturity_date;
   }
 
-  public Point setY(double y) {
-    this.y = y;
-    setYIsSet(true);
+  public GovernmentBondId setMaturity_date(int maturity_date) {
+    this.maturity_date = maturity_date;
+    setMaturity_dateIsSet(true);
     return this;
   }
 
-  public void unsetY() {
-    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __Y_ISSET_ID);
+  public void unsetMaturity_date() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __MATURITY_DATE_ISSET_ID);
   }
 
-  /** Returns true if field y is set (has been assigned a value) and false otherwise */
-  public boolean isSetY() {
-    return EncodingUtils.testBit(__isset_bitfield, __Y_ISSET_ID);
+  /** Returns true if field maturity_date is set (has been assigned a value) and false otherwise */
+  public boolean isSetMaturity_date() {
+    return EncodingUtils.testBit(__isset_bitfield, __MATURITY_DATE_ISSET_ID);
   }
 
-  public void setYIsSet(boolean value) {
-    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __Y_ISSET_ID, value);
+  public void setMaturity_dateIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __MATURITY_DATE_ISSET_ID, value);
   }
 
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
-    case X:
+    case NAME:
       if (value == null) {
-        unsetX();
+        unsetName();
       } else {
-        setX((Integer)value);
+        setName((String)value);
       }
       break;
 
-    case Y:
+    case MATURITY_DATE:
       if (value == null) {
-        unsetY();
+        unsetMaturity_date();
       } else {
-        setY((Double)value);
+        setMaturity_date((Integer)value);
       }
       break;
 
@@ -228,11 +228,11 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
-    case X:
-      return getX();
+    case NAME:
+      return getName();
 
-    case Y:
-      return getY();
+    case MATURITY_DATE:
+      return getMaturity_date();
 
     }
     throw new IllegalStateException();
@@ -245,10 +245,10 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
     }
 
     switch (field) {
-    case X:
-      return isSetX();
-    case Y:
-      return isSetY();
+    case NAME:
+      return isSetName();
+    case MATURITY_DATE:
+      return isSetMaturity_date();
     }
     throw new IllegalStateException();
   }
@@ -257,30 +257,30 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof Point)
-      return this.equals((Point)that);
+    if (that instanceof GovernmentBondId)
+      return this.equals((GovernmentBondId)that);
     return false;
   }
 
-  public boolean equals(Point that) {
+  public boolean equals(GovernmentBondId that) {
     if (that == null)
       return false;
 
-    boolean this_present_x = true;
-    boolean that_present_x = true;
-    if (this_present_x || that_present_x) {
-      if (!(this_present_x && that_present_x))
+    boolean this_present_name = true && this.isSetName();
+    boolean that_present_name = true && that.isSetName();
+    if (this_present_name || that_present_name) {
+      if (!(this_present_name && that_present_name))
         return false;
-      if (this.x != that.x)
+      if (!this.name.equals(that.name))
         return false;
     }
 
-    boolean this_present_y = true;
-    boolean that_present_y = true;
-    if (this_present_y || that_present_y) {
-      if (!(this_present_y && that_present_y))
+    boolean this_present_maturity_date = true;
+    boolean that_present_maturity_date = true;
+    if (this_present_maturity_date || that_present_maturity_date) {
+      if (!(this_present_maturity_date && that_present_maturity_date))
         return false;
-      if (this.y != that.y)
+      if (this.maturity_date != that.maturity_date)
         return false;
     }
 
@@ -291,43 +291,43 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
   public int hashCode() {
     List<Object> list = new ArrayList<Object>();
 
-    boolean present_x = true;
-    list.add(present_x);
-    if (present_x)
-      list.add(x);
+    boolean present_name = true && (isSetName());
+    list.add(present_name);
+    if (present_name)
+      list.add(name);
 
-    boolean present_y = true;
-    list.add(present_y);
-    if (present_y)
-      list.add(y);
+    boolean present_maturity_date = true;
+    list.add(present_maturity_date);
+    if (present_maturity_date)
+      list.add(maturity_date);
 
     return list.hashCode();
   }
 
   @Override
-  public int compareTo(Point other) {
+  public int compareTo(GovernmentBondId other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
 
     int lastComparison = 0;
 
-    lastComparison = Boolean.valueOf(isSetX()).compareTo(other.isSetX());
+    lastComparison = Boolean.valueOf(isSetName()).compareTo(other.isSetName());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetX()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.x, other.x);
+    if (isSetName()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.name, other.name);
       if (lastComparison != 0) {
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetY()).compareTo(other.isSetY());
+    lastComparison = Boolean.valueOf(isSetMaturity_date()).compareTo(other.isSetMaturity_date());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetY()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.y, other.y);
+    if (isSetMaturity_date()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.maturity_date, other.maturity_date);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -349,15 +349,19 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("Point(");
+    StringBuilder sb = new StringBuilder("GovernmentBondId(");
     boolean first = true;
 
-    sb.append("x:");
-    sb.append(this.x);
+    sb.append("name:");
+    if (this.name == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.name);
+    }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("y:");
-    sb.append(this.y);
+    sb.append("maturity_date:");
+    sb.append(this.maturity_date);
     first = false;
     sb.append(")");
     return sb.toString();
@@ -386,15 +390,15 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
     }
   }
 
-  private static class PointStandardSchemeFactory implements SchemeFactory {
-    public PointStandardScheme getScheme() {
-      return new PointStandardScheme();
+  private static class GovernmentBondIdStandardSchemeFactory implements SchemeFactory {
+    public GovernmentBondIdStandardScheme getScheme() {
+      return new GovernmentBondIdStandardScheme();
     }
   }
 
-  private static class PointStandardScheme extends StandardScheme<Point> {
+  private static class GovernmentBondIdStandardScheme extends StandardScheme<GovernmentBondId> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, Point struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, GovernmentBondId struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -404,18 +408,18 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
           break;
         }
         switch (schemeField.id) {
-          case 1: // X
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.x = iprot.readI32();
-              struct.setXIsSet(true);
+          case 1: // NAME
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.name = iprot.readString();
+              struct.setNameIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // Y
-            if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
-              struct.y = iprot.readDouble();
-              struct.setYIsSet(true);
+          case 2: // MATURITY_DATE
+            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+              struct.maturity_date = iprot.readI32();
+              struct.setMaturity_dateIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -431,15 +435,17 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, Point struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, GovernmentBondId struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      oprot.writeFieldBegin(X_FIELD_DESC);
-      oprot.writeI32(struct.x);
-      oprot.writeFieldEnd();
-      oprot.writeFieldBegin(Y_FIELD_DESC);
-      oprot.writeDouble(struct.y);
+      if (struct.name != null) {
+        oprot.writeFieldBegin(NAME_FIELD_DESC);
+        oprot.writeString(struct.name);
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldBegin(MATURITY_DATE_FIELD_DESC);
+      oprot.writeI32(struct.maturity_date);
       oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -447,44 +453,44 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
 
   }
 
-  private static class PointTupleSchemeFactory implements SchemeFactory {
-    public PointTupleScheme getScheme() {
-      return new PointTupleScheme();
+  private static class GovernmentBondIdTupleSchemeFactory implements SchemeFactory {
+    public GovernmentBondIdTupleScheme getScheme() {
+      return new GovernmentBondIdTupleScheme();
     }
   }
 
-  private static class PointTupleScheme extends TupleScheme<Point> {
+  private static class GovernmentBondIdTupleScheme extends TupleScheme<GovernmentBondId> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, Point struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, GovernmentBondId struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
-      if (struct.isSetX()) {
+      if (struct.isSetName()) {
         optionals.set(0);
       }
-      if (struct.isSetY()) {
+      if (struct.isSetMaturity_date()) {
         optionals.set(1);
       }
       oprot.writeBitSet(optionals, 2);
-      if (struct.isSetX()) {
-        oprot.writeI32(struct.x);
+      if (struct.isSetName()) {
+        oprot.writeString(struct.name);
       }
-      if (struct.isSetY()) {
-        oprot.writeDouble(struct.y);
+      if (struct.isSetMaturity_date()) {
+        oprot.writeI32(struct.maturity_date);
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, Point struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, GovernmentBondId struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
-        struct.x = iprot.readI32();
-        struct.setXIsSet(true);
+        struct.name = iprot.readString();
+        struct.setNameIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.y = iprot.readDouble();
-        struct.setYIsSet(true);
+        struct.maturity_date = iprot.readI32();
+        struct.setMaturity_dateIsSet(true);
       }
     }
   }

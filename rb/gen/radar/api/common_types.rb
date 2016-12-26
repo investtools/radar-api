@@ -78,6 +78,24 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
+    class GovernmentBondId
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      NAME = 1
+      MATURITY_DATE = 2
+
+      FIELDS = {
+        NAME => {:type => ::Thrift::Types::STRING, :name => 'name'},
+        MATURITY_DATE => {:type => ::Thrift::Types::I32, :name => 'maturity_date'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class SecurityId < ::Thrift::Union
       include ::Thrift::Struct_Union
       class << self
@@ -92,16 +110,22 @@ module Radar
         def index_linked_bond(val)
           SecurityId.new(:index_linked_bond, val)
         end
+
+        def government_bond(val)
+          SecurityId.new(:government_bond, val)
+        end
       end
 
       STOCK = 1
       FUND = 2
       INDEX_LINKED_BOND = 3
+      GOVERNMENT_BOND = 4
 
       FIELDS = {
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         FUND => {:type => ::Thrift::Types::STRUCT, :name => 'fund', :class => ::Radar::Api::FundId},
-        INDEX_LINKED_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'index_linked_bond', :class => ::Radar::Api::IndexLinkedBondId}
+        INDEX_LINKED_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'index_linked_bond', :class => ::Radar::Api::IndexLinkedBondId},
+        GOVERNMENT_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'government_bond', :class => ::Radar::Api::GovernmentBondId}
       }
 
       def struct_fields; FIELDS; end

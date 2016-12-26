@@ -267,10 +267,77 @@ IndexLinkedBondId.prototype.write = function(output) {
   return;
 };
 
+GovernmentBondId = module.exports.GovernmentBondId = function(args) {
+  this.name = null;
+  this.maturity_date = null;
+  if (args) {
+    if (args.name !== undefined && args.name !== null) {
+      this.name = args.name;
+    }
+    if (args.maturity_date !== undefined && args.maturity_date !== null) {
+      this.maturity_date = args.maturity_date;
+    }
+  }
+};
+GovernmentBondId.prototype = {};
+GovernmentBondId.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.maturity_date = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+GovernmentBondId.prototype.write = function(output) {
+  output.writeStructBegin('GovernmentBondId');
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 1);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.maturity_date !== null && this.maturity_date !== undefined) {
+    output.writeFieldBegin('maturity_date', Thrift.Type.I32, 2);
+    output.writeI32(this.maturity_date);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 SecurityId = module.exports.SecurityId = function(args) {
   this.stock = null;
   this.fund = null;
   this.index_linked_bond = null;
+  this.government_bond = null;
   if (args) {
     if (args.stock !== undefined && args.stock !== null) {
       this.stock = new ttypes.StockId(args.stock);
@@ -280,6 +347,9 @@ SecurityId = module.exports.SecurityId = function(args) {
     }
     if (args.index_linked_bond !== undefined && args.index_linked_bond !== null) {
       this.index_linked_bond = new ttypes.IndexLinkedBondId(args.index_linked_bond);
+    }
+    if (args.government_bond !== undefined && args.government_bond !== null) {
+      this.government_bond = new ttypes.GovernmentBondId(args.government_bond);
     }
   }
 };
@@ -321,6 +391,14 @@ SecurityId.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 4:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.government_bond = new ttypes.GovernmentBondId();
+        this.government_bond.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -345,6 +423,11 @@ SecurityId.prototype.write = function(output) {
   if (this.index_linked_bond !== null && this.index_linked_bond !== undefined) {
     output.writeFieldBegin('index_linked_bond', Thrift.Type.STRUCT, 3);
     this.index_linked_bond.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.government_bond !== null && this.government_bond !== undefined) {
+    output.writeFieldBegin('government_bond', Thrift.Type.STRUCT, 4);
+    this.government_bond.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
