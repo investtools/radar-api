@@ -56,7 +56,7 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class IndexLinkedBondId
+    class CorporateBondId
       include ::Thrift::Struct, ::Thrift::Struct_Union
       INDEX = 1
       FACTOR = 2
@@ -109,8 +109,8 @@ module Radar
           SecurityId.new(:fund, val)
         end
 
-        def index_linked_bond(val)
-          SecurityId.new(:index_linked_bond, val)
+        def corporate_bond(val)
+          SecurityId.new(:corporate_bond, val)
         end
 
         def government_bond(val)
@@ -120,13 +120,13 @@ module Radar
 
       STOCK = 1
       FUND = 2
-      INDEX_LINKED_BOND = 3
+      CORPORATE_BOND = 3
       GOVERNMENT_BOND = 4
 
       FIELDS = {
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         FUND => {:type => ::Thrift::Types::STRUCT, :name => 'fund', :class => ::Radar::Api::FundId},
-        INDEX_LINKED_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'index_linked_bond', :class => ::Radar::Api::IndexLinkedBondId},
+        CORPORATE_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'corporate_bond', :class => ::Radar::Api::CorporateBondId},
         GOVERNMENT_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'government_bond', :class => ::Radar::Api::GovernmentBondId}
       }
 

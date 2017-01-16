@@ -19,7 +19,7 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class IndexLinkedBondId : TBase
+public partial class CorporateBondId : TBase
 {
   private IndexId _index;
   private double _factor;
@@ -105,7 +105,7 @@ public partial class IndexLinkedBondId : TBase
     public bool maturity_date;
   }
 
-  public IndexLinkedBondId() {
+  public CorporateBondId() {
   }
 
   public void Read (TProtocol iprot)
@@ -177,7 +177,7 @@ public partial class IndexLinkedBondId : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("IndexLinkedBondId");
+      TStruct struc = new TStruct("CorporateBondId");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
       if (Index != null && __isset.index) {
@@ -230,7 +230,7 @@ public partial class IndexLinkedBondId : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("IndexLinkedBondId(");
+    StringBuilder __sb = new StringBuilder("CorporateBondId(");
     bool __first = true;
     if (Index != null && __isset.index) {
       if(!__first) { __sb.Append(", "); }

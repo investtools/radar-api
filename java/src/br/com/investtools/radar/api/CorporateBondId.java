@@ -33,8 +33,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked"})
-public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBondId, IndexLinkedBondId._Fields>, java.io.Serializable, Cloneable, Comparable<IndexLinkedBondId> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("IndexLinkedBondId");
+public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId, CorporateBondId._Fields>, java.io.Serializable, Cloneable, Comparable<CorporateBondId> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("CorporateBondId");
 
   private static final org.apache.thrift.protocol.TField INDEX_FIELD_DESC = new org.apache.thrift.protocol.TField("index", org.apache.thrift.protocol.TType.STRUCT, (short)1);
   private static final org.apache.thrift.protocol.TField FACTOR_FIELD_DESC = new org.apache.thrift.protocol.TField("factor", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
@@ -44,8 +44,8 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new IndexLinkedBondIdStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new IndexLinkedBondIdTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new CorporateBondIdStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new CorporateBondIdTupleSchemeFactory());
   }
 
   public IndexId index; // required
@@ -144,13 +144,13 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     tmpMap.put(_Fields.MATURITY_DATE, new org.apache.thrift.meta_data.FieldMetaData("maturity_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(IndexLinkedBondId.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(CorporateBondId.class, metaDataMap);
   }
 
-  public IndexLinkedBondId() {
+  public CorporateBondId() {
   }
 
-  public IndexLinkedBondId(
+  public CorporateBondId(
     IndexId index,
     double factor,
     double rate,
@@ -172,7 +172,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public IndexLinkedBondId(IndexLinkedBondId other) {
+  public CorporateBondId(CorporateBondId other) {
     __isset_bitfield = other.__isset_bitfield;
     if (other.isSetIndex()) {
       this.index = new IndexId(other.index);
@@ -183,8 +183,8 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     this.maturity_date = other.maturity_date;
   }
 
-  public IndexLinkedBondId deepCopy() {
-    return new IndexLinkedBondId(this);
+  public CorporateBondId deepCopy() {
+    return new CorporateBondId(this);
   }
 
   @Override
@@ -204,7 +204,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     return this.index;
   }
 
-  public IndexLinkedBondId setIndex(IndexId index) {
+  public CorporateBondId setIndex(IndexId index) {
     this.index = index;
     return this;
   }
@@ -228,7 +228,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     return this.factor;
   }
 
-  public IndexLinkedBondId setFactor(double factor) {
+  public CorporateBondId setFactor(double factor) {
     this.factor = factor;
     setFactorIsSet(true);
     return this;
@@ -251,7 +251,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     return this.rate;
   }
 
-  public IndexLinkedBondId setRate(double rate) {
+  public CorporateBondId setRate(double rate) {
     this.rate = rate;
     setRateIsSet(true);
     return this;
@@ -274,7 +274,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     return this.base_date;
   }
 
-  public IndexLinkedBondId setBase_date(int base_date) {
+  public CorporateBondId setBase_date(int base_date) {
     this.base_date = base_date;
     setBase_dateIsSet(true);
     return this;
@@ -297,7 +297,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     return this.maturity_date;
   }
 
-  public IndexLinkedBondId setMaturity_date(int maturity_date) {
+  public CorporateBondId setMaturity_date(int maturity_date) {
     this.maturity_date = maturity_date;
     setMaturity_dateIsSet(true);
     return this;
@@ -407,12 +407,12 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof IndexLinkedBondId)
-      return this.equals((IndexLinkedBondId)that);
+    if (that instanceof CorporateBondId)
+      return this.equals((CorporateBondId)that);
     return false;
   }
 
-  public boolean equals(IndexLinkedBondId that) {
+  public boolean equals(CorporateBondId that) {
     if (that == null)
       return false;
 
@@ -497,7 +497,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
   }
 
   @Override
-  public int compareTo(IndexLinkedBondId other) {
+  public int compareTo(CorporateBondId other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -571,7 +571,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("IndexLinkedBondId(");
+    StringBuilder sb = new StringBuilder("CorporateBondId(");
     boolean first = true;
 
     sb.append("index:");
@@ -627,15 +627,15 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     }
   }
 
-  private static class IndexLinkedBondIdStandardSchemeFactory implements SchemeFactory {
-    public IndexLinkedBondIdStandardScheme getScheme() {
-      return new IndexLinkedBondIdStandardScheme();
+  private static class CorporateBondIdStandardSchemeFactory implements SchemeFactory {
+    public CorporateBondIdStandardScheme getScheme() {
+      return new CorporateBondIdStandardScheme();
     }
   }
 
-  private static class IndexLinkedBondIdStandardScheme extends StandardScheme<IndexLinkedBondId> {
+  private static class CorporateBondIdStandardScheme extends StandardScheme<CorporateBondId> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, IndexLinkedBondId struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, CorporateBondId struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -697,7 +697,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, IndexLinkedBondId struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, CorporateBondId struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -724,16 +724,16 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
 
   }
 
-  private static class IndexLinkedBondIdTupleSchemeFactory implements SchemeFactory {
-    public IndexLinkedBondIdTupleScheme getScheme() {
-      return new IndexLinkedBondIdTupleScheme();
+  private static class CorporateBondIdTupleSchemeFactory implements SchemeFactory {
+    public CorporateBondIdTupleScheme getScheme() {
+      return new CorporateBondIdTupleScheme();
     }
   }
 
-  private static class IndexLinkedBondIdTupleScheme extends TupleScheme<IndexLinkedBondId> {
+  private static class CorporateBondIdTupleScheme extends TupleScheme<CorporateBondId> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, IndexLinkedBondId struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, CorporateBondId struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
       if (struct.isSetIndex()) {
@@ -770,7 +770,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, IndexLinkedBondId struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, CorporateBondId struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(5);
       if (incoming.get(0)) {

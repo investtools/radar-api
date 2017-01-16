@@ -1,5 +1,5 @@
 #THRIFT=thrift
-THRIFT=docker run --rm -t -i -w /radar-api -v `pwd`:/radar-api thrift thrift
+THRIFT=docker run --rm -w /radar-api -v `pwd`:/radar-api thrift thrift
 SOURCE=radar.thrift
 
 all: js/lib csharp/src rb/gen java/src html

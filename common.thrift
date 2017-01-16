@@ -29,7 +29,7 @@ struct FundId {
   1: string cnpj
 }
 
-struct IndexLinkedBondId {
+struct CorporateBondId {
   1: IndexId index
   2: double factor
   5: double rate
@@ -45,7 +45,7 @@ struct GovernmentBondId {
 union SecurityId {
   1: StockId stock
   2: FundId fund
-  3: IndexLinkedBondId index_linked_bond
+  3: CorporateBondId corporate_bond
   4: GovernmentBondId government_bond
 }
 

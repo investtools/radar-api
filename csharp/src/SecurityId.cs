@@ -23,7 +23,7 @@ public partial class SecurityId : TBase
 {
   private StockId _stock;
   private FundId _fund;
-  private IndexLinkedBondId _index_linked_bond;
+  private CorporateBondId _corporate_bond;
   private GovernmentBondId _government_bond;
 
   public StockId Stock
@@ -52,16 +52,16 @@ public partial class SecurityId : TBase
     }
   }
 
-  public IndexLinkedBondId Index_linked_bond
+  public CorporateBondId Corporate_bond
   {
     get
     {
-      return _index_linked_bond;
+      return _corporate_bond;
     }
     set
     {
-      __isset.index_linked_bond = true;
-      this._index_linked_bond = value;
+      __isset.corporate_bond = true;
+      this._corporate_bond = value;
     }
   }
 
@@ -86,7 +86,7 @@ public partial class SecurityId : TBase
   public struct Isset {
     public bool stock;
     public bool fund;
-    public bool index_linked_bond;
+    public bool corporate_bond;
     public bool government_bond;
   }
 
@@ -126,8 +126,8 @@ public partial class SecurityId : TBase
             break;
           case 3:
             if (field.Type == TType.Struct) {
-              Index_linked_bond = new IndexLinkedBondId();
-              Index_linked_bond.Read(iprot);
+              Corporate_bond = new CorporateBondId();
+              Corporate_bond.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -177,12 +177,12 @@ public partial class SecurityId : TBase
         Fund.Write(oprot);
         oprot.WriteFieldEnd();
       }
-      if (Index_linked_bond != null && __isset.index_linked_bond) {
-        field.Name = "index_linked_bond";
+      if (Corporate_bond != null && __isset.corporate_bond) {
+        field.Name = "corporate_bond";
         field.Type = TType.Struct;
         field.ID = 3;
         oprot.WriteFieldBegin(field);
-        Index_linked_bond.Write(oprot);
+        Corporate_bond.Write(oprot);
         oprot.WriteFieldEnd();
       }
       if (Government_bond != null && __isset.government_bond) {
@@ -217,11 +217,11 @@ public partial class SecurityId : TBase
       __sb.Append("Fund: ");
       __sb.Append(Fund== null ? "<null>" : Fund.ToString());
     }
-    if (Index_linked_bond != null && __isset.index_linked_bond) {
+    if (Corporate_bond != null && __isset.corporate_bond) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Index_linked_bond: ");
-      __sb.Append(Index_linked_bond== null ? "<null>" : Index_linked_bond.ToString());
+      __sb.Append("Corporate_bond: ");
+      __sb.Append(Corporate_bond== null ? "<null>" : Corporate_bond.ToString());
     }
     if (Government_bond != null && __isset.government_bond) {
       if(!__first) { __sb.Append(", "); }

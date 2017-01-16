@@ -168,7 +168,7 @@ FundId.prototype.write = function(output) {
   return;
 };
 
-IndexLinkedBondId = module.exports.IndexLinkedBondId = function(args) {
+CorporateBondId = module.exports.CorporateBondId = function(args) {
   this.index = null;
   this.factor = null;
   this.rate = null;
@@ -192,8 +192,8 @@ IndexLinkedBondId = module.exports.IndexLinkedBondId = function(args) {
     }
   }
 };
-IndexLinkedBondId.prototype = {};
-IndexLinkedBondId.prototype.read = function(input) {
+CorporateBondId.prototype = {};
+CorporateBondId.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -251,8 +251,8 @@ IndexLinkedBondId.prototype.read = function(input) {
   return;
 };
 
-IndexLinkedBondId.prototype.write = function(output) {
-  output.writeStructBegin('IndexLinkedBondId');
+CorporateBondId.prototype.write = function(output) {
+  output.writeStructBegin('CorporateBondId');
   if (this.index !== null && this.index !== undefined) {
     output.writeFieldBegin('index', Thrift.Type.STRUCT, 1);
     this.index.write(output);
@@ -352,7 +352,7 @@ GovernmentBondId.prototype.write = function(output) {
 SecurityId = module.exports.SecurityId = function(args) {
   this.stock = null;
   this.fund = null;
-  this.index_linked_bond = null;
+  this.corporate_bond = null;
   this.government_bond = null;
   if (args) {
     if (args.stock !== undefined && args.stock !== null) {
@@ -361,8 +361,8 @@ SecurityId = module.exports.SecurityId = function(args) {
     if (args.fund !== undefined && args.fund !== null) {
       this.fund = new ttypes.FundId(args.fund);
     }
-    if (args.index_linked_bond !== undefined && args.index_linked_bond !== null) {
-      this.index_linked_bond = new ttypes.IndexLinkedBondId(args.index_linked_bond);
+    if (args.corporate_bond !== undefined && args.corporate_bond !== null) {
+      this.corporate_bond = new ttypes.CorporateBondId(args.corporate_bond);
     }
     if (args.government_bond !== undefined && args.government_bond !== null) {
       this.government_bond = new ttypes.GovernmentBondId(args.government_bond);
@@ -401,8 +401,8 @@ SecurityId.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.STRUCT) {
-        this.index_linked_bond = new ttypes.IndexLinkedBondId();
-        this.index_linked_bond.read(input);
+        this.corporate_bond = new ttypes.CorporateBondId();
+        this.corporate_bond.read(input);
       } else {
         input.skip(ftype);
       }
@@ -436,9 +436,9 @@ SecurityId.prototype.write = function(output) {
     this.fund.write(output);
     output.writeFieldEnd();
   }
-  if (this.index_linked_bond !== null && this.index_linked_bond !== undefined) {
-    output.writeFieldBegin('index_linked_bond', Thrift.Type.STRUCT, 3);
-    this.index_linked_bond.write(output);
+  if (this.corporate_bond !== null && this.corporate_bond !== undefined) {
+    output.writeFieldBegin('corporate_bond', Thrift.Type.STRUCT, 3);
+    this.corporate_bond.write(output);
     output.writeFieldEnd();
   }
   if (this.government_bond !== null && this.government_bond !== undefined) {
