@@ -171,6 +171,7 @@ FundId.prototype.write = function(output) {
 IndexLinkedBondId = module.exports.IndexLinkedBondId = function(args) {
   this.index = null;
   this.factor = null;
+  this.rate = null;
   this.base_date = null;
   this.maturity_date = null;
   if (args) {
@@ -179,6 +180,9 @@ IndexLinkedBondId = module.exports.IndexLinkedBondId = function(args) {
     }
     if (args.factor !== undefined && args.factor !== null) {
       this.factor = args.factor;
+    }
+    if (args.rate !== undefined && args.rate !== null) {
+      this.rate = args.rate;
     }
     if (args.base_date !== undefined && args.base_date !== null) {
       this.base_date = args.base_date;
@@ -217,6 +221,13 @@ IndexLinkedBondId.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.rate = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       case 3:
       if (ftype == Thrift.Type.I32) {
         this.base_date = input.readI32();
@@ -250,6 +261,11 @@ IndexLinkedBondId.prototype.write = function(output) {
   if (this.factor !== null && this.factor !== undefined) {
     output.writeFieldBegin('factor', Thrift.Type.DOUBLE, 2);
     output.writeDouble(this.factor);
+    output.writeFieldEnd();
+  }
+  if (this.rate !== null && this.rate !== undefined) {
+    output.writeFieldBegin('rate', Thrift.Type.DOUBLE, 5);
+    output.writeDouble(this.rate);
     output.writeFieldEnd();
   }
   if (this.base_date !== null && this.base_date !== undefined) {

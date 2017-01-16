@@ -60,12 +60,14 @@ module Radar
       include ::Thrift::Struct, ::Thrift::Struct_Union
       INDEX = 1
       FACTOR = 2
+      RATE = 5
       BASE_DATE = 3
       MATURITY_DATE = 4
 
       FIELDS = {
         INDEX => {:type => ::Thrift::Types::STRUCT, :name => 'index', :class => ::Radar::Api::IndexId},
         FACTOR => {:type => ::Thrift::Types::DOUBLE, :name => 'factor'},
+        RATE => {:type => ::Thrift::Types::DOUBLE, :name => 'rate'},
         BASE_DATE => {:type => ::Thrift::Types::I32, :name => 'base_date'},
         MATURITY_DATE => {:type => ::Thrift::Types::I32, :name => 'maturity_date'}
       }

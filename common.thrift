@@ -32,6 +32,7 @@ struct FundId {
 struct IndexLinkedBondId {
   1: IndexId index
   2: double factor
+  5: double rate
   3: Date base_date
   4: Date maturity_date
 }

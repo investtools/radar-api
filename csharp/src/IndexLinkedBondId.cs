@@ -23,6 +23,7 @@ public partial class IndexLinkedBondId : TBase
 {
   private IndexId _index;
   private double _factor;
+  private double _rate;
   private int _base_date;
   private int _maturity_date;
 
@@ -49,6 +50,19 @@ public partial class IndexLinkedBondId : TBase
     {
       __isset.factor = true;
       this._factor = value;
+    }
+  }
+
+  public double Rate
+  {
+    get
+    {
+      return _rate;
+    }
+    set
+    {
+      __isset.rate = true;
+      this._rate = value;
     }
   }
 
@@ -86,6 +100,7 @@ public partial class IndexLinkedBondId : TBase
   public struct Isset {
     public bool index;
     public bool factor;
+    public bool rate;
     public bool base_date;
     public bool maturity_date;
   }
@@ -119,6 +134,13 @@ public partial class IndexLinkedBondId : TBase
           case 2:
             if (field.Type == TType.Double) {
               Factor = iprot.ReadDouble();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 5:
+            if (field.Type == TType.Double) {
+              Rate = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -190,6 +212,14 @@ public partial class IndexLinkedBondId : TBase
         oprot.WriteI32(Maturity_date);
         oprot.WriteFieldEnd();
       }
+      if (__isset.rate) {
+        field.Name = "rate";
+        field.Type = TType.Double;
+        field.ID = 5;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteDouble(Rate);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -213,6 +243,12 @@ public partial class IndexLinkedBondId : TBase
       __first = false;
       __sb.Append("Factor: ");
       __sb.Append(Factor);
+    }
+    if (__isset.rate) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Rate: ");
+      __sb.Append(Rate);
     }
     if (__isset.base_date) {
       if(!__first) { __sb.Append(", "); }

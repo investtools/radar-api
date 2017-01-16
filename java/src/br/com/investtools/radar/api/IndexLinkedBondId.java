@@ -38,6 +38,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
 
   private static final org.apache.thrift.protocol.TField INDEX_FIELD_DESC = new org.apache.thrift.protocol.TField("index", org.apache.thrift.protocol.TType.STRUCT, (short)1);
   private static final org.apache.thrift.protocol.TField FACTOR_FIELD_DESC = new org.apache.thrift.protocol.TField("factor", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
+  private static final org.apache.thrift.protocol.TField RATE_FIELD_DESC = new org.apache.thrift.protocol.TField("rate", org.apache.thrift.protocol.TType.DOUBLE, (short)5);
   private static final org.apache.thrift.protocol.TField BASE_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("base_date", org.apache.thrift.protocol.TType.I32, (short)3);
   private static final org.apache.thrift.protocol.TField MATURITY_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("maturity_date", org.apache.thrift.protocol.TType.I32, (short)4);
 
@@ -49,6 +50,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
 
   public IndexId index; // required
   public double factor; // required
+  public double rate; // required
   public int base_date; // required
   public int maturity_date; // required
 
@@ -56,6 +58,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     INDEX((short)1, "index"),
     FACTOR((short)2, "factor"),
+    RATE((short)5, "rate"),
     BASE_DATE((short)3, "base_date"),
     MATURITY_DATE((short)4, "maturity_date");
 
@@ -76,6 +79,8 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
           return INDEX;
         case 2: // FACTOR
           return FACTOR;
+        case 5: // RATE
+          return RATE;
         case 3: // BASE_DATE
           return BASE_DATE;
         case 4: // MATURITY_DATE
@@ -121,8 +126,9 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
 
   // isset id assignments
   private static final int __FACTOR_ISSET_ID = 0;
-  private static final int __BASE_DATE_ISSET_ID = 1;
-  private static final int __MATURITY_DATE_ISSET_ID = 2;
+  private static final int __RATE_ISSET_ID = 1;
+  private static final int __BASE_DATE_ISSET_ID = 2;
+  private static final int __MATURITY_DATE_ISSET_ID = 3;
   private byte __isset_bitfield = 0;
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
@@ -130,6 +136,8 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     tmpMap.put(_Fields.INDEX, new org.apache.thrift.meta_data.FieldMetaData("index", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, IndexId.class)));
     tmpMap.put(_Fields.FACTOR, new org.apache.thrift.meta_data.FieldMetaData("factor", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
+    tmpMap.put(_Fields.RATE, new org.apache.thrift.meta_data.FieldMetaData("rate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     tmpMap.put(_Fields.BASE_DATE, new org.apache.thrift.meta_data.FieldMetaData("base_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
@@ -145,6 +153,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
   public IndexLinkedBondId(
     IndexId index,
     double factor,
+    double rate,
     int base_date,
     int maturity_date)
   {
@@ -152,6 +161,8 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     this.index = index;
     this.factor = factor;
     setFactorIsSet(true);
+    this.rate = rate;
+    setRateIsSet(true);
     this.base_date = base_date;
     setBase_dateIsSet(true);
     this.maturity_date = maturity_date;
@@ -167,6 +178,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
       this.index = new IndexId(other.index);
     }
     this.factor = other.factor;
+    this.rate = other.rate;
     this.base_date = other.base_date;
     this.maturity_date = other.maturity_date;
   }
@@ -180,6 +192,8 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     this.index = null;
     setFactorIsSet(false);
     this.factor = 0.0;
+    setRateIsSet(false);
+    this.rate = 0.0;
     setBase_dateIsSet(false);
     this.base_date = 0;
     setMaturity_dateIsSet(false);
@@ -231,6 +245,29 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
 
   public void setFactorIsSet(boolean value) {
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __FACTOR_ISSET_ID, value);
+  }
+
+  public double getRate() {
+    return this.rate;
+  }
+
+  public IndexLinkedBondId setRate(double rate) {
+    this.rate = rate;
+    setRateIsSet(true);
+    return this;
+  }
+
+  public void unsetRate() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __RATE_ISSET_ID);
+  }
+
+  /** Returns true if field rate is set (has been assigned a value) and false otherwise */
+  public boolean isSetRate() {
+    return EncodingUtils.testBit(__isset_bitfield, __RATE_ISSET_ID);
+  }
+
+  public void setRateIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __RATE_ISSET_ID, value);
   }
 
   public int getBase_date() {
@@ -297,6 +334,14 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
       }
       break;
 
+    case RATE:
+      if (value == null) {
+        unsetRate();
+      } else {
+        setRate((Double)value);
+      }
+      break;
+
     case BASE_DATE:
       if (value == null) {
         unsetBase_date();
@@ -324,6 +369,9 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     case FACTOR:
       return getFactor();
 
+    case RATE:
+      return getRate();
+
     case BASE_DATE:
       return getBase_date();
 
@@ -345,6 +393,8 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
       return isSetIndex();
     case FACTOR:
       return isSetFactor();
+    case RATE:
+      return isSetRate();
     case BASE_DATE:
       return isSetBase_date();
     case MATURITY_DATE:
@@ -384,6 +434,15 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
         return false;
     }
 
+    boolean this_present_rate = true;
+    boolean that_present_rate = true;
+    if (this_present_rate || that_present_rate) {
+      if (!(this_present_rate && that_present_rate))
+        return false;
+      if (this.rate != that.rate)
+        return false;
+    }
+
     boolean this_present_base_date = true;
     boolean that_present_base_date = true;
     if (this_present_base_date || that_present_base_date) {
@@ -418,6 +477,11 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     list.add(present_factor);
     if (present_factor)
       list.add(factor);
+
+    boolean present_rate = true;
+    list.add(present_rate);
+    if (present_rate)
+      list.add(rate);
 
     boolean present_base_date = true;
     list.add(present_base_date);
@@ -456,6 +520,16 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     }
     if (isSetFactor()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.factor, other.factor);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetRate()).compareTo(other.isSetRate());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetRate()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.rate, other.rate);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -510,6 +584,10 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     if (!first) sb.append(", ");
     sb.append("factor:");
     sb.append(this.factor);
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("rate:");
+    sb.append(this.rate);
     first = false;
     if (!first) sb.append(", ");
     sb.append("base_date:");
@@ -584,6 +662,14 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 5: // RATE
+            if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
+              struct.rate = iprot.readDouble();
+              struct.setRateIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           case 3: // BASE_DATE
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
               struct.base_date = iprot.readI32();
@@ -629,6 +715,9 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
       oprot.writeFieldBegin(MATURITY_DATE_FIELD_DESC);
       oprot.writeI32(struct.maturity_date);
       oprot.writeFieldEnd();
+      oprot.writeFieldBegin(RATE_FIELD_DESC);
+      oprot.writeDouble(struct.rate);
+      oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -653,18 +742,24 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
       if (struct.isSetFactor()) {
         optionals.set(1);
       }
-      if (struct.isSetBase_date()) {
+      if (struct.isSetRate()) {
         optionals.set(2);
       }
-      if (struct.isSetMaturity_date()) {
+      if (struct.isSetBase_date()) {
         optionals.set(3);
       }
-      oprot.writeBitSet(optionals, 4);
+      if (struct.isSetMaturity_date()) {
+        optionals.set(4);
+      }
+      oprot.writeBitSet(optionals, 5);
       if (struct.isSetIndex()) {
         struct.index.write(oprot);
       }
       if (struct.isSetFactor()) {
         oprot.writeDouble(struct.factor);
+      }
+      if (struct.isSetRate()) {
+        oprot.writeDouble(struct.rate);
       }
       if (struct.isSetBase_date()) {
         oprot.writeI32(struct.base_date);
@@ -677,7 +772,7 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, IndexLinkedBondId struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(4);
+      BitSet incoming = iprot.readBitSet(5);
       if (incoming.get(0)) {
         struct.index = new IndexId();
         struct.index.read(iprot);
@@ -688,10 +783,14 @@ public class IndexLinkedBondId implements org.apache.thrift.TBase<IndexLinkedBon
         struct.setFactorIsSet(true);
       }
       if (incoming.get(2)) {
+        struct.rate = iprot.readDouble();
+        struct.setRateIsSet(true);
+      }
+      if (incoming.get(3)) {
         struct.base_date = iprot.readI32();
         struct.setBase_dateIsSet(true);
       }
-      if (incoming.get(3)) {
+      if (incoming.get(4)) {
         struct.maturity_date = iprot.readI32();
         struct.setMaturity_dateIsSet(true);
       }
