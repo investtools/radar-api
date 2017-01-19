@@ -68,8 +68,8 @@ module Radar
         INDEX => {:type => ::Thrift::Types::STRUCT, :name => 'index', :class => ::Radar::Api::IndexId},
         FACTOR => {:type => ::Thrift::Types::DOUBLE, :name => 'factor'},
         RATE => {:type => ::Thrift::Types::DOUBLE, :name => 'rate'},
-        BASE_DATE => {:type => ::Thrift::Types::I32, :name => 'base_date'},
-        MATURITY_DATE => {:type => ::Thrift::Types::I32, :name => 'maturity_date'}
+        BASE_DATE => {:type => ::Thrift::Types::I64, :name => 'base_date'},
+        MATURITY_DATE => {:type => ::Thrift::Types::I64, :name => 'maturity_date'}
       }
 
       def struct_fields; FIELDS; end
@@ -87,7 +87,7 @@ module Radar
 
       FIELDS = {
         NAME => {:type => ::Thrift::Types::STRING, :name => 'name'},
-        MATURITY_DATE => {:type => ::Thrift::Types::I32, :name => 'maturity_date'}
+        MATURITY_DATE => {:type => ::Thrift::Types::I64, :name => 'maturity_date'}
       }
 
       def struct_fields; FIELDS; end

@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._Fields>, java.io.Serializable, Cloneable, Comparable<Portfolio> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Portfolio");
 
-  private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I32, (short)1);
+  private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)1);
   private static final org.apache.thrift.protocol.TField POSITIONS_FIELD_DESC = new org.apache.thrift.protocol.TField("positions", org.apache.thrift.protocol.TType.LIST, (short)2);
   private static final org.apache.thrift.protocol.TField RENTABILITY_FIELD_DESC = new org.apache.thrift.protocol.TField("rentability", org.apache.thrift.protocol.TType.DOUBLE, (short)3);
   private static final org.apache.thrift.protocol.TField NAV_FIELD_DESC = new org.apache.thrift.protocol.TField("nav", org.apache.thrift.protocol.TType.DOUBLE, (short)4);
@@ -49,7 +49,7 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
     schemes.put(TupleScheme.class, new PortfolioTupleSchemeFactory());
   }
 
-  public int date; // required
+  public long date; // required
   public List<Position> positions; // required
   public double rentability; // required
   public double nav; // required
@@ -145,7 +145,7 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.POSITIONS, new org.apache.thrift.meta_data.FieldMetaData("positions", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
             new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Position.class))));
@@ -166,7 +166,7 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
   }
 
   public Portfolio(
-    int date,
+    long date,
     List<Position> positions,
     double rentability,
     double nav,
@@ -229,11 +229,11 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
     this.provisions = null;
   }
 
-  public int getDate() {
+  public long getDate() {
     return this.date;
   }
 
-  public Portfolio setDate(int date) {
+  public Portfolio setDate(long date) {
     this.date = date;
     setDateIsSet(true);
     return this;
@@ -411,7 +411,7 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
       if (value == null) {
         unsetDate();
       } else {
-        setDate((Integer)value);
+        setDate((Long)value);
       }
       break;
 
@@ -777,8 +777,8 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
         }
         switch (schemeField.id) {
           case 1: // DATE
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.date = iprot.readI32();
+            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+              struct.date = iprot.readI64();
               struct.setDateIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -862,7 +862,7 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
 
       oprot.writeStructBegin(STRUCT_DESC);
       oprot.writeFieldBegin(DATE_FIELD_DESC);
-      oprot.writeI32(struct.date);
+      oprot.writeI64(struct.date);
       oprot.writeFieldEnd();
       if (struct.positions != null) {
         oprot.writeFieldBegin(POSITIONS_FIELD_DESC);
@@ -935,7 +935,7 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
       }
       oprot.writeBitSet(optionals, 6);
       if (struct.isSetDate()) {
-        oprot.writeI32(struct.date);
+        oprot.writeI64(struct.date);
       }
       if (struct.isSetPositions()) {
         {
@@ -971,7 +971,7 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(6);
       if (incoming.get(0)) {
-        struct.date = iprot.readI32();
+        struct.date = iprot.readI64();
         struct.setDateIsSet(true);
       }
       if (incoming.get(1)) {

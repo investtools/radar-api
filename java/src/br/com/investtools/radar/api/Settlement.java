@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Settlement extends org.apache.thrift.TUnion<Settlement, Settlement._Fields> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Settlement");
-  private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I32, (short)1);
+  private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)1);
   private static final org.apache.thrift.protocol.TField PERIOD_FIELD_DESC = new org.apache.thrift.protocol.TField("period", org.apache.thrift.protocol.TType.I16, (short)2);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
@@ -106,7 +106,7 @@ public class Settlement extends org.apache.thrift.TUnion<Settlement, Settlement.
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.PERIOD, new org.apache.thrift.meta_data.FieldMetaData("period", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -128,7 +128,7 @@ public class Settlement extends org.apache.thrift.TUnion<Settlement, Settlement.
     return new Settlement(this);
   }
 
-  public static Settlement date(int value) {
+  public static Settlement date(long value) {
     Settlement x = new Settlement();
     x.setDate(value);
     return x;
@@ -145,10 +145,10 @@ public class Settlement extends org.apache.thrift.TUnion<Settlement, Settlement.
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
     switch (setField) {
       case DATE:
-        if (value instanceof Integer) {
+        if (value instanceof Long) {
           break;
         }
-        throw new ClassCastException("Was expecting value of type Integer for field 'date', but got " + value.getClass().getSimpleName());
+        throw new ClassCastException("Was expecting value of type Long for field 'date', but got " + value.getClass().getSimpleName());
       case PERIOD:
         if (value instanceof Short) {
           break;
@@ -166,8 +166,8 @@ public class Settlement extends org.apache.thrift.TUnion<Settlement, Settlement.
       switch (setField) {
         case DATE:
           if (field.type == DATE_FIELD_DESC.type) {
-            Integer date;
-            date = iprot.readI32();
+            Long date;
+            date = iprot.readI64();
             return date;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
@@ -195,8 +195,8 @@ public class Settlement extends org.apache.thrift.TUnion<Settlement, Settlement.
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
       case DATE:
-        Integer date = (Integer)value_;
-        oprot.writeI32(date);
+        Long date = (Long)value_;
+        oprot.writeI64(date);
         return;
       case PERIOD:
         Short period = (Short)value_;
@@ -213,8 +213,8 @@ public class Settlement extends org.apache.thrift.TUnion<Settlement, Settlement.
     if (setField != null) {
       switch (setField) {
         case DATE:
-          Integer date;
-          date = iprot.readI32();
+          Long date;
+          date = iprot.readI64();
           return date;
         case PERIOD:
           Short period;
@@ -232,8 +232,8 @@ public class Settlement extends org.apache.thrift.TUnion<Settlement, Settlement.
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
       case DATE:
-        Integer date = (Integer)value_;
-        oprot.writeI32(date);
+        Long date = (Long)value_;
+        oprot.writeI64(date);
         return;
       case PERIOD:
         Short period = (Short)value_;
@@ -271,15 +271,15 @@ public class Settlement extends org.apache.thrift.TUnion<Settlement, Settlement.
   }
 
 
-  public int getDate() {
+  public long getDate() {
     if (getSetField() == _Fields.DATE) {
-      return (Integer)getFieldValue();
+      return (Long)getFieldValue();
     } else {
       throw new RuntimeException("Cannot get field 'date' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setDate(int value) {
+  public void setDate(long value) {
     setField_ = _Fields.DATE;
     value_ = value;
   }

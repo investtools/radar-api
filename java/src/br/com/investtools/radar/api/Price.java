@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class Price implements org.apache.thrift.TBase<Price, Price._Fields>, java.io.Serializable, Cloneable, Comparable<Price> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Price");
 
-  private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I32, (short)1);
+  private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)1);
   private static final org.apache.thrift.protocol.TField CLOSE_FIELD_DESC = new org.apache.thrift.protocol.TField("close", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -45,7 +45,7 @@ public class Price implements org.apache.thrift.TBase<Price, Price._Fields>, jav
     schemes.put(TupleScheme.class, new PriceTupleSchemeFactory());
   }
 
-  public int date; // required
+  public long date; // required
   public double close; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
@@ -117,7 +117,7 @@ public class Price implements org.apache.thrift.TBase<Price, Price._Fields>, jav
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.CLOSE, new org.apache.thrift.meta_data.FieldMetaData("close", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -128,7 +128,7 @@ public class Price implements org.apache.thrift.TBase<Price, Price._Fields>, jav
   }
 
   public Price(
-    int date,
+    long date,
     double close)
   {
     this();
@@ -159,11 +159,11 @@ public class Price implements org.apache.thrift.TBase<Price, Price._Fields>, jav
     this.close = 0.0;
   }
 
-  public int getDate() {
+  public long getDate() {
     return this.date;
   }
 
-  public Price setDate(int date) {
+  public Price setDate(long date) {
     this.date = date;
     setDateIsSet(true);
     return this;
@@ -211,7 +211,7 @@ public class Price implements org.apache.thrift.TBase<Price, Price._Fields>, jav
       if (value == null) {
         unsetDate();
       } else {
-        setDate((Integer)value);
+        setDate((Long)value);
       }
       break;
 
@@ -405,8 +405,8 @@ public class Price implements org.apache.thrift.TBase<Price, Price._Fields>, jav
         }
         switch (schemeField.id) {
           case 1: // DATE
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.date = iprot.readI32();
+            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+              struct.date = iprot.readI64();
               struct.setDateIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -436,7 +436,7 @@ public class Price implements org.apache.thrift.TBase<Price, Price._Fields>, jav
 
       oprot.writeStructBegin(STRUCT_DESC);
       oprot.writeFieldBegin(DATE_FIELD_DESC);
-      oprot.writeI32(struct.date);
+      oprot.writeI64(struct.date);
       oprot.writeFieldEnd();
       oprot.writeFieldBegin(CLOSE_FIELD_DESC);
       oprot.writeDouble(struct.close);
@@ -467,7 +467,7 @@ public class Price implements org.apache.thrift.TBase<Price, Price._Fields>, jav
       }
       oprot.writeBitSet(optionals, 2);
       if (struct.isSetDate()) {
-        oprot.writeI32(struct.date);
+        oprot.writeI64(struct.date);
       }
       if (struct.isSetClose()) {
         oprot.writeDouble(struct.close);
@@ -479,7 +479,7 @@ public class Price implements org.apache.thrift.TBase<Price, Price._Fields>, jav
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
-        struct.date = iprot.readI32();
+        struct.date = iprot.readI64();
         struct.setDateIsSet(true);
       }
       if (incoming.get(1)) {

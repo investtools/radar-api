@@ -17,19 +17,19 @@ using Thrift.Transport;
 
 public partial class IndexService {
   public interface Iface {
-    List<Price> prices(string symbol, int start_date, int end_date);
+    List<Price> prices(string symbol, long start_date, long end_date);
     #if SILVERLIGHT
-    IAsyncResult Begin_prices(AsyncCallback callback, object state, string symbol, int start_date, int end_date);
+    IAsyncResult Begin_prices(AsyncCallback callback, object state, string symbol, long start_date, long end_date);
     List<Price> End_prices(IAsyncResult asyncResult);
     #endif
-    double price(string symbol, int date);
+    double price(string symbol, long date);
     #if SILVERLIGHT
-    IAsyncResult Begin_price(AsyncCallback callback, object state, string symbol, int date);
+    IAsyncResult Begin_price(AsyncCallback callback, object state, string symbol, long date);
     double End_price(IAsyncResult asyncResult);
     #endif
-    double price_change(string symbol, int start_date, int end_date);
+    double price_change(string symbol, long start_date, long end_date);
     #if SILVERLIGHT
-    IAsyncResult Begin_price_change(AsyncCallback callback, object state, string symbol, int start_date, int end_date);
+    IAsyncResult Begin_price_change(AsyncCallback callback, object state, string symbol, long start_date, long end_date);
     double End_price_change(IAsyncResult asyncResult);
     #endif
   }
@@ -92,7 +92,7 @@ public partial class IndexService {
 
     
     #if SILVERLIGHT
-    public IAsyncResult Begin_prices(AsyncCallback callback, object state, string symbol, int start_date, int end_date)
+    public IAsyncResult Begin_prices(AsyncCallback callback, object state, string symbol, long start_date, long end_date)
     {
       return send_prices(callback, state, symbol, start_date, end_date);
     }
@@ -105,7 +105,7 @@ public partial class IndexService {
 
     #endif
 
-    public List<Price> prices(string symbol, int start_date, int end_date)
+    public List<Price> prices(string symbol, long start_date, long end_date)
     {
       #if !SILVERLIGHT
       send_prices(symbol, start_date, end_date);
@@ -118,9 +118,9 @@ public partial class IndexService {
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_prices(AsyncCallback callback, object state, string symbol, int start_date, int end_date)
+    public IAsyncResult send_prices(AsyncCallback callback, object state, string symbol, long start_date, long end_date)
     #else
-    public void send_prices(string symbol, int start_date, int end_date)
+    public void send_prices(string symbol, long start_date, long end_date)
     #endif
     {
       oprot_.WriteMessageBegin(new TMessage("prices", TMessageType.Call, seqid_));
@@ -156,7 +156,7 @@ public partial class IndexService {
 
     
     #if SILVERLIGHT
-    public IAsyncResult Begin_price(AsyncCallback callback, object state, string symbol, int date)
+    public IAsyncResult Begin_price(AsyncCallback callback, object state, string symbol, long date)
     {
       return send_price(callback, state, symbol, date);
     }
@@ -169,7 +169,7 @@ public partial class IndexService {
 
     #endif
 
-    public double price(string symbol, int date)
+    public double price(string symbol, long date)
     {
       #if !SILVERLIGHT
       send_price(symbol, date);
@@ -182,9 +182,9 @@ public partial class IndexService {
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_price(AsyncCallback callback, object state, string symbol, int date)
+    public IAsyncResult send_price(AsyncCallback callback, object state, string symbol, long date)
     #else
-    public void send_price(string symbol, int date)
+    public void send_price(string symbol, long date)
     #endif
     {
       oprot_.WriteMessageBegin(new TMessage("price", TMessageType.Call, seqid_));
@@ -219,7 +219,7 @@ public partial class IndexService {
 
     
     #if SILVERLIGHT
-    public IAsyncResult Begin_price_change(AsyncCallback callback, object state, string symbol, int start_date, int end_date)
+    public IAsyncResult Begin_price_change(AsyncCallback callback, object state, string symbol, long start_date, long end_date)
     {
       return send_price_change(callback, state, symbol, start_date, end_date);
     }
@@ -232,7 +232,7 @@ public partial class IndexService {
 
     #endif
 
-    public double price_change(string symbol, int start_date, int end_date)
+    public double price_change(string symbol, long start_date, long end_date)
     {
       #if !SILVERLIGHT
       send_price_change(symbol, start_date, end_date);
@@ -245,9 +245,9 @@ public partial class IndexService {
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_price_change(AsyncCallback callback, object state, string symbol, int start_date, int end_date)
+    public IAsyncResult send_price_change(AsyncCallback callback, object state, string symbol, long start_date, long end_date)
     #else
-    public void send_price_change(string symbol, int start_date, int end_date)
+    public void send_price_change(string symbol, long start_date, long end_date)
     #endif
     {
       oprot_.WriteMessageBegin(new TMessage("price_change", TMessageType.Call, seqid_));
@@ -369,8 +369,8 @@ public partial class IndexService {
   public partial class prices_args : TBase
   {
     private string _symbol;
-    private int _start_date;
-    private int _end_date;
+    private long _start_date;
+    private long _end_date;
 
     public string Symbol
     {
@@ -385,7 +385,7 @@ public partial class IndexService {
       }
     }
 
-    public int Start_date
+    public long Start_date
     {
       get
       {
@@ -398,7 +398,7 @@ public partial class IndexService {
       }
     }
 
-    public int End_date
+    public long End_date
     {
       get
       {
@@ -448,15 +448,15 @@ public partial class IndexService {
               }
               break;
             case 2:
-              if (field.Type == TType.I32) {
-                Start_date = iprot.ReadI32();
+              if (field.Type == TType.I64) {
+                Start_date = iprot.ReadI64();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
-              if (field.Type == TType.I32) {
-                End_date = iprot.ReadI32();
+              if (field.Type == TType.I64) {
+                End_date = iprot.ReadI64();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -492,18 +492,18 @@ public partial class IndexService {
         }
         if (__isset.start_date) {
           field.Name = "start_date";
-          field.Type = TType.I32;
+          field.Type = TType.I64;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Start_date);
+          oprot.WriteI64(Start_date);
           oprot.WriteFieldEnd();
         }
         if (__isset.end_date) {
           field.Name = "end_date";
-          field.Type = TType.I32;
+          field.Type = TType.I64;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(End_date);
+          oprot.WriteI64(End_date);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -678,7 +678,7 @@ public partial class IndexService {
   public partial class price_args : TBase
   {
     private string _symbol;
-    private int _date;
+    private long _date;
 
     public string Symbol
     {
@@ -693,7 +693,7 @@ public partial class IndexService {
       }
     }
 
-    public int Date
+    public long Date
     {
       get
       {
@@ -742,8 +742,8 @@ public partial class IndexService {
               }
               break;
             case 2:
-              if (field.Type == TType.I32) {
-                Date = iprot.ReadI32();
+              if (field.Type == TType.I64) {
+                Date = iprot.ReadI64();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -779,10 +779,10 @@ public partial class IndexService {
         }
         if (__isset.date) {
           field.Name = "date";
-          field.Type = TType.I32;
+          field.Type = TType.I64;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Date);
+          oprot.WriteI64(Date);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -931,8 +931,8 @@ public partial class IndexService {
   public partial class price_change_args : TBase
   {
     private string _symbol;
-    private int _start_date;
-    private int _end_date;
+    private long _start_date;
+    private long _end_date;
 
     public string Symbol
     {
@@ -947,7 +947,7 @@ public partial class IndexService {
       }
     }
 
-    public int Start_date
+    public long Start_date
     {
       get
       {
@@ -960,7 +960,7 @@ public partial class IndexService {
       }
     }
 
-    public int End_date
+    public long End_date
     {
       get
       {
@@ -1010,15 +1010,15 @@ public partial class IndexService {
               }
               break;
             case 2:
-              if (field.Type == TType.I32) {
-                Start_date = iprot.ReadI32();
+              if (field.Type == TType.I64) {
+                Start_date = iprot.ReadI64();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
-              if (field.Type == TType.I32) {
-                End_date = iprot.ReadI32();
+              if (field.Type == TType.I64) {
+                End_date = iprot.ReadI64();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1054,18 +1054,18 @@ public partial class IndexService {
         }
         if (__isset.start_date) {
           field.Name = "start_date";
-          field.Type = TType.I32;
+          field.Type = TType.I64;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Start_date);
+          oprot.WriteI64(Start_date);
           oprot.WriteFieldEnd();
         }
         if (__isset.end_date) {
           field.Name = "end_date";
-          field.Type = TType.I32;
+          field.Type = TType.I64;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(End_date);
+          oprot.WriteI64(End_date);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();

@@ -262,8 +262,8 @@ FundService_daily_data_args.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.I32) {
-        this.date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -285,8 +285,8 @@ FundService_daily_data_args.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I32, 2);
-    output.writeI32(this.date);
+    output.writeFieldBegin('date', Thrift.Type.I64, 2);
+    output.writeI64(this.date);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

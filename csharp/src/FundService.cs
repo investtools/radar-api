@@ -27,9 +27,9 @@ public partial class FundService {
     IAsyncResult Begin_short_name(AsyncCallback callback, object state, FundId id);
     string End_short_name(IAsyncResult asyncResult);
     #endif
-    DailyFundData daily_data(FundId id, int date);
+    DailyFundData daily_data(FundId id, long date);
     #if SILVERLIGHT
-    IAsyncResult Begin_daily_data(AsyncCallback callback, object state, FundId id, int date);
+    IAsyncResult Begin_daily_data(AsyncCallback callback, object state, FundId id, long date);
     DailyFundData End_daily_data(IAsyncResult asyncResult);
     #endif
   }
@@ -216,7 +216,7 @@ public partial class FundService {
 
     
     #if SILVERLIGHT
-    public IAsyncResult Begin_daily_data(AsyncCallback callback, object state, FundId id, int date)
+    public IAsyncResult Begin_daily_data(AsyncCallback callback, object state, FundId id, long date)
     {
       return send_daily_data(callback, state, id, date);
     }
@@ -229,7 +229,7 @@ public partial class FundService {
 
     #endif
 
-    public DailyFundData daily_data(FundId id, int date)
+    public DailyFundData daily_data(FundId id, long date)
     {
       #if !SILVERLIGHT
       send_daily_data(id, date);
@@ -242,9 +242,9 @@ public partial class FundService {
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_daily_data(AsyncCallback callback, object state, FundId id, int date)
+    public IAsyncResult send_daily_data(AsyncCallback callback, object state, FundId id, long date)
     #else
-    public void send_daily_data(FundId id, int date)
+    public void send_daily_data(FundId id, long date)
     #endif
     {
       oprot_.WriteMessageBegin(new TMessage("daily_data", TMessageType.Call, seqid_));
@@ -805,7 +805,7 @@ public partial class FundService {
   public partial class daily_data_args : TBase
   {
     private FundId _id;
-    private int _date;
+    private long _date;
 
     public FundId Id
     {
@@ -820,7 +820,7 @@ public partial class FundService {
       }
     }
 
-    public int Date
+    public long Date
     {
       get
       {
@@ -870,8 +870,8 @@ public partial class FundService {
               }
               break;
             case 2:
-              if (field.Type == TType.I32) {
-                Date = iprot.ReadI32();
+              if (field.Type == TType.I64) {
+                Date = iprot.ReadI64();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -907,10 +907,10 @@ public partial class FundService {
         }
         if (__isset.date) {
           field.Name = "date";
-          field.Type = TType.I32;
+          field.Type = TType.I64;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Date);
+          oprot.WriteI64(Date);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();

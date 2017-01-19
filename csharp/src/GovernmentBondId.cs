@@ -22,7 +22,7 @@ using Thrift.Transport;
 public partial class GovernmentBondId : TBase
 {
   private string _name;
-  private int _maturity_date;
+  private long _maturity_date;
 
   public string Name
   {
@@ -37,7 +37,7 @@ public partial class GovernmentBondId : TBase
     }
   }
 
-  public int Maturity_date
+  public long Maturity_date
   {
     get
     {
@@ -86,8 +86,8 @@ public partial class GovernmentBondId : TBase
             }
             break;
           case 2:
-            if (field.Type == TType.I32) {
-              Maturity_date = iprot.ReadI32();
+            if (field.Type == TType.I64) {
+              Maturity_date = iprot.ReadI64();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -123,10 +123,10 @@ public partial class GovernmentBondId : TBase
       }
       if (__isset.maturity_date) {
         field.Name = "maturity_date";
-        field.Type = TType.I32;
+        field.Type = TType.I64;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Maturity_date);
+        oprot.WriteI64(Maturity_date);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();

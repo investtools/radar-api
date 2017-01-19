@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, java.io.Serializable, Cloneable, Comparable<Point> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Point");
 
-  private static final org.apache.thrift.protocol.TField X_FIELD_DESC = new org.apache.thrift.protocol.TField("x", org.apache.thrift.protocol.TType.I32, (short)1);
+  private static final org.apache.thrift.protocol.TField X_FIELD_DESC = new org.apache.thrift.protocol.TField("x", org.apache.thrift.protocol.TType.I64, (short)1);
   private static final org.apache.thrift.protocol.TField Y_FIELD_DESC = new org.apache.thrift.protocol.TField("y", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -45,7 +45,7 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
     schemes.put(TupleScheme.class, new PointTupleSchemeFactory());
   }
 
-  public int x; // required
+  public long x; // required
   public double y; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
@@ -117,7 +117,7 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.X, new org.apache.thrift.meta_data.FieldMetaData("x", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.Y, new org.apache.thrift.meta_data.FieldMetaData("y", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -128,7 +128,7 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
   }
 
   public Point(
-    int x,
+    long x,
     double y)
   {
     this();
@@ -159,11 +159,11 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
     this.y = 0.0;
   }
 
-  public int getX() {
+  public long getX() {
     return this.x;
   }
 
-  public Point setX(int x) {
+  public Point setX(long x) {
     this.x = x;
     setXIsSet(true);
     return this;
@@ -211,7 +211,7 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
       if (value == null) {
         unsetX();
       } else {
-        setX((Integer)value);
+        setX((Long)value);
       }
       break;
 
@@ -405,8 +405,8 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
         }
         switch (schemeField.id) {
           case 1: // X
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.x = iprot.readI32();
+            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+              struct.x = iprot.readI64();
               struct.setXIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -436,7 +436,7 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
 
       oprot.writeStructBegin(STRUCT_DESC);
       oprot.writeFieldBegin(X_FIELD_DESC);
-      oprot.writeI32(struct.x);
+      oprot.writeI64(struct.x);
       oprot.writeFieldEnd();
       oprot.writeFieldBegin(Y_FIELD_DESC);
       oprot.writeDouble(struct.y);
@@ -467,7 +467,7 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
       }
       oprot.writeBitSet(optionals, 2);
       if (struct.isSetX()) {
-        oprot.writeI32(struct.x);
+        oprot.writeI64(struct.x);
       }
       if (struct.isSetY()) {
         oprot.writeDouble(struct.y);
@@ -479,7 +479,7 @@ public class Point implements org.apache.thrift.TBase<Point, Point._Fields>, jav
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
-        struct.x = iprot.readI32();
+        struct.x = iprot.readI64();
         struct.setXIsSet(true);
       }
       if (incoming.get(1)) {

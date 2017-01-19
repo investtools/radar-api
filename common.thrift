@@ -5,7 +5,7 @@ namespace java br.com.investtools.radar.api
  * Representação <i><a href="http://en.wikipedia.org/wiki/Unix_time">Unix time</a></i>
  * no horário 00:00:00.00 UTC.
  */
-typedef i32 Date
+typedef i64 Date
 
 /**
  * Representação <i><a href="http://en.wikipedia.org/wiki/RGB_color_model">RGB</a></i>

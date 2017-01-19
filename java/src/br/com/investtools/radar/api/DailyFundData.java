@@ -37,7 +37,7 @@ public class DailyFundData implements org.apache.thrift.TBase<DailyFundData, Dai
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("DailyFundData");
 
   private static final org.apache.thrift.protocol.TField PRICE_FIELD_DESC = new org.apache.thrift.protocol.TField("price", org.apache.thrift.protocol.TType.DOUBLE, (short)1);
-  private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I32, (short)2);
+  private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)2);
   private static final org.apache.thrift.protocol.TField NAV_FIELD_DESC = new org.apache.thrift.protocol.TField("nav", org.apache.thrift.protocol.TType.DOUBLE, (short)3);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -47,7 +47,7 @@ public class DailyFundData implements org.apache.thrift.TBase<DailyFundData, Dai
   }
 
   public double price; // required
-  public int date; // required
+  public long date; // required
   public double nav; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
@@ -125,7 +125,7 @@ public class DailyFundData implements org.apache.thrift.TBase<DailyFundData, Dai
     tmpMap.put(_Fields.PRICE, new org.apache.thrift.meta_data.FieldMetaData("price", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.NAV, new org.apache.thrift.meta_data.FieldMetaData("nav", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -137,7 +137,7 @@ public class DailyFundData implements org.apache.thrift.TBase<DailyFundData, Dai
 
   public DailyFundData(
     double price,
-    int date,
+    long date,
     double nav)
   {
     this();
@@ -196,11 +196,11 @@ public class DailyFundData implements org.apache.thrift.TBase<DailyFundData, Dai
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PRICE_ISSET_ID, value);
   }
 
-  public int getDate() {
+  public long getDate() {
     return this.date;
   }
 
-  public DailyFundData setDate(int date) {
+  public DailyFundData setDate(long date) {
     this.date = date;
     setDateIsSet(true);
     return this;
@@ -256,7 +256,7 @@ public class DailyFundData implements org.apache.thrift.TBase<DailyFundData, Dai
       if (value == null) {
         unsetDate();
       } else {
-        setDate((Integer)value);
+        setDate((Long)value);
       }
       break;
 
@@ -491,8 +491,8 @@ public class DailyFundData implements org.apache.thrift.TBase<DailyFundData, Dai
             }
             break;
           case 2: // DATE
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.date = iprot.readI32();
+            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+              struct.date = iprot.readI64();
               struct.setDateIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -525,7 +525,7 @@ public class DailyFundData implements org.apache.thrift.TBase<DailyFundData, Dai
       oprot.writeDouble(struct.price);
       oprot.writeFieldEnd();
       oprot.writeFieldBegin(DATE_FIELD_DESC);
-      oprot.writeI32(struct.date);
+      oprot.writeI64(struct.date);
       oprot.writeFieldEnd();
       oprot.writeFieldBegin(NAV_FIELD_DESC);
       oprot.writeDouble(struct.nav);
@@ -562,7 +562,7 @@ public class DailyFundData implements org.apache.thrift.TBase<DailyFundData, Dai
         oprot.writeDouble(struct.price);
       }
       if (struct.isSetDate()) {
-        oprot.writeI32(struct.date);
+        oprot.writeI64(struct.date);
       }
       if (struct.isSetNav()) {
         oprot.writeDouble(struct.nav);
@@ -578,7 +578,7 @@ public class DailyFundData implements org.apache.thrift.TBase<DailyFundData, Dai
         struct.setPriceIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.date = iprot.readI32();
+        struct.date = iprot.readI64();
         struct.setDateIsSet(true);
       }
       if (incoming.get(2)) {

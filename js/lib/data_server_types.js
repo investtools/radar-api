@@ -38,8 +38,8 @@ Price.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -63,8 +63,8 @@ Price.prototype.read = function(input) {
 Price.prototype.write = function(output) {
   output.writeStructBegin('Price');
   if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I32, 1);
-    output.writeI32(this.date);
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
     output.writeFieldEnd();
   }
   if (this.close !== null && this.close !== undefined) {
@@ -115,8 +115,8 @@ DailyFundData.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.I32) {
-        this.date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -145,8 +145,8 @@ DailyFundData.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I32, 2);
-    output.writeI32(this.date);
+    output.writeFieldBegin('date', Thrift.Type.I64, 2);
+    output.writeI64(this.date);
     output.writeFieldEnd();
   }
   if (this.nav !== null && this.nav !== undefined) {

@@ -96,8 +96,8 @@ module Radar
 
         FIELDS = {
           SYMBOL => {:type => ::Thrift::Types::STRING, :name => 'symbol'},
-          START_DATE => {:type => ::Thrift::Types::I32, :name => 'start_date'},
-          END_DATE => {:type => ::Thrift::Types::I32, :name => 'end_date'}
+          START_DATE => {:type => ::Thrift::Types::I64, :name => 'start_date'},
+          END_DATE => {:type => ::Thrift::Types::I64, :name => 'end_date'}
         }
 
         def struct_fields; FIELDS; end
@@ -131,7 +131,7 @@ module Radar
 
         FIELDS = {
           SYMBOL => {:type => ::Thrift::Types::STRING, :name => 'symbol'},
-          DATE => {:type => ::Thrift::Types::I32, :name => 'date'}
+          DATE => {:type => ::Thrift::Types::I64, :name => 'date'}
         }
 
         def struct_fields; FIELDS; end
@@ -166,8 +166,8 @@ module Radar
 
         FIELDS = {
           SYMBOL => {:type => ::Thrift::Types::STRING, :name => 'symbol'},
-          START_DATE => {:type => ::Thrift::Types::I32, :name => 'start_date'},
-          END_DATE => {:type => ::Thrift::Types::I32, :name => 'end_date'}
+          START_DATE => {:type => ::Thrift::Types::I64, :name => 'start_date'},
+          END_DATE => {:type => ::Thrift::Types::I64, :name => 'end_date'}
         }
 
         def struct_fields; FIELDS; end

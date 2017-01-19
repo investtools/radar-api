@@ -50,8 +50,8 @@ StockSellTransaction.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -90,8 +90,8 @@ StockSellTransaction.prototype.read = function(input) {
 StockSellTransaction.prototype.write = function(output) {
   output.writeStructBegin('StockSellTransaction');
   if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I32, 1);
-    output.writeI32(this.date);
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
     output.writeFieldEnd();
   }
   if (this.stock !== null && this.stock !== undefined) {
@@ -153,8 +153,8 @@ StockBuyTransaction.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -200,8 +200,8 @@ StockBuyTransaction.prototype.read = function(input) {
 StockBuyTransaction.prototype.write = function(output) {
   output.writeStructBegin('StockBuyTransaction');
   if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I32, 1);
-    output.writeI32(this.date);
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
     output.writeFieldEnd();
   }
   if (this.stock !== null && this.stock !== undefined) {

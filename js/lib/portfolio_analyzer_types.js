@@ -60,8 +60,8 @@ Point.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.x = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.x = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -85,8 +85,8 @@ Point.prototype.read = function(input) {
 Point.prototype.write = function(output) {
   output.writeStructBegin('Point');
   if (this.x !== null && this.x !== undefined) {
-    output.writeFieldBegin('x', Thrift.Type.I32, 1);
-    output.writeI32(this.x);
+    output.writeFieldBegin('x', Thrift.Type.I64, 1);
+    output.writeI64(this.x);
     output.writeFieldEnd();
   }
   if (this.y !== null && this.y !== undefined) {
@@ -1694,8 +1694,8 @@ Settlement.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -1719,8 +1719,8 @@ Settlement.prototype.read = function(input) {
 Settlement.prototype.write = function(output) {
   output.writeStructBegin('Settlement');
   if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I32, 1);
-    output.writeI32(this.date);
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
     output.writeFieldEnd();
   }
   if (this.period !== null && this.period !== undefined) {
@@ -1859,8 +1859,8 @@ Portfolio.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -1940,8 +1940,8 @@ Portfolio.prototype.read = function(input) {
 Portfolio.prototype.write = function(output) {
   output.writeStructBegin('Portfolio');
   if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I32, 1);
-    output.writeI32(this.date);
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
     output.writeFieldEnd();
   }
   if (this.positions !== null && this.positions !== undefined) {
@@ -2147,8 +2147,8 @@ CashFlow.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.I32) {
-        this.date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -2186,8 +2186,8 @@ CashFlow.prototype.read = function(input) {
 CashFlow.prototype.write = function(output) {
   output.writeStructBegin('CashFlow');
   if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I32, 1);
-    output.writeI32(this.date);
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
     output.writeFieldEnd();
   }
   if (this.value !== null && this.value !== undefined) {

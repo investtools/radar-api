@@ -194,8 +194,8 @@ module Radar
 
         FIELDS = {
           ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::Api::SecurityId},
-          START_DATE => {:type => ::Thrift::Types::I32, :name => 'start_date'},
-          END_DATE => {:type => ::Thrift::Types::I32, :name => 'end_date'}
+          START_DATE => {:type => ::Thrift::Types::I64, :name => 'start_date'},
+          END_DATE => {:type => ::Thrift::Types::I64, :name => 'end_date'}
         }
 
         def struct_fields; FIELDS; end
@@ -229,7 +229,7 @@ module Radar
 
         FIELDS = {
           ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::Api::SecurityId},
-          DATE => {:type => ::Thrift::Types::I32, :name => 'date'}
+          DATE => {:type => ::Thrift::Types::I64, :name => 'date'}
         }
 
         def struct_fields; FIELDS; end
@@ -264,8 +264,8 @@ module Radar
 
         FIELDS = {
           ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::Api::SecurityId},
-          START_DATE => {:type => ::Thrift::Types::I32, :name => 'start_date'},
-          END_DATE => {:type => ::Thrift::Types::I32, :name => 'end_date'}
+          START_DATE => {:type => ::Thrift::Types::I64, :name => 'start_date'},
+          END_DATE => {:type => ::Thrift::Types::I64, :name => 'end_date'}
         }
 
         def struct_fields; FIELDS; end
@@ -300,8 +300,8 @@ module Radar
 
         FIELDS = {
           ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::Api::SecurityId},
-          START_DATE => {:type => ::Thrift::Types::I32, :name => 'start_date'},
-          END_DATE => {:type => ::Thrift::Types::I32, :name => 'end_date'}
+          START_DATE => {:type => ::Thrift::Types::I64, :name => 'start_date'},
+          END_DATE => {:type => ::Thrift::Types::I64, :name => 'end_date'}
         }
 
         def struct_fields; FIELDS; end
@@ -336,8 +336,8 @@ module Radar
 
         FIELDS = {
           ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::Api::SecurityId},
-          START_DATE => {:type => ::Thrift::Types::I32, :name => 'start_date'},
-          END_DATE => {:type => ::Thrift::Types::I32, :name => 'end_date'}
+          START_DATE => {:type => ::Thrift::Types::I64, :name => 'start_date'},
+          END_DATE => {:type => ::Thrift::Types::I64, :name => 'end_date'}
         }
 
         def struct_fields; FIELDS; end

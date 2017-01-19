@@ -24,8 +24,8 @@ public partial class CorporateBondId : TBase
   private IndexId _index;
   private double _factor;
   private double _rate;
-  private int _base_date;
-  private int _maturity_date;
+  private long _base_date;
+  private long _maturity_date;
 
   public IndexId Index
   {
@@ -66,7 +66,7 @@ public partial class CorporateBondId : TBase
     }
   }
 
-  public int Base_date
+  public long Base_date
   {
     get
     {
@@ -79,7 +79,7 @@ public partial class CorporateBondId : TBase
     }
   }
 
-  public int Maturity_date
+  public long Maturity_date
   {
     get
     {
@@ -146,15 +146,15 @@ public partial class CorporateBondId : TBase
             }
             break;
           case 3:
-            if (field.Type == TType.I32) {
-              Base_date = iprot.ReadI32();
+            if (field.Type == TType.I64) {
+              Base_date = iprot.ReadI64();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 4:
-            if (field.Type == TType.I32) {
-              Maturity_date = iprot.ReadI32();
+            if (field.Type == TType.I64) {
+              Maturity_date = iprot.ReadI64();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -198,18 +198,18 @@ public partial class CorporateBondId : TBase
       }
       if (__isset.base_date) {
         field.Name = "base_date";
-        field.Type = TType.I32;
+        field.Type = TType.I64;
         field.ID = 3;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Base_date);
+        oprot.WriteI64(Base_date);
         oprot.WriteFieldEnd();
       }
       if (__isset.maturity_date) {
         field.Name = "maturity_date";
-        field.Type = TType.I32;
+        field.Type = TType.I64;
         field.ID = 4;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Maturity_date);
+        oprot.WriteI64(Maturity_date);
         oprot.WriteFieldEnd();
       }
       if (__isset.rate) {

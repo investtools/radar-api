@@ -37,7 +37,7 @@ public class GovernmentBondId implements org.apache.thrift.TBase<GovernmentBondI
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("GovernmentBondId");
 
   private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField MATURITY_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("maturity_date", org.apache.thrift.protocol.TType.I32, (short)2);
+  private static final org.apache.thrift.protocol.TField MATURITY_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("maturity_date", org.apache.thrift.protocol.TType.I64, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -46,7 +46,7 @@ public class GovernmentBondId implements org.apache.thrift.TBase<GovernmentBondI
   }
 
   public String name; // required
-  public int maturity_date; // required
+  public long maturity_date; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -118,7 +118,7 @@ public class GovernmentBondId implements org.apache.thrift.TBase<GovernmentBondI
     tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.MATURITY_DATE, new org.apache.thrift.meta_data.FieldMetaData("maturity_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(GovernmentBondId.class, metaDataMap);
   }
@@ -128,7 +128,7 @@ public class GovernmentBondId implements org.apache.thrift.TBase<GovernmentBondI
 
   public GovernmentBondId(
     String name,
-    int maturity_date)
+    long maturity_date)
   {
     this();
     this.name = name;
@@ -182,11 +182,11 @@ public class GovernmentBondId implements org.apache.thrift.TBase<GovernmentBondI
     }
   }
 
-  public int getMaturity_date() {
+  public long getMaturity_date() {
     return this.maturity_date;
   }
 
-  public GovernmentBondId setMaturity_date(int maturity_date) {
+  public GovernmentBondId setMaturity_date(long maturity_date) {
     this.maturity_date = maturity_date;
     setMaturity_dateIsSet(true);
     return this;
@@ -219,7 +219,7 @@ public class GovernmentBondId implements org.apache.thrift.TBase<GovernmentBondI
       if (value == null) {
         unsetMaturity_date();
       } else {
-        setMaturity_date((Integer)value);
+        setMaturity_date((Long)value);
       }
       break;
 
@@ -417,8 +417,8 @@ public class GovernmentBondId implements org.apache.thrift.TBase<GovernmentBondI
             }
             break;
           case 2: // MATURITY_DATE
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.maturity_date = iprot.readI32();
+            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+              struct.maturity_date = iprot.readI64();
               struct.setMaturity_dateIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -445,7 +445,7 @@ public class GovernmentBondId implements org.apache.thrift.TBase<GovernmentBondI
         oprot.writeFieldEnd();
       }
       oprot.writeFieldBegin(MATURITY_DATE_FIELD_DESC);
-      oprot.writeI32(struct.maturity_date);
+      oprot.writeI64(struct.maturity_date);
       oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -476,7 +476,7 @@ public class GovernmentBondId implements org.apache.thrift.TBase<GovernmentBondI
         oprot.writeString(struct.name);
       }
       if (struct.isSetMaturity_date()) {
-        oprot.writeI32(struct.maturity_date);
+        oprot.writeI64(struct.maturity_date);
       }
     }
 
@@ -489,7 +489,7 @@ public class GovernmentBondId implements org.apache.thrift.TBase<GovernmentBondI
         struct.setNameIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.maturity_date = iprot.readI32();
+        struct.maturity_date = iprot.readI64();
         struct.setMaturity_dateIsSet(true);
       }
     }

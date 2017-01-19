@@ -50,7 +50,7 @@ module Radar
       Y = 2
 
       FIELDS = {
-        X => {:type => ::Thrift::Types::I32, :name => 'x'},
+        X => {:type => ::Thrift::Types::I64, :name => 'x'},
         Y => {:type => ::Thrift::Types::DOUBLE, :name => 'y'}
       }
 
@@ -447,7 +447,7 @@ module Radar
       PERIOD = 2
 
       FIELDS = {
-        DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
         PERIOD => {:type => ::Thrift::Types::I16, :name => 'period'}
       }
 
@@ -491,7 +491,7 @@ module Radar
       PROVISIONS = 6
 
       FIELDS = {
-        DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
         POSITIONS => {:type => ::Thrift::Types::LIST, :name => 'positions', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Position}},
         RENTABILITY => {:type => ::Thrift::Types::DOUBLE, :name => 'rentability'},
         NAV => {:type => ::Thrift::Types::DOUBLE, :name => 'nav'},
@@ -541,7 +541,7 @@ module Radar
       TYPE = 4
 
       FIELDS = {
-        DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
         VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'},
         BALANCE => {:type => ::Thrift::Types::DOUBLE, :name => 'balance'},
         TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::Api::CashFlowType}

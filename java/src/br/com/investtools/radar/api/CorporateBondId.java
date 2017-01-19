@@ -39,8 +39,8 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
   private static final org.apache.thrift.protocol.TField INDEX_FIELD_DESC = new org.apache.thrift.protocol.TField("index", org.apache.thrift.protocol.TType.STRUCT, (short)1);
   private static final org.apache.thrift.protocol.TField FACTOR_FIELD_DESC = new org.apache.thrift.protocol.TField("factor", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
   private static final org.apache.thrift.protocol.TField RATE_FIELD_DESC = new org.apache.thrift.protocol.TField("rate", org.apache.thrift.protocol.TType.DOUBLE, (short)5);
-  private static final org.apache.thrift.protocol.TField BASE_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("base_date", org.apache.thrift.protocol.TType.I32, (short)3);
-  private static final org.apache.thrift.protocol.TField MATURITY_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("maturity_date", org.apache.thrift.protocol.TType.I32, (short)4);
+  private static final org.apache.thrift.protocol.TField BASE_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("base_date", org.apache.thrift.protocol.TType.I64, (short)3);
+  private static final org.apache.thrift.protocol.TField MATURITY_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("maturity_date", org.apache.thrift.protocol.TType.I64, (short)4);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -51,8 +51,8 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
   public IndexId index; // required
   public double factor; // required
   public double rate; // required
-  public int base_date; // required
-  public int maturity_date; // required
+  public long base_date; // required
+  public long maturity_date; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -140,9 +140,9 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
     tmpMap.put(_Fields.RATE, new org.apache.thrift.meta_data.FieldMetaData("rate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     tmpMap.put(_Fields.BASE_DATE, new org.apache.thrift.meta_data.FieldMetaData("base_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.MATURITY_DATE, new org.apache.thrift.meta_data.FieldMetaData("maturity_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(CorporateBondId.class, metaDataMap);
   }
@@ -154,8 +154,8 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
     IndexId index,
     double factor,
     double rate,
-    int base_date,
-    int maturity_date)
+    long base_date,
+    long maturity_date)
   {
     this();
     this.index = index;
@@ -270,11 +270,11 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __RATE_ISSET_ID, value);
   }
 
-  public int getBase_date() {
+  public long getBase_date() {
     return this.base_date;
   }
 
-  public CorporateBondId setBase_date(int base_date) {
+  public CorporateBondId setBase_date(long base_date) {
     this.base_date = base_date;
     setBase_dateIsSet(true);
     return this;
@@ -293,11 +293,11 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __BASE_DATE_ISSET_ID, value);
   }
 
-  public int getMaturity_date() {
+  public long getMaturity_date() {
     return this.maturity_date;
   }
 
-  public CorporateBondId setMaturity_date(int maturity_date) {
+  public CorporateBondId setMaturity_date(long maturity_date) {
     this.maturity_date = maturity_date;
     setMaturity_dateIsSet(true);
     return this;
@@ -346,7 +346,7 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
       if (value == null) {
         unsetBase_date();
       } else {
-        setBase_date((Integer)value);
+        setBase_date((Long)value);
       }
       break;
 
@@ -354,7 +354,7 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
       if (value == null) {
         unsetMaturity_date();
       } else {
-        setMaturity_date((Integer)value);
+        setMaturity_date((Long)value);
       }
       break;
 
@@ -671,16 +671,16 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
             }
             break;
           case 3: // BASE_DATE
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.base_date = iprot.readI32();
+            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+              struct.base_date = iprot.readI64();
               struct.setBase_dateIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
           case 4: // MATURITY_DATE
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.maturity_date = iprot.readI32();
+            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+              struct.maturity_date = iprot.readI64();
               struct.setMaturity_dateIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -710,10 +710,10 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
       oprot.writeDouble(struct.factor);
       oprot.writeFieldEnd();
       oprot.writeFieldBegin(BASE_DATE_FIELD_DESC);
-      oprot.writeI32(struct.base_date);
+      oprot.writeI64(struct.base_date);
       oprot.writeFieldEnd();
       oprot.writeFieldBegin(MATURITY_DATE_FIELD_DESC);
-      oprot.writeI32(struct.maturity_date);
+      oprot.writeI64(struct.maturity_date);
       oprot.writeFieldEnd();
       oprot.writeFieldBegin(RATE_FIELD_DESC);
       oprot.writeDouble(struct.rate);
@@ -762,10 +762,10 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
         oprot.writeDouble(struct.rate);
       }
       if (struct.isSetBase_date()) {
-        oprot.writeI32(struct.base_date);
+        oprot.writeI64(struct.base_date);
       }
       if (struct.isSetMaturity_date()) {
-        oprot.writeI32(struct.maturity_date);
+        oprot.writeI64(struct.maturity_date);
       }
     }
 
@@ -787,11 +787,11 @@ public class CorporateBondId implements org.apache.thrift.TBase<CorporateBondId,
         struct.setRateIsSet(true);
       }
       if (incoming.get(3)) {
-        struct.base_date = iprot.readI32();
+        struct.base_date = iprot.readI64();
         struct.setBase_dateIsSet(true);
       }
       if (incoming.get(4)) {
-        struct.maturity_date = iprot.readI32();
+        struct.maturity_date = iprot.readI64();
         struct.setMaturity_dateIsSet(true);
       }
     }

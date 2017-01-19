@@ -21,13 +21,13 @@ using Thrift.Transport;
 #endif
 public partial class StockBuyTransaction : TBase
 {
-  private int _date;
+  private long _date;
   private StockId _stock;
   private int _shares;
   private double _price;
   private StockBuyTransactionType _type;
 
-  public int Date
+  public long Date
   {
     get
     {
@@ -130,8 +130,8 @@ public partial class StockBuyTransaction : TBase
         switch (field.ID)
         {
           case 1:
-            if (field.Type == TType.I32) {
-              Date = iprot.ReadI32();
+            if (field.Type == TType.I64) {
+              Date = iprot.ReadI64();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -188,10 +188,10 @@ public partial class StockBuyTransaction : TBase
       TField field = new TField();
       if (__isset.date) {
         field.Name = "date";
-        field.Type = TType.I32;
+        field.Type = TType.I64;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Date);
+        oprot.WriteI64(Date);
         oprot.WriteFieldEnd();
       }
       if (Stock != null && __isset.stock) {

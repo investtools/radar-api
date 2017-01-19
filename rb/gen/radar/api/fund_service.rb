@@ -159,7 +159,7 @@ module Radar
 
         FIELDS = {
           ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::Api::FundId},
-          DATE => {:type => ::Thrift::Types::I32, :name => 'date'}
+          DATE => {:type => ::Thrift::Types::I64, :name => 'date'}
         }
 
         def struct_fields; FIELDS; end

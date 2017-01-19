@@ -39,15 +39,15 @@ public class SecurityService {
 
     public String short_name(br.com.investtools.radar.api.SecurityId id) throws org.apache.thrift.TException;
 
-    public List<Price> prices(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException;
+    public List<Price> prices(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException;
 
-    public double price(br.com.investtools.radar.api.SecurityId id, int date) throws org.apache.thrift.TException;
+    public double price(br.com.investtools.radar.api.SecurityId id, long date) throws org.apache.thrift.TException;
 
-    public double price_change(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException;
+    public double price_change(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException;
 
-    public List<Double> price_changes(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException;
+    public List<Double> price_changes(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException;
 
-    public double price_volatility(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException;
+    public double price_volatility(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException;
 
   }
 
@@ -55,15 +55,15 @@ public class SecurityService {
 
     public void short_name(br.com.investtools.radar.api.SecurityId id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void prices(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void prices(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void price(br.com.investtools.radar.api.SecurityId id, int date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void price(br.com.investtools.radar.api.SecurityId id, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void price_change(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void price_change(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void price_changes(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void price_changes(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void price_volatility(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void price_volatility(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -110,13 +110,13 @@ public class SecurityService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "short_name failed: unknown result");
     }
 
-    public List<Price> prices(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException
+    public List<Price> prices(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException
     {
       send_prices(id, start_date, end_date);
       return recv_prices();
     }
 
-    public void send_prices(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException
+    public void send_prices(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException
     {
       prices_args args = new prices_args();
       args.setId(id);
@@ -135,13 +135,13 @@ public class SecurityService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "prices failed: unknown result");
     }
 
-    public double price(br.com.investtools.radar.api.SecurityId id, int date) throws org.apache.thrift.TException
+    public double price(br.com.investtools.radar.api.SecurityId id, long date) throws org.apache.thrift.TException
     {
       send_price(id, date);
       return recv_price();
     }
 
-    public void send_price(br.com.investtools.radar.api.SecurityId id, int date) throws org.apache.thrift.TException
+    public void send_price(br.com.investtools.radar.api.SecurityId id, long date) throws org.apache.thrift.TException
     {
       price_args args = new price_args();
       args.setId(id);
@@ -159,13 +159,13 @@ public class SecurityService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "price failed: unknown result");
     }
 
-    public double price_change(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException
+    public double price_change(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException
     {
       send_price_change(id, start_date, end_date);
       return recv_price_change();
     }
 
-    public void send_price_change(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException
+    public void send_price_change(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException
     {
       price_change_args args = new price_change_args();
       args.setId(id);
@@ -184,13 +184,13 @@ public class SecurityService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "price_change failed: unknown result");
     }
 
-    public List<Double> price_changes(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException
+    public List<Double> price_changes(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException
     {
       send_price_changes(id, start_date, end_date);
       return recv_price_changes();
     }
 
-    public void send_price_changes(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException
+    public void send_price_changes(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException
     {
       price_changes_args args = new price_changes_args();
       args.setId(id);
@@ -209,13 +209,13 @@ public class SecurityService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "price_changes failed: unknown result");
     }
 
-    public double price_volatility(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException
+    public double price_volatility(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException
     {
       send_price_volatility(id, start_date, end_date);
       return recv_price_volatility();
     }
 
-    public void send_price_volatility(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date) throws org.apache.thrift.TException
+    public void send_price_volatility(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date) throws org.apache.thrift.TException
     {
       price_volatility_args args = new price_volatility_args();
       args.setId(id);
@@ -284,7 +284,7 @@ public class SecurityService {
       }
     }
 
-    public void prices(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void prices(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       prices_call method_call = new prices_call(id, start_date, end_date, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -293,9 +293,9 @@ public class SecurityService {
 
     public static class prices_call extends org.apache.thrift.async.TAsyncMethodCall {
       private br.com.investtools.radar.api.SecurityId id;
-      private int start_date;
-      private int end_date;
-      public prices_call(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private long start_date;
+      private long end_date;
+      public prices_call(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.id = id;
         this.start_date = start_date;
@@ -322,7 +322,7 @@ public class SecurityService {
       }
     }
 
-    public void price(br.com.investtools.radar.api.SecurityId id, int date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void price(br.com.investtools.radar.api.SecurityId id, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       price_call method_call = new price_call(id, date, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -331,8 +331,8 @@ public class SecurityService {
 
     public static class price_call extends org.apache.thrift.async.TAsyncMethodCall {
       private br.com.investtools.radar.api.SecurityId id;
-      private int date;
-      public price_call(br.com.investtools.radar.api.SecurityId id, int date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private long date;
+      public price_call(br.com.investtools.radar.api.SecurityId id, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.id = id;
         this.date = date;
@@ -357,7 +357,7 @@ public class SecurityService {
       }
     }
 
-    public void price_change(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void price_change(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       price_change_call method_call = new price_change_call(id, start_date, end_date, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -366,9 +366,9 @@ public class SecurityService {
 
     public static class price_change_call extends org.apache.thrift.async.TAsyncMethodCall {
       private br.com.investtools.radar.api.SecurityId id;
-      private int start_date;
-      private int end_date;
-      public price_change_call(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private long start_date;
+      private long end_date;
+      public price_change_call(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.id = id;
         this.start_date = start_date;
@@ -395,7 +395,7 @@ public class SecurityService {
       }
     }
 
-    public void price_changes(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void price_changes(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       price_changes_call method_call = new price_changes_call(id, start_date, end_date, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -404,9 +404,9 @@ public class SecurityService {
 
     public static class price_changes_call extends org.apache.thrift.async.TAsyncMethodCall {
       private br.com.investtools.radar.api.SecurityId id;
-      private int start_date;
-      private int end_date;
-      public price_changes_call(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private long start_date;
+      private long end_date;
+      public price_changes_call(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.id = id;
         this.start_date = start_date;
@@ -433,7 +433,7 @@ public class SecurityService {
       }
     }
 
-    public void price_volatility(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void price_volatility(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       price_volatility_call method_call = new price_volatility_call(id, start_date, end_date, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -442,9 +442,9 @@ public class SecurityService {
 
     public static class price_volatility_call extends org.apache.thrift.async.TAsyncMethodCall {
       private br.com.investtools.radar.api.SecurityId id;
-      private int start_date;
-      private int end_date;
-      public price_volatility_call(br.com.investtools.radar.api.SecurityId id, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private long start_date;
+      private long end_date;
+      public price_volatility_call(br.com.investtools.radar.api.SecurityId id, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.id = id;
         this.start_date = start_date;
@@ -1677,8 +1677,8 @@ public class SecurityService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("prices_args");
 
     private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I32, (short)2);
-    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I32, (short)3);
+    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I64, (short)2);
+    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I64, (short)3);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -1687,8 +1687,8 @@ public class SecurityService {
     }
 
     public br.com.investtools.radar.api.SecurityId id; // required
-    public int start_date; // required
-    public int end_date; // required
+    public long start_date; // required
+    public long end_date; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -1764,9 +1764,9 @@ public class SecurityService {
       tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.SecurityId.class)));
       tmpMap.put(_Fields.START_DATE, new org.apache.thrift.meta_data.FieldMetaData("start_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       tmpMap.put(_Fields.END_DATE, new org.apache.thrift.meta_data.FieldMetaData("end_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(prices_args.class, metaDataMap);
     }
@@ -1776,8 +1776,8 @@ public class SecurityService {
 
     public prices_args(
       br.com.investtools.radar.api.SecurityId id,
-      int start_date,
-      int end_date)
+      long start_date,
+      long end_date)
     {
       this();
       this.id = id;
@@ -1836,11 +1836,11 @@ public class SecurityService {
       }
     }
 
-    public int getStart_date() {
+    public long getStart_date() {
       return this.start_date;
     }
 
-    public prices_args setStart_date(int start_date) {
+    public prices_args setStart_date(long start_date) {
       this.start_date = start_date;
       setStart_dateIsSet(true);
       return this;
@@ -1859,11 +1859,11 @@ public class SecurityService {
       __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __START_DATE_ISSET_ID, value);
     }
 
-    public int getEnd_date() {
+    public long getEnd_date() {
       return this.end_date;
     }
 
-    public prices_args setEnd_date(int end_date) {
+    public prices_args setEnd_date(long end_date) {
       this.end_date = end_date;
       setEnd_dateIsSet(true);
       return this;
@@ -1896,7 +1896,7 @@ public class SecurityService {
         if (value == null) {
           unsetStart_date();
         } else {
-          setStart_date((Integer)value);
+          setStart_date((Long)value);
         }
         break;
 
@@ -1904,7 +1904,7 @@ public class SecurityService {
         if (value == null) {
           unsetEnd_date();
         } else {
-          setEnd_date((Integer)value);
+          setEnd_date((Long)value);
         }
         break;
 
@@ -2136,16 +2136,16 @@ public class SecurityService {
               }
               break;
             case 2: // START_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.start_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.start_date = iprot.readI64();
                 struct.setStart_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
             case 3: // END_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.end_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.end_date = iprot.readI64();
                 struct.setEnd_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -2172,10 +2172,10 @@ public class SecurityService {
           oprot.writeFieldEnd();
         }
         oprot.writeFieldBegin(START_DATE_FIELD_DESC);
-        oprot.writeI32(struct.start_date);
+        oprot.writeI64(struct.start_date);
         oprot.writeFieldEnd();
         oprot.writeFieldBegin(END_DATE_FIELD_DESC);
-        oprot.writeI32(struct.end_date);
+        oprot.writeI64(struct.end_date);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -2209,10 +2209,10 @@ public class SecurityService {
           struct.id.write(oprot);
         }
         if (struct.isSetStart_date()) {
-          oprot.writeI32(struct.start_date);
+          oprot.writeI64(struct.start_date);
         }
         if (struct.isSetEnd_date()) {
-          oprot.writeI32(struct.end_date);
+          oprot.writeI64(struct.end_date);
         }
       }
 
@@ -2226,11 +2226,11 @@ public class SecurityService {
           struct.setIdIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.start_date = iprot.readI32();
+          struct.start_date = iprot.readI64();
           struct.setStart_dateIsSet(true);
         }
         if (incoming.get(2)) {
-          struct.end_date = iprot.readI32();
+          struct.end_date = iprot.readI64();
           struct.setEnd_dateIsSet(true);
         }
       }
@@ -2657,7 +2657,7 @@ public class SecurityService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("price_args");
 
     private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I32, (short)2);
+    private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -2666,7 +2666,7 @@ public class SecurityService {
     }
 
     public br.com.investtools.radar.api.SecurityId id; // required
-    public int date; // required
+    public long date; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -2738,7 +2738,7 @@ public class SecurityService {
       tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.SecurityId.class)));
       tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(price_args.class, metaDataMap);
     }
@@ -2748,7 +2748,7 @@ public class SecurityService {
 
     public price_args(
       br.com.investtools.radar.api.SecurityId id,
-      int date)
+      long date)
     {
       this();
       this.id = id;
@@ -2802,11 +2802,11 @@ public class SecurityService {
       }
     }
 
-    public int getDate() {
+    public long getDate() {
       return this.date;
     }
 
-    public price_args setDate(int date) {
+    public price_args setDate(long date) {
       this.date = date;
       setDateIsSet(true);
       return this;
@@ -2839,7 +2839,7 @@ public class SecurityService {
         if (value == null) {
           unsetDate();
         } else {
-          setDate((Integer)value);
+          setDate((Long)value);
         }
         break;
 
@@ -3038,8 +3038,8 @@ public class SecurityService {
               }
               break;
             case 2: // DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.date = iprot.readI64();
                 struct.setDateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -3066,7 +3066,7 @@ public class SecurityService {
           oprot.writeFieldEnd();
         }
         oprot.writeFieldBegin(DATE_FIELD_DESC);
-        oprot.writeI32(struct.date);
+        oprot.writeI64(struct.date);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -3097,7 +3097,7 @@ public class SecurityService {
           struct.id.write(oprot);
         }
         if (struct.isSetDate()) {
-          oprot.writeI32(struct.date);
+          oprot.writeI64(struct.date);
         }
       }
 
@@ -3111,7 +3111,7 @@ public class SecurityService {
           struct.setIdIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.date = iprot.readI32();
+          struct.date = iprot.readI64();
           struct.setDateIsSet(true);
         }
       }
@@ -3484,8 +3484,8 @@ public class SecurityService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("price_change_args");
 
     private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I32, (short)2);
-    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I32, (short)3);
+    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I64, (short)2);
+    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I64, (short)3);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -3494,8 +3494,8 @@ public class SecurityService {
     }
 
     public br.com.investtools.radar.api.SecurityId id; // required
-    public int start_date; // required
-    public int end_date; // required
+    public long start_date; // required
+    public long end_date; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -3571,9 +3571,9 @@ public class SecurityService {
       tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.SecurityId.class)));
       tmpMap.put(_Fields.START_DATE, new org.apache.thrift.meta_data.FieldMetaData("start_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       tmpMap.put(_Fields.END_DATE, new org.apache.thrift.meta_data.FieldMetaData("end_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(price_change_args.class, metaDataMap);
     }
@@ -3583,8 +3583,8 @@ public class SecurityService {
 
     public price_change_args(
       br.com.investtools.radar.api.SecurityId id,
-      int start_date,
-      int end_date)
+      long start_date,
+      long end_date)
     {
       this();
       this.id = id;
@@ -3643,11 +3643,11 @@ public class SecurityService {
       }
     }
 
-    public int getStart_date() {
+    public long getStart_date() {
       return this.start_date;
     }
 
-    public price_change_args setStart_date(int start_date) {
+    public price_change_args setStart_date(long start_date) {
       this.start_date = start_date;
       setStart_dateIsSet(true);
       return this;
@@ -3666,11 +3666,11 @@ public class SecurityService {
       __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __START_DATE_ISSET_ID, value);
     }
 
-    public int getEnd_date() {
+    public long getEnd_date() {
       return this.end_date;
     }
 
-    public price_change_args setEnd_date(int end_date) {
+    public price_change_args setEnd_date(long end_date) {
       this.end_date = end_date;
       setEnd_dateIsSet(true);
       return this;
@@ -3703,7 +3703,7 @@ public class SecurityService {
         if (value == null) {
           unsetStart_date();
         } else {
-          setStart_date((Integer)value);
+          setStart_date((Long)value);
         }
         break;
 
@@ -3711,7 +3711,7 @@ public class SecurityService {
         if (value == null) {
           unsetEnd_date();
         } else {
-          setEnd_date((Integer)value);
+          setEnd_date((Long)value);
         }
         break;
 
@@ -3943,16 +3943,16 @@ public class SecurityService {
               }
               break;
             case 2: // START_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.start_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.start_date = iprot.readI64();
                 struct.setStart_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
             case 3: // END_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.end_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.end_date = iprot.readI64();
                 struct.setEnd_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -3979,10 +3979,10 @@ public class SecurityService {
           oprot.writeFieldEnd();
         }
         oprot.writeFieldBegin(START_DATE_FIELD_DESC);
-        oprot.writeI32(struct.start_date);
+        oprot.writeI64(struct.start_date);
         oprot.writeFieldEnd();
         oprot.writeFieldBegin(END_DATE_FIELD_DESC);
-        oprot.writeI32(struct.end_date);
+        oprot.writeI64(struct.end_date);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -4016,10 +4016,10 @@ public class SecurityService {
           struct.id.write(oprot);
         }
         if (struct.isSetStart_date()) {
-          oprot.writeI32(struct.start_date);
+          oprot.writeI64(struct.start_date);
         }
         if (struct.isSetEnd_date()) {
-          oprot.writeI32(struct.end_date);
+          oprot.writeI64(struct.end_date);
         }
       }
 
@@ -4033,11 +4033,11 @@ public class SecurityService {
           struct.setIdIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.start_date = iprot.readI32();
+          struct.start_date = iprot.readI64();
           struct.setStart_dateIsSet(true);
         }
         if (incoming.get(2)) {
-          struct.end_date = iprot.readI32();
+          struct.end_date = iprot.readI64();
           struct.setEnd_dateIsSet(true);
         }
       }
@@ -4410,8 +4410,8 @@ public class SecurityService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("price_changes_args");
 
     private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I32, (short)2);
-    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I32, (short)3);
+    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I64, (short)2);
+    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I64, (short)3);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -4420,8 +4420,8 @@ public class SecurityService {
     }
 
     public br.com.investtools.radar.api.SecurityId id; // required
-    public int start_date; // required
-    public int end_date; // required
+    public long start_date; // required
+    public long end_date; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -4497,9 +4497,9 @@ public class SecurityService {
       tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.SecurityId.class)));
       tmpMap.put(_Fields.START_DATE, new org.apache.thrift.meta_data.FieldMetaData("start_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       tmpMap.put(_Fields.END_DATE, new org.apache.thrift.meta_data.FieldMetaData("end_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(price_changes_args.class, metaDataMap);
     }
@@ -4509,8 +4509,8 @@ public class SecurityService {
 
     public price_changes_args(
       br.com.investtools.radar.api.SecurityId id,
-      int start_date,
-      int end_date)
+      long start_date,
+      long end_date)
     {
       this();
       this.id = id;
@@ -4569,11 +4569,11 @@ public class SecurityService {
       }
     }
 
-    public int getStart_date() {
+    public long getStart_date() {
       return this.start_date;
     }
 
-    public price_changes_args setStart_date(int start_date) {
+    public price_changes_args setStart_date(long start_date) {
       this.start_date = start_date;
       setStart_dateIsSet(true);
       return this;
@@ -4592,11 +4592,11 @@ public class SecurityService {
       __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __START_DATE_ISSET_ID, value);
     }
 
-    public int getEnd_date() {
+    public long getEnd_date() {
       return this.end_date;
     }
 
-    public price_changes_args setEnd_date(int end_date) {
+    public price_changes_args setEnd_date(long end_date) {
       this.end_date = end_date;
       setEnd_dateIsSet(true);
       return this;
@@ -4629,7 +4629,7 @@ public class SecurityService {
         if (value == null) {
           unsetStart_date();
         } else {
-          setStart_date((Integer)value);
+          setStart_date((Long)value);
         }
         break;
 
@@ -4637,7 +4637,7 @@ public class SecurityService {
         if (value == null) {
           unsetEnd_date();
         } else {
-          setEnd_date((Integer)value);
+          setEnd_date((Long)value);
         }
         break;
 
@@ -4869,16 +4869,16 @@ public class SecurityService {
               }
               break;
             case 2: // START_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.start_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.start_date = iprot.readI64();
                 struct.setStart_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
             case 3: // END_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.end_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.end_date = iprot.readI64();
                 struct.setEnd_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -4905,10 +4905,10 @@ public class SecurityService {
           oprot.writeFieldEnd();
         }
         oprot.writeFieldBegin(START_DATE_FIELD_DESC);
-        oprot.writeI32(struct.start_date);
+        oprot.writeI64(struct.start_date);
         oprot.writeFieldEnd();
         oprot.writeFieldBegin(END_DATE_FIELD_DESC);
-        oprot.writeI32(struct.end_date);
+        oprot.writeI64(struct.end_date);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -4942,10 +4942,10 @@ public class SecurityService {
           struct.id.write(oprot);
         }
         if (struct.isSetStart_date()) {
-          oprot.writeI32(struct.start_date);
+          oprot.writeI64(struct.start_date);
         }
         if (struct.isSetEnd_date()) {
-          oprot.writeI32(struct.end_date);
+          oprot.writeI64(struct.end_date);
         }
       }
 
@@ -4959,11 +4959,11 @@ public class SecurityService {
           struct.setIdIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.start_date = iprot.readI32();
+          struct.start_date = iprot.readI64();
           struct.setStart_dateIsSet(true);
         }
         if (incoming.get(2)) {
-          struct.end_date = iprot.readI32();
+          struct.end_date = iprot.readI64();
           struct.setEnd_dateIsSet(true);
         }
       }
@@ -5385,8 +5385,8 @@ public class SecurityService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("price_volatility_args");
 
     private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I32, (short)2);
-    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I32, (short)3);
+    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I64, (short)2);
+    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I64, (short)3);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -5395,8 +5395,8 @@ public class SecurityService {
     }
 
     public br.com.investtools.radar.api.SecurityId id; // required
-    public int start_date; // required
-    public int end_date; // required
+    public long start_date; // required
+    public long end_date; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -5472,9 +5472,9 @@ public class SecurityService {
       tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.SecurityId.class)));
       tmpMap.put(_Fields.START_DATE, new org.apache.thrift.meta_data.FieldMetaData("start_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       tmpMap.put(_Fields.END_DATE, new org.apache.thrift.meta_data.FieldMetaData("end_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(price_volatility_args.class, metaDataMap);
     }
@@ -5484,8 +5484,8 @@ public class SecurityService {
 
     public price_volatility_args(
       br.com.investtools.radar.api.SecurityId id,
-      int start_date,
-      int end_date)
+      long start_date,
+      long end_date)
     {
       this();
       this.id = id;
@@ -5544,11 +5544,11 @@ public class SecurityService {
       }
     }
 
-    public int getStart_date() {
+    public long getStart_date() {
       return this.start_date;
     }
 
-    public price_volatility_args setStart_date(int start_date) {
+    public price_volatility_args setStart_date(long start_date) {
       this.start_date = start_date;
       setStart_dateIsSet(true);
       return this;
@@ -5567,11 +5567,11 @@ public class SecurityService {
       __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __START_DATE_ISSET_ID, value);
     }
 
-    public int getEnd_date() {
+    public long getEnd_date() {
       return this.end_date;
     }
 
-    public price_volatility_args setEnd_date(int end_date) {
+    public price_volatility_args setEnd_date(long end_date) {
       this.end_date = end_date;
       setEnd_dateIsSet(true);
       return this;
@@ -5604,7 +5604,7 @@ public class SecurityService {
         if (value == null) {
           unsetStart_date();
         } else {
-          setStart_date((Integer)value);
+          setStart_date((Long)value);
         }
         break;
 
@@ -5612,7 +5612,7 @@ public class SecurityService {
         if (value == null) {
           unsetEnd_date();
         } else {
-          setEnd_date((Integer)value);
+          setEnd_date((Long)value);
         }
         break;
 
@@ -5844,16 +5844,16 @@ public class SecurityService {
               }
               break;
             case 2: // START_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.start_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.start_date = iprot.readI64();
                 struct.setStart_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
             case 3: // END_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.end_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.end_date = iprot.readI64();
                 struct.setEnd_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -5880,10 +5880,10 @@ public class SecurityService {
           oprot.writeFieldEnd();
         }
         oprot.writeFieldBegin(START_DATE_FIELD_DESC);
-        oprot.writeI32(struct.start_date);
+        oprot.writeI64(struct.start_date);
         oprot.writeFieldEnd();
         oprot.writeFieldBegin(END_DATE_FIELD_DESC);
-        oprot.writeI32(struct.end_date);
+        oprot.writeI64(struct.end_date);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -5917,10 +5917,10 @@ public class SecurityService {
           struct.id.write(oprot);
         }
         if (struct.isSetStart_date()) {
-          oprot.writeI32(struct.start_date);
+          oprot.writeI64(struct.start_date);
         }
         if (struct.isSetEnd_date()) {
-          oprot.writeI32(struct.end_date);
+          oprot.writeI64(struct.end_date);
         }
       }
 
@@ -5934,11 +5934,11 @@ public class SecurityService {
           struct.setIdIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.start_date = iprot.readI32();
+          struct.start_date = iprot.readI64();
           struct.setStart_dateIsSet(true);
         }
         if (incoming.get(2)) {
-          struct.end_date = iprot.readI32();
+          struct.end_date = iprot.readI64();
           struct.setEnd_dateIsSet(true);
         }
       }

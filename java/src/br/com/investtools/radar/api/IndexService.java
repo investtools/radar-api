@@ -37,21 +37,21 @@ public class IndexService {
 
   public interface Iface {
 
-    public List<Price> prices(String symbol, int start_date, int end_date) throws org.apache.thrift.TException;
+    public List<Price> prices(String symbol, long start_date, long end_date) throws org.apache.thrift.TException;
 
-    public double price(String symbol, int date) throws org.apache.thrift.TException;
+    public double price(String symbol, long date) throws org.apache.thrift.TException;
 
-    public double price_change(String symbol, int start_date, int end_date) throws org.apache.thrift.TException;
+    public double price_change(String symbol, long start_date, long end_date) throws org.apache.thrift.TException;
 
   }
 
   public interface AsyncIface {
 
-    public void prices(String symbol, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void prices(String symbol, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void price(String symbol, int date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void price(String symbol, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void price_change(String symbol, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void price_change(String symbol, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -75,13 +75,13 @@ public class IndexService {
       super(iprot, oprot);
     }
 
-    public List<Price> prices(String symbol, int start_date, int end_date) throws org.apache.thrift.TException
+    public List<Price> prices(String symbol, long start_date, long end_date) throws org.apache.thrift.TException
     {
       send_prices(symbol, start_date, end_date);
       return recv_prices();
     }
 
-    public void send_prices(String symbol, int start_date, int end_date) throws org.apache.thrift.TException
+    public void send_prices(String symbol, long start_date, long end_date) throws org.apache.thrift.TException
     {
       prices_args args = new prices_args();
       args.setSymbol(symbol);
@@ -100,13 +100,13 @@ public class IndexService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "prices failed: unknown result");
     }
 
-    public double price(String symbol, int date) throws org.apache.thrift.TException
+    public double price(String symbol, long date) throws org.apache.thrift.TException
     {
       send_price(symbol, date);
       return recv_price();
     }
 
-    public void send_price(String symbol, int date) throws org.apache.thrift.TException
+    public void send_price(String symbol, long date) throws org.apache.thrift.TException
     {
       price_args args = new price_args();
       args.setSymbol(symbol);
@@ -124,13 +124,13 @@ public class IndexService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "price failed: unknown result");
     }
 
-    public double price_change(String symbol, int start_date, int end_date) throws org.apache.thrift.TException
+    public double price_change(String symbol, long start_date, long end_date) throws org.apache.thrift.TException
     {
       send_price_change(symbol, start_date, end_date);
       return recv_price_change();
     }
 
-    public void send_price_change(String symbol, int start_date, int end_date) throws org.apache.thrift.TException
+    public void send_price_change(String symbol, long start_date, long end_date) throws org.apache.thrift.TException
     {
       price_change_args args = new price_change_args();
       args.setSymbol(symbol);
@@ -167,7 +167,7 @@ public class IndexService {
       super(protocolFactory, clientManager, transport);
     }
 
-    public void prices(String symbol, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void prices(String symbol, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       prices_call method_call = new prices_call(symbol, start_date, end_date, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -176,9 +176,9 @@ public class IndexService {
 
     public static class prices_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String symbol;
-      private int start_date;
-      private int end_date;
-      public prices_call(String symbol, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private long start_date;
+      private long end_date;
+      public prices_call(String symbol, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.symbol = symbol;
         this.start_date = start_date;
@@ -205,7 +205,7 @@ public class IndexService {
       }
     }
 
-    public void price(String symbol, int date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void price(String symbol, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       price_call method_call = new price_call(symbol, date, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -214,8 +214,8 @@ public class IndexService {
 
     public static class price_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String symbol;
-      private int date;
-      public price_call(String symbol, int date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private long date;
+      public price_call(String symbol, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.symbol = symbol;
         this.date = date;
@@ -240,7 +240,7 @@ public class IndexService {
       }
     }
 
-    public void price_change(String symbol, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void price_change(String symbol, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       price_change_call method_call = new price_change_call(symbol, start_date, end_date, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -249,9 +249,9 @@ public class IndexService {
 
     public static class price_change_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String symbol;
-      private int start_date;
-      private int end_date;
-      public price_change_call(String symbol, int start_date, int end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private long start_date;
+      private long end_date;
+      public price_change_call(String symbol, long start_date, long end_date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.symbol = symbol;
         this.start_date = start_date;
@@ -539,8 +539,8 @@ public class IndexService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("prices_args");
 
     private static final org.apache.thrift.protocol.TField SYMBOL_FIELD_DESC = new org.apache.thrift.protocol.TField("symbol", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I32, (short)2);
-    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I32, (short)3);
+    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I64, (short)2);
+    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I64, (short)3);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -549,8 +549,8 @@ public class IndexService {
     }
 
     public String symbol; // required
-    public int start_date; // required
-    public int end_date; // required
+    public long start_date; // required
+    public long end_date; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -626,9 +626,9 @@ public class IndexService {
       tmpMap.put(_Fields.SYMBOL, new org.apache.thrift.meta_data.FieldMetaData("symbol", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.START_DATE, new org.apache.thrift.meta_data.FieldMetaData("start_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       tmpMap.put(_Fields.END_DATE, new org.apache.thrift.meta_data.FieldMetaData("end_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(prices_args.class, metaDataMap);
     }
@@ -638,8 +638,8 @@ public class IndexService {
 
     public prices_args(
       String symbol,
-      int start_date,
-      int end_date)
+      long start_date,
+      long end_date)
     {
       this();
       this.symbol = symbol;
@@ -698,11 +698,11 @@ public class IndexService {
       }
     }
 
-    public int getStart_date() {
+    public long getStart_date() {
       return this.start_date;
     }
 
-    public prices_args setStart_date(int start_date) {
+    public prices_args setStart_date(long start_date) {
       this.start_date = start_date;
       setStart_dateIsSet(true);
       return this;
@@ -721,11 +721,11 @@ public class IndexService {
       __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __START_DATE_ISSET_ID, value);
     }
 
-    public int getEnd_date() {
+    public long getEnd_date() {
       return this.end_date;
     }
 
-    public prices_args setEnd_date(int end_date) {
+    public prices_args setEnd_date(long end_date) {
       this.end_date = end_date;
       setEnd_dateIsSet(true);
       return this;
@@ -758,7 +758,7 @@ public class IndexService {
         if (value == null) {
           unsetStart_date();
         } else {
-          setStart_date((Integer)value);
+          setStart_date((Long)value);
         }
         break;
 
@@ -766,7 +766,7 @@ public class IndexService {
         if (value == null) {
           unsetEnd_date();
         } else {
-          setEnd_date((Integer)value);
+          setEnd_date((Long)value);
         }
         break;
 
@@ -997,16 +997,16 @@ public class IndexService {
               }
               break;
             case 2: // START_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.start_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.start_date = iprot.readI64();
                 struct.setStart_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
             case 3: // END_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.end_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.end_date = iprot.readI64();
                 struct.setEnd_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -1033,10 +1033,10 @@ public class IndexService {
           oprot.writeFieldEnd();
         }
         oprot.writeFieldBegin(START_DATE_FIELD_DESC);
-        oprot.writeI32(struct.start_date);
+        oprot.writeI64(struct.start_date);
         oprot.writeFieldEnd();
         oprot.writeFieldBegin(END_DATE_FIELD_DESC);
-        oprot.writeI32(struct.end_date);
+        oprot.writeI64(struct.end_date);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -1070,10 +1070,10 @@ public class IndexService {
           oprot.writeString(struct.symbol);
         }
         if (struct.isSetStart_date()) {
-          oprot.writeI32(struct.start_date);
+          oprot.writeI64(struct.start_date);
         }
         if (struct.isSetEnd_date()) {
-          oprot.writeI32(struct.end_date);
+          oprot.writeI64(struct.end_date);
         }
       }
 
@@ -1086,11 +1086,11 @@ public class IndexService {
           struct.setSymbolIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.start_date = iprot.readI32();
+          struct.start_date = iprot.readI64();
           struct.setStart_dateIsSet(true);
         }
         if (incoming.get(2)) {
-          struct.end_date = iprot.readI32();
+          struct.end_date = iprot.readI64();
           struct.setEnd_dateIsSet(true);
         }
       }
@@ -1517,7 +1517,7 @@ public class IndexService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("price_args");
 
     private static final org.apache.thrift.protocol.TField SYMBOL_FIELD_DESC = new org.apache.thrift.protocol.TField("symbol", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I32, (short)2);
+    private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -1526,7 +1526,7 @@ public class IndexService {
     }
 
     public String symbol; // required
-    public int date; // required
+    public long date; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -1598,7 +1598,7 @@ public class IndexService {
       tmpMap.put(_Fields.SYMBOL, new org.apache.thrift.meta_data.FieldMetaData("symbol", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(price_args.class, metaDataMap);
     }
@@ -1608,7 +1608,7 @@ public class IndexService {
 
     public price_args(
       String symbol,
-      int date)
+      long date)
     {
       this();
       this.symbol = symbol;
@@ -1662,11 +1662,11 @@ public class IndexService {
       }
     }
 
-    public int getDate() {
+    public long getDate() {
       return this.date;
     }
 
-    public price_args setDate(int date) {
+    public price_args setDate(long date) {
       this.date = date;
       setDateIsSet(true);
       return this;
@@ -1699,7 +1699,7 @@ public class IndexService {
         if (value == null) {
           unsetDate();
         } else {
-          setDate((Integer)value);
+          setDate((Long)value);
         }
         break;
 
@@ -1897,8 +1897,8 @@ public class IndexService {
               }
               break;
             case 2: // DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.date = iprot.readI64();
                 struct.setDateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -1925,7 +1925,7 @@ public class IndexService {
           oprot.writeFieldEnd();
         }
         oprot.writeFieldBegin(DATE_FIELD_DESC);
-        oprot.writeI32(struct.date);
+        oprot.writeI64(struct.date);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -1956,7 +1956,7 @@ public class IndexService {
           oprot.writeString(struct.symbol);
         }
         if (struct.isSetDate()) {
-          oprot.writeI32(struct.date);
+          oprot.writeI64(struct.date);
         }
       }
 
@@ -1969,7 +1969,7 @@ public class IndexService {
           struct.setSymbolIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.date = iprot.readI32();
+          struct.date = iprot.readI64();
           struct.setDateIsSet(true);
         }
       }
@@ -2342,8 +2342,8 @@ public class IndexService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("price_change_args");
 
     private static final org.apache.thrift.protocol.TField SYMBOL_FIELD_DESC = new org.apache.thrift.protocol.TField("symbol", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I32, (short)2);
-    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I32, (short)3);
+    private static final org.apache.thrift.protocol.TField START_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("start_date", org.apache.thrift.protocol.TType.I64, (short)2);
+    private static final org.apache.thrift.protocol.TField END_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("end_date", org.apache.thrift.protocol.TType.I64, (short)3);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -2352,8 +2352,8 @@ public class IndexService {
     }
 
     public String symbol; // required
-    public int start_date; // required
-    public int end_date; // required
+    public long start_date; // required
+    public long end_date; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -2429,9 +2429,9 @@ public class IndexService {
       tmpMap.put(_Fields.SYMBOL, new org.apache.thrift.meta_data.FieldMetaData("symbol", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.START_DATE, new org.apache.thrift.meta_data.FieldMetaData("start_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       tmpMap.put(_Fields.END_DATE, new org.apache.thrift.meta_data.FieldMetaData("end_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(price_change_args.class, metaDataMap);
     }
@@ -2441,8 +2441,8 @@ public class IndexService {
 
     public price_change_args(
       String symbol,
-      int start_date,
-      int end_date)
+      long start_date,
+      long end_date)
     {
       this();
       this.symbol = symbol;
@@ -2501,11 +2501,11 @@ public class IndexService {
       }
     }
 
-    public int getStart_date() {
+    public long getStart_date() {
       return this.start_date;
     }
 
-    public price_change_args setStart_date(int start_date) {
+    public price_change_args setStart_date(long start_date) {
       this.start_date = start_date;
       setStart_dateIsSet(true);
       return this;
@@ -2524,11 +2524,11 @@ public class IndexService {
       __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __START_DATE_ISSET_ID, value);
     }
 
-    public int getEnd_date() {
+    public long getEnd_date() {
       return this.end_date;
     }
 
-    public price_change_args setEnd_date(int end_date) {
+    public price_change_args setEnd_date(long end_date) {
       this.end_date = end_date;
       setEnd_dateIsSet(true);
       return this;
@@ -2561,7 +2561,7 @@ public class IndexService {
         if (value == null) {
           unsetStart_date();
         } else {
-          setStart_date((Integer)value);
+          setStart_date((Long)value);
         }
         break;
 
@@ -2569,7 +2569,7 @@ public class IndexService {
         if (value == null) {
           unsetEnd_date();
         } else {
-          setEnd_date((Integer)value);
+          setEnd_date((Long)value);
         }
         break;
 
@@ -2800,16 +2800,16 @@ public class IndexService {
               }
               break;
             case 2: // START_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.start_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.start_date = iprot.readI64();
                 struct.setStart_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
             case 3: // END_DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.end_date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.end_date = iprot.readI64();
                 struct.setEnd_dateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -2836,10 +2836,10 @@ public class IndexService {
           oprot.writeFieldEnd();
         }
         oprot.writeFieldBegin(START_DATE_FIELD_DESC);
-        oprot.writeI32(struct.start_date);
+        oprot.writeI64(struct.start_date);
         oprot.writeFieldEnd();
         oprot.writeFieldBegin(END_DATE_FIELD_DESC);
-        oprot.writeI32(struct.end_date);
+        oprot.writeI64(struct.end_date);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -2873,10 +2873,10 @@ public class IndexService {
           oprot.writeString(struct.symbol);
         }
         if (struct.isSetStart_date()) {
-          oprot.writeI32(struct.start_date);
+          oprot.writeI64(struct.start_date);
         }
         if (struct.isSetEnd_date()) {
-          oprot.writeI32(struct.end_date);
+          oprot.writeI64(struct.end_date);
         }
       }
 
@@ -2889,11 +2889,11 @@ public class IndexService {
           struct.setSymbolIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.start_date = iprot.readI32();
+          struct.start_date = iprot.readI64();
           struct.setStart_dateIsSet(true);
         }
         if (incoming.get(2)) {
-          struct.end_date = iprot.readI32();
+          struct.end_date = iprot.readI64();
           struct.setEnd_dateIsSet(true);
         }
       }

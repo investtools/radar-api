@@ -25,7 +25,7 @@ module Radar
       PRICE = 4
 
       FIELDS = {
-        DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'}
@@ -48,7 +48,7 @@ module Radar
       TYPE = 5
 
       FIELDS = {
-        DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'},

@@ -41,7 +41,7 @@ public class FundService {
 
     public String short_name(br.com.investtools.radar.api.FundId id) throws org.apache.thrift.TException;
 
-    public DailyFundData daily_data(br.com.investtools.radar.api.FundId id, int date) throws org.apache.thrift.TException;
+    public DailyFundData daily_data(br.com.investtools.radar.api.FundId id, long date) throws org.apache.thrift.TException;
 
   }
 
@@ -51,7 +51,7 @@ public class FundService {
 
     public void short_name(br.com.investtools.radar.api.FundId id, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void daily_data(br.com.investtools.radar.api.FundId id, int date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void daily_data(br.com.investtools.radar.api.FundId id, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -121,13 +121,13 @@ public class FundService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "short_name failed: unknown result");
     }
 
-    public DailyFundData daily_data(br.com.investtools.radar.api.FundId id, int date) throws org.apache.thrift.TException
+    public DailyFundData daily_data(br.com.investtools.radar.api.FundId id, long date) throws org.apache.thrift.TException
     {
       send_daily_data(id, date);
       return recv_daily_data();
     }
 
-    public void send_daily_data(br.com.investtools.radar.api.FundId id, int date) throws org.apache.thrift.TException
+    public void send_daily_data(br.com.investtools.radar.api.FundId id, long date) throws org.apache.thrift.TException
     {
       daily_data_args args = new daily_data_args();
       args.setId(id);
@@ -227,7 +227,7 @@ public class FundService {
       }
     }
 
-    public void daily_data(br.com.investtools.radar.api.FundId id, int date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void daily_data(br.com.investtools.radar.api.FundId id, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
       daily_data_call method_call = new daily_data_call(id, date, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
@@ -236,8 +236,8 @@ public class FundService {
 
     public static class daily_data_call extends org.apache.thrift.async.TAsyncMethodCall {
       private br.com.investtools.radar.api.FundId id;
-      private int date;
-      public daily_data_call(br.com.investtools.radar.api.FundId id, int date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private long date;
+      public daily_data_call(br.com.investtools.radar.api.FundId id, long date, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.id = id;
         this.date = date;
@@ -1973,7 +1973,7 @@ public class FundService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("daily_data_args");
 
     private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I32, (short)2);
+    private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -1982,7 +1982,7 @@ public class FundService {
     }
 
     public br.com.investtools.radar.api.FundId id; // required
-    public int date; // required
+    public long date; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -2054,7 +2054,7 @@ public class FundService {
       tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.FundId.class)));
       tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32          , "Date")));
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(daily_data_args.class, metaDataMap);
     }
@@ -2064,7 +2064,7 @@ public class FundService {
 
     public daily_data_args(
       br.com.investtools.radar.api.FundId id,
-      int date)
+      long date)
     {
       this();
       this.id = id;
@@ -2118,11 +2118,11 @@ public class FundService {
       }
     }
 
-    public int getDate() {
+    public long getDate() {
       return this.date;
     }
 
-    public daily_data_args setDate(int date) {
+    public daily_data_args setDate(long date) {
       this.date = date;
       setDateIsSet(true);
       return this;
@@ -2155,7 +2155,7 @@ public class FundService {
         if (value == null) {
           unsetDate();
         } else {
-          setDate((Integer)value);
+          setDate((Long)value);
         }
         break;
 
@@ -2357,8 +2357,8 @@ public class FundService {
               }
               break;
             case 2: // DATE
-              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.date = iprot.readI32();
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.date = iprot.readI64();
                 struct.setDateIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -2385,7 +2385,7 @@ public class FundService {
           oprot.writeFieldEnd();
         }
         oprot.writeFieldBegin(DATE_FIELD_DESC);
-        oprot.writeI32(struct.date);
+        oprot.writeI64(struct.date);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -2416,7 +2416,7 @@ public class FundService {
           struct.id.write(oprot);
         }
         if (struct.isSetDate()) {
-          oprot.writeI32(struct.date);
+          oprot.writeI64(struct.date);
         }
       }
 
@@ -2430,7 +2430,7 @@ public class FundService {
           struct.setIdIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.date = iprot.readI32();
+          struct.date = iprot.readI64();
           struct.setDateIsSet(true);
         }
       }

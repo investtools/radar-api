@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class CashFlow implements org.apache.thrift.TBase<CashFlow, CashFlow._Fields>, java.io.Serializable, Cloneable, Comparable<CashFlow> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("CashFlow");
 
-  private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I32, (short)1);
+  private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)1);
   private static final org.apache.thrift.protocol.TField VALUE_FIELD_DESC = new org.apache.thrift.protocol.TField("value", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
   private static final org.apache.thrift.protocol.TField BALANCE_FIELD_DESC = new org.apache.thrift.protocol.TField("balance", org.apache.thrift.protocol.TType.DOUBLE, (short)3);
   private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)4);
@@ -47,7 +47,7 @@ public class CashFlow implements org.apache.thrift.TBase<CashFlow, CashFlow._Fie
     schemes.put(TupleScheme.class, new CashFlowTupleSchemeFactory());
   }
 
-  public int date; // required
+  public long date; // required
   public double value; // required
   public double balance; // required
   /**
@@ -136,7 +136,7 @@ public class CashFlow implements org.apache.thrift.TBase<CashFlow, CashFlow._Fie
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32        , "Date")));
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.VALUE, new org.apache.thrift.meta_data.FieldMetaData("value", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     tmpMap.put(_Fields.BALANCE, new org.apache.thrift.meta_data.FieldMetaData("balance", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -151,7 +151,7 @@ public class CashFlow implements org.apache.thrift.TBase<CashFlow, CashFlow._Fie
   }
 
   public CashFlow(
-    int date,
+    long date,
     double value,
     double balance,
     CashFlowType type)
@@ -194,11 +194,11 @@ public class CashFlow implements org.apache.thrift.TBase<CashFlow, CashFlow._Fie
     this.type = null;
   }
 
-  public int getDate() {
+  public long getDate() {
     return this.date;
   }
 
-  public CashFlow setDate(int date) {
+  public CashFlow setDate(long date) {
     this.date = date;
     setDateIsSet(true);
     return this;
@@ -301,7 +301,7 @@ public class CashFlow implements org.apache.thrift.TBase<CashFlow, CashFlow._Fie
       if (value == null) {
         unsetDate();
       } else {
-        setDate((Integer)value);
+        setDate((Long)value);
       }
       break;
 
@@ -581,8 +581,8 @@ public class CashFlow implements org.apache.thrift.TBase<CashFlow, CashFlow._Fie
         }
         switch (schemeField.id) {
           case 1: // DATE
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.date = iprot.readI32();
+            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+              struct.date = iprot.readI64();
               struct.setDateIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -628,7 +628,7 @@ public class CashFlow implements org.apache.thrift.TBase<CashFlow, CashFlow._Fie
 
       oprot.writeStructBegin(STRUCT_DESC);
       oprot.writeFieldBegin(DATE_FIELD_DESC);
-      oprot.writeI32(struct.date);
+      oprot.writeI64(struct.date);
       oprot.writeFieldEnd();
       oprot.writeFieldBegin(VALUE_FIELD_DESC);
       oprot.writeDouble(struct.value);
@@ -673,7 +673,7 @@ public class CashFlow implements org.apache.thrift.TBase<CashFlow, CashFlow._Fie
       }
       oprot.writeBitSet(optionals, 4);
       if (struct.isSetDate()) {
-        oprot.writeI32(struct.date);
+        oprot.writeI64(struct.date);
       }
       if (struct.isSetValue()) {
         oprot.writeDouble(struct.value);
@@ -691,7 +691,7 @@ public class CashFlow implements org.apache.thrift.TBase<CashFlow, CashFlow._Fie
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(4);
       if (incoming.get(0)) {
-        struct.date = iprot.readI32();
+        struct.date = iprot.readI64();
         struct.setDateIsSet(true);
       }
       if (incoming.get(1)) {

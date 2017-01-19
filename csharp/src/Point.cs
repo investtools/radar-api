@@ -21,10 +21,10 @@ using Thrift.Transport;
 #endif
 public partial class Point : TBase
 {
-  private int _x;
+  private long _x;
   private double _y;
 
-  public int X
+  public long X
   {
     get
     {
@@ -79,8 +79,8 @@ public partial class Point : TBase
         switch (field.ID)
         {
           case 1:
-            if (field.Type == TType.I32) {
-              X = iprot.ReadI32();
+            if (field.Type == TType.I64) {
+              X = iprot.ReadI64();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -115,10 +115,10 @@ public partial class Point : TBase
       TField field = new TField();
       if (__isset.x) {
         field.Name = "x";
-        field.Type = TType.I32;
+        field.Type = TType.I64;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(X);
+        oprot.WriteI64(X);
         oprot.WriteFieldEnd();
       }
       if (__isset.y) {

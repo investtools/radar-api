@@ -51,15 +51,15 @@ IndexService_prices_args.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.I32) {
-        this.start_date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.start_date = input.readI64();
       } else {
         input.skip(ftype);
       }
       break;
       case 3:
-      if (ftype == Thrift.Type.I32) {
-        this.end_date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.end_date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -81,13 +81,13 @@ IndexService_prices_args.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.start_date !== null && this.start_date !== undefined) {
-    output.writeFieldBegin('start_date', Thrift.Type.I32, 2);
-    output.writeI32(this.start_date);
+    output.writeFieldBegin('start_date', Thrift.Type.I64, 2);
+    output.writeI64(this.start_date);
     output.writeFieldEnd();
   }
   if (this.end_date !== null && this.end_date !== undefined) {
-    output.writeFieldBegin('end_date', Thrift.Type.I32, 3);
-    output.writeI32(this.end_date);
+    output.writeFieldBegin('end_date', Thrift.Type.I64, 3);
+    output.writeI64(this.end_date);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -205,8 +205,8 @@ IndexService_price_args.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.I32) {
-        this.date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -228,8 +228,8 @@ IndexService_price_args.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I32, 2);
-    output.writeI32(this.date);
+    output.writeFieldBegin('date', Thrift.Type.I64, 2);
+    output.writeI64(this.date);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -328,15 +328,15 @@ IndexService_price_change_args.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.I32) {
-        this.start_date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.start_date = input.readI64();
       } else {
         input.skip(ftype);
       }
       break;
       case 3:
-      if (ftype == Thrift.Type.I32) {
-        this.end_date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.end_date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -358,13 +358,13 @@ IndexService_price_change_args.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.start_date !== null && this.start_date !== undefined) {
-    output.writeFieldBegin('start_date', Thrift.Type.I32, 2);
-    output.writeI32(this.start_date);
+    output.writeFieldBegin('start_date', Thrift.Type.I64, 2);
+    output.writeI64(this.start_date);
     output.writeFieldEnd();
   }
   if (this.end_date !== null && this.end_date !== undefined) {
-    output.writeFieldBegin('end_date', Thrift.Type.I32, 3);
-    output.writeI32(this.end_date);
+    output.writeFieldBegin('end_date', Thrift.Type.I64, 3);
+    output.writeI64(this.end_date);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

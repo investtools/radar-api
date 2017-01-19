@@ -16,7 +16,7 @@ module Radar
       CLOSE = 2
 
       FIELDS = {
-        DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
         CLOSE => {:type => ::Thrift::Types::DOUBLE, :name => 'close'}
       }
 
@@ -36,7 +36,7 @@ module Radar
 
       FIELDS = {
         PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'},
-        DATE => {:type => ::Thrift::Types::I32, :name => 'date'},
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
         NAV => {:type => ::Thrift::Types::DOUBLE, :name => 'nav'}
       }
 

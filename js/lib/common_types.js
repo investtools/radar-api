@@ -229,15 +229,15 @@ CorporateBondId.prototype.read = function(input) {
       }
       break;
       case 3:
-      if (ftype == Thrift.Type.I32) {
-        this.base_date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.base_date = input.readI64();
       } else {
         input.skip(ftype);
       }
       break;
       case 4:
-      if (ftype == Thrift.Type.I32) {
-        this.maturity_date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.maturity_date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -269,13 +269,13 @@ CorporateBondId.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.base_date !== null && this.base_date !== undefined) {
-    output.writeFieldBegin('base_date', Thrift.Type.I32, 3);
-    output.writeI32(this.base_date);
+    output.writeFieldBegin('base_date', Thrift.Type.I64, 3);
+    output.writeI64(this.base_date);
     output.writeFieldEnd();
   }
   if (this.maturity_date !== null && this.maturity_date !== undefined) {
-    output.writeFieldBegin('maturity_date', Thrift.Type.I32, 4);
-    output.writeI32(this.maturity_date);
+    output.writeFieldBegin('maturity_date', Thrift.Type.I64, 4);
+    output.writeI64(this.maturity_date);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -317,8 +317,8 @@ GovernmentBondId.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.I32) {
-        this.maturity_date = input.readI32();
+      if (ftype == Thrift.Type.I64) {
+        this.maturity_date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -340,8 +340,8 @@ GovernmentBondId.prototype.write = function(output) {
     output.writeFieldEnd();
   }
   if (this.maturity_date !== null && this.maturity_date !== undefined) {
-    output.writeFieldBegin('maturity_date', Thrift.Type.I32, 2);
-    output.writeI32(this.maturity_date);
+    output.writeFieldBegin('maturity_date', Thrift.Type.I64, 2);
+    output.writeI64(this.maturity_date);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
