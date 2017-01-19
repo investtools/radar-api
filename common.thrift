@@ -42,10 +42,16 @@ struct GovernmentBondId {
   2: Date maturity_date
 }
 
+struct CustomSecurityId {
+  1: string user_id
+  2: string id
+}
+
 union SecurityId {
   1: StockId stock
   2: FundId fund
   3: CorporateBondId corporate_bond
   4: GovernmentBondId government_bond
+  5: CustomSecurityId custom_security
 }
 

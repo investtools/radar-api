@@ -98,6 +98,24 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
+    class CustomSecurityId
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      USER_ID = 1
+      ID = 2
+
+      FIELDS = {
+        USER_ID => {:type => ::Thrift::Types::STRING, :name => 'user_id'},
+        ID => {:type => ::Thrift::Types::STRING, :name => 'id'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class SecurityId < ::Thrift::Union
       include ::Thrift::Struct_Union
       class << self
@@ -116,18 +134,24 @@ module Radar
         def government_bond(val)
           SecurityId.new(:government_bond, val)
         end
+
+        def custom_security(val)
+          SecurityId.new(:custom_security, val)
+        end
       end
 
       STOCK = 1
       FUND = 2
       CORPORATE_BOND = 3
       GOVERNMENT_BOND = 4
+      CUSTOM_SECURITY = 5
 
       FIELDS = {
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         FUND => {:type => ::Thrift::Types::STRUCT, :name => 'fund', :class => ::Radar::Api::FundId},
         CORPORATE_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'corporate_bond', :class => ::Radar::Api::CorporateBondId},
-        GOVERNMENT_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'government_bond', :class => ::Radar::Api::GovernmentBondId}
+        GOVERNMENT_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'government_bond', :class => ::Radar::Api::GovernmentBondId},
+        CUSTOM_SECURITY => {:type => ::Thrift::Types::STRUCT, :name => 'custom_security', :class => ::Radar::Api::CustomSecurityId}
       }
 
       def struct_fields; FIELDS; end

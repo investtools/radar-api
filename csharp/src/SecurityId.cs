@@ -25,6 +25,7 @@ public partial class SecurityId : TBase
   private FundId _fund;
   private CorporateBondId _corporate_bond;
   private GovernmentBondId _government_bond;
+  private CustomSecurityId _custom_security;
 
   public StockId Stock
   {
@@ -78,6 +79,19 @@ public partial class SecurityId : TBase
     }
   }
 
+  public CustomSecurityId Custom_security
+  {
+    get
+    {
+      return _custom_security;
+    }
+    set
+    {
+      __isset.custom_security = true;
+      this._custom_security = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -88,6 +102,7 @@ public partial class SecurityId : TBase
     public bool fund;
     public bool corporate_bond;
     public bool government_bond;
+    public bool custom_security;
   }
 
   public SecurityId() {
@@ -136,6 +151,14 @@ public partial class SecurityId : TBase
             if (field.Type == TType.Struct) {
               Government_bond = new GovernmentBondId();
               Government_bond.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 5:
+            if (field.Type == TType.Struct) {
+              Custom_security = new CustomSecurityId();
+              Custom_security.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -193,6 +216,14 @@ public partial class SecurityId : TBase
         Government_bond.Write(oprot);
         oprot.WriteFieldEnd();
       }
+      if (Custom_security != null && __isset.custom_security) {
+        field.Name = "custom_security";
+        field.Type = TType.Struct;
+        field.ID = 5;
+        oprot.WriteFieldBegin(field);
+        Custom_security.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -228,6 +259,12 @@ public partial class SecurityId : TBase
       __first = false;
       __sb.Append("Government_bond: ");
       __sb.Append(Government_bond== null ? "<null>" : Government_bond.ToString());
+    }
+    if (Custom_security != null && __isset.custom_security) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Custom_security: ");
+      __sb.Append(Custom_security== null ? "<null>" : Custom_security.ToString());
     }
     __sb.Append(")");
     return __sb.ToString();

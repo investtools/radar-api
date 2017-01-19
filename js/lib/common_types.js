@@ -349,11 +349,78 @@ GovernmentBondId.prototype.write = function(output) {
   return;
 };
 
+CustomSecurityId = module.exports.CustomSecurityId = function(args) {
+  this.user_id = null;
+  this.id = null;
+  if (args) {
+    if (args.user_id !== undefined && args.user_id !== null) {
+      this.user_id = args.user_id;
+    }
+    if (args.id !== undefined && args.id !== null) {
+      this.id = args.id;
+    }
+  }
+};
+CustomSecurityId.prototype = {};
+CustomSecurityId.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.user_id = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.id = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CustomSecurityId.prototype.write = function(output) {
+  output.writeStructBegin('CustomSecurityId');
+  if (this.user_id !== null && this.user_id !== undefined) {
+    output.writeFieldBegin('user_id', Thrift.Type.STRING, 1);
+    output.writeString(this.user_id);
+    output.writeFieldEnd();
+  }
+  if (this.id !== null && this.id !== undefined) {
+    output.writeFieldBegin('id', Thrift.Type.STRING, 2);
+    output.writeString(this.id);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 SecurityId = module.exports.SecurityId = function(args) {
   this.stock = null;
   this.fund = null;
   this.corporate_bond = null;
   this.government_bond = null;
+  this.custom_security = null;
   if (args) {
     if (args.stock !== undefined && args.stock !== null) {
       this.stock = new ttypes.StockId(args.stock);
@@ -366,6 +433,9 @@ SecurityId = module.exports.SecurityId = function(args) {
     }
     if (args.government_bond !== undefined && args.government_bond !== null) {
       this.government_bond = new ttypes.GovernmentBondId(args.government_bond);
+    }
+    if (args.custom_security !== undefined && args.custom_security !== null) {
+      this.custom_security = new ttypes.CustomSecurityId(args.custom_security);
     }
   }
 };
@@ -415,6 +485,14 @@ SecurityId.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.custom_security = new ttypes.CustomSecurityId();
+        this.custom_security.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -444,6 +522,11 @@ SecurityId.prototype.write = function(output) {
   if (this.government_bond !== null && this.government_bond !== undefined) {
     output.writeFieldBegin('government_bond', Thrift.Type.STRUCT, 4);
     this.government_bond.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.custom_security !== null && this.custom_security !== undefined) {
+    output.writeFieldBegin('custom_security', Thrift.Type.STRUCT, 5);
+    this.custom_security.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
