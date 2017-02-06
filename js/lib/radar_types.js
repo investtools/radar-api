@@ -7,7 +7,7 @@ var thrift = require('thrift');
 var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
-var transaction_sync_ttypes = require('./transaction_sync_types')
+var transaction_importer_ttypes = require('./transaction_importer_types')
 var portfolio_analyzer_ttypes = require('./portfolio_analyzer_types')
 var data_server_ttypes = require('./data_server_types')
 

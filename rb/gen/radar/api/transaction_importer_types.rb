@@ -20,12 +20,14 @@ module Radar
     class StockSellTransaction
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
-      STOCK = 2
-      SHARES = 3
-      PRICE = 4
+      ACCOUNT = 2
+      STOCK = 3
+      SHARES = 4
+      PRICE = 5
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
+        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'}
@@ -42,13 +44,15 @@ module Radar
     class StockBuyTransaction
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
-      STOCK = 2
-      SHARES = 3
-      PRICE = 4
-      TYPE = 5
+      ACCOUNT = 2
+      STOCK = 3
+      SHARES = 4
+      PRICE = 5
+      TYPE = 6
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
+        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'},
@@ -95,14 +99,35 @@ module Radar
       ::Thrift::Union.generate_accessors self
     end
 
-    class TransactionSynchronizerConfig
+    class Account
       include ::Thrift::Struct, ::Thrift::Struct_Union
       ID = 1
-      NAME = 2
+      LAST_TRANSACTION_DATE = 2
 
       FIELDS = {
         ID => {:type => ::Thrift::Types::STRING, :name => 'id'},
-        NAME => {:type => ::Thrift::Types::STRING, :name => 'name'}
+        LAST_TRANSACTION_DATE => {:type => ::Thrift::Types::I64, :name => 'last_transaction_date'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class AuthenticationError < ::Thrift::Exception
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      def initialize(message=nil)
+        super()
+        self.message = message
+      end
+
+      MESSAGE = 1
+
+      FIELDS = {
+        MESSAGE => {:type => ::Thrift::Types::STRING, :name => 'message'}
       }
 
       def struct_fields; FIELDS; end

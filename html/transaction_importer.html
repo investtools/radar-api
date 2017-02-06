@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<title>Thrift module: transaction_importer</title></head><body>
+<div class="container-fluid">
+<h1>Thrift module: transaction_importer</h1>
+<table class="table-bordered table-striped table-condensed"><thead><th>Module</th><th>Services</th><th>Data types</th><th>Constants</th></thead>
+<tr>
+<td>transaction_importer</td><td><a href="#Svc_TransactionImporter">TransactionImporter</a><br/>
+<ul>
+<li><a href="#Fn_TransactionImporter_accounts">accounts</a></li>
+<li><a href="#Fn_TransactionImporter_fetch">fetch</a></li>
+<li><a href="#Fn_TransactionImporter_name">name</a></li>
+</ul>
+</td>
+<td><a href="#Struct_Account">Account</a><br/>
+<a href="#Struct_AuthenticationError">AuthenticationError</a><br/>
+<a href="#Struct_StockBuyTransaction">StockBuyTransaction</a><br/>
+<a href="#Enum_StockBuyTransactionType">StockBuyTransactionType</a><br/>
+<a href="#Struct_StockSellTransaction">StockSellTransaction</a><br/>
+<a href="#Struct_Transaction">Transaction</a><br/>
+</td>
+<td></code></td>
+</tr></table>
+<hr/><h2 id="Enumerations">Enumerations</h2>
+<div class="definition"><h3 id="Enum_StockBuyTransactionType">Enumeration: StockBuyTransactionType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>REGULAR</code></td><td><code>1</code></td><td>
+</td></tr>
+<tr><td><code>IPO</code></td><td><code>2</code></td><td>
+</td></tr>
+</table></div>
+<hr/><h2 id="Structs">Data structures</h2>
+<div class="definition"><h3 id="Struct_StockSellTransaction">Struct: StockSellTransaction</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>date</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>account</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>stock</td><td><code><a href="common.html#Struct_StockId">common.StockId</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>shares</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>price</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_StockBuyTransaction">Struct: StockBuyTransaction</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>date</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>account</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>stock</td><td><code><a href="common.html#Struct_StockId">common.StockId</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>shares</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>5</td><td>price</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>6</td><td>type</td><td><code><a href="#Enum_StockBuyTransactionType">StockBuyTransactionType</a></code></td><td></td><td>default</td><td><code><code><a href="#Const_StockBuyTransactionType.REGULAR">StockBuyTransactionType.REGULAR</a></code></code></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_Transaction">Union: Transaction</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>stock_buy</td><td><code><a href="#Struct_StockBuyTransaction">StockBuyTransaction</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>stock_sell</td><td><code><a href="#Struct_StockSellTransaction">StockSellTransaction</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_Account">Struct: Account</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>id</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>last_transaction_date</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_AuthenticationError">Exception: AuthenticationError</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>message</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><hr/><h2 id="Services">Services</h2>
+<h3 id="Svc_TransactionImporter">Service: TransactionImporter</h3>
+<div class="definition"><h4 id="Fn_TransactionImporter_name">Function: TransactionImporter.name</h4>
+<pre><code>string</code> name()
+</pre></div><div class="definition"><h4 id="Fn_TransactionImporter_accounts">Function: TransactionImporter.accounts</h4>
+<pre><code>map&lt;<code>string</code>, <code>string</code>&gt;</code> accounts(<code>string</code> username,
+                           <code>string</code> password)
+    throws <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>
+</pre></div><div class="definition"><h4 id="Fn_TransactionImporter_fetch">Function: TransactionImporter.fetch</h4>
+<pre><code>list&lt;<code><a href="#Struct_Transaction">Transaction</a></code>&gt;</code> fetch(<code>string</code> username,
+                        <code>string</code> password,
+                        <code>list&lt;<code><a href="#Struct_Account">Account</a></code>&gt;</code> accounts)
+    throws <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>
+</pre></div></div></body></html>

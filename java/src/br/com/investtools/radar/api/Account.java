@@ -33,25 +33,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked"})
-public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<TransactionSynchronizerConfig, TransactionSynchronizerConfig._Fields>, java.io.Serializable, Cloneable, Comparable<TransactionSynchronizerConfig> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("TransactionSynchronizerConfig");
+public class Account implements org.apache.thrift.TBase<Account, Account._Fields>, java.io.Serializable, Cloneable, Comparable<Account> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Account");
 
   private static final org.apache.thrift.protocol.TField ID_FIELD_DESC = new org.apache.thrift.protocol.TField("id", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField LAST_TRANSACTION_DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("last_transaction_date", org.apache.thrift.protocol.TType.I64, (short)2);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
-    schemes.put(StandardScheme.class, new TransactionSynchronizerConfigStandardSchemeFactory());
-    schemes.put(TupleScheme.class, new TransactionSynchronizerConfigTupleSchemeFactory());
+    schemes.put(StandardScheme.class, new AccountStandardSchemeFactory());
+    schemes.put(TupleScheme.class, new AccountTupleSchemeFactory());
   }
 
   public String id; // required
-  public String name; // required
+  public long last_transaction_date; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     ID((short)1, "id"),
-    NAME((short)2, "name");
+    LAST_TRANSACTION_DATE((short)2, "last_transaction_date");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -68,8 +68,8 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
       switch(fieldId) {
         case 1: // ID
           return ID;
-        case 2: // NAME
-          return NAME;
+        case 2: // LAST_TRANSACTION_DATE
+          return LAST_TRANSACTION_DATE;
         default:
           return null;
       }
@@ -110,56 +110,59 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
   }
 
   // isset id assignments
+  private static final int __LAST_TRANSACTION_DATE_ISSET_ID = 0;
+  private byte __isset_bitfield = 0;
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.ID, new org.apache.thrift.meta_data.FieldMetaData("id", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.LAST_TRANSACTION_DATE, new org.apache.thrift.meta_data.FieldMetaData("last_transaction_date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(TransactionSynchronizerConfig.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Account.class, metaDataMap);
   }
 
-  public TransactionSynchronizerConfig() {
+  public Account() {
   }
 
-  public TransactionSynchronizerConfig(
+  public Account(
     String id,
-    String name)
+    long last_transaction_date)
   {
     this();
     this.id = id;
-    this.name = name;
+    this.last_transaction_date = last_transaction_date;
+    setLast_transaction_dateIsSet(true);
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public TransactionSynchronizerConfig(TransactionSynchronizerConfig other) {
+  public Account(Account other) {
+    __isset_bitfield = other.__isset_bitfield;
     if (other.isSetId()) {
       this.id = other.id;
     }
-    if (other.isSetName()) {
-      this.name = other.name;
-    }
+    this.last_transaction_date = other.last_transaction_date;
   }
 
-  public TransactionSynchronizerConfig deepCopy() {
-    return new TransactionSynchronizerConfig(this);
+  public Account deepCopy() {
+    return new Account(this);
   }
 
   @Override
   public void clear() {
     this.id = null;
-    this.name = null;
+    setLast_transaction_dateIsSet(false);
+    this.last_transaction_date = 0;
   }
 
   public String getId() {
     return this.id;
   }
 
-  public TransactionSynchronizerConfig setId(String id) {
+  public Account setId(String id) {
     this.id = id;
     return this;
   }
@@ -179,28 +182,27 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
     }
   }
 
-  public String getName() {
-    return this.name;
+  public long getLast_transaction_date() {
+    return this.last_transaction_date;
   }
 
-  public TransactionSynchronizerConfig setName(String name) {
-    this.name = name;
+  public Account setLast_transaction_date(long last_transaction_date) {
+    this.last_transaction_date = last_transaction_date;
+    setLast_transaction_dateIsSet(true);
     return this;
   }
 
-  public void unsetName() {
-    this.name = null;
+  public void unsetLast_transaction_date() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __LAST_TRANSACTION_DATE_ISSET_ID);
   }
 
-  /** Returns true if field name is set (has been assigned a value) and false otherwise */
-  public boolean isSetName() {
-    return this.name != null;
+  /** Returns true if field last_transaction_date is set (has been assigned a value) and false otherwise */
+  public boolean isSetLast_transaction_date() {
+    return EncodingUtils.testBit(__isset_bitfield, __LAST_TRANSACTION_DATE_ISSET_ID);
   }
 
-  public void setNameIsSet(boolean value) {
-    if (!value) {
-      this.name = null;
-    }
+  public void setLast_transaction_dateIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __LAST_TRANSACTION_DATE_ISSET_ID, value);
   }
 
   public void setFieldValue(_Fields field, Object value) {
@@ -213,11 +215,11 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
       }
       break;
 
-    case NAME:
+    case LAST_TRANSACTION_DATE:
       if (value == null) {
-        unsetName();
+        unsetLast_transaction_date();
       } else {
-        setName((String)value);
+        setLast_transaction_date((Long)value);
       }
       break;
 
@@ -229,8 +231,8 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
     case ID:
       return getId();
 
-    case NAME:
-      return getName();
+    case LAST_TRANSACTION_DATE:
+      return getLast_transaction_date();
 
     }
     throw new IllegalStateException();
@@ -245,8 +247,8 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
     switch (field) {
     case ID:
       return isSetId();
-    case NAME:
-      return isSetName();
+    case LAST_TRANSACTION_DATE:
+      return isSetLast_transaction_date();
     }
     throw new IllegalStateException();
   }
@@ -255,12 +257,12 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
   public boolean equals(Object that) {
     if (that == null)
       return false;
-    if (that instanceof TransactionSynchronizerConfig)
-      return this.equals((TransactionSynchronizerConfig)that);
+    if (that instanceof Account)
+      return this.equals((Account)that);
     return false;
   }
 
-  public boolean equals(TransactionSynchronizerConfig that) {
+  public boolean equals(Account that) {
     if (that == null)
       return false;
 
@@ -273,12 +275,12 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
         return false;
     }
 
-    boolean this_present_name = true && this.isSetName();
-    boolean that_present_name = true && that.isSetName();
-    if (this_present_name || that_present_name) {
-      if (!(this_present_name && that_present_name))
+    boolean this_present_last_transaction_date = true;
+    boolean that_present_last_transaction_date = true;
+    if (this_present_last_transaction_date || that_present_last_transaction_date) {
+      if (!(this_present_last_transaction_date && that_present_last_transaction_date))
         return false;
-      if (!this.name.equals(that.name))
+      if (this.last_transaction_date != that.last_transaction_date)
         return false;
     }
 
@@ -294,16 +296,16 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
     if (present_id)
       list.add(id);
 
-    boolean present_name = true && (isSetName());
-    list.add(present_name);
-    if (present_name)
-      list.add(name);
+    boolean present_last_transaction_date = true;
+    list.add(present_last_transaction_date);
+    if (present_last_transaction_date)
+      list.add(last_transaction_date);
 
     return list.hashCode();
   }
 
   @Override
-  public int compareTo(TransactionSynchronizerConfig other) {
+  public int compareTo(Account other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -320,12 +322,12 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
         return lastComparison;
       }
     }
-    lastComparison = Boolean.valueOf(isSetName()).compareTo(other.isSetName());
+    lastComparison = Boolean.valueOf(isSetLast_transaction_date()).compareTo(other.isSetLast_transaction_date());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetName()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.name, other.name);
+    if (isSetLast_transaction_date()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.last_transaction_date, other.last_transaction_date);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -347,7 +349,7 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder("TransactionSynchronizerConfig(");
+    StringBuilder sb = new StringBuilder("Account(");
     boolean first = true;
 
     sb.append("id:");
@@ -358,12 +360,8 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
     }
     first = false;
     if (!first) sb.append(", ");
-    sb.append("name:");
-    if (this.name == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.name);
-    }
+    sb.append("last_transaction_date:");
+    sb.append(this.last_transaction_date);
     first = false;
     sb.append(")");
     return sb.toString();
@@ -384,21 +382,23 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
 
   private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
     try {
+      // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+      __isset_bitfield = 0;
       read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
     } catch (org.apache.thrift.TException te) {
       throw new java.io.IOException(te);
     }
   }
 
-  private static class TransactionSynchronizerConfigStandardSchemeFactory implements SchemeFactory {
-    public TransactionSynchronizerConfigStandardScheme getScheme() {
-      return new TransactionSynchronizerConfigStandardScheme();
+  private static class AccountStandardSchemeFactory implements SchemeFactory {
+    public AccountStandardScheme getScheme() {
+      return new AccountStandardScheme();
     }
   }
 
-  private static class TransactionSynchronizerConfigStandardScheme extends StandardScheme<TransactionSynchronizerConfig> {
+  private static class AccountStandardScheme extends StandardScheme<Account> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, TransactionSynchronizerConfig struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, Account struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -416,10 +416,10 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // NAME
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.name = iprot.readString();
-              struct.setNameIsSet(true);
+          case 2: // LAST_TRANSACTION_DATE
+            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+              struct.last_transaction_date = iprot.readI64();
+              struct.setLast_transaction_dateIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -435,7 +435,7 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, TransactionSynchronizerConfig struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, Account struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -444,46 +444,44 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
         oprot.writeString(struct.id);
         oprot.writeFieldEnd();
       }
-      if (struct.name != null) {
-        oprot.writeFieldBegin(NAME_FIELD_DESC);
-        oprot.writeString(struct.name);
-        oprot.writeFieldEnd();
-      }
+      oprot.writeFieldBegin(LAST_TRANSACTION_DATE_FIELD_DESC);
+      oprot.writeI64(struct.last_transaction_date);
+      oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
 
   }
 
-  private static class TransactionSynchronizerConfigTupleSchemeFactory implements SchemeFactory {
-    public TransactionSynchronizerConfigTupleScheme getScheme() {
-      return new TransactionSynchronizerConfigTupleScheme();
+  private static class AccountTupleSchemeFactory implements SchemeFactory {
+    public AccountTupleScheme getScheme() {
+      return new AccountTupleScheme();
     }
   }
 
-  private static class TransactionSynchronizerConfigTupleScheme extends TupleScheme<TransactionSynchronizerConfig> {
+  private static class AccountTupleScheme extends TupleScheme<Account> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, TransactionSynchronizerConfig struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, Account struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       BitSet optionals = new BitSet();
       if (struct.isSetId()) {
         optionals.set(0);
       }
-      if (struct.isSetName()) {
+      if (struct.isSetLast_transaction_date()) {
         optionals.set(1);
       }
       oprot.writeBitSet(optionals, 2);
       if (struct.isSetId()) {
         oprot.writeString(struct.id);
       }
-      if (struct.isSetName()) {
-        oprot.writeString(struct.name);
+      if (struct.isSetLast_transaction_date()) {
+        oprot.writeI64(struct.last_transaction_date);
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, TransactionSynchronizerConfig struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, Account struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
@@ -491,8 +489,8 @@ public class TransactionSynchronizerConfig implements org.apache.thrift.TBase<Tr
         struct.setIdIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.name = iprot.readString();
-        struct.setNameIsSet(true);
+        struct.last_transaction_date = iprot.readI64();
+        struct.setLast_transaction_dateIsSet(true);
       }
     }
   }

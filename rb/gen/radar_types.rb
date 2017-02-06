@@ -5,7 +5,7 @@
 #
 
 require 'thrift'
-require 'radar/api/transaction_sync_types'
+require 'radar/api/transaction_importer_types'
 require 'radar/api/portfolio_analyzer_types'
 require 'radar/api/data_server_types'
 

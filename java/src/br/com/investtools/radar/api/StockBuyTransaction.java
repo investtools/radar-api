@@ -37,10 +37,11 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("StockBuyTransaction");
 
   private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)1);
-  private static final org.apache.thrift.protocol.TField STOCK_FIELD_DESC = new org.apache.thrift.protocol.TField("stock", org.apache.thrift.protocol.TType.STRUCT, (short)2);
-  private static final org.apache.thrift.protocol.TField SHARES_FIELD_DESC = new org.apache.thrift.protocol.TField("shares", org.apache.thrift.protocol.TType.I32, (short)3);
-  private static final org.apache.thrift.protocol.TField PRICE_FIELD_DESC = new org.apache.thrift.protocol.TField("price", org.apache.thrift.protocol.TType.DOUBLE, (short)4);
-  private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)5);
+  private static final org.apache.thrift.protocol.TField ACCOUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("account", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField STOCK_FIELD_DESC = new org.apache.thrift.protocol.TField("stock", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+  private static final org.apache.thrift.protocol.TField SHARES_FIELD_DESC = new org.apache.thrift.protocol.TField("shares", org.apache.thrift.protocol.TType.I32, (short)4);
+  private static final org.apache.thrift.protocol.TField PRICE_FIELD_DESC = new org.apache.thrift.protocol.TField("price", org.apache.thrift.protocol.TType.DOUBLE, (short)5);
+  private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)6);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -49,6 +50,7 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
   }
 
   public long date; // required
+  public String account; // required
   public br.com.investtools.radar.api.StockId stock; // required
   public int shares; // required
   public double price; // required
@@ -61,14 +63,15 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     DATE((short)1, "date"),
-    STOCK((short)2, "stock"),
-    SHARES((short)3, "shares"),
-    PRICE((short)4, "price"),
+    ACCOUNT((short)2, "account"),
+    STOCK((short)3, "stock"),
+    SHARES((short)4, "shares"),
+    PRICE((short)5, "price"),
     /**
      * 
      * @see StockBuyTransactionType
      */
-    TYPE((short)5, "type");
+    TYPE((short)6, "type");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -85,13 +88,15 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
       switch(fieldId) {
         case 1: // DATE
           return DATE;
-        case 2: // STOCK
+        case 2: // ACCOUNT
+          return ACCOUNT;
+        case 3: // STOCK
           return STOCK;
-        case 3: // SHARES
+        case 4: // SHARES
           return SHARES;
-        case 4: // PRICE
+        case 5: // PRICE
           return PRICE;
-        case 5: // TYPE
+        case 6: // TYPE
           return TYPE;
         default:
           return null;
@@ -142,6 +147,8 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
+    tmpMap.put(_Fields.ACCOUNT, new org.apache.thrift.meta_data.FieldMetaData("account", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.STOCK, new org.apache.thrift.meta_data.FieldMetaData("stock", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.StockId.class)));
     tmpMap.put(_Fields.SHARES, new org.apache.thrift.meta_data.FieldMetaData("shares", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -161,6 +168,7 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
 
   public StockBuyTransaction(
     long date,
+    String account,
     br.com.investtools.radar.api.StockId stock,
     int shares,
     double price,
@@ -169,6 +177,7 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
     this();
     this.date = date;
     setDateIsSet(true);
+    this.account = account;
     this.stock = stock;
     this.shares = shares;
     setSharesIsSet(true);
@@ -183,6 +192,9 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
   public StockBuyTransaction(StockBuyTransaction other) {
     __isset_bitfield = other.__isset_bitfield;
     this.date = other.date;
+    if (other.isSetAccount()) {
+      this.account = other.account;
+    }
     if (other.isSetStock()) {
       this.stock = new br.com.investtools.radar.api.StockId(other.stock);
     }
@@ -201,6 +213,7 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
   public void clear() {
     setDateIsSet(false);
     this.date = 0;
+    this.account = null;
     this.stock = null;
     setSharesIsSet(false);
     this.shares = 0;
@@ -231,6 +244,30 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
 
   public void setDateIsSet(boolean value) {
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __DATE_ISSET_ID, value);
+  }
+
+  public String getAccount() {
+    return this.account;
+  }
+
+  public StockBuyTransaction setAccount(String account) {
+    this.account = account;
+    return this;
+  }
+
+  public void unsetAccount() {
+    this.account = null;
+  }
+
+  /** Returns true if field account is set (has been assigned a value) and false otherwise */
+  public boolean isSetAccount() {
+    return this.account != null;
+  }
+
+  public void setAccountIsSet(boolean value) {
+    if (!value) {
+      this.account = null;
+    }
   }
 
   public br.com.investtools.radar.api.StockId getStock() {
@@ -345,6 +382,14 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
       }
       break;
 
+    case ACCOUNT:
+      if (value == null) {
+        unsetAccount();
+      } else {
+        setAccount((String)value);
+      }
+      break;
+
     case STOCK:
       if (value == null) {
         unsetStock();
@@ -385,6 +430,9 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
     case DATE:
       return getDate();
 
+    case ACCOUNT:
+      return getAccount();
+
     case STOCK:
       return getStock();
 
@@ -410,6 +458,8 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
     switch (field) {
     case DATE:
       return isSetDate();
+    case ACCOUNT:
+      return isSetAccount();
     case STOCK:
       return isSetStock();
     case SHARES:
@@ -441,6 +491,15 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
       if (!(this_present_date && that_present_date))
         return false;
       if (this.date != that.date)
+        return false;
+    }
+
+    boolean this_present_account = true && this.isSetAccount();
+    boolean that_present_account = true && that.isSetAccount();
+    if (this_present_account || that_present_account) {
+      if (!(this_present_account && that_present_account))
+        return false;
+      if (!this.account.equals(that.account))
         return false;
     }
 
@@ -492,6 +551,11 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
     if (present_date)
       list.add(date);
 
+    boolean present_account = true && (isSetAccount());
+    list.add(present_account);
+    if (present_account)
+      list.add(account);
+
     boolean present_stock = true && (isSetStock());
     list.add(present_stock);
     if (present_stock)
@@ -529,6 +593,16 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
     }
     if (isSetDate()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.date, other.date);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetAccount()).compareTo(other.isSetAccount());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetAccount()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.account, other.account);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -595,6 +669,14 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
 
     sb.append("date:");
     sb.append(this.date);
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("account:");
+    if (this.account == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.account);
+    }
     first = false;
     if (!first) sb.append(", ");
     sb.append("stock:");
@@ -676,7 +758,15 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // STOCK
+          case 2: // ACCOUNT
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.account = iprot.readString();
+              struct.setAccountIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 3: // STOCK
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
               struct.stock = new br.com.investtools.radar.api.StockId();
               struct.stock.read(iprot);
@@ -685,7 +775,7 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 3: // SHARES
+          case 4: // SHARES
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
               struct.shares = iprot.readI32();
               struct.setSharesIsSet(true);
@@ -693,7 +783,7 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 4: // PRICE
+          case 5: // PRICE
             if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
               struct.price = iprot.readDouble();
               struct.setPriceIsSet(true);
@@ -701,7 +791,7 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 5: // TYPE
+          case 6: // TYPE
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
               struct.type = br.com.investtools.radar.api.StockBuyTransactionType.findByValue(iprot.readI32());
               struct.setTypeIsSet(true);
@@ -727,6 +817,11 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
       oprot.writeFieldBegin(DATE_FIELD_DESC);
       oprot.writeI64(struct.date);
       oprot.writeFieldEnd();
+      if (struct.account != null) {
+        oprot.writeFieldBegin(ACCOUNT_FIELD_DESC);
+        oprot.writeString(struct.account);
+        oprot.writeFieldEnd();
+      }
       if (struct.stock != null) {
         oprot.writeFieldBegin(STOCK_FIELD_DESC);
         struct.stock.write(oprot);
@@ -764,21 +859,27 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
       if (struct.isSetDate()) {
         optionals.set(0);
       }
-      if (struct.isSetStock()) {
+      if (struct.isSetAccount()) {
         optionals.set(1);
       }
-      if (struct.isSetShares()) {
+      if (struct.isSetStock()) {
         optionals.set(2);
       }
-      if (struct.isSetPrice()) {
+      if (struct.isSetShares()) {
         optionals.set(3);
       }
-      if (struct.isSetType()) {
+      if (struct.isSetPrice()) {
         optionals.set(4);
       }
-      oprot.writeBitSet(optionals, 5);
+      if (struct.isSetType()) {
+        optionals.set(5);
+      }
+      oprot.writeBitSet(optionals, 6);
       if (struct.isSetDate()) {
         oprot.writeI64(struct.date);
+      }
+      if (struct.isSetAccount()) {
+        oprot.writeString(struct.account);
       }
       if (struct.isSetStock()) {
         struct.stock.write(oprot);
@@ -797,25 +898,29 @@ public class StockBuyTransaction implements org.apache.thrift.TBase<StockBuyTran
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, StockBuyTransaction struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(5);
+      BitSet incoming = iprot.readBitSet(6);
       if (incoming.get(0)) {
         struct.date = iprot.readI64();
         struct.setDateIsSet(true);
       }
       if (incoming.get(1)) {
+        struct.account = iprot.readString();
+        struct.setAccountIsSet(true);
+      }
+      if (incoming.get(2)) {
         struct.stock = new br.com.investtools.radar.api.StockId();
         struct.stock.read(iprot);
         struct.setStockIsSet(true);
       }
-      if (incoming.get(2)) {
+      if (incoming.get(3)) {
         struct.shares = iprot.readI32();
         struct.setSharesIsSet(true);
       }
-      if (incoming.get(3)) {
+      if (incoming.get(4)) {
         struct.price = iprot.readDouble();
         struct.setPriceIsSet(true);
       }
-      if (incoming.get(4)) {
+      if (incoming.get(5)) {
         struct.type = br.com.investtools.radar.api.StockBuyTransactionType.findByValue(iprot.readI32());
         struct.setTypeIsSet(true);
       }

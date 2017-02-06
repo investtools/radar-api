@@ -19,34 +19,20 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class TransactionSynchronizerConfig : TBase
+public partial class AuthenticationError : TException, TBase
 {
-  private string _id;
-  private string _name;
+  private string _message;
 
-  public string Id
+  public string Message
   {
     get
     {
-      return _id;
+      return _message;
     }
     set
     {
-      __isset.id = true;
-      this._id = value;
-    }
-  }
-
-  public string Name
-  {
-    get
-    {
-      return _name;
-    }
-    set
-    {
-      __isset.name = true;
-      this._name = value;
+      __isset.message = true;
+      this._message = value;
     }
   }
 
@@ -56,11 +42,10 @@ public partial class TransactionSynchronizerConfig : TBase
   [Serializable]
   #endif
   public struct Isset {
-    public bool id;
-    public bool name;
+    public bool message;
   }
 
-  public TransactionSynchronizerConfig() {
+  public AuthenticationError() {
   }
 
   public void Read (TProtocol iprot)
@@ -80,14 +65,7 @@ public partial class TransactionSynchronizerConfig : TBase
         {
           case 1:
             if (field.Type == TType.String) {
-              Id = iprot.ReadString();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 2:
-            if (field.Type == TType.String) {
-              Name = iprot.ReadString();
+              Message = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -110,23 +88,15 @@ public partial class TransactionSynchronizerConfig : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("TransactionSynchronizerConfig");
+      TStruct struc = new TStruct("AuthenticationError");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (Id != null && __isset.id) {
-        field.Name = "id";
+      if (Message != null && __isset.message) {
+        field.Name = "message";
         field.Type = TType.String;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        oprot.WriteString(Id);
-        oprot.WriteFieldEnd();
-      }
-      if (Name != null && __isset.name) {
-        field.Name = "name";
-        field.Type = TType.String;
-        field.ID = 2;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteString(Name);
+        oprot.WriteString(Message);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -139,19 +109,13 @@ public partial class TransactionSynchronizerConfig : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("TransactionSynchronizerConfig(");
+    StringBuilder __sb = new StringBuilder("AuthenticationError(");
     bool __first = true;
-    if (Id != null && __isset.id) {
+    if (Message != null && __isset.message) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Id: ");
-      __sb.Append(Id);
-    }
-    if (Name != null && __isset.name) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Name: ");
-      __sb.Append(Name);
+      __sb.Append("Message: ");
+      __sb.Append(Message);
     }
     __sb.Append(")");
     return __sb.ToString();
