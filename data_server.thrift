@@ -34,3 +34,7 @@ service IndexService {
   double price(1: string symbol, 2: common.Date date)
   double price_change(1: string symbol, 2: common.Date start_date, 3: common.Date end_date)
 }
+
+service CalendarService {
+  common.Date advance(1: string calendar, 2: common.Date date, 3: i16 n)
+}
