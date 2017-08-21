@@ -129,6 +129,7 @@ struct Position {
   3: double rentability
   4: double avg_price
   5: double shares
+  6: double paid_value
 }
 
 /**
