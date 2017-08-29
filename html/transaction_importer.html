@@ -18,6 +18,7 @@
 </td>
 <td><a href="#Struct_Account">Account</a><br/>
 <a href="#Struct_AuthenticationError">AuthenticationError</a><br/>
+<a href="#Struct_CEIUnderMaintenance">CEIUnderMaintenance</a><br/>
 <a href="#Struct_StockBuyTransaction">StockBuyTransaction</a><br/>
 <a href="#Enum_StockBuyTransactionType">StockBuyTransactionType</a><br/>
 <a href="#Struct_StockSellTransaction">StockSellTransaction</a><br/>
@@ -60,6 +61,9 @@
 </table><br/></div><div class="definition"><h3 id="Struct_AuthenticationError">Exception: AuthenticationError</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>message</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_CEIUnderMaintenance">Exception: CEIUnderMaintenance</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>message</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_TransactionImporter">Service: TransactionImporter</h3>
 <div class="definition"><h4 id="Fn_TransactionImporter_name">Function: TransactionImporter.name</h4>
@@ -67,10 +71,10 @@
 </pre></div><div class="definition"><h4 id="Fn_TransactionImporter_accounts">Function: TransactionImporter.accounts</h4>
 <pre><code>map&lt;<code>string</code>, <code>string</code>&gt;</code> accounts(<code>string</code> username,
                            <code>string</code> password)
-    throws <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>
+    throws <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>, <code><a href="#Struct_CEIUnderMaintenance">CEIUnderMaintenance</a></code>
 </pre></div><div class="definition"><h4 id="Fn_TransactionImporter_fetch">Function: TransactionImporter.fetch</h4>
 <pre><code>list&lt;<code><a href="#Struct_Transaction">Transaction</a></code>&gt;</code> fetch(<code>string</code> username,
                         <code>string</code> password,
                         <code>list&lt;<code><a href="#Struct_Account">Account</a></code>&gt;</code> accounts)
-    throws <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>
+    throws <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>, <code><a href="#Struct_CEIUnderMaintenance">CEIUnderMaintenance</a></code>
 </pre></div></div></body></html>

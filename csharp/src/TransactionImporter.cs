@@ -217,6 +217,9 @@ public partial class TransactionImporter {
       if (result.__isset.auth_error) {
         throw result.Auth_error;
       }
+      if (result.__isset.under_maintenance_error) {
+        throw result.Under_maintenance_error;
+      }
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "accounts failed: unknown result");
     }
 
@@ -283,6 +286,9 @@ public partial class TransactionImporter {
       }
       if (result.__isset.auth_error) {
         throw result.Auth_error;
+      }
+      if (result.__isset.under_maintenance_error) {
+        throw result.Under_maintenance_error;
       }
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "fetch failed: unknown result");
     }
@@ -371,6 +377,10 @@ public partial class TransactionImporter {
         {
           result.Auth_error = auth_error;
         }
+        catch (CEIUnderMaintenance under_maintenance_error)
+        {
+          result.Under_maintenance_error = under_maintenance_error;
+        }
         oprot.WriteMessageBegin(new TMessage("accounts", TMessageType.Reply, seqid)); 
         result.Write(oprot);
       }
@@ -405,6 +415,10 @@ public partial class TransactionImporter {
         catch (AuthenticationError auth_error)
         {
           result.Auth_error = auth_error;
+        }
+        catch (CEIUnderMaintenance under_maintenance_error)
+        {
+          result.Under_maintenance_error = under_maintenance_error;
         }
         oprot.WriteMessageBegin(new TMessage("fetch", TMessageType.Reply, seqid)); 
         result.Write(oprot);
@@ -752,6 +766,7 @@ public partial class TransactionImporter {
   {
     private Dictionary<string, string> _success;
     private AuthenticationError _auth_error;
+    private CEIUnderMaintenance _under_maintenance_error;
 
     public Dictionary<string, string> Success
     {
@@ -779,6 +794,19 @@ public partial class TransactionImporter {
       }
     }
 
+    public CEIUnderMaintenance Under_maintenance_error
+    {
+      get
+      {
+        return _under_maintenance_error;
+      }
+      set
+      {
+        __isset.under_maintenance_error = true;
+        this._under_maintenance_error = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -787,6 +815,7 @@ public partial class TransactionImporter {
     public struct Isset {
       public bool success;
       public bool auth_error;
+      public bool under_maintenance_error;
     }
 
     public accounts_result() {
@@ -830,6 +859,14 @@ public partial class TransactionImporter {
               if (field.Type == TType.Struct) {
                 Auth_error = new AuthenticationError();
                 Auth_error.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.Struct) {
+                Under_maintenance_error = new CEIUnderMaintenance();
+                Under_maintenance_error.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -882,6 +919,15 @@ public partial class TransactionImporter {
             Auth_error.Write(oprot);
             oprot.WriteFieldEnd();
           }
+        } else if (this.__isset.under_maintenance_error) {
+          if (Under_maintenance_error != null) {
+            field.Name = "Under_maintenance_error";
+            field.Type = TType.Struct;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            Under_maintenance_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
         }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
@@ -906,6 +952,12 @@ public partial class TransactionImporter {
         __first = false;
         __sb.Append("Auth_error: ");
         __sb.Append(Auth_error== null ? "<null>" : Auth_error.ToString());
+      }
+      if (Under_maintenance_error != null && __isset.under_maintenance_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Under_maintenance_error: ");
+        __sb.Append(Under_maintenance_error== null ? "<null>" : Under_maintenance_error.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -1119,6 +1171,7 @@ public partial class TransactionImporter {
   {
     private List<Transaction> _success;
     private AuthenticationError _auth_error;
+    private CEIUnderMaintenance _under_maintenance_error;
 
     public List<Transaction> Success
     {
@@ -1146,6 +1199,19 @@ public partial class TransactionImporter {
       }
     }
 
+    public CEIUnderMaintenance Under_maintenance_error
+    {
+      get
+      {
+        return _under_maintenance_error;
+      }
+      set
+      {
+        __isset.under_maintenance_error = true;
+        this._under_maintenance_error = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -1154,6 +1220,7 @@ public partial class TransactionImporter {
     public struct Isset {
       public bool success;
       public bool auth_error;
+      public bool under_maintenance_error;
     }
 
     public fetch_result() {
@@ -1196,6 +1263,14 @@ public partial class TransactionImporter {
               if (field.Type == TType.Struct) {
                 Auth_error = new AuthenticationError();
                 Auth_error.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.Struct) {
+                Under_maintenance_error = new CEIUnderMaintenance();
+                Under_maintenance_error.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1247,6 +1322,15 @@ public partial class TransactionImporter {
             Auth_error.Write(oprot);
             oprot.WriteFieldEnd();
           }
+        } else if (this.__isset.under_maintenance_error) {
+          if (Under_maintenance_error != null) {
+            field.Name = "Under_maintenance_error";
+            field.Type = TType.Struct;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            Under_maintenance_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
         }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
@@ -1271,6 +1355,12 @@ public partial class TransactionImporter {
         __first = false;
         __sb.Append("Auth_error: ");
         __sb.Append(Auth_error== null ? "<null>" : Auth_error.ToString());
+      }
+      if (Under_maintenance_error != null && __isset.under_maintenance_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Under_maintenance_error: ");
+        __sb.Append(Under_maintenance_error== null ? "<null>" : Under_maintenance_error.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();

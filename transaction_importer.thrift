@@ -38,8 +38,12 @@ exception AuthenticationError {
   1: string message
 }
 
+exception CEIUnderMaintenance {
+  1: string message
+}
+
 service TransactionImporter {
   string name()
-  map<string, string> accounts(1: string username, 2: string password) throws (1: AuthenticationError auth_error)
-  list<Transaction> fetch(1: string username, 2: string password, 3: list<Account> accounts)  throws (1: AuthenticationError auth_error)
+  map<string, string> accounts(1: string username, 2: string password) throws (1: AuthenticationError auth_error, 2: CEIUnderMaintenance under_maintenance_error)
+  list<Transaction> fetch(1: string username, 2: string password, 3: list<Account> accounts)  throws (1: AuthenticationError auth_error, 2: CEIUnderMaintenance under_maintenance_error)
 }

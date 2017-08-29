@@ -41,6 +41,7 @@ module Radar
           result = receive_message(Accounts_result)
           return result.success unless result.success.nil?
           raise result.auth_error unless result.auth_error.nil?
+          raise result.under_maintenance_error unless result.under_maintenance_error.nil?
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'accounts failed: unknown result')
         end
 
@@ -57,6 +58,7 @@ module Radar
           result = receive_message(Fetch_result)
           return result.success unless result.success.nil?
           raise result.auth_error unless result.auth_error.nil?
+          raise result.under_maintenance_error unless result.under_maintenance_error.nil?
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'fetch failed: unknown result')
         end
 
@@ -79,6 +81,8 @@ module Radar
             result.success = @handler.accounts(args.username, args.password)
           rescue ::Radar::Api::AuthenticationError => auth_error
             result.auth_error = auth_error
+          rescue ::Radar::Api::CEIUnderMaintenance => under_maintenance_error
+            result.under_maintenance_error = under_maintenance_error
           end
           write_result(result, oprot, 'accounts', seqid)
         end
@@ -90,6 +94,8 @@ module Radar
             result.success = @handler.fetch(args.username, args.password, args.accounts)
           rescue ::Radar::Api::AuthenticationError => auth_error
             result.auth_error = auth_error
+          rescue ::Radar::Api::CEIUnderMaintenance => under_maintenance_error
+            result.under_maintenance_error = under_maintenance_error
           end
           write_result(result, oprot, 'fetch', seqid)
         end
@@ -151,10 +157,12 @@ module Radar
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
         AUTH_ERROR = 1
+        UNDER_MAINTENANCE_ERROR = 2
 
         FIELDS = {
           SUCCESS => {:type => ::Thrift::Types::MAP, :name => 'success', :key => {:type => ::Thrift::Types::STRING}, :value => {:type => ::Thrift::Types::STRING}},
-          AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError}
+          AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
+          UNDER_MAINTENANCE_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'under_maintenance_error', :class => ::Radar::Api::CEIUnderMaintenance}
         }
 
         def struct_fields; FIELDS; end
@@ -189,10 +197,12 @@ module Radar
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
         AUTH_ERROR = 1
+        UNDER_MAINTENANCE_ERROR = 2
 
         FIELDS = {
           SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Transaction}},
-          AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError}
+          AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
+          UNDER_MAINTENANCE_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'under_maintenance_error', :class => ::Radar::Api::CEIUnderMaintenance}
         }
 
         def struct_fields; FIELDS; end
