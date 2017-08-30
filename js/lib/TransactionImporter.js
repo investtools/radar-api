@@ -165,13 +165,13 @@ TransactionImporter_accounts_args.prototype.write = function(output) {
 var TransactionImporter_accounts_result = function(args) {
   this.success = null;
   this.auth_error = null;
-  this.under_maintenance_error = null;
+  this.system_unavailable = null;
   if (args instanceof ttypes.AuthenticationError) {
     this.auth_error = args;
     return;
   }
-  if (args instanceof ttypes.CEIUnderMaintenance) {
-    this.under_maintenance_error = args;
+  if (args instanceof ttypes.SystemUnavailableError) {
+    this.system_unavailable = args;
     return;
   }
   if (args) {
@@ -181,8 +181,8 @@ var TransactionImporter_accounts_result = function(args) {
     if (args.auth_error !== undefined && args.auth_error !== null) {
       this.auth_error = args.auth_error;
     }
-    if (args.under_maintenance_error !== undefined && args.under_maintenance_error !== null) {
-      this.under_maintenance_error = args.under_maintenance_error;
+    if (args.system_unavailable !== undefined && args.system_unavailable !== null) {
+      this.system_unavailable = args.system_unavailable;
     }
   }
 };
@@ -234,8 +234,8 @@ TransactionImporter_accounts_result.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.STRUCT) {
-        this.under_maintenance_error = new ttypes.CEIUnderMaintenance();
-        this.under_maintenance_error.read(input);
+        this.system_unavailable = new ttypes.SystemUnavailableError();
+        this.system_unavailable.read(input);
       } else {
         input.skip(ftype);
       }
@@ -271,9 +271,9 @@ TransactionImporter_accounts_result.prototype.write = function(output) {
     this.auth_error.write(output);
     output.writeFieldEnd();
   }
-  if (this.under_maintenance_error !== null && this.under_maintenance_error !== undefined) {
-    output.writeFieldBegin('under_maintenance_error', Thrift.Type.STRUCT, 2);
-    this.under_maintenance_error.write(output);
+  if (this.system_unavailable !== null && this.system_unavailable !== undefined) {
+    output.writeFieldBegin('system_unavailable', Thrift.Type.STRUCT, 2);
+    this.system_unavailable.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -389,13 +389,13 @@ TransactionImporter_fetch_args.prototype.write = function(output) {
 var TransactionImporter_fetch_result = function(args) {
   this.success = null;
   this.auth_error = null;
-  this.under_maintenance_error = null;
+  this.system_unavailable = null;
   if (args instanceof ttypes.AuthenticationError) {
     this.auth_error = args;
     return;
   }
-  if (args instanceof ttypes.CEIUnderMaintenance) {
-    this.under_maintenance_error = args;
+  if (args instanceof ttypes.SystemUnavailableError) {
+    this.system_unavailable = args;
     return;
   }
   if (args) {
@@ -405,8 +405,8 @@ var TransactionImporter_fetch_result = function(args) {
     if (args.auth_error !== undefined && args.auth_error !== null) {
       this.auth_error = args.auth_error;
     }
-    if (args.under_maintenance_error !== undefined && args.under_maintenance_error !== null) {
-      this.under_maintenance_error = args.under_maintenance_error;
+    if (args.system_unavailable !== undefined && args.system_unavailable !== null) {
+      this.system_unavailable = args.system_unavailable;
     }
   }
 };
@@ -455,8 +455,8 @@ TransactionImporter_fetch_result.prototype.read = function(input) {
       break;
       case 2:
       if (ftype == Thrift.Type.STRUCT) {
-        this.under_maintenance_error = new ttypes.CEIUnderMaintenance();
-        this.under_maintenance_error.read(input);
+        this.system_unavailable = new ttypes.SystemUnavailableError();
+        this.system_unavailable.read(input);
       } else {
         input.skip(ftype);
       }
@@ -491,9 +491,9 @@ TransactionImporter_fetch_result.prototype.write = function(output) {
     this.auth_error.write(output);
     output.writeFieldEnd();
   }
-  if (this.under_maintenance_error !== null && this.under_maintenance_error !== undefined) {
-    output.writeFieldBegin('under_maintenance_error', Thrift.Type.STRUCT, 2);
-    this.under_maintenance_error.write(output);
+  if (this.system_unavailable !== null && this.system_unavailable !== undefined) {
+    output.writeFieldBegin('system_unavailable', Thrift.Type.STRUCT, 2);
+    this.system_unavailable.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -602,8 +602,8 @@ TransactionImporterClient.prototype.recv_accounts = function(input,mtype,rseqid)
   if (null !== result.auth_error) {
     return callback(result.auth_error);
   }
-  if (null !== result.under_maintenance_error) {
-    return callback(result.under_maintenance_error);
+  if (null !== result.system_unavailable) {
+    return callback(result.system_unavailable);
   }
   if (null !== result.success) {
     return callback(null, result.success);
@@ -657,8 +657,8 @@ TransactionImporterClient.prototype.recv_fetch = function(input,mtype,rseqid) {
   if (null !== result.auth_error) {
     return callback(result.auth_error);
   }
-  if (null !== result.under_maintenance_error) {
-    return callback(result.under_maintenance_error);
+  if (null !== result.system_unavailable) {
+    return callback(result.system_unavailable);
   }
   if (null !== result.success) {
     return callback(null, result.success);
@@ -734,7 +734,7 @@ TransactionImporterProcessor.prototype.process_accounts = function(seqid, input,
         output.flush();
       }, function (err) {
         var result;
-        if (err instanceof ttypes.AuthenticationError || err instanceof ttypes.CEIUnderMaintenance) {
+        if (err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
           result = new TransactionImporter_accounts_result(err);
           output.writeMessageBegin("accounts", Thrift.MessageType.REPLY, seqid);
         } else {
@@ -748,7 +748,7 @@ TransactionImporterProcessor.prototype.process_accounts = function(seqid, input,
   } else {
     this._handler.accounts(args.username, args.password, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined') || err instanceof ttypes.AuthenticationError || err instanceof ttypes.CEIUnderMaintenance) {
+      if ((err === null || typeof err === 'undefined') || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
         result_obj = new TransactionImporter_accounts_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("accounts", Thrift.MessageType.REPLY, seqid);
       } else {
@@ -775,7 +775,7 @@ TransactionImporterProcessor.prototype.process_fetch = function(seqid, input, ou
         output.flush();
       }, function (err) {
         var result;
-        if (err instanceof ttypes.AuthenticationError || err instanceof ttypes.CEIUnderMaintenance) {
+        if (err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
           result = new TransactionImporter_fetch_result(err);
           output.writeMessageBegin("fetch", Thrift.MessageType.REPLY, seqid);
         } else {
@@ -789,7 +789,7 @@ TransactionImporterProcessor.prototype.process_fetch = function(seqid, input, ou
   } else {
     this._handler.fetch(args.username, args.password, args.accounts, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined') || err instanceof ttypes.AuthenticationError || err instanceof ttypes.CEIUnderMaintenance) {
+      if ((err === null || typeof err === 'undefined') || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
         result_obj = new TransactionImporter_fetch_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("fetch", Thrift.MessageType.REPLY, seqid);
       } else {

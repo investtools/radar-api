@@ -453,9 +453,9 @@ AuthenticationError.prototype.write = function(output) {
   return;
 };
 
-var CEIUnderMaintenance = module.exports.CEIUnderMaintenance = function(args) {
-  Thrift.TException.call(this, "CEIUnderMaintenance");
-  this.name = "CEIUnderMaintenance";
+var SystemUnavailableError = module.exports.SystemUnavailableError = function(args) {
+  Thrift.TException.call(this, "SystemUnavailableError");
+  this.name = "SystemUnavailableError";
   this.message = null;
   if (args) {
     if (args.message !== undefined && args.message !== null) {
@@ -463,9 +463,9 @@ var CEIUnderMaintenance = module.exports.CEIUnderMaintenance = function(args) {
     }
   }
 };
-Thrift.inherits(CEIUnderMaintenance, Thrift.TException);
-CEIUnderMaintenance.prototype.name = 'CEIUnderMaintenance';
-CEIUnderMaintenance.prototype.read = function(input) {
+Thrift.inherits(SystemUnavailableError, Thrift.TException);
+SystemUnavailableError.prototype.name = 'SystemUnavailableError';
+SystemUnavailableError.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -497,8 +497,8 @@ CEIUnderMaintenance.prototype.read = function(input) {
   return;
 };
 
-CEIUnderMaintenance.prototype.write = function(output) {
-  output.writeStructBegin('CEIUnderMaintenance');
+SystemUnavailableError.prototype.write = function(output) {
+  output.writeStructBegin('SystemUnavailableError');
   if (this.message !== null && this.message !== undefined) {
     output.writeFieldBegin('message', Thrift.Type.STRING, 1);
     output.writeString(this.message);

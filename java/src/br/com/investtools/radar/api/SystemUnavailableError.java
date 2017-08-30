@@ -7,13 +7,13 @@
 package br.com.investtools.radar.api;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class CEIUnderMaintenance extends org.apache.thrift.TException implements org.apache.thrift.TBase<CEIUnderMaintenance, CEIUnderMaintenance._Fields>, java.io.Serializable, Cloneable, Comparable<CEIUnderMaintenance> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("CEIUnderMaintenance");
+public class SystemUnavailableError extends org.apache.thrift.TException implements org.apache.thrift.TBase<SystemUnavailableError, SystemUnavailableError._Fields>, java.io.Serializable, Cloneable, Comparable<SystemUnavailableError> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("SystemUnavailableError");
 
   private static final org.apache.thrift.protocol.TField MESSAGE_FIELD_DESC = new org.apache.thrift.protocol.TField("message", org.apache.thrift.protocol.TType.STRING, (short)1);
 
-  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new CEIUnderMaintenanceStandardSchemeFactory();
-  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new CEIUnderMaintenanceTupleSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new SystemUnavailableErrorStandardSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new SystemUnavailableErrorTupleSchemeFactory();
 
   public java.lang.String message; // required
 
@@ -82,13 +82,13 @@ public class CEIUnderMaintenance extends org.apache.thrift.TException implements
     tmpMap.put(_Fields.MESSAGE, new org.apache.thrift.meta_data.FieldMetaData("message", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(CEIUnderMaintenance.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(SystemUnavailableError.class, metaDataMap);
   }
 
-  public CEIUnderMaintenance() {
+  public SystemUnavailableError() {
   }
 
-  public CEIUnderMaintenance(
+  public SystemUnavailableError(
     java.lang.String message)
   {
     this();
@@ -98,14 +98,14 @@ public class CEIUnderMaintenance extends org.apache.thrift.TException implements
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public CEIUnderMaintenance(CEIUnderMaintenance other) {
+  public SystemUnavailableError(SystemUnavailableError other) {
     if (other.isSetMessage()) {
       this.message = other.message;
     }
   }
 
-  public CEIUnderMaintenance deepCopy() {
-    return new CEIUnderMaintenance(this);
+  public SystemUnavailableError deepCopy() {
+    return new SystemUnavailableError(this);
   }
 
   @Override
@@ -117,7 +117,7 @@ public class CEIUnderMaintenance extends org.apache.thrift.TException implements
     return this.message;
   }
 
-  public CEIUnderMaintenance setMessage(java.lang.String message) {
+  public SystemUnavailableError setMessage(java.lang.String message) {
     this.message = message;
     return this;
   }
@@ -176,12 +176,12 @@ public class CEIUnderMaintenance extends org.apache.thrift.TException implements
   public boolean equals(java.lang.Object that) {
     if (that == null)
       return false;
-    if (that instanceof CEIUnderMaintenance)
-      return this.equals((CEIUnderMaintenance)that);
+    if (that instanceof SystemUnavailableError)
+      return this.equals((SystemUnavailableError)that);
     return false;
   }
 
-  public boolean equals(CEIUnderMaintenance that) {
+  public boolean equals(SystemUnavailableError that) {
     if (that == null)
       return false;
     if (this == that)
@@ -211,7 +211,7 @@ public class CEIUnderMaintenance extends org.apache.thrift.TException implements
   }
 
   @Override
-  public int compareTo(CEIUnderMaintenance other) {
+  public int compareTo(SystemUnavailableError other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -245,7 +245,7 @@ public class CEIUnderMaintenance extends org.apache.thrift.TException implements
 
   @Override
   public java.lang.String toString() {
-    java.lang.StringBuilder sb = new java.lang.StringBuilder("CEIUnderMaintenance(");
+    java.lang.StringBuilder sb = new java.lang.StringBuilder("SystemUnavailableError(");
     boolean first = true;
 
     sb.append("message:");
@@ -280,15 +280,15 @@ public class CEIUnderMaintenance extends org.apache.thrift.TException implements
     }
   }
 
-  private static class CEIUnderMaintenanceStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public CEIUnderMaintenanceStandardScheme getScheme() {
-      return new CEIUnderMaintenanceStandardScheme();
+  private static class SystemUnavailableErrorStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public SystemUnavailableErrorStandardScheme getScheme() {
+      return new SystemUnavailableErrorStandardScheme();
     }
   }
 
-  private static class CEIUnderMaintenanceStandardScheme extends org.apache.thrift.scheme.StandardScheme<CEIUnderMaintenance> {
+  private static class SystemUnavailableErrorStandardScheme extends org.apache.thrift.scheme.StandardScheme<SystemUnavailableError> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, CEIUnderMaintenance struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, SystemUnavailableError struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -317,7 +317,7 @@ public class CEIUnderMaintenance extends org.apache.thrift.TException implements
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, CEIUnderMaintenance struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, SystemUnavailableError struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -332,16 +332,16 @@ public class CEIUnderMaintenance extends org.apache.thrift.TException implements
 
   }
 
-  private static class CEIUnderMaintenanceTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public CEIUnderMaintenanceTupleScheme getScheme() {
-      return new CEIUnderMaintenanceTupleScheme();
+  private static class SystemUnavailableErrorTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public SystemUnavailableErrorTupleScheme getScheme() {
+      return new SystemUnavailableErrorTupleScheme();
     }
   }
 
-  private static class CEIUnderMaintenanceTupleScheme extends org.apache.thrift.scheme.TupleScheme<CEIUnderMaintenance> {
+  private static class SystemUnavailableErrorTupleScheme extends org.apache.thrift.scheme.TupleScheme<SystemUnavailableError> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, CEIUnderMaintenance struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, SystemUnavailableError struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet optionals = new java.util.BitSet();
       if (struct.isSetMessage()) {
@@ -354,7 +354,7 @@ public class CEIUnderMaintenance extends org.apache.thrift.TException implements
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, CEIUnderMaintenance struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, SystemUnavailableError struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet incoming = iprot.readBitSet(1);
       if (incoming.get(0)) {

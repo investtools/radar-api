@@ -138,7 +138,7 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class CEIUnderMaintenance < ::Thrift::Exception
+    class SystemUnavailableError < ::Thrift::Exception
       include ::Thrift::Struct, ::Thrift::Struct_Union
       def initialize(message=nil)
         super()

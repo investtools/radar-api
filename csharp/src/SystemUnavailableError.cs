@@ -19,7 +19,7 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class CEIUnderMaintenance : TException, TBase
+public partial class SystemUnavailableError : TException, TBase
 {
   private string _message;
 
@@ -45,7 +45,7 @@ public partial class CEIUnderMaintenance : TException, TBase
     public bool message;
   }
 
-  public CEIUnderMaintenance() {
+  public SystemUnavailableError() {
   }
 
   public void Read (TProtocol iprot)
@@ -88,7 +88,7 @@ public partial class CEIUnderMaintenance : TException, TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("CEIUnderMaintenance");
+      TStruct struc = new TStruct("SystemUnavailableError");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
       if (Message != null && __isset.message) {
@@ -109,7 +109,7 @@ public partial class CEIUnderMaintenance : TException, TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("CEIUnderMaintenance(");
+    StringBuilder __sb = new StringBuilder("SystemUnavailableError(");
     bool __first = true;
     if (Message != null && __isset.message) {
       if(!__first) { __sb.Append(", "); }

@@ -217,8 +217,8 @@ public partial class TransactionImporter {
       if (result.__isset.auth_error) {
         throw result.Auth_error;
       }
-      if (result.__isset.under_maintenance_error) {
-        throw result.Under_maintenance_error;
+      if (result.__isset.system_unavailable) {
+        throw result.System_unavailable;
       }
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "accounts failed: unknown result");
     }
@@ -287,8 +287,8 @@ public partial class TransactionImporter {
       if (result.__isset.auth_error) {
         throw result.Auth_error;
       }
-      if (result.__isset.under_maintenance_error) {
-        throw result.Under_maintenance_error;
+      if (result.__isset.system_unavailable) {
+        throw result.System_unavailable;
       }
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "fetch failed: unknown result");
     }
@@ -377,9 +377,9 @@ public partial class TransactionImporter {
         {
           result.Auth_error = auth_error;
         }
-        catch (CEIUnderMaintenance under_maintenance_error)
+        catch (SystemUnavailableError system_unavailable)
         {
-          result.Under_maintenance_error = under_maintenance_error;
+          result.System_unavailable = system_unavailable;
         }
         oprot.WriteMessageBegin(new TMessage("accounts", TMessageType.Reply, seqid)); 
         result.Write(oprot);
@@ -416,9 +416,9 @@ public partial class TransactionImporter {
         {
           result.Auth_error = auth_error;
         }
-        catch (CEIUnderMaintenance under_maintenance_error)
+        catch (SystemUnavailableError system_unavailable)
         {
-          result.Under_maintenance_error = under_maintenance_error;
+          result.System_unavailable = system_unavailable;
         }
         oprot.WriteMessageBegin(new TMessage("fetch", TMessageType.Reply, seqid)); 
         result.Write(oprot);
@@ -766,7 +766,7 @@ public partial class TransactionImporter {
   {
     private Dictionary<string, string> _success;
     private AuthenticationError _auth_error;
-    private CEIUnderMaintenance _under_maintenance_error;
+    private SystemUnavailableError _system_unavailable;
 
     public Dictionary<string, string> Success
     {
@@ -794,16 +794,16 @@ public partial class TransactionImporter {
       }
     }
 
-    public CEIUnderMaintenance Under_maintenance_error
+    public SystemUnavailableError System_unavailable
     {
       get
       {
-        return _under_maintenance_error;
+        return _system_unavailable;
       }
       set
       {
-        __isset.under_maintenance_error = true;
-        this._under_maintenance_error = value;
+        __isset.system_unavailable = true;
+        this._system_unavailable = value;
       }
     }
 
@@ -815,7 +815,7 @@ public partial class TransactionImporter {
     public struct Isset {
       public bool success;
       public bool auth_error;
-      public bool under_maintenance_error;
+      public bool system_unavailable;
     }
 
     public accounts_result() {
@@ -865,8 +865,8 @@ public partial class TransactionImporter {
               break;
             case 2:
               if (field.Type == TType.Struct) {
-                Under_maintenance_error = new CEIUnderMaintenance();
-                Under_maintenance_error.Read(iprot);
+                System_unavailable = new SystemUnavailableError();
+                System_unavailable.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -919,13 +919,13 @@ public partial class TransactionImporter {
             Auth_error.Write(oprot);
             oprot.WriteFieldEnd();
           }
-        } else if (this.__isset.under_maintenance_error) {
-          if (Under_maintenance_error != null) {
-            field.Name = "Under_maintenance_error";
+        } else if (this.__isset.system_unavailable) {
+          if (System_unavailable != null) {
+            field.Name = "System_unavailable";
             field.Type = TType.Struct;
             field.ID = 2;
             oprot.WriteFieldBegin(field);
-            Under_maintenance_error.Write(oprot);
+            System_unavailable.Write(oprot);
             oprot.WriteFieldEnd();
           }
         }
@@ -953,11 +953,11 @@ public partial class TransactionImporter {
         __sb.Append("Auth_error: ");
         __sb.Append(Auth_error== null ? "<null>" : Auth_error.ToString());
       }
-      if (Under_maintenance_error != null && __isset.under_maintenance_error) {
+      if (System_unavailable != null && __isset.system_unavailable) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Under_maintenance_error: ");
-        __sb.Append(Under_maintenance_error== null ? "<null>" : Under_maintenance_error.ToString());
+        __sb.Append("System_unavailable: ");
+        __sb.Append(System_unavailable== null ? "<null>" : System_unavailable.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -1171,7 +1171,7 @@ public partial class TransactionImporter {
   {
     private List<Transaction> _success;
     private AuthenticationError _auth_error;
-    private CEIUnderMaintenance _under_maintenance_error;
+    private SystemUnavailableError _system_unavailable;
 
     public List<Transaction> Success
     {
@@ -1199,16 +1199,16 @@ public partial class TransactionImporter {
       }
     }
 
-    public CEIUnderMaintenance Under_maintenance_error
+    public SystemUnavailableError System_unavailable
     {
       get
       {
-        return _under_maintenance_error;
+        return _system_unavailable;
       }
       set
       {
-        __isset.under_maintenance_error = true;
-        this._under_maintenance_error = value;
+        __isset.system_unavailable = true;
+        this._system_unavailable = value;
       }
     }
 
@@ -1220,7 +1220,7 @@ public partial class TransactionImporter {
     public struct Isset {
       public bool success;
       public bool auth_error;
-      public bool under_maintenance_error;
+      public bool system_unavailable;
     }
 
     public fetch_result() {
@@ -1269,8 +1269,8 @@ public partial class TransactionImporter {
               break;
             case 2:
               if (field.Type == TType.Struct) {
-                Under_maintenance_error = new CEIUnderMaintenance();
-                Under_maintenance_error.Read(iprot);
+                System_unavailable = new SystemUnavailableError();
+                System_unavailable.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1322,13 +1322,13 @@ public partial class TransactionImporter {
             Auth_error.Write(oprot);
             oprot.WriteFieldEnd();
           }
-        } else if (this.__isset.under_maintenance_error) {
-          if (Under_maintenance_error != null) {
-            field.Name = "Under_maintenance_error";
+        } else if (this.__isset.system_unavailable) {
+          if (System_unavailable != null) {
+            field.Name = "System_unavailable";
             field.Type = TType.Struct;
             field.ID = 2;
             oprot.WriteFieldBegin(field);
-            Under_maintenance_error.Write(oprot);
+            System_unavailable.Write(oprot);
             oprot.WriteFieldEnd();
           }
         }
@@ -1356,11 +1356,11 @@ public partial class TransactionImporter {
         __sb.Append("Auth_error: ");
         __sb.Append(Auth_error== null ? "<null>" : Auth_error.ToString());
       }
-      if (Under_maintenance_error != null && __isset.under_maintenance_error) {
+      if (System_unavailable != null && __isset.system_unavailable) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Under_maintenance_error: ");
-        __sb.Append(Under_maintenance_error== null ? "<null>" : Under_maintenance_error.ToString());
+        __sb.Append("System_unavailable: ");
+        __sb.Append(System_unavailable== null ? "<null>" : System_unavailable.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();

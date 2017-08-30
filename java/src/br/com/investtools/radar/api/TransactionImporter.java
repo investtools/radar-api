@@ -13,9 +13,9 @@ public class TransactionImporter {
 
     public java.lang.String name() throws org.apache.thrift.TException;
 
-    public java.util.Map<java.lang.String,java.lang.String> accounts(java.lang.String username, java.lang.String password) throws AuthenticationError, CEIUnderMaintenance, org.apache.thrift.TException;
+    public java.util.Map<java.lang.String,java.lang.String> accounts(java.lang.String username, java.lang.String password) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
 
-    public java.util.List<Transaction> fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts) throws AuthenticationError, CEIUnderMaintenance, org.apache.thrift.TException;
+    public java.util.List<Transaction> fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
 
   }
 
@@ -71,7 +71,7 @@ public class TransactionImporter {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "name failed: unknown result");
     }
 
-    public java.util.Map<java.lang.String,java.lang.String> accounts(java.lang.String username, java.lang.String password) throws AuthenticationError, CEIUnderMaintenance, org.apache.thrift.TException
+    public java.util.Map<java.lang.String,java.lang.String> accounts(java.lang.String username, java.lang.String password) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       send_accounts(username, password);
       return recv_accounts();
@@ -85,7 +85,7 @@ public class TransactionImporter {
       sendBase("accounts", args);
     }
 
-    public java.util.Map<java.lang.String,java.lang.String> recv_accounts() throws AuthenticationError, CEIUnderMaintenance, org.apache.thrift.TException
+    public java.util.Map<java.lang.String,java.lang.String> recv_accounts() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       accounts_result result = new accounts_result();
       receiveBase(result, "accounts");
@@ -95,13 +95,13 @@ public class TransactionImporter {
       if (result.auth_error != null) {
         throw result.auth_error;
       }
-      if (result.under_maintenance_error != null) {
-        throw result.under_maintenance_error;
+      if (result.system_unavailable != null) {
+        throw result.system_unavailable;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "accounts failed: unknown result");
     }
 
-    public java.util.List<Transaction> fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts) throws AuthenticationError, CEIUnderMaintenance, org.apache.thrift.TException
+    public java.util.List<Transaction> fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       send_fetch(username, password, accounts);
       return recv_fetch();
@@ -116,7 +116,7 @@ public class TransactionImporter {
       sendBase("fetch", args);
     }
 
-    public java.util.List<Transaction> recv_fetch() throws AuthenticationError, CEIUnderMaintenance, org.apache.thrift.TException
+    public java.util.List<Transaction> recv_fetch() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       fetch_result result = new fetch_result();
       receiveBase(result, "fetch");
@@ -126,8 +126,8 @@ public class TransactionImporter {
       if (result.auth_error != null) {
         throw result.auth_error;
       }
-      if (result.under_maintenance_error != null) {
-        throw result.under_maintenance_error;
+      if (result.system_unavailable != null) {
+        throw result.system_unavailable;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "fetch failed: unknown result");
     }
@@ -204,7 +204,7 @@ public class TransactionImporter {
         prot.writeMessageEnd();
       }
 
-      public java.util.Map<java.lang.String,java.lang.String> getResult() throws AuthenticationError, CEIUnderMaintenance, org.apache.thrift.TException {
+      public java.util.Map<java.lang.String,java.lang.String> getResult() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -242,7 +242,7 @@ public class TransactionImporter {
         prot.writeMessageEnd();
       }
 
-      public java.util.List<Transaction> getResult() throws AuthenticationError, CEIUnderMaintenance, org.apache.thrift.TException {
+      public java.util.List<Transaction> getResult() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -310,8 +310,8 @@ public class TransactionImporter {
           result.success = iface.accounts(args.username, args.password);
         } catch (AuthenticationError auth_error) {
           result.auth_error = auth_error;
-        } catch (CEIUnderMaintenance under_maintenance_error) {
-          result.under_maintenance_error = under_maintenance_error;
+        } catch (SystemUnavailableError system_unavailable) {
+          result.system_unavailable = system_unavailable;
         }
         return result;
       }
@@ -336,8 +336,8 @@ public class TransactionImporter {
           result.success = iface.fetch(args.username, args.password, args.accounts);
         } catch (AuthenticationError auth_error) {
           result.auth_error = auth_error;
-        } catch (CEIUnderMaintenance under_maintenance_error) {
-          result.under_maintenance_error = under_maintenance_error;
+        } catch (SystemUnavailableError system_unavailable) {
+          result.system_unavailable = system_unavailable;
         }
         return result;
       }
@@ -456,9 +456,9 @@ public class TransactionImporter {
               result.auth_error = (AuthenticationError) e;
               result.setAuth_errorIsSet(true);
               msg = result;
-            } else if (e instanceof CEIUnderMaintenance) {
-              result.under_maintenance_error = (CEIUnderMaintenance) e;
-              result.setUnder_maintenance_errorIsSet(true);
+            } else if (e instanceof SystemUnavailableError) {
+              result.system_unavailable = (SystemUnavailableError) e;
+              result.setSystem_unavailableIsSet(true);
               msg = result;
             } else if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
@@ -525,9 +525,9 @@ public class TransactionImporter {
               result.auth_error = (AuthenticationError) e;
               result.setAuth_errorIsSet(true);
               msg = result;
-            } else if (e instanceof CEIUnderMaintenance) {
-              result.under_maintenance_error = (CEIUnderMaintenance) e;
-              result.setUnder_maintenance_errorIsSet(true);
+            } else if (e instanceof SystemUnavailableError) {
+              result.system_unavailable = (SystemUnavailableError) e;
+              result.setSystem_unavailableIsSet(true);
               msg = result;
             } else if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
@@ -1646,20 +1646,20 @@ public class TransactionImporter {
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.MAP, (short)0);
     private static final org.apache.thrift.protocol.TField AUTH_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("auth_error", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField UNDER_MAINTENANCE_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("under_maintenance_error", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+    private static final org.apache.thrift.protocol.TField SYSTEM_UNAVAILABLE_FIELD_DESC = new org.apache.thrift.protocol.TField("system_unavailable", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new accounts_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new accounts_resultTupleSchemeFactory();
 
     public java.util.Map<java.lang.String,java.lang.String> success; // required
     public AuthenticationError auth_error; // required
-    public CEIUnderMaintenance under_maintenance_error; // required
+    public SystemUnavailableError system_unavailable; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       SUCCESS((short)0, "success"),
       AUTH_ERROR((short)1, "auth_error"),
-      UNDER_MAINTENANCE_ERROR((short)2, "under_maintenance_error");
+      SYSTEM_UNAVAILABLE((short)2, "system_unavailable");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -1678,8 +1678,8 @@ public class TransactionImporter {
             return SUCCESS;
           case 1: // AUTH_ERROR
             return AUTH_ERROR;
-          case 2: // UNDER_MAINTENANCE_ERROR
-            return UNDER_MAINTENANCE_ERROR;
+          case 2: // SYSTEM_UNAVAILABLE
+            return SYSTEM_UNAVAILABLE;
           default:
             return null;
         }
@@ -1729,8 +1729,8 @@ public class TransactionImporter {
               new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
       tmpMap.put(_Fields.AUTH_ERROR, new org.apache.thrift.meta_data.FieldMetaData("auth_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AuthenticationError.class)));
-      tmpMap.put(_Fields.UNDER_MAINTENANCE_ERROR, new org.apache.thrift.meta_data.FieldMetaData("under_maintenance_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CEIUnderMaintenance.class)));
+      tmpMap.put(_Fields.SYSTEM_UNAVAILABLE, new org.apache.thrift.meta_data.FieldMetaData("system_unavailable", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, SystemUnavailableError.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(accounts_result.class, metaDataMap);
     }
@@ -1741,12 +1741,12 @@ public class TransactionImporter {
     public accounts_result(
       java.util.Map<java.lang.String,java.lang.String> success,
       AuthenticationError auth_error,
-      CEIUnderMaintenance under_maintenance_error)
+      SystemUnavailableError system_unavailable)
     {
       this();
       this.success = success;
       this.auth_error = auth_error;
-      this.under_maintenance_error = under_maintenance_error;
+      this.system_unavailable = system_unavailable;
     }
 
     /**
@@ -1760,8 +1760,8 @@ public class TransactionImporter {
       if (other.isSetAuth_error()) {
         this.auth_error = new AuthenticationError(other.auth_error);
       }
-      if (other.isSetUnder_maintenance_error()) {
-        this.under_maintenance_error = new CEIUnderMaintenance(other.under_maintenance_error);
+      if (other.isSetSystem_unavailable()) {
+        this.system_unavailable = new SystemUnavailableError(other.system_unavailable);
       }
     }
 
@@ -1773,7 +1773,7 @@ public class TransactionImporter {
     public void clear() {
       this.success = null;
       this.auth_error = null;
-      this.under_maintenance_error = null;
+      this.system_unavailable = null;
     }
 
     public int getSuccessSize() {
@@ -1835,27 +1835,27 @@ public class TransactionImporter {
       }
     }
 
-    public CEIUnderMaintenance getUnder_maintenance_error() {
-      return this.under_maintenance_error;
+    public SystemUnavailableError getSystem_unavailable() {
+      return this.system_unavailable;
     }
 
-    public accounts_result setUnder_maintenance_error(CEIUnderMaintenance under_maintenance_error) {
-      this.under_maintenance_error = under_maintenance_error;
+    public accounts_result setSystem_unavailable(SystemUnavailableError system_unavailable) {
+      this.system_unavailable = system_unavailable;
       return this;
     }
 
-    public void unsetUnder_maintenance_error() {
-      this.under_maintenance_error = null;
+    public void unsetSystem_unavailable() {
+      this.system_unavailable = null;
     }
 
-    /** Returns true if field under_maintenance_error is set (has been assigned a value) and false otherwise */
-    public boolean isSetUnder_maintenance_error() {
-      return this.under_maintenance_error != null;
+    /** Returns true if field system_unavailable is set (has been assigned a value) and false otherwise */
+    public boolean isSetSystem_unavailable() {
+      return this.system_unavailable != null;
     }
 
-    public void setUnder_maintenance_errorIsSet(boolean value) {
+    public void setSystem_unavailableIsSet(boolean value) {
       if (!value) {
-        this.under_maintenance_error = null;
+        this.system_unavailable = null;
       }
     }
 
@@ -1877,11 +1877,11 @@ public class TransactionImporter {
         }
         break;
 
-      case UNDER_MAINTENANCE_ERROR:
+      case SYSTEM_UNAVAILABLE:
         if (value == null) {
-          unsetUnder_maintenance_error();
+          unsetSystem_unavailable();
         } else {
-          setUnder_maintenance_error((CEIUnderMaintenance)value);
+          setSystem_unavailable((SystemUnavailableError)value);
         }
         break;
 
@@ -1896,8 +1896,8 @@ public class TransactionImporter {
       case AUTH_ERROR:
         return getAuth_error();
 
-      case UNDER_MAINTENANCE_ERROR:
-        return getUnder_maintenance_error();
+      case SYSTEM_UNAVAILABLE:
+        return getSystem_unavailable();
 
       }
       throw new java.lang.IllegalStateException();
@@ -1914,8 +1914,8 @@ public class TransactionImporter {
         return isSetSuccess();
       case AUTH_ERROR:
         return isSetAuth_error();
-      case UNDER_MAINTENANCE_ERROR:
-        return isSetUnder_maintenance_error();
+      case SYSTEM_UNAVAILABLE:
+        return isSetSystem_unavailable();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -1953,12 +1953,12 @@ public class TransactionImporter {
           return false;
       }
 
-      boolean this_present_under_maintenance_error = true && this.isSetUnder_maintenance_error();
-      boolean that_present_under_maintenance_error = true && that.isSetUnder_maintenance_error();
-      if (this_present_under_maintenance_error || that_present_under_maintenance_error) {
-        if (!(this_present_under_maintenance_error && that_present_under_maintenance_error))
+      boolean this_present_system_unavailable = true && this.isSetSystem_unavailable();
+      boolean that_present_system_unavailable = true && that.isSetSystem_unavailable();
+      if (this_present_system_unavailable || that_present_system_unavailable) {
+        if (!(this_present_system_unavailable && that_present_system_unavailable))
           return false;
-        if (!this.under_maintenance_error.equals(that.under_maintenance_error))
+        if (!this.system_unavailable.equals(that.system_unavailable))
           return false;
       }
 
@@ -1977,9 +1977,9 @@ public class TransactionImporter {
       if (isSetAuth_error())
         hashCode = hashCode * 8191 + auth_error.hashCode();
 
-      hashCode = hashCode * 8191 + ((isSetUnder_maintenance_error()) ? 131071 : 524287);
-      if (isSetUnder_maintenance_error())
-        hashCode = hashCode * 8191 + under_maintenance_error.hashCode();
+      hashCode = hashCode * 8191 + ((isSetSystem_unavailable()) ? 131071 : 524287);
+      if (isSetSystem_unavailable())
+        hashCode = hashCode * 8191 + system_unavailable.hashCode();
 
       return hashCode;
     }
@@ -2012,12 +2012,12 @@ public class TransactionImporter {
           return lastComparison;
         }
       }
-      lastComparison = java.lang.Boolean.valueOf(isSetUnder_maintenance_error()).compareTo(other.isSetUnder_maintenance_error());
+      lastComparison = java.lang.Boolean.valueOf(isSetSystem_unavailable()).compareTo(other.isSetSystem_unavailable());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetUnder_maintenance_error()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.under_maintenance_error, other.under_maintenance_error);
+      if (isSetSystem_unavailable()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.system_unavailable, other.system_unavailable);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -2058,11 +2058,11 @@ public class TransactionImporter {
       }
       first = false;
       if (!first) sb.append(", ");
-      sb.append("under_maintenance_error:");
-      if (this.under_maintenance_error == null) {
+      sb.append("system_unavailable:");
+      if (this.system_unavailable == null) {
         sb.append("null");
       } else {
-        sb.append(this.under_maintenance_error);
+        sb.append(this.system_unavailable);
       }
       first = false;
       sb.append(")");
@@ -2137,11 +2137,11 @@ public class TransactionImporter {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 2: // UNDER_MAINTENANCE_ERROR
+            case 2: // SYSTEM_UNAVAILABLE
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.under_maintenance_error = new CEIUnderMaintenance();
-                struct.under_maintenance_error.read(iprot);
-                struct.setUnder_maintenance_errorIsSet(true);
+                struct.system_unavailable = new SystemUnavailableError();
+                struct.system_unavailable.read(iprot);
+                struct.setSystem_unavailableIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -2179,9 +2179,9 @@ public class TransactionImporter {
           struct.auth_error.write(oprot);
           oprot.writeFieldEnd();
         }
-        if (struct.under_maintenance_error != null) {
-          oprot.writeFieldBegin(UNDER_MAINTENANCE_ERROR_FIELD_DESC);
-          struct.under_maintenance_error.write(oprot);
+        if (struct.system_unavailable != null) {
+          oprot.writeFieldBegin(SYSTEM_UNAVAILABLE_FIELD_DESC);
+          struct.system_unavailable.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -2208,7 +2208,7 @@ public class TransactionImporter {
         if (struct.isSetAuth_error()) {
           optionals.set(1);
         }
-        if (struct.isSetUnder_maintenance_error()) {
+        if (struct.isSetSystem_unavailable()) {
           optionals.set(2);
         }
         oprot.writeBitSet(optionals, 3);
@@ -2225,8 +2225,8 @@ public class TransactionImporter {
         if (struct.isSetAuth_error()) {
           struct.auth_error.write(oprot);
         }
-        if (struct.isSetUnder_maintenance_error()) {
-          struct.under_maintenance_error.write(oprot);
+        if (struct.isSetSystem_unavailable()) {
+          struct.system_unavailable.write(oprot);
         }
       }
 
@@ -2255,9 +2255,9 @@ public class TransactionImporter {
           struct.setAuth_errorIsSet(true);
         }
         if (incoming.get(2)) {
-          struct.under_maintenance_error = new CEIUnderMaintenance();
-          struct.under_maintenance_error.read(iprot);
-          struct.setUnder_maintenance_errorIsSet(true);
+          struct.system_unavailable = new SystemUnavailableError();
+          struct.system_unavailable.read(iprot);
+          struct.setSystem_unavailableIsSet(true);
         }
       }
     }
@@ -2896,20 +2896,20 @@ public class TransactionImporter {
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
     private static final org.apache.thrift.protocol.TField AUTH_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("auth_error", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField UNDER_MAINTENANCE_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("under_maintenance_error", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+    private static final org.apache.thrift.protocol.TField SYSTEM_UNAVAILABLE_FIELD_DESC = new org.apache.thrift.protocol.TField("system_unavailable", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new fetch_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new fetch_resultTupleSchemeFactory();
 
     public java.util.List<Transaction> success; // required
     public AuthenticationError auth_error; // required
-    public CEIUnderMaintenance under_maintenance_error; // required
+    public SystemUnavailableError system_unavailable; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       SUCCESS((short)0, "success"),
       AUTH_ERROR((short)1, "auth_error"),
-      UNDER_MAINTENANCE_ERROR((short)2, "under_maintenance_error");
+      SYSTEM_UNAVAILABLE((short)2, "system_unavailable");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -2928,8 +2928,8 @@ public class TransactionImporter {
             return SUCCESS;
           case 1: // AUTH_ERROR
             return AUTH_ERROR;
-          case 2: // UNDER_MAINTENANCE_ERROR
-            return UNDER_MAINTENANCE_ERROR;
+          case 2: // SYSTEM_UNAVAILABLE
+            return SYSTEM_UNAVAILABLE;
           default:
             return null;
         }
@@ -2978,8 +2978,8 @@ public class TransactionImporter {
               new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Transaction.class))));
       tmpMap.put(_Fields.AUTH_ERROR, new org.apache.thrift.meta_data.FieldMetaData("auth_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AuthenticationError.class)));
-      tmpMap.put(_Fields.UNDER_MAINTENANCE_ERROR, new org.apache.thrift.meta_data.FieldMetaData("under_maintenance_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CEIUnderMaintenance.class)));
+      tmpMap.put(_Fields.SYSTEM_UNAVAILABLE, new org.apache.thrift.meta_data.FieldMetaData("system_unavailable", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, SystemUnavailableError.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(fetch_result.class, metaDataMap);
     }
@@ -2990,12 +2990,12 @@ public class TransactionImporter {
     public fetch_result(
       java.util.List<Transaction> success,
       AuthenticationError auth_error,
-      CEIUnderMaintenance under_maintenance_error)
+      SystemUnavailableError system_unavailable)
     {
       this();
       this.success = success;
       this.auth_error = auth_error;
-      this.under_maintenance_error = under_maintenance_error;
+      this.system_unavailable = system_unavailable;
     }
 
     /**
@@ -3012,8 +3012,8 @@ public class TransactionImporter {
       if (other.isSetAuth_error()) {
         this.auth_error = new AuthenticationError(other.auth_error);
       }
-      if (other.isSetUnder_maintenance_error()) {
-        this.under_maintenance_error = new CEIUnderMaintenance(other.under_maintenance_error);
+      if (other.isSetSystem_unavailable()) {
+        this.system_unavailable = new SystemUnavailableError(other.system_unavailable);
       }
     }
 
@@ -3025,7 +3025,7 @@ public class TransactionImporter {
     public void clear() {
       this.success = null;
       this.auth_error = null;
-      this.under_maintenance_error = null;
+      this.system_unavailable = null;
     }
 
     public int getSuccessSize() {
@@ -3091,27 +3091,27 @@ public class TransactionImporter {
       }
     }
 
-    public CEIUnderMaintenance getUnder_maintenance_error() {
-      return this.under_maintenance_error;
+    public SystemUnavailableError getSystem_unavailable() {
+      return this.system_unavailable;
     }
 
-    public fetch_result setUnder_maintenance_error(CEIUnderMaintenance under_maintenance_error) {
-      this.under_maintenance_error = under_maintenance_error;
+    public fetch_result setSystem_unavailable(SystemUnavailableError system_unavailable) {
+      this.system_unavailable = system_unavailable;
       return this;
     }
 
-    public void unsetUnder_maintenance_error() {
-      this.under_maintenance_error = null;
+    public void unsetSystem_unavailable() {
+      this.system_unavailable = null;
     }
 
-    /** Returns true if field under_maintenance_error is set (has been assigned a value) and false otherwise */
-    public boolean isSetUnder_maintenance_error() {
-      return this.under_maintenance_error != null;
+    /** Returns true if field system_unavailable is set (has been assigned a value) and false otherwise */
+    public boolean isSetSystem_unavailable() {
+      return this.system_unavailable != null;
     }
 
-    public void setUnder_maintenance_errorIsSet(boolean value) {
+    public void setSystem_unavailableIsSet(boolean value) {
       if (!value) {
-        this.under_maintenance_error = null;
+        this.system_unavailable = null;
       }
     }
 
@@ -3133,11 +3133,11 @@ public class TransactionImporter {
         }
         break;
 
-      case UNDER_MAINTENANCE_ERROR:
+      case SYSTEM_UNAVAILABLE:
         if (value == null) {
-          unsetUnder_maintenance_error();
+          unsetSystem_unavailable();
         } else {
-          setUnder_maintenance_error((CEIUnderMaintenance)value);
+          setSystem_unavailable((SystemUnavailableError)value);
         }
         break;
 
@@ -3152,8 +3152,8 @@ public class TransactionImporter {
       case AUTH_ERROR:
         return getAuth_error();
 
-      case UNDER_MAINTENANCE_ERROR:
-        return getUnder_maintenance_error();
+      case SYSTEM_UNAVAILABLE:
+        return getSystem_unavailable();
 
       }
       throw new java.lang.IllegalStateException();
@@ -3170,8 +3170,8 @@ public class TransactionImporter {
         return isSetSuccess();
       case AUTH_ERROR:
         return isSetAuth_error();
-      case UNDER_MAINTENANCE_ERROR:
-        return isSetUnder_maintenance_error();
+      case SYSTEM_UNAVAILABLE:
+        return isSetSystem_unavailable();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -3209,12 +3209,12 @@ public class TransactionImporter {
           return false;
       }
 
-      boolean this_present_under_maintenance_error = true && this.isSetUnder_maintenance_error();
-      boolean that_present_under_maintenance_error = true && that.isSetUnder_maintenance_error();
-      if (this_present_under_maintenance_error || that_present_under_maintenance_error) {
-        if (!(this_present_under_maintenance_error && that_present_under_maintenance_error))
+      boolean this_present_system_unavailable = true && this.isSetSystem_unavailable();
+      boolean that_present_system_unavailable = true && that.isSetSystem_unavailable();
+      if (this_present_system_unavailable || that_present_system_unavailable) {
+        if (!(this_present_system_unavailable && that_present_system_unavailable))
           return false;
-        if (!this.under_maintenance_error.equals(that.under_maintenance_error))
+        if (!this.system_unavailable.equals(that.system_unavailable))
           return false;
       }
 
@@ -3233,9 +3233,9 @@ public class TransactionImporter {
       if (isSetAuth_error())
         hashCode = hashCode * 8191 + auth_error.hashCode();
 
-      hashCode = hashCode * 8191 + ((isSetUnder_maintenance_error()) ? 131071 : 524287);
-      if (isSetUnder_maintenance_error())
-        hashCode = hashCode * 8191 + under_maintenance_error.hashCode();
+      hashCode = hashCode * 8191 + ((isSetSystem_unavailable()) ? 131071 : 524287);
+      if (isSetSystem_unavailable())
+        hashCode = hashCode * 8191 + system_unavailable.hashCode();
 
       return hashCode;
     }
@@ -3268,12 +3268,12 @@ public class TransactionImporter {
           return lastComparison;
         }
       }
-      lastComparison = java.lang.Boolean.valueOf(isSetUnder_maintenance_error()).compareTo(other.isSetUnder_maintenance_error());
+      lastComparison = java.lang.Boolean.valueOf(isSetSystem_unavailable()).compareTo(other.isSetSystem_unavailable());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetUnder_maintenance_error()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.under_maintenance_error, other.under_maintenance_error);
+      if (isSetSystem_unavailable()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.system_unavailable, other.system_unavailable);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -3314,11 +3314,11 @@ public class TransactionImporter {
       }
       first = false;
       if (!first) sb.append(", ");
-      sb.append("under_maintenance_error:");
-      if (this.under_maintenance_error == null) {
+      sb.append("system_unavailable:");
+      if (this.system_unavailable == null) {
         sb.append("null");
       } else {
-        sb.append(this.under_maintenance_error);
+        sb.append(this.system_unavailable);
       }
       first = false;
       sb.append(")");
@@ -3392,11 +3392,11 @@ public class TransactionImporter {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 2: // UNDER_MAINTENANCE_ERROR
+            case 2: // SYSTEM_UNAVAILABLE
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.under_maintenance_error = new CEIUnderMaintenance();
-                struct.under_maintenance_error.read(iprot);
-                struct.setUnder_maintenance_errorIsSet(true);
+                struct.system_unavailable = new SystemUnavailableError();
+                struct.system_unavailable.read(iprot);
+                struct.setSystem_unavailableIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -3433,9 +3433,9 @@ public class TransactionImporter {
           struct.auth_error.write(oprot);
           oprot.writeFieldEnd();
         }
-        if (struct.under_maintenance_error != null) {
-          oprot.writeFieldBegin(UNDER_MAINTENANCE_ERROR_FIELD_DESC);
-          struct.under_maintenance_error.write(oprot);
+        if (struct.system_unavailable != null) {
+          oprot.writeFieldBegin(SYSTEM_UNAVAILABLE_FIELD_DESC);
+          struct.system_unavailable.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -3462,7 +3462,7 @@ public class TransactionImporter {
         if (struct.isSetAuth_error()) {
           optionals.set(1);
         }
-        if (struct.isSetUnder_maintenance_error()) {
+        if (struct.isSetSystem_unavailable()) {
           optionals.set(2);
         }
         oprot.writeBitSet(optionals, 3);
@@ -3478,8 +3478,8 @@ public class TransactionImporter {
         if (struct.isSetAuth_error()) {
           struct.auth_error.write(oprot);
         }
-        if (struct.isSetUnder_maintenance_error()) {
-          struct.under_maintenance_error.write(oprot);
+        if (struct.isSetSystem_unavailable()) {
+          struct.system_unavailable.write(oprot);
         }
       }
 
@@ -3507,9 +3507,9 @@ public class TransactionImporter {
           struct.setAuth_errorIsSet(true);
         }
         if (incoming.get(2)) {
-          struct.under_maintenance_error = new CEIUnderMaintenance();
-          struct.under_maintenance_error.read(iprot);
-          struct.setUnder_maintenance_errorIsSet(true);
+          struct.system_unavailable = new SystemUnavailableError();
+          struct.system_unavailable.read(iprot);
+          struct.setSystem_unavailableIsSet(true);
         }
       }
     }
