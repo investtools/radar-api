@@ -5,7 +5,7 @@
 #
 
 require 'thrift'
-require 'radar/api/transaction_importer_types'
+require 'radar/api/portfolio_analyzer_types'
 
 module Radar
   module Api
