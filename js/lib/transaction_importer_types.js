@@ -263,15 +263,285 @@ StockBuyTransaction.prototype.write = function(output) {
   return;
 };
 
+var StockLendingTransaction = module.exports.StockLendingTransaction = function(args) {
+  this.date = null;
+  this.account = null;
+  this.stock = null;
+  this.shares = null;
+  this.price = null;
+  this.rate = null;
+  this.due = null;
+  if (args) {
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.account !== undefined && args.account !== null) {
+      this.account = args.account;
+    }
+    if (args.stock !== undefined && args.stock !== null) {
+      this.stock = new common_ttypes.StockId(args.stock);
+    }
+    if (args.shares !== undefined && args.shares !== null) {
+      this.shares = args.shares;
+    }
+    if (args.price !== undefined && args.price !== null) {
+      this.price = args.price;
+    }
+    if (args.rate !== undefined && args.rate !== null) {
+      this.rate = args.rate;
+    }
+    if (args.due !== undefined && args.due !== null) {
+      this.due = args.due;
+    }
+  }
+};
+StockLendingTransaction.prototype = {};
+StockLendingTransaction.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.account = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock = new common_ttypes.StockId();
+        this.stock.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.shares = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.price = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.rate = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I64) {
+        this.due = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+StockLendingTransaction.prototype.write = function(output) {
+  output.writeStructBegin('StockLendingTransaction');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.account !== null && this.account !== undefined) {
+    output.writeFieldBegin('account', Thrift.Type.STRING, 2);
+    output.writeString(this.account);
+    output.writeFieldEnd();
+  }
+  if (this.stock !== null && this.stock !== undefined) {
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 3);
+    this.stock.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.shares !== null && this.shares !== undefined) {
+    output.writeFieldBegin('shares', Thrift.Type.I32, 4);
+    output.writeI32(this.shares);
+    output.writeFieldEnd();
+  }
+  if (this.price !== null && this.price !== undefined) {
+    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 5);
+    output.writeDouble(this.price);
+    output.writeFieldEnd();
+  }
+  if (this.rate !== null && this.rate !== undefined) {
+    output.writeFieldBegin('rate', Thrift.Type.DOUBLE, 6);
+    output.writeDouble(this.rate);
+    output.writeFieldEnd();
+  }
+  if (this.due !== null && this.due !== undefined) {
+    output.writeFieldBegin('due', Thrift.Type.I64, 7);
+    output.writeI64(this.due);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var StockLendingReturningTransaction = module.exports.StockLendingReturningTransaction = function(args) {
+  this.date = null;
+  this.account = null;
+  this.stock = null;
+  this.shares = null;
+  this.credit = null;
+  if (args) {
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.account !== undefined && args.account !== null) {
+      this.account = args.account;
+    }
+    if (args.stock !== undefined && args.stock !== null) {
+      this.stock = new common_ttypes.StockId(args.stock);
+    }
+    if (args.shares !== undefined && args.shares !== null) {
+      this.shares = args.shares;
+    }
+    if (args.credit !== undefined && args.credit !== null) {
+      this.credit = args.credit;
+    }
+  }
+};
+StockLendingReturningTransaction.prototype = {};
+StockLendingReturningTransaction.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.account = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock = new common_ttypes.StockId();
+        this.stock.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.shares = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.credit = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+StockLendingReturningTransaction.prototype.write = function(output) {
+  output.writeStructBegin('StockLendingReturningTransaction');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.account !== null && this.account !== undefined) {
+    output.writeFieldBegin('account', Thrift.Type.STRING, 2);
+    output.writeString(this.account);
+    output.writeFieldEnd();
+  }
+  if (this.stock !== null && this.stock !== undefined) {
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 3);
+    this.stock.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.shares !== null && this.shares !== undefined) {
+    output.writeFieldBegin('shares', Thrift.Type.I32, 4);
+    output.writeI32(this.shares);
+    output.writeFieldEnd();
+  }
+  if (this.credit !== null && this.credit !== undefined) {
+    output.writeFieldBegin('credit', Thrift.Type.DOUBLE, 5);
+    output.writeDouble(this.credit);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 var Transaction = module.exports.Transaction = function(args) {
   this.stock_buy = null;
   this.stock_sell = null;
+  this.stock_lending = null;
+  this.stock_lending_returning = null;
   if (args) {
     if (args.stock_buy !== undefined && args.stock_buy !== null) {
       this.stock_buy = new ttypes.StockBuyTransaction(args.stock_buy);
     }
     if (args.stock_sell !== undefined && args.stock_sell !== null) {
       this.stock_sell = new ttypes.StockSellTransaction(args.stock_sell);
+    }
+    if (args.stock_lending !== undefined && args.stock_lending !== null) {
+      this.stock_lending = new ttypes.StockLendingTransaction(args.stock_lending);
+    }
+    if (args.stock_lending_returning !== undefined && args.stock_lending_returning !== null) {
+      this.stock_lending_returning = new ttypes.StockLendingReturningTransaction(args.stock_lending_returning);
     }
   }
 };
@@ -305,6 +575,22 @@ Transaction.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock_lending = new ttypes.StockLendingTransaction();
+        this.stock_lending.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock_lending_returning = new ttypes.StockLendingReturningTransaction();
+        this.stock_lending_returning.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -324,6 +610,16 @@ Transaction.prototype.write = function(output) {
   if (this.stock_sell !== null && this.stock_sell !== undefined) {
     output.writeFieldBegin('stock_sell', Thrift.Type.STRUCT, 2);
     this.stock_sell.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.stock_lending !== null && this.stock_lending !== undefined) {
+    output.writeFieldBegin('stock_lending', Thrift.Type.STRUCT, 3);
+    this.stock_lending.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.stock_lending_returning !== null && this.stock_lending_returning !== undefined) {
+    output.writeFieldBegin('stock_lending_returning', Thrift.Type.STRUCT, 4);
+    this.stock_lending_returning.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

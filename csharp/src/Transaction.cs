@@ -23,6 +23,8 @@ public partial class Transaction : TBase
 {
   private StockBuyTransaction _stock_buy;
   private StockSellTransaction _stock_sell;
+  private StockLendingTransaction _stock_lending;
+  private StockLendingReturningTransaction _stock_lending_returning;
 
   public StockBuyTransaction Stock_buy
   {
@@ -50,6 +52,32 @@ public partial class Transaction : TBase
     }
   }
 
+  public StockLendingTransaction Stock_lending
+  {
+    get
+    {
+      return _stock_lending;
+    }
+    set
+    {
+      __isset.stock_lending = true;
+      this._stock_lending = value;
+    }
+  }
+
+  public StockLendingReturningTransaction Stock_lending_returning
+  {
+    get
+    {
+      return _stock_lending_returning;
+    }
+    set
+    {
+      __isset.stock_lending_returning = true;
+      this._stock_lending_returning = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -58,6 +86,8 @@ public partial class Transaction : TBase
   public struct Isset {
     public bool stock_buy;
     public bool stock_sell;
+    public bool stock_lending;
+    public bool stock_lending_returning;
   }
 
   public Transaction() {
@@ -90,6 +120,22 @@ public partial class Transaction : TBase
             if (field.Type == TType.Struct) {
               Stock_sell = new StockSellTransaction();
               Stock_sell.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 3:
+            if (field.Type == TType.Struct) {
+              Stock_lending = new StockLendingTransaction();
+              Stock_lending.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 4:
+            if (field.Type == TType.Struct) {
+              Stock_lending_returning = new StockLendingReturningTransaction();
+              Stock_lending_returning.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -131,6 +177,22 @@ public partial class Transaction : TBase
         Stock_sell.Write(oprot);
         oprot.WriteFieldEnd();
       }
+      if (Stock_lending != null && __isset.stock_lending) {
+        field.Name = "stock_lending";
+        field.Type = TType.Struct;
+        field.ID = 3;
+        oprot.WriteFieldBegin(field);
+        Stock_lending.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
+      if (Stock_lending_returning != null && __isset.stock_lending_returning) {
+        field.Name = "stock_lending_returning";
+        field.Type = TType.Struct;
+        field.ID = 4;
+        oprot.WriteFieldBegin(field);
+        Stock_lending_returning.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -154,6 +216,18 @@ public partial class Transaction : TBase
       __first = false;
       __sb.Append("Stock_sell: ");
       __sb.Append(Stock_sell== null ? "<null>" : Stock_sell.ToString());
+    }
+    if (Stock_lending != null && __isset.stock_lending) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Stock_lending: ");
+      __sb.Append(Stock_lending== null ? "<null>" : Stock_lending.ToString());
+    }
+    if (Stock_lending_returning != null && __isset.stock_lending_returning) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Stock_lending_returning: ");
+      __sb.Append(Stock_lending_returning== null ? "<null>" : Stock_lending_returning.ToString());
     }
     __sb.Append(")");
     return __sb.ToString();

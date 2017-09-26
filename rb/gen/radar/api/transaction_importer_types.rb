@@ -70,6 +70,58 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
+    class StockLendingTransaction
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DATE = 1
+      ACCOUNT = 2
+      STOCK = 3
+      SHARES = 4
+      PRICE = 5
+      RATE = 6
+      DUE = 7
+
+      FIELDS = {
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
+        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
+        STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
+        SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
+        PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'},
+        RATE => {:type => ::Thrift::Types::DOUBLE, :name => 'rate'},
+        DUE => {:type => ::Thrift::Types::I64, :name => 'due'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class StockLendingReturningTransaction
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DATE = 1
+      ACCOUNT = 2
+      STOCK = 3
+      SHARES = 4
+      CREDIT = 5
+
+      FIELDS = {
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
+        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
+        STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
+        SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
+        CREDIT => {:type => ::Thrift::Types::DOUBLE, :name => 'credit'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class Transaction < ::Thrift::Union
       include ::Thrift::Struct_Union
       class << self
@@ -80,14 +132,26 @@ module Radar
         def stock_sell(val)
           Transaction.new(:stock_sell, val)
         end
+
+        def stock_lending(val)
+          Transaction.new(:stock_lending, val)
+        end
+
+        def stock_lending_returning(val)
+          Transaction.new(:stock_lending_returning, val)
+        end
       end
 
       STOCK_BUY = 1
       STOCK_SELL = 2
+      STOCK_LENDING = 3
+      STOCK_LENDING_RETURNING = 4
 
       FIELDS = {
         STOCK_BUY => {:type => ::Thrift::Types::STRUCT, :name => 'stock_buy', :class => ::Radar::Api::StockBuyTransaction, :optional => true},
-        STOCK_SELL => {:type => ::Thrift::Types::STRUCT, :name => 'stock_sell', :class => ::Radar::Api::StockSellTransaction, :optional => true}
+        STOCK_SELL => {:type => ::Thrift::Types::STRUCT, :name => 'stock_sell', :class => ::Radar::Api::StockSellTransaction, :optional => true},
+        STOCK_LENDING => {:type => ::Thrift::Types::STRUCT, :name => 'stock_lending', :class => ::Radar::Api::StockLendingTransaction, :optional => true},
+        STOCK_LENDING_RETURNING => {:type => ::Thrift::Types::STRUCT, :name => 'stock_lending_returning', :class => ::Radar::Api::StockLendingReturningTransaction, :optional => true}
       }
 
       def struct_fields; FIELDS; end

@@ -11,11 +11,15 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Transaction");
   private static final org.apache.thrift.protocol.TField STOCK_BUY_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_buy", org.apache.thrift.protocol.TType.STRUCT, (short)1);
   private static final org.apache.thrift.protocol.TField STOCK_SELL_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_sell", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField STOCK_LENDING_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_lending", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+  private static final org.apache.thrift.protocol.TField STOCK_LENDING_RETURNING_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_lending_returning", org.apache.thrift.protocol.TType.STRUCT, (short)4);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     STOCK_BUY((short)1, "stock_buy"),
-    STOCK_SELL((short)2, "stock_sell");
+    STOCK_SELL((short)2, "stock_sell"),
+    STOCK_LENDING((short)3, "stock_lending"),
+    STOCK_LENDING_RETURNING((short)4, "stock_lending_returning");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -34,6 +38,10 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           return STOCK_BUY;
         case 2: // STOCK_SELL
           return STOCK_SELL;
+        case 3: // STOCK_LENDING
+          return STOCK_LENDING;
+        case 4: // STOCK_LENDING_RETURNING
+          return STOCK_LENDING_RETURNING;
         default:
           return null;
       }
@@ -80,6 +88,10 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StockBuyTransaction.class)));
     tmpMap.put(_Fields.STOCK_SELL, new org.apache.thrift.meta_data.FieldMetaData("stock_sell", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StockSellTransaction.class)));
+    tmpMap.put(_Fields.STOCK_LENDING, new org.apache.thrift.meta_data.FieldMetaData("stock_lending", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StockLendingTransaction.class)));
+    tmpMap.put(_Fields.STOCK_LENDING_RETURNING, new org.apache.thrift.meta_data.FieldMetaData("stock_lending_returning", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StockLendingReturningTransaction.class)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Transaction.class, metaDataMap);
   }
@@ -111,6 +123,18 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
     return x;
   }
 
+  public static Transaction stock_lending(StockLendingTransaction value) {
+    Transaction x = new Transaction();
+    x.setStock_lending(value);
+    return x;
+  }
+
+  public static Transaction stock_lending_returning(StockLendingReturningTransaction value) {
+    Transaction x = new Transaction();
+    x.setStock_lending_returning(value);
+    return x;
+  }
+
 
   @Override
   protected void checkType(_Fields setField, java.lang.Object value) throws java.lang.ClassCastException {
@@ -125,6 +149,16 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           break;
         }
         throw new java.lang.ClassCastException("Was expecting value of type StockSellTransaction for field 'stock_sell', but got " + value.getClass().getSimpleName());
+      case STOCK_LENDING:
+        if (value instanceof StockLendingTransaction) {
+          break;
+        }
+        throw new java.lang.ClassCastException("Was expecting value of type StockLendingTransaction for field 'stock_lending', but got " + value.getClass().getSimpleName());
+      case STOCK_LENDING_RETURNING:
+        if (value instanceof StockLendingReturningTransaction) {
+          break;
+        }
+        throw new java.lang.ClassCastException("Was expecting value of type StockLendingReturningTransaction for field 'stock_lending_returning', but got " + value.getClass().getSimpleName());
       default:
         throw new java.lang.IllegalArgumentException("Unknown field id " + setField);
     }
@@ -155,6 +189,26 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
+        case STOCK_LENDING:
+          if (field.type == STOCK_LENDING_FIELD_DESC.type) {
+            StockLendingTransaction stock_lending;
+            stock_lending = new StockLendingTransaction();
+            stock_lending.read(iprot);
+            return stock_lending;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case STOCK_LENDING_RETURNING:
+          if (field.type == STOCK_LENDING_RETURNING_FIELD_DESC.type) {
+            StockLendingReturningTransaction stock_lending_returning;
+            stock_lending_returning = new StockLendingReturningTransaction();
+            stock_lending_returning.read(iprot);
+            return stock_lending_returning;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
         default:
           throw new java.lang.IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -174,6 +228,14 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
       case STOCK_SELL:
         StockSellTransaction stock_sell = (StockSellTransaction)value_;
         stock_sell.write(oprot);
+        return;
+      case STOCK_LENDING:
+        StockLendingTransaction stock_lending = (StockLendingTransaction)value_;
+        stock_lending.write(oprot);
+        return;
+      case STOCK_LENDING_RETURNING:
+        StockLendingReturningTransaction stock_lending_returning = (StockLendingReturningTransaction)value_;
+        stock_lending_returning.write(oprot);
         return;
       default:
         throw new java.lang.IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -195,6 +257,16 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           stock_sell = new StockSellTransaction();
           stock_sell.read(iprot);
           return stock_sell;
+        case STOCK_LENDING:
+          StockLendingTransaction stock_lending;
+          stock_lending = new StockLendingTransaction();
+          stock_lending.read(iprot);
+          return stock_lending;
+        case STOCK_LENDING_RETURNING:
+          StockLendingReturningTransaction stock_lending_returning;
+          stock_lending_returning = new StockLendingReturningTransaction();
+          stock_lending_returning.read(iprot);
+          return stock_lending_returning;
         default:
           throw new java.lang.IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -214,6 +286,14 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         StockSellTransaction stock_sell = (StockSellTransaction)value_;
         stock_sell.write(oprot);
         return;
+      case STOCK_LENDING:
+        StockLendingTransaction stock_lending = (StockLendingTransaction)value_;
+        stock_lending.write(oprot);
+        return;
+      case STOCK_LENDING_RETURNING:
+        StockLendingReturningTransaction stock_lending_returning = (StockLendingReturningTransaction)value_;
+        stock_lending_returning.write(oprot);
+        return;
       default:
         throw new java.lang.IllegalStateException("Cannot write union with unknown field " + setField_);
     }
@@ -226,6 +306,10 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         return STOCK_BUY_FIELD_DESC;
       case STOCK_SELL:
         return STOCK_SELL_FIELD_DESC;
+      case STOCK_LENDING:
+        return STOCK_LENDING_FIELD_DESC;
+      case STOCK_LENDING_RETURNING:
+        return STOCK_LENDING_RETURNING_FIELD_DESC;
       default:
         throw new java.lang.IllegalArgumentException("Unknown field id " + setField);
     }
@@ -274,6 +358,34 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
     value_ = value;
   }
 
+  public StockLendingTransaction getStock_lending() {
+    if (getSetField() == _Fields.STOCK_LENDING) {
+      return (StockLendingTransaction)getFieldValue();
+    } else {
+      throw new java.lang.RuntimeException("Cannot get field 'stock_lending' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setStock_lending(StockLendingTransaction value) {
+    if (value == null) throw new java.lang.NullPointerException();
+    setField_ = _Fields.STOCK_LENDING;
+    value_ = value;
+  }
+
+  public StockLendingReturningTransaction getStock_lending_returning() {
+    if (getSetField() == _Fields.STOCK_LENDING_RETURNING) {
+      return (StockLendingReturningTransaction)getFieldValue();
+    } else {
+      throw new java.lang.RuntimeException("Cannot get field 'stock_lending_returning' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setStock_lending_returning(StockLendingReturningTransaction value) {
+    if (value == null) throw new java.lang.NullPointerException();
+    setField_ = _Fields.STOCK_LENDING_RETURNING;
+    value_ = value;
+  }
+
   public boolean isSetStock_buy() {
     return setField_ == _Fields.STOCK_BUY;
   }
@@ -281,6 +393,16 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
 
   public boolean isSetStock_sell() {
     return setField_ == _Fields.STOCK_SELL;
+  }
+
+
+  public boolean isSetStock_lending() {
+    return setField_ == _Fields.STOCK_LENDING;
+  }
+
+
+  public boolean isSetStock_lending_returning() {
+    return setField_ == _Fields.STOCK_LENDING_RETURNING;
   }
 
 
