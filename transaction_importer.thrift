@@ -24,9 +24,29 @@ struct StockBuyTransaction {
   6: StockBuyTransactionType type = 1
 }
 
+struct StockLendingTransaction {
+  1: common.Date date
+  2: string account
+  3: common.StockId stock
+  4: i32 shares
+  5: double price
+  6: double rate
+  7: commom.Date due
+}
+
+struct StockLendingReturningTransaction {
+  1: common.Date date
+  2: string account
+  3: common.StockId stock
+  4: i32 shares
+  5: double credit
+}
+
 union Transaction {
   1: StockBuyTransaction stock_buy
   2: StockSellTransaction stock_sell
+  3: StockLendingTransaction stock_lending
+  4: StockLendingReturningTransaction stock_lending_returning
 }
 
 struct Account {
