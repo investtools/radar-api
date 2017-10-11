@@ -19,7 +19,7 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class StockLendingReturningTransaction : TBase
+public partial class StockLendingReturning : TBase
 {
   private long _date;
   private string _account;
@@ -105,7 +105,7 @@ public partial class StockLendingReturningTransaction : TBase
     public bool credit;
   }
 
-  public StockLendingReturningTransaction() {
+  public StockLendingReturning() {
   }
 
   public void Read (TProtocol iprot)
@@ -177,7 +177,7 @@ public partial class StockLendingReturningTransaction : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("StockLendingReturningTransaction");
+      TStruct struc = new TStruct("StockLendingReturning");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
       if (__isset.date) {
@@ -230,7 +230,7 @@ public partial class StockLendingReturningTransaction : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("StockLendingReturningTransaction(");
+    StringBuilder __sb = new StringBuilder("StockLendingReturning(");
     bool __first = true;
     if (__isset.date) {
       if(!__first) { __sb.Append(", "); }

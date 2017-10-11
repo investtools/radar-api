@@ -15,7 +15,7 @@ public class TransactionImporter {
 
     public java.util.Map<java.lang.String,java.lang.String> accounts(java.lang.String username, java.lang.String password) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
 
-    public java.util.List<Transaction> fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
+    public java.util.List<br.com.investtools.radar.api.Transaction> fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
 
   }
 
@@ -25,7 +25,7 @@ public class TransactionImporter {
 
     public void accounts(java.lang.String username, java.lang.String password, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<java.lang.String,java.lang.String>> resultHandler) throws org.apache.thrift.TException;
 
-    public void fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts, org.apache.thrift.async.AsyncMethodCallback<java.util.List<Transaction>> resultHandler) throws org.apache.thrift.TException;
+    public void fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts, org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.Transaction>> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -101,7 +101,7 @@ public class TransactionImporter {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "accounts failed: unknown result");
     }
 
-    public java.util.List<Transaction> fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    public java.util.List<br.com.investtools.radar.api.Transaction> fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       send_fetch(username, password, accounts);
       return recv_fetch();
@@ -116,7 +116,7 @@ public class TransactionImporter {
       sendBase("fetch", args);
     }
 
-    public java.util.List<Transaction> recv_fetch() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    public java.util.List<br.com.investtools.radar.api.Transaction> recv_fetch() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       fetch_result result = new fetch_result();
       receiveBase(result, "fetch");
@@ -214,18 +214,18 @@ public class TransactionImporter {
       }
     }
 
-    public void fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts, org.apache.thrift.async.AsyncMethodCallback<java.util.List<Transaction>> resultHandler) throws org.apache.thrift.TException {
+    public void fetch(java.lang.String username, java.lang.String password, java.util.List<Account> accounts, org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.Transaction>> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       fetch_call method_call = new fetch_call(username, password, accounts, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class fetch_call extends org.apache.thrift.async.TAsyncMethodCall<java.util.List<Transaction>> {
+    public static class fetch_call extends org.apache.thrift.async.TAsyncMethodCall<java.util.List<br.com.investtools.radar.api.Transaction>> {
       private java.lang.String username;
       private java.lang.String password;
       private java.util.List<Account> accounts;
-      public fetch_call(java.lang.String username, java.lang.String password, java.util.List<Account> accounts, org.apache.thrift.async.AsyncMethodCallback<java.util.List<Transaction>> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public fetch_call(java.lang.String username, java.lang.String password, java.util.List<Account> accounts, org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.Transaction>> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.username = username;
         this.password = password;
@@ -242,7 +242,7 @@ public class TransactionImporter {
         prot.writeMessageEnd();
       }
 
-      public java.util.List<Transaction> getResult() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
+      public java.util.List<br.com.investtools.radar.api.Transaction> getResult() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -492,7 +492,7 @@ public class TransactionImporter {
       }
     }
 
-    public static class fetch<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, fetch_args, java.util.List<Transaction>> {
+    public static class fetch<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, fetch_args, java.util.List<br.com.investtools.radar.api.Transaction>> {
       public fetch() {
         super("fetch");
       }
@@ -501,10 +501,10 @@ public class TransactionImporter {
         return new fetch_args();
       }
 
-      public org.apache.thrift.async.AsyncMethodCallback<java.util.List<Transaction>> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+      public org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.Transaction>> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new org.apache.thrift.async.AsyncMethodCallback<java.util.List<Transaction>>() { 
-          public void onComplete(java.util.List<Transaction> o) {
+        return new org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.Transaction>>() { 
+          public void onComplete(java.util.List<br.com.investtools.radar.api.Transaction> o) {
             fetch_result result = new fetch_result();
             result.success = o;
             try {
@@ -556,7 +556,7 @@ public class TransactionImporter {
         return false;
       }
 
-      public void start(I iface, fetch_args args, org.apache.thrift.async.AsyncMethodCallback<java.util.List<Transaction>> resultHandler) throws org.apache.thrift.TException {
+      public void start(I iface, fetch_args args, org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.Transaction>> resultHandler) throws org.apache.thrift.TException {
         iface.fetch(args.username, args.password, args.accounts,resultHandler);
       }
     }
@@ -2901,7 +2901,7 @@ public class TransactionImporter {
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new fetch_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new fetch_resultTupleSchemeFactory();
 
-    public java.util.List<Transaction> success; // required
+    public java.util.List<br.com.investtools.radar.api.Transaction> success; // required
     public AuthenticationError auth_error; // required
     public SystemUnavailableError system_unavailable; // required
 
@@ -2975,7 +2975,7 @@ public class TransactionImporter {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Transaction.class))));
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.Transaction.class))));
       tmpMap.put(_Fields.AUTH_ERROR, new org.apache.thrift.meta_data.FieldMetaData("auth_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AuthenticationError.class)));
       tmpMap.put(_Fields.SYSTEM_UNAVAILABLE, new org.apache.thrift.meta_data.FieldMetaData("system_unavailable", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -2988,7 +2988,7 @@ public class TransactionImporter {
     }
 
     public fetch_result(
-      java.util.List<Transaction> success,
+      java.util.List<br.com.investtools.radar.api.Transaction> success,
       AuthenticationError auth_error,
       SystemUnavailableError system_unavailable)
     {
@@ -3003,9 +3003,9 @@ public class TransactionImporter {
      */
     public fetch_result(fetch_result other) {
       if (other.isSetSuccess()) {
-        java.util.List<Transaction> __this__success = new java.util.ArrayList<Transaction>(other.success.size());
-        for (Transaction other_element : other.success) {
-          __this__success.add(new Transaction(other_element));
+        java.util.List<br.com.investtools.radar.api.Transaction> __this__success = new java.util.ArrayList<br.com.investtools.radar.api.Transaction>(other.success.size());
+        for (br.com.investtools.radar.api.Transaction other_element : other.success) {
+          __this__success.add(new br.com.investtools.radar.api.Transaction(other_element));
         }
         this.success = __this__success;
       }
@@ -3032,22 +3032,22 @@ public class TransactionImporter {
       return (this.success == null) ? 0 : this.success.size();
     }
 
-    public java.util.Iterator<Transaction> getSuccessIterator() {
+    public java.util.Iterator<br.com.investtools.radar.api.Transaction> getSuccessIterator() {
       return (this.success == null) ? null : this.success.iterator();
     }
 
-    public void addToSuccess(Transaction elem) {
+    public void addToSuccess(br.com.investtools.radar.api.Transaction elem) {
       if (this.success == null) {
-        this.success = new java.util.ArrayList<Transaction>();
+        this.success = new java.util.ArrayList<br.com.investtools.radar.api.Transaction>();
       }
       this.success.add(elem);
     }
 
-    public java.util.List<Transaction> getSuccess() {
+    public java.util.List<br.com.investtools.radar.api.Transaction> getSuccess() {
       return this.success;
     }
 
-    public fetch_result setSuccess(java.util.List<Transaction> success) {
+    public fetch_result setSuccess(java.util.List<br.com.investtools.radar.api.Transaction> success) {
       this.success = success;
       return this;
     }
@@ -3121,7 +3121,7 @@ public class TransactionImporter {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((java.util.List<Transaction>)value);
+          setSuccess((java.util.List<br.com.investtools.radar.api.Transaction>)value);
         }
         break;
 
@@ -3368,11 +3368,11 @@ public class TransactionImporter {
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
                   org.apache.thrift.protocol.TList _list18 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<Transaction>(_list18.size);
-                  Transaction _elem19;
+                  struct.success = new java.util.ArrayList<br.com.investtools.radar.api.Transaction>(_list18.size);
+                  br.com.investtools.radar.api.Transaction _elem19;
                   for (int _i20 = 0; _i20 < _list18.size; ++_i20)
                   {
-                    _elem19 = new Transaction();
+                    _elem19 = new br.com.investtools.radar.api.Transaction();
                     _elem19.read(iprot);
                     struct.success.add(_elem19);
                   }
@@ -3420,7 +3420,7 @@ public class TransactionImporter {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Transaction _iter21 : struct.success)
+            for (br.com.investtools.radar.api.Transaction _iter21 : struct.success)
             {
               _iter21.write(oprot);
             }
@@ -3469,7 +3469,7 @@ public class TransactionImporter {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Transaction _iter22 : struct.success)
+            for (br.com.investtools.radar.api.Transaction _iter22 : struct.success)
             {
               _iter22.write(oprot);
             }
@@ -3490,11 +3490,11 @@ public class TransactionImporter {
         if (incoming.get(0)) {
           {
             org.apache.thrift.protocol.TList _list23 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new java.util.ArrayList<Transaction>(_list23.size);
-            Transaction _elem24;
+            struct.success = new java.util.ArrayList<br.com.investtools.radar.api.Transaction>(_list23.size);
+            br.com.investtools.radar.api.Transaction _elem24;
             for (int _i25 = 0; _i25 < _list23.size; ++_i25)
             {
-              _elem24 = new Transaction();
+              _elem24 = new br.com.investtools.radar.api.Transaction();
               _elem24.read(iprot);
               struct.success.add(_elem24);
             }

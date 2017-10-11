@@ -19,14 +19,13 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class StockBuyTransaction : TBase
+public partial class StockSell : TBase
 {
   private long _date;
   private string _account;
   private StockId _stock;
   private int _shares;
   private double _price;
-  private StockBuyTransactionType _type;
 
   public long Date
   {
@@ -93,23 +92,6 @@ public partial class StockBuyTransaction : TBase
     }
   }
 
-  /// <summary>
-  /// 
-  /// <seealso cref="StockBuyTransactionType"/>
-  /// </summary>
-  public StockBuyTransactionType Type
-  {
-    get
-    {
-      return _type;
-    }
-    set
-    {
-      __isset.type = true;
-      this._type = value;
-    }
-  }
-
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -121,12 +103,9 @@ public partial class StockBuyTransaction : TBase
     public bool stock;
     public bool shares;
     public bool price;
-    public bool type;
   }
 
-  public StockBuyTransaction() {
-    this._type = StockBuyTransactionType.REGULAR;
-    this.__isset.type = true;
+  public StockSell() {
   }
 
   public void Read (TProtocol iprot)
@@ -180,13 +159,6 @@ public partial class StockBuyTransaction : TBase
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 6:
-            if (field.Type == TType.I32) {
-              Type = (StockBuyTransactionType)iprot.ReadI32();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
           default: 
             TProtocolUtil.Skip(iprot, field.Type);
             break;
@@ -205,7 +177,7 @@ public partial class StockBuyTransaction : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("StockBuyTransaction");
+      TStruct struc = new TStruct("StockSell");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
       if (__isset.date) {
@@ -248,14 +220,6 @@ public partial class StockBuyTransaction : TBase
         oprot.WriteDouble(Price);
         oprot.WriteFieldEnd();
       }
-      if (__isset.type) {
-        field.Name = "type";
-        field.Type = TType.I32;
-        field.ID = 6;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI32((int)Type);
-        oprot.WriteFieldEnd();
-      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -266,7 +230,7 @@ public partial class StockBuyTransaction : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("StockBuyTransaction(");
+    StringBuilder __sb = new StringBuilder("StockSell(");
     bool __first = true;
     if (__isset.date) {
       if(!__first) { __sb.Append(", "); }
@@ -297,12 +261,6 @@ public partial class StockBuyTransaction : TBase
       __first = false;
       __sb.Append("Price: ");
       __sb.Append(Price);
-    }
-    if (__isset.type) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Type: ");
-      __sb.Append(Type);
     }
     __sb.Append(")");
     return __sb.ToString();

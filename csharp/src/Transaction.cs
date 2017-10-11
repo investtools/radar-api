@@ -21,12 +21,13 @@ using Thrift.Transport;
 #endif
 public partial class Transaction : TBase
 {
-  private StockBuyTransaction _stock_buy;
-  private StockSellTransaction _stock_sell;
-  private StockLendingTransaction _stock_lending;
-  private StockLendingReturningTransaction _stock_lending_returning;
+  private StockBuy _stock_buy;
+  private StockSell _stock_sell;
+  private StockLending _stock_lending;
+  private StockLendingReturning _stock_lending_returning;
+  private CommissionExpense _stock_commission_expense;
 
-  public StockBuyTransaction Stock_buy
+  public StockBuy Stock_buy
   {
     get
     {
@@ -39,7 +40,7 @@ public partial class Transaction : TBase
     }
   }
 
-  public StockSellTransaction Stock_sell
+  public StockSell Stock_sell
   {
     get
     {
@@ -52,7 +53,7 @@ public partial class Transaction : TBase
     }
   }
 
-  public StockLendingTransaction Stock_lending
+  public StockLending Stock_lending
   {
     get
     {
@@ -65,7 +66,7 @@ public partial class Transaction : TBase
     }
   }
 
-  public StockLendingReturningTransaction Stock_lending_returning
+  public StockLendingReturning Stock_lending_returning
   {
     get
     {
@@ -75,6 +76,19 @@ public partial class Transaction : TBase
     {
       __isset.stock_lending_returning = true;
       this._stock_lending_returning = value;
+    }
+  }
+
+  public CommissionExpense Stock_commission_expense
+  {
+    get
+    {
+      return _stock_commission_expense;
+    }
+    set
+    {
+      __isset.stock_commission_expense = true;
+      this._stock_commission_expense = value;
     }
   }
 
@@ -88,6 +102,7 @@ public partial class Transaction : TBase
     public bool stock_sell;
     public bool stock_lending;
     public bool stock_lending_returning;
+    public bool stock_commission_expense;
   }
 
   public Transaction() {
@@ -110,7 +125,7 @@ public partial class Transaction : TBase
         {
           case 1:
             if (field.Type == TType.Struct) {
-              Stock_buy = new StockBuyTransaction();
+              Stock_buy = new StockBuy();
               Stock_buy.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
@@ -118,7 +133,7 @@ public partial class Transaction : TBase
             break;
           case 2:
             if (field.Type == TType.Struct) {
-              Stock_sell = new StockSellTransaction();
+              Stock_sell = new StockSell();
               Stock_sell.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
@@ -126,7 +141,7 @@ public partial class Transaction : TBase
             break;
           case 3:
             if (field.Type == TType.Struct) {
-              Stock_lending = new StockLendingTransaction();
+              Stock_lending = new StockLending();
               Stock_lending.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
@@ -134,8 +149,16 @@ public partial class Transaction : TBase
             break;
           case 4:
             if (field.Type == TType.Struct) {
-              Stock_lending_returning = new StockLendingReturningTransaction();
+              Stock_lending_returning = new StockLendingReturning();
               Stock_lending_returning.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 5:
+            if (field.Type == TType.Struct) {
+              Stock_commission_expense = new CommissionExpense();
+              Stock_commission_expense.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -193,6 +216,14 @@ public partial class Transaction : TBase
         Stock_lending_returning.Write(oprot);
         oprot.WriteFieldEnd();
       }
+      if (Stock_commission_expense != null && __isset.stock_commission_expense) {
+        field.Name = "stock_commission_expense";
+        field.Type = TType.Struct;
+        field.ID = 5;
+        oprot.WriteFieldBegin(field);
+        Stock_commission_expense.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -228,6 +259,12 @@ public partial class Transaction : TBase
       __first = false;
       __sb.Append("Stock_lending_returning: ");
       __sb.Append(Stock_lending_returning== null ? "<null>" : Stock_lending_returning.ToString());
+    }
+    if (Stock_commission_expense != null && __isset.stock_commission_expense) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Stock_commission_expense: ");
+      __sb.Append(Stock_commission_expense== null ? "<null>" : Stock_commission_expense.ToString());
     }
     __sb.Append(")");
     return __sb.ToString();

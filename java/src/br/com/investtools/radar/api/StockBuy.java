@@ -7,27 +7,29 @@
 package br.com.investtools.radar.api;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class StockLendingTransaction implements org.apache.thrift.TBase<StockLendingTransaction, StockLendingTransaction._Fields>, java.io.Serializable, Cloneable, Comparable<StockLendingTransaction> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("StockLendingTransaction");
+public class StockBuy implements org.apache.thrift.TBase<StockBuy, StockBuy._Fields>, java.io.Serializable, Cloneable, Comparable<StockBuy> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("StockBuy");
 
   private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)1);
   private static final org.apache.thrift.protocol.TField ACCOUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("account", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField STOCK_FIELD_DESC = new org.apache.thrift.protocol.TField("stock", org.apache.thrift.protocol.TType.STRUCT, (short)3);
   private static final org.apache.thrift.protocol.TField SHARES_FIELD_DESC = new org.apache.thrift.protocol.TField("shares", org.apache.thrift.protocol.TType.I32, (short)4);
   private static final org.apache.thrift.protocol.TField PRICE_FIELD_DESC = new org.apache.thrift.protocol.TField("price", org.apache.thrift.protocol.TType.DOUBLE, (short)5);
-  private static final org.apache.thrift.protocol.TField RATE_FIELD_DESC = new org.apache.thrift.protocol.TField("rate", org.apache.thrift.protocol.TType.DOUBLE, (short)6);
-  private static final org.apache.thrift.protocol.TField DUE_FIELD_DESC = new org.apache.thrift.protocol.TField("due", org.apache.thrift.protocol.TType.I64, (short)7);
+  private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)6);
 
-  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new StockLendingTransactionStandardSchemeFactory();
-  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new StockLendingTransactionTupleSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new StockBuyStandardSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new StockBuyTupleSchemeFactory();
 
   public long date; // required
   public java.lang.String account; // required
   public br.com.investtools.radar.api.StockId stock; // required
   public int shares; // required
   public double price; // required
-  public double rate; // required
-  public long due; // required
+  /**
+   * 
+   * @see StockBuyTransactionType
+   */
+  public StockBuyTransactionType type; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -36,8 +38,11 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     STOCK((short)3, "stock"),
     SHARES((short)4, "shares"),
     PRICE((short)5, "price"),
-    RATE((short)6, "rate"),
-    DUE((short)7, "due");
+    /**
+     * 
+     * @see StockBuyTransactionType
+     */
+    TYPE((short)6, "type");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -62,10 +67,8 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
           return SHARES;
         case 5: // PRICE
           return PRICE;
-        case 6: // RATE
-          return RATE;
-        case 7: // DUE
-          return DUE;
+        case 6: // TYPE
+          return TYPE;
         default:
           return null;
       }
@@ -109,8 +112,6 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
   private static final int __DATE_ISSET_ID = 0;
   private static final int __SHARES_ISSET_ID = 1;
   private static final int __PRICE_ISSET_ID = 2;
-  private static final int __RATE_ISSET_ID = 3;
-  private static final int __DUE_ISSET_ID = 4;
   private byte __isset_bitfield = 0;
   public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
@@ -125,25 +126,24 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     tmpMap.put(_Fields.PRICE, new org.apache.thrift.meta_data.FieldMetaData("price", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
-    tmpMap.put(_Fields.RATE, new org.apache.thrift.meta_data.FieldMetaData("rate", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
-    tmpMap.put(_Fields.DUE, new org.apache.thrift.meta_data.FieldMetaData("due", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
+    tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.EnumMetaData(org.apache.thrift.protocol.TType.ENUM, StockBuyTransactionType.class)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(StockLendingTransaction.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(StockBuy.class, metaDataMap);
   }
 
-  public StockLendingTransaction() {
+  public StockBuy() {
+    this.type = br.com.investtools.radar.api.StockBuyTransactionType.REGULAR;
+
   }
 
-  public StockLendingTransaction(
+  public StockBuy(
     long date,
     java.lang.String account,
     br.com.investtools.radar.api.StockId stock,
     int shares,
     double price,
-    double rate,
-    long due)
+    StockBuyTransactionType type)
   {
     this();
     this.date = date;
@@ -154,16 +154,13 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     setSharesIsSet(true);
     this.price = price;
     setPriceIsSet(true);
-    this.rate = rate;
-    setRateIsSet(true);
-    this.due = due;
-    setDueIsSet(true);
+    this.type = type;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public StockLendingTransaction(StockLendingTransaction other) {
+  public StockBuy(StockBuy other) {
     __isset_bitfield = other.__isset_bitfield;
     this.date = other.date;
     if (other.isSetAccount()) {
@@ -174,12 +171,13 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     }
     this.shares = other.shares;
     this.price = other.price;
-    this.rate = other.rate;
-    this.due = other.due;
+    if (other.isSetType()) {
+      this.type = other.type;
+    }
   }
 
-  public StockLendingTransaction deepCopy() {
-    return new StockLendingTransaction(this);
+  public StockBuy deepCopy() {
+    return new StockBuy(this);
   }
 
   @Override
@@ -192,17 +190,15 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     this.shares = 0;
     setPriceIsSet(false);
     this.price = 0.0;
-    setRateIsSet(false);
-    this.rate = 0.0;
-    setDueIsSet(false);
-    this.due = 0;
+    this.type = br.com.investtools.radar.api.StockBuyTransactionType.REGULAR;
+
   }
 
   public long getDate() {
     return this.date;
   }
 
-  public StockLendingTransaction setDate(long date) {
+  public StockBuy setDate(long date) {
     this.date = date;
     setDateIsSet(true);
     return this;
@@ -225,7 +221,7 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     return this.account;
   }
 
-  public StockLendingTransaction setAccount(java.lang.String account) {
+  public StockBuy setAccount(java.lang.String account) {
     this.account = account;
     return this;
   }
@@ -249,7 +245,7 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     return this.stock;
   }
 
-  public StockLendingTransaction setStock(br.com.investtools.radar.api.StockId stock) {
+  public StockBuy setStock(br.com.investtools.radar.api.StockId stock) {
     this.stock = stock;
     return this;
   }
@@ -273,7 +269,7 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     return this.shares;
   }
 
-  public StockLendingTransaction setShares(int shares) {
+  public StockBuy setShares(int shares) {
     this.shares = shares;
     setSharesIsSet(true);
     return this;
@@ -296,7 +292,7 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     return this.price;
   }
 
-  public StockLendingTransaction setPrice(double price) {
+  public StockBuy setPrice(double price) {
     this.price = price;
     setPriceIsSet(true);
     return this;
@@ -315,50 +311,36 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __PRICE_ISSET_ID, value);
   }
 
-  public double getRate() {
-    return this.rate;
+  /**
+   * 
+   * @see StockBuyTransactionType
+   */
+  public StockBuyTransactionType getType() {
+    return this.type;
   }
 
-  public StockLendingTransaction setRate(double rate) {
-    this.rate = rate;
-    setRateIsSet(true);
+  /**
+   * 
+   * @see StockBuyTransactionType
+   */
+  public StockBuy setType(StockBuyTransactionType type) {
+    this.type = type;
     return this;
   }
 
-  public void unsetRate() {
-    __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __RATE_ISSET_ID);
+  public void unsetType() {
+    this.type = null;
   }
 
-  /** Returns true if field rate is set (has been assigned a value) and false otherwise */
-  public boolean isSetRate() {
-    return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __RATE_ISSET_ID);
+  /** Returns true if field type is set (has been assigned a value) and false otherwise */
+  public boolean isSetType() {
+    return this.type != null;
   }
 
-  public void setRateIsSet(boolean value) {
-    __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __RATE_ISSET_ID, value);
-  }
-
-  public long getDue() {
-    return this.due;
-  }
-
-  public StockLendingTransaction setDue(long due) {
-    this.due = due;
-    setDueIsSet(true);
-    return this;
-  }
-
-  public void unsetDue() {
-    __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __DUE_ISSET_ID);
-  }
-
-  /** Returns true if field due is set (has been assigned a value) and false otherwise */
-  public boolean isSetDue() {
-    return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __DUE_ISSET_ID);
-  }
-
-  public void setDueIsSet(boolean value) {
-    __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __DUE_ISSET_ID, value);
+  public void setTypeIsSet(boolean value) {
+    if (!value) {
+      this.type = null;
+    }
   }
 
   public void setFieldValue(_Fields field, java.lang.Object value) {
@@ -403,19 +385,11 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
       }
       break;
 
-    case RATE:
+    case TYPE:
       if (value == null) {
-        unsetRate();
+        unsetType();
       } else {
-        setRate((java.lang.Double)value);
-      }
-      break;
-
-    case DUE:
-      if (value == null) {
-        unsetDue();
-      } else {
-        setDue((java.lang.Long)value);
+        setType((StockBuyTransactionType)value);
       }
       break;
 
@@ -439,11 +413,8 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     case PRICE:
       return getPrice();
 
-    case RATE:
-      return getRate();
-
-    case DUE:
-      return getDue();
+    case TYPE:
+      return getType();
 
     }
     throw new java.lang.IllegalStateException();
@@ -466,10 +437,8 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
       return isSetShares();
     case PRICE:
       return isSetPrice();
-    case RATE:
-      return isSetRate();
-    case DUE:
-      return isSetDue();
+    case TYPE:
+      return isSetType();
     }
     throw new java.lang.IllegalStateException();
   }
@@ -478,12 +447,12 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
   public boolean equals(java.lang.Object that) {
     if (that == null)
       return false;
-    if (that instanceof StockLendingTransaction)
-      return this.equals((StockLendingTransaction)that);
+    if (that instanceof StockBuy)
+      return this.equals((StockBuy)that);
     return false;
   }
 
-  public boolean equals(StockLendingTransaction that) {
+  public boolean equals(StockBuy that) {
     if (that == null)
       return false;
     if (this == that)
@@ -534,21 +503,12 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
         return false;
     }
 
-    boolean this_present_rate = true;
-    boolean that_present_rate = true;
-    if (this_present_rate || that_present_rate) {
-      if (!(this_present_rate && that_present_rate))
+    boolean this_present_type = true && this.isSetType();
+    boolean that_present_type = true && that.isSetType();
+    if (this_present_type || that_present_type) {
+      if (!(this_present_type && that_present_type))
         return false;
-      if (this.rate != that.rate)
-        return false;
-    }
-
-    boolean this_present_due = true;
-    boolean that_present_due = true;
-    if (this_present_due || that_present_due) {
-      if (!(this_present_due && that_present_due))
-        return false;
-      if (this.due != that.due)
+      if (!this.type.equals(that.type))
         return false;
     }
 
@@ -573,15 +533,15 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
 
     hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(price);
 
-    hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(rate);
-
-    hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(due);
+    hashCode = hashCode * 8191 + ((isSetType()) ? 131071 : 524287);
+    if (isSetType())
+      hashCode = hashCode * 8191 + type.getValue();
 
     return hashCode;
   }
 
   @Override
-  public int compareTo(StockLendingTransaction other) {
+  public int compareTo(StockBuy other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -638,22 +598,12 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
         return lastComparison;
       }
     }
-    lastComparison = java.lang.Boolean.valueOf(isSetRate()).compareTo(other.isSetRate());
+    lastComparison = java.lang.Boolean.valueOf(isSetType()).compareTo(other.isSetType());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetRate()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.rate, other.rate);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = java.lang.Boolean.valueOf(isSetDue()).compareTo(other.isSetDue());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetDue()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.due, other.due);
+    if (isSetType()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.type, other.type);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -675,7 +625,7 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
 
   @Override
   public java.lang.String toString() {
-    java.lang.StringBuilder sb = new java.lang.StringBuilder("StockLendingTransaction(");
+    java.lang.StringBuilder sb = new java.lang.StringBuilder("StockBuy(");
     boolean first = true;
 
     sb.append("date:");
@@ -706,12 +656,12 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     sb.append(this.price);
     first = false;
     if (!first) sb.append(", ");
-    sb.append("rate:");
-    sb.append(this.rate);
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("due:");
-    sb.append(this.due);
+    sb.append("type:");
+    if (this.type == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.type);
+    }
     first = false;
     sb.append(")");
     return sb.toString();
@@ -743,15 +693,15 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
     }
   }
 
-  private static class StockLendingTransactionStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public StockLendingTransactionStandardScheme getScheme() {
-      return new StockLendingTransactionStandardScheme();
+  private static class StockBuyStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public StockBuyStandardScheme getScheme() {
+      return new StockBuyStandardScheme();
     }
   }
 
-  private static class StockLendingTransactionStandardScheme extends org.apache.thrift.scheme.StandardScheme<StockLendingTransaction> {
+  private static class StockBuyStandardScheme extends org.apache.thrift.scheme.StandardScheme<StockBuy> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, StockLendingTransaction struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, StockBuy struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -802,18 +752,10 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 6: // RATE
-            if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
-              struct.rate = iprot.readDouble();
-              struct.setRateIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 7: // DUE
-            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
-              struct.due = iprot.readI64();
-              struct.setDueIsSet(true);
+          case 6: // TYPE
+            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+              struct.type = br.com.investtools.radar.api.StockBuyTransactionType.findByValue(iprot.readI32());
+              struct.setTypeIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -829,7 +771,7 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, StockLendingTransaction struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, StockBuy struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -852,28 +794,27 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
       oprot.writeFieldBegin(PRICE_FIELD_DESC);
       oprot.writeDouble(struct.price);
       oprot.writeFieldEnd();
-      oprot.writeFieldBegin(RATE_FIELD_DESC);
-      oprot.writeDouble(struct.rate);
-      oprot.writeFieldEnd();
-      oprot.writeFieldBegin(DUE_FIELD_DESC);
-      oprot.writeI64(struct.due);
-      oprot.writeFieldEnd();
+      if (struct.type != null) {
+        oprot.writeFieldBegin(TYPE_FIELD_DESC);
+        oprot.writeI32(struct.type.getValue());
+        oprot.writeFieldEnd();
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
 
   }
 
-  private static class StockLendingTransactionTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public StockLendingTransactionTupleScheme getScheme() {
-      return new StockLendingTransactionTupleScheme();
+  private static class StockBuyTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public StockBuyTupleScheme getScheme() {
+      return new StockBuyTupleScheme();
     }
   }
 
-  private static class StockLendingTransactionTupleScheme extends org.apache.thrift.scheme.TupleScheme<StockLendingTransaction> {
+  private static class StockBuyTupleScheme extends org.apache.thrift.scheme.TupleScheme<StockBuy> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, StockLendingTransaction struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, StockBuy struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet optionals = new java.util.BitSet();
       if (struct.isSetDate()) {
@@ -891,13 +832,10 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
       if (struct.isSetPrice()) {
         optionals.set(4);
       }
-      if (struct.isSetRate()) {
+      if (struct.isSetType()) {
         optionals.set(5);
       }
-      if (struct.isSetDue()) {
-        optionals.set(6);
-      }
-      oprot.writeBitSet(optionals, 7);
+      oprot.writeBitSet(optionals, 6);
       if (struct.isSetDate()) {
         oprot.writeI64(struct.date);
       }
@@ -913,18 +851,15 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
       if (struct.isSetPrice()) {
         oprot.writeDouble(struct.price);
       }
-      if (struct.isSetRate()) {
-        oprot.writeDouble(struct.rate);
-      }
-      if (struct.isSetDue()) {
-        oprot.writeI64(struct.due);
+      if (struct.isSetType()) {
+        oprot.writeI32(struct.type.getValue());
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, StockLendingTransaction struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, StockBuy struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(7);
+      java.util.BitSet incoming = iprot.readBitSet(6);
       if (incoming.get(0)) {
         struct.date = iprot.readI64();
         struct.setDateIsSet(true);
@@ -947,12 +882,8 @@ public class StockLendingTransaction implements org.apache.thrift.TBase<StockLen
         struct.setPriceIsSet(true);
       }
       if (incoming.get(5)) {
-        struct.rate = iprot.readDouble();
-        struct.setRateIsSet(true);
-      }
-      if (incoming.get(6)) {
-        struct.due = iprot.readI64();
-        struct.setDueIsSet(true);
+        struct.type = br.com.investtools.radar.api.StockBuyTransactionType.findByValue(iprot.readI32());
+        struct.setTypeIsSet(true);
       }
     }
   }

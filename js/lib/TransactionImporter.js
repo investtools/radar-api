@@ -10,6 +10,7 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 var common_ttypes = require('./common_types');
+var transaction_ttypes = require('./transaction_types');
 
 
 var ttypes = require('./transaction_importer_types');
@@ -400,7 +401,7 @@ var TransactionImporter_fetch_result = function(args) {
   }
   if (args) {
     if (args.success !== undefined && args.success !== null) {
-      this.success = Thrift.copyList(args.success, [ttypes.Transaction]);
+      this.success = Thrift.copyList(args.success, [transaction_ttypes.Transaction]);
     }
     if (args.auth_error !== undefined && args.auth_error !== null) {
       this.auth_error = args.auth_error;
@@ -436,7 +437,7 @@ TransactionImporter_fetch_result.prototype.read = function(input) {
         for (var _i23 = 0; _i23 < _size18; ++_i23)
         {
           var elem24 = null;
-          elem24 = new ttypes.Transaction();
+          elem24 = new transaction_ttypes.Transaction();
           elem24.read(input);
           this.success.push(elem24);
         }
