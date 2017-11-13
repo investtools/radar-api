@@ -7,6 +7,10 @@ enum StockBuyTransactionType {
   REGULAR = 1, IPO = 2
 }
 
+enum StockOptionTransactionType {
+  BUY = 1, SELL = 2
+}
+
 struct StockSell {
   1: common.Date date
   2: string account
@@ -22,6 +26,17 @@ struct StockBuy {
   4: i32 shares
   5: double price
   6: StockBuyTransactionType type = 1
+}
+
+struct StockOption {
+  1: common.Date date
+  2: string account
+  3: common.StockId stock
+  4: i32 shares
+  5: double price
+  6: common.Date maturity
+  7: StockOptionTransactionType transaction_type
+  8: StockBuyTransactionType type = 1
 }
 
 struct StockLending {
@@ -54,4 +69,5 @@ union Transaction {
   3: StockLending stock_lending
   4: StockLendingReturning stock_lending_returning
   5: CommissionExpense stock_commission_expense
+  6: StockOption stock_option
 }

@@ -26,6 +26,7 @@ public partial class Transaction : TBase
   private StockLending _stock_lending;
   private StockLendingReturning _stock_lending_returning;
   private CommissionExpense _stock_commission_expense;
+  private StockOption _stock_option;
 
   public StockBuy Stock_buy
   {
@@ -92,6 +93,19 @@ public partial class Transaction : TBase
     }
   }
 
+  public StockOption Stock_option
+  {
+    get
+    {
+      return _stock_option;
+    }
+    set
+    {
+      __isset.stock_option = true;
+      this._stock_option = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -103,6 +117,7 @@ public partial class Transaction : TBase
     public bool stock_lending;
     public bool stock_lending_returning;
     public bool stock_commission_expense;
+    public bool stock_option;
   }
 
   public Transaction() {
@@ -159,6 +174,14 @@ public partial class Transaction : TBase
             if (field.Type == TType.Struct) {
               Stock_commission_expense = new CommissionExpense();
               Stock_commission_expense.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 6:
+            if (field.Type == TType.Struct) {
+              Stock_option = new StockOption();
+              Stock_option.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -224,6 +247,14 @@ public partial class Transaction : TBase
         Stock_commission_expense.Write(oprot);
         oprot.WriteFieldEnd();
       }
+      if (Stock_option != null && __isset.stock_option) {
+        field.Name = "stock_option";
+        field.Type = TType.Struct;
+        field.ID = 6;
+        oprot.WriteFieldBegin(field);
+        Stock_option.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -265,6 +296,12 @@ public partial class Transaction : TBase
       __first = false;
       __sb.Append("Stock_commission_expense: ");
       __sb.Append(Stock_commission_expense== null ? "<null>" : Stock_commission_expense.ToString());
+    }
+    if (Stock_option != null && __isset.stock_option) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Stock_option: ");
+      __sb.Append(Stock_option== null ? "<null>" : Stock_option.ToString());
     }
     __sb.Append(")");
     return __sb.ToString();

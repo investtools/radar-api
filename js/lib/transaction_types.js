@@ -17,6 +17,10 @@ ttypes.StockBuyTransactionType = {
   'REGULAR' : 1,
   'IPO' : 2
 };
+ttypes.StockOptionTransactionType = {
+  'BUY' : 1,
+  'SELL' : 2
+};
 var StockSell = module.exports.StockSell = function(args) {
   this.date = null;
   this.account = null;
@@ -255,6 +259,169 @@ StockBuy.prototype.write = function(output) {
   }
   if (this.type !== null && this.type !== undefined) {
     output.writeFieldBegin('type', Thrift.Type.I32, 6);
+    output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var StockOption = module.exports.StockOption = function(args) {
+  this.date = null;
+  this.account = null;
+  this.stock = null;
+  this.shares = null;
+  this.price = null;
+  this.maturity = null;
+  this.transaction_type = null;
+  this.type = 1;
+  if (args) {
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.account !== undefined && args.account !== null) {
+      this.account = args.account;
+    }
+    if (args.stock !== undefined && args.stock !== null) {
+      this.stock = new common_ttypes.StockId(args.stock);
+    }
+    if (args.shares !== undefined && args.shares !== null) {
+      this.shares = args.shares;
+    }
+    if (args.price !== undefined && args.price !== null) {
+      this.price = args.price;
+    }
+    if (args.maturity !== undefined && args.maturity !== null) {
+      this.maturity = args.maturity;
+    }
+    if (args.transaction_type !== undefined && args.transaction_type !== null) {
+      this.transaction_type = args.transaction_type;
+    }
+    if (args.type !== undefined && args.type !== null) {
+      this.type = args.type;
+    }
+  }
+};
+StockOption.prototype = {};
+StockOption.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.account = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock = new common_ttypes.StockId();
+        this.stock.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.shares = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.price = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.I64) {
+        this.maturity = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.transaction_type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 8:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+StockOption.prototype.write = function(output) {
+  output.writeStructBegin('StockOption');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.account !== null && this.account !== undefined) {
+    output.writeFieldBegin('account', Thrift.Type.STRING, 2);
+    output.writeString(this.account);
+    output.writeFieldEnd();
+  }
+  if (this.stock !== null && this.stock !== undefined) {
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 3);
+    this.stock.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.shares !== null && this.shares !== undefined) {
+    output.writeFieldBegin('shares', Thrift.Type.I32, 4);
+    output.writeI32(this.shares);
+    output.writeFieldEnd();
+  }
+  if (this.price !== null && this.price !== undefined) {
+    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 5);
+    output.writeDouble(this.price);
+    output.writeFieldEnd();
+  }
+  if (this.maturity !== null && this.maturity !== undefined) {
+    output.writeFieldBegin('maturity', Thrift.Type.I64, 6);
+    output.writeI64(this.maturity);
+    output.writeFieldEnd();
+  }
+  if (this.transaction_type !== null && this.transaction_type !== undefined) {
+    output.writeFieldBegin('transaction_type', Thrift.Type.I32, 7);
+    output.writeI32(this.transaction_type);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 8);
     output.writeI32(this.type);
     output.writeFieldEnd();
   }
@@ -613,6 +780,7 @@ var Transaction = module.exports.Transaction = function(args) {
   this.stock_lending = null;
   this.stock_lending_returning = null;
   this.stock_commission_expense = null;
+  this.stock_option = null;
   if (args) {
     if (args.stock_buy !== undefined && args.stock_buy !== null) {
       this.stock_buy = new ttypes.StockBuy(args.stock_buy);
@@ -628,6 +796,9 @@ var Transaction = module.exports.Transaction = function(args) {
     }
     if (args.stock_commission_expense !== undefined && args.stock_commission_expense !== null) {
       this.stock_commission_expense = new ttypes.CommissionExpense(args.stock_commission_expense);
+    }
+    if (args.stock_option !== undefined && args.stock_option !== null) {
+      this.stock_option = new ttypes.StockOption(args.stock_option);
     }
   }
 };
@@ -685,6 +856,14 @@ Transaction.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 6:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock_option = new ttypes.StockOption();
+        this.stock_option.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -719,6 +898,11 @@ Transaction.prototype.write = function(output) {
   if (this.stock_commission_expense !== null && this.stock_commission_expense !== undefined) {
     output.writeFieldBegin('stock_commission_expense', Thrift.Type.STRUCT, 5);
     this.stock_commission_expense.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.stock_option !== null && this.stock_option !== undefined) {
+    output.writeFieldBegin('stock_option', Thrift.Type.STRUCT, 6);
+    this.stock_option.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
