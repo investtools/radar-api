@@ -262,18 +262,24 @@ module Radar
         def number(val)
           TableCellContent.new(:number, val)
         end
+
+        def percentage_point(val)
+          TableCellContent.new(:percentage_point, val)
+        end
       end
 
       TEXT = 1
       PERCENT = 2
       CURRENCY = 3
       NUMBER = 4
+      PERCENTAGE_POINT = 5
 
       FIELDS = {
         TEXT => {:type => ::Thrift::Types::STRING, :name => 'text', :optional => true},
         PERCENT => {:type => ::Thrift::Types::DOUBLE, :name => 'percent', :optional => true},
         CURRENCY => {:type => ::Thrift::Types::DOUBLE, :name => 'currency', :optional => true},
-        NUMBER => {:type => ::Thrift::Types::DOUBLE, :name => 'number', :optional => true}
+        NUMBER => {:type => ::Thrift::Types::DOUBLE, :name => 'number', :optional => true},
+        PERCENTAGE_POINT => {:type => ::Thrift::Types::DOUBLE, :name => 'percentage_point', :optional => true}
       }
 
       def struct_fields; FIELDS; end

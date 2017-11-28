@@ -25,6 +25,7 @@ public partial class TableCellContent : TBase
   private double _percent;
   private double _currency;
   private double _number;
+  private double _percentage_point;
 
   public string Text
   {
@@ -78,6 +79,19 @@ public partial class TableCellContent : TBase
     }
   }
 
+  public double Percentage_point
+  {
+    get
+    {
+      return _percentage_point;
+    }
+    set
+    {
+      __isset.percentage_point = true;
+      this._percentage_point = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -88,6 +102,7 @@ public partial class TableCellContent : TBase
     public bool percent;
     public bool currency;
     public bool number;
+    public bool percentage_point;
   }
 
   public TableCellContent() {
@@ -132,6 +147,13 @@ public partial class TableCellContent : TBase
           case 4:
             if (field.Type == TType.Double) {
               Number = iprot.ReadDouble();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 5:
+            if (field.Type == TType.Double) {
+              Percentage_point = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -189,6 +211,14 @@ public partial class TableCellContent : TBase
         oprot.WriteDouble(Number);
         oprot.WriteFieldEnd();
       }
+      if (__isset.percentage_point) {
+        field.Name = "percentage_point";
+        field.Type = TType.Double;
+        field.ID = 5;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteDouble(Percentage_point);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -224,6 +254,12 @@ public partial class TableCellContent : TBase
       __first = false;
       __sb.Append("Number: ");
       __sb.Append(Number);
+    }
+    if (__isset.percentage_point) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Percentage_point: ");
+      __sb.Append(Percentage_point);
     }
     __sb.Append(")");
     return __sb.ToString();

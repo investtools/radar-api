@@ -934,6 +934,7 @@ var TableCellContent = module.exports.TableCellContent = function(args) {
   this.percent = null;
   this.currency = null;
   this.number = null;
+  this.percentage_point = null;
   if (args) {
     if (args.text !== undefined && args.text !== null) {
       this.text = args.text;
@@ -946,6 +947,9 @@ var TableCellContent = module.exports.TableCellContent = function(args) {
     }
     if (args.number !== undefined && args.number !== null) {
       this.number = args.number;
+    }
+    if (args.percentage_point !== undefined && args.percentage_point !== null) {
+      this.percentage_point = args.percentage_point;
     }
   }
 };
@@ -991,6 +995,13 @@ TableCellContent.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 5:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.percentage_point = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1020,6 +1031,11 @@ TableCellContent.prototype.write = function(output) {
   if (this.number !== null && this.number !== undefined) {
     output.writeFieldBegin('number', Thrift.Type.DOUBLE, 4);
     output.writeDouble(this.number);
+    output.writeFieldEnd();
+  }
+  if (this.percentage_point !== null && this.percentage_point !== undefined) {
+    output.writeFieldBegin('percentage_point', Thrift.Type.DOUBLE, 5);
+    output.writeDouble(this.percentage_point);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

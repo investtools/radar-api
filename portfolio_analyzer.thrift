@@ -81,6 +81,7 @@ union TableCellContent {
   2: double percent
   3: double currency
   4: double number
+  5: double percentage_point
 }
 
 struct TableCellFormat {

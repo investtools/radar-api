@@ -13,13 +13,15 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
   private static final org.apache.thrift.protocol.TField PERCENT_FIELD_DESC = new org.apache.thrift.protocol.TField("percent", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
   private static final org.apache.thrift.protocol.TField CURRENCY_FIELD_DESC = new org.apache.thrift.protocol.TField("currency", org.apache.thrift.protocol.TType.DOUBLE, (short)3);
   private static final org.apache.thrift.protocol.TField NUMBER_FIELD_DESC = new org.apache.thrift.protocol.TField("number", org.apache.thrift.protocol.TType.DOUBLE, (short)4);
+  private static final org.apache.thrift.protocol.TField PERCENTAGE_POINT_FIELD_DESC = new org.apache.thrift.protocol.TField("percentage_point", org.apache.thrift.protocol.TType.DOUBLE, (short)5);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     TEXT((short)1, "text"),
     PERCENT((short)2, "percent"),
     CURRENCY((short)3, "currency"),
-    NUMBER((short)4, "number");
+    NUMBER((short)4, "number"),
+    PERCENTAGE_POINT((short)5, "percentage_point");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -42,6 +44,8 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
           return CURRENCY;
         case 4: // NUMBER
           return NUMBER;
+        case 5: // PERCENTAGE_POINT
+          return PERCENTAGE_POINT;
         default:
           return null;
       }
@@ -92,6 +96,8 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     tmpMap.put(_Fields.NUMBER, new org.apache.thrift.meta_data.FieldMetaData("number", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
+    tmpMap.put(_Fields.PERCENTAGE_POINT, new org.apache.thrift.meta_data.FieldMetaData("percentage_point", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(TableCellContent.class, metaDataMap);
   }
@@ -135,6 +141,12 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
     return x;
   }
 
+  public static TableCellContent percentage_point(double value) {
+    TableCellContent x = new TableCellContent();
+    x.setPercentage_point(value);
+    return x;
+  }
+
 
   @Override
   protected void checkType(_Fields setField, java.lang.Object value) throws java.lang.ClassCastException {
@@ -159,6 +171,11 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
           break;
         }
         throw new java.lang.ClassCastException("Was expecting value of type java.lang.Double for field 'number', but got " + value.getClass().getSimpleName());
+      case PERCENTAGE_POINT:
+        if (value instanceof java.lang.Double) {
+          break;
+        }
+        throw new java.lang.ClassCastException("Was expecting value of type java.lang.Double for field 'percentage_point', but got " + value.getClass().getSimpleName());
       default:
         throw new java.lang.IllegalArgumentException("Unknown field id " + setField);
     }
@@ -205,6 +222,15 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
+        case PERCENTAGE_POINT:
+          if (field.type == PERCENTAGE_POINT_FIELD_DESC.type) {
+            java.lang.Double percentage_point;
+            percentage_point = iprot.readDouble();
+            return percentage_point;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
         default:
           throw new java.lang.IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -233,6 +259,10 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
         java.lang.Double number = (java.lang.Double)value_;
         oprot.writeDouble(number);
         return;
+      case PERCENTAGE_POINT:
+        java.lang.Double percentage_point = (java.lang.Double)value_;
+        oprot.writeDouble(percentage_point);
+        return;
       default:
         throw new java.lang.IllegalStateException("Cannot write union with unknown field " + setField_);
     }
@@ -259,6 +289,10 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
           java.lang.Double number;
           number = iprot.readDouble();
           return number;
+        case PERCENTAGE_POINT:
+          java.lang.Double percentage_point;
+          percentage_point = iprot.readDouble();
+          return percentage_point;
         default:
           throw new java.lang.IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -286,6 +320,10 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
         java.lang.Double number = (java.lang.Double)value_;
         oprot.writeDouble(number);
         return;
+      case PERCENTAGE_POINT:
+        java.lang.Double percentage_point = (java.lang.Double)value_;
+        oprot.writeDouble(percentage_point);
+        return;
       default:
         throw new java.lang.IllegalStateException("Cannot write union with unknown field " + setField_);
     }
@@ -302,6 +340,8 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
         return CURRENCY_FIELD_DESC;
       case NUMBER:
         return NUMBER_FIELD_DESC;
+      case PERCENTAGE_POINT:
+        return PERCENTAGE_POINT_FIELD_DESC;
       default:
         throw new java.lang.IllegalArgumentException("Unknown field id " + setField);
     }
@@ -375,6 +415,19 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
     value_ = value;
   }
 
+  public double getPercentage_point() {
+    if (getSetField() == _Fields.PERCENTAGE_POINT) {
+      return (java.lang.Double)getFieldValue();
+    } else {
+      throw new java.lang.RuntimeException("Cannot get field 'percentage_point' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setPercentage_point(double value) {
+    setField_ = _Fields.PERCENTAGE_POINT;
+    value_ = value;
+  }
+
   public boolean isSetText() {
     return setField_ == _Fields.TEXT;
   }
@@ -392,6 +445,11 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
 
   public boolean isSetNumber() {
     return setField_ == _Fields.NUMBER;
+  }
+
+
+  public boolean isSetPercentage_point() {
+    return setField_ == _Fields.PERCENTAGE_POINT;
   }
 
 
