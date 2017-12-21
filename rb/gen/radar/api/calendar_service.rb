@@ -28,6 +28,21 @@ module Radar
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'advance failed: unknown result')
         end
 
+        def first_business_day(calendar, date)
+          send_first_business_day(calendar, date)
+          return recv_first_business_day()
+        end
+
+        def send_first_business_day(calendar, date)
+          send_message('first_business_day', First_business_day_args, :calendar => calendar, :date => date)
+        end
+
+        def recv_first_business_day()
+          result = receive_message(First_business_day_result)
+          return result.success unless result.success.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'first_business_day failed: unknown result')
+        end
+
       end
 
       class Processor
@@ -38,6 +53,13 @@ module Radar
           result = Advance_result.new()
           result.success = @handler.advance(args.calendar, args.date, args.n)
           write_result(result, oprot, 'advance', seqid)
+        end
+
+        def process_first_business_day(seqid, iprot, oprot)
+          args = read_args(iprot, First_business_day_args)
+          result = First_business_day_result.new()
+          result.success = @handler.first_business_day(args.calendar, args.date)
+          write_result(result, oprot, 'first_business_day', seqid)
         end
 
       end
@@ -65,6 +87,40 @@ module Radar
       end
 
       class Advance_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::I64, :name => 'success'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class First_business_day_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        CALENDAR = 1
+        DATE = 2
+
+        FIELDS = {
+          CALENDAR => {:type => ::Thrift::Types::STRING, :name => 'calendar'},
+          DATE => {:type => ::Thrift::Types::I64, :name => 'date'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class First_business_day_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
 

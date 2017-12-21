@@ -37,4 +37,5 @@ service IndexService {
 
 service CalendarService {
   common.Date advance(1: string calendar, 2: common.Date date, 3: i16 n)
+  common.Date first_business_day(1: string calendar, 2: common.Date date)
 }

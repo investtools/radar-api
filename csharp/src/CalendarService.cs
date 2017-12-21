@@ -18,12 +18,17 @@ using Thrift.Transport;
 public partial class CalendarService {
   public interface ISync {
     long advance(string calendar, long date, short n);
+    long first_business_day(string calendar, long date);
   }
 
   public interface Iface : ISync {
     #if SILVERLIGHT
     IAsyncResult Begin_advance(AsyncCallback callback, object state, string calendar, long date, short n);
     long End_advance(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_first_business_day(AsyncCallback callback, object state, string calendar, long date);
+    long End_first_business_day(IAsyncResult asyncResult);
     #endif
   }
 
@@ -147,12 +152,76 @@ public partial class CalendarService {
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "advance failed: unknown result");
     }
 
+    
+    #if SILVERLIGHT
+    public IAsyncResult Begin_first_business_day(AsyncCallback callback, object state, string calendar, long date)
+    {
+      return send_first_business_day(callback, state, calendar, date);
+    }
+
+    public long End_first_business_day(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_first_business_day();
+    }
+
+    #endif
+
+    public long first_business_day(string calendar, long date)
+    {
+      #if !SILVERLIGHT
+      send_first_business_day(calendar, date);
+      return recv_first_business_day();
+
+      #else
+      var asyncResult = Begin_first_business_day(null, null, calendar, date);
+      return End_first_business_day(asyncResult);
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_first_business_day(AsyncCallback callback, object state, string calendar, long date)
+    #else
+    public void send_first_business_day(string calendar, long date)
+    #endif
+    {
+      oprot_.WriteMessageBegin(new TMessage("first_business_day", TMessageType.Call, seqid_));
+      first_business_day_args args = new first_business_day_args();
+      args.Calendar = calendar;
+      args.Date = date;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      #if SILVERLIGHT
+      return oprot_.Transport.BeginFlush(callback, state);
+      #else
+      oprot_.Transport.Flush();
+      #endif
+    }
+
+    public long recv_first_business_day()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      first_business_day_result result = new first_business_day_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "first_business_day failed: unknown result");
+    }
+
   }
   public class Processor : TProcessor {
     public Processor(ISync iface)
     {
       iface_ = iface;
       processMap_["advance"] = advance_Process;
+      processMap_["first_business_day"] = first_business_day_Process;
     }
 
     protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -207,6 +276,34 @@ public partial class CalendarService {
         Console.Error.WriteLine(ex.ToString());
         TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
         oprot.WriteMessageBegin(new TMessage("advance", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void first_business_day_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      first_business_day_args args = new first_business_day_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      first_business_day_result result = new first_business_day_result();
+      try
+      {
+        result.Success = iface_.first_business_day(args.Calendar, args.Date);
+        oprot.WriteMessageBegin(new TMessage("first_business_day", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("first_business_day", TMessageType.Exception, seqid));
         x.Write(oprot);
       }
       oprot.WriteMessageEnd();
@@ -491,6 +588,259 @@ public partial class CalendarService {
 
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("advance_result(");
+      bool __first = true;
+      if (__isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class first_business_day_args : TBase
+  {
+    private string _calendar;
+    private long _date;
+
+    public string Calendar
+    {
+      get
+      {
+        return _calendar;
+      }
+      set
+      {
+        __isset.calendar = true;
+        this._calendar = value;
+      }
+    }
+
+    public long Date
+    {
+      get
+      {
+        return _date;
+      }
+      set
+      {
+        __isset.date = true;
+        this._date = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool calendar;
+      public bool date;
+    }
+
+    public first_business_day_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Calendar = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I64) {
+                Date = iprot.ReadI64();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("first_business_day_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Calendar != null && __isset.calendar) {
+          field.Name = "calendar";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Calendar);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.date) {
+          field.Name = "date";
+          field.Type = TType.I64;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI64(Date);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("first_business_day_args(");
+      bool __first = true;
+      if (Calendar != null && __isset.calendar) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Calendar: ");
+        __sb.Append(Calendar);
+      }
+      if (__isset.date) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Date: ");
+        __sb.Append(Date);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class first_business_day_result : TBase
+  {
+    private long _success;
+
+    public long Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+    }
+
+    public first_business_day_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.I64) {
+                Success = iprot.ReadI64();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("first_business_day_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.I64;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI64(Success);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("first_business_day_result(");
       bool __first = true;
       if (__isset.success) {
         if(!__first) { __sb.Append(", "); }
