@@ -244,27 +244,27 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class TableCellContent < ::Thrift::Union
+    class TableCellTypes < ::Thrift::Union
       include ::Thrift::Struct_Union
       class << self
         def text(val)
-          TableCellContent.new(:text, val)
+          TableCellTypes.new(:text, val)
         end
 
         def percent(val)
-          TableCellContent.new(:percent, val)
+          TableCellTypes.new(:percent, val)
         end
 
         def currency(val)
-          TableCellContent.new(:currency, val)
+          TableCellTypes.new(:currency, val)
         end
 
         def number(val)
-          TableCellContent.new(:number, val)
+          TableCellTypes.new(:number, val)
         end
 
         def percentage_point(val)
-          TableCellContent.new(:percentage_point, val)
+          TableCellTypes.new(:percentage_point, val)
         end
       end
 
@@ -289,6 +289,24 @@ module Radar
       end
 
       ::Thrift::Union.generate_accessors self
+    end
+
+    class TableCellContent
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      TYPE = 1
+      STRIP_INSIGNIFICANT_ZEROS = 2
+
+      FIELDS = {
+        TYPE => {:type => ::Thrift::Types::STRUCT, :name => 'type', :class => ::Radar::Api::TableCellTypes},
+        STRIP_INSIGNIFICANT_ZEROS => {:type => ::Thrift::Types::BOOL, :name => 'strip_insignificant_zeros', :default => false}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
     end
 
     class TableCellFormat

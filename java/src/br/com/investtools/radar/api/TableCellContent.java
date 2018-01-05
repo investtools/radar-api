@@ -7,21 +7,22 @@
 package br.com.investtools.radar.api;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent, TableCellContent._Fields> {
+public class TableCellContent implements org.apache.thrift.TBase<TableCellContent, TableCellContent._Fields>, java.io.Serializable, Cloneable, Comparable<TableCellContent> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("TableCellContent");
-  private static final org.apache.thrift.protocol.TField TEXT_FIELD_DESC = new org.apache.thrift.protocol.TField("text", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField PERCENT_FIELD_DESC = new org.apache.thrift.protocol.TField("percent", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
-  private static final org.apache.thrift.protocol.TField CURRENCY_FIELD_DESC = new org.apache.thrift.protocol.TField("currency", org.apache.thrift.protocol.TType.DOUBLE, (short)3);
-  private static final org.apache.thrift.protocol.TField NUMBER_FIELD_DESC = new org.apache.thrift.protocol.TField("number", org.apache.thrift.protocol.TType.DOUBLE, (short)4);
-  private static final org.apache.thrift.protocol.TField PERCENTAGE_POINT_FIELD_DESC = new org.apache.thrift.protocol.TField("percentage_point", org.apache.thrift.protocol.TType.DOUBLE, (short)5);
+
+  private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+  private static final org.apache.thrift.protocol.TField STRIP_INSIGNIFICANT_ZEROS_FIELD_DESC = new org.apache.thrift.protocol.TField("strip_insignificant_zeros", org.apache.thrift.protocol.TType.BOOL, (short)2);
+
+  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new TableCellContentStandardSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new TableCellContentTupleSchemeFactory();
+
+  public TableCellTypes type; // required
+  public boolean strip_insignificant_zeros; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    TEXT((short)1, "text"),
-    PERCENT((short)2, "percent"),
-    CURRENCY((short)3, "currency"),
-    NUMBER((short)4, "number"),
-    PERCENTAGE_POINT((short)5, "percentage_point");
+    TYPE((short)1, "type"),
+    STRIP_INSIGNIFICANT_ZEROS((short)2, "strip_insignificant_zeros");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -36,16 +37,10 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // TEXT
-          return TEXT;
-        case 2: // PERCENT
-          return PERCENT;
-        case 3: // CURRENCY
-          return CURRENCY;
-        case 4: // NUMBER
-          return NUMBER;
-        case 5: // PERCENTAGE_POINT
-          return PERCENTAGE_POINT;
+        case 1: // TYPE
+          return TYPE;
+        case 2: // STRIP_INSIGNIFICANT_ZEROS
+          return STRIP_INSIGNIFICANT_ZEROS;
         default:
           return null;
       }
@@ -85,412 +80,269 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
     }
   }
 
+  // isset id assignments
+  private static final int __STRIP_INSIGNIFICANT_ZEROS_ISSET_ID = 0;
+  private byte __isset_bitfield = 0;
   public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.TEXT, new org.apache.thrift.meta_data.FieldMetaData("text", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.PERCENT, new org.apache.thrift.meta_data.FieldMetaData("percent", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
-    tmpMap.put(_Fields.CURRENCY, new org.apache.thrift.meta_data.FieldMetaData("currency", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
-    tmpMap.put(_Fields.NUMBER, new org.apache.thrift.meta_data.FieldMetaData("number", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
-    tmpMap.put(_Fields.PERCENTAGE_POINT, new org.apache.thrift.meta_data.FieldMetaData("percentage_point", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
+    tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TableCellTypes.class)));
+    tmpMap.put(_Fields.STRIP_INSIGNIFICANT_ZEROS, new org.apache.thrift.meta_data.FieldMetaData("strip_insignificant_zeros", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(TableCellContent.class, metaDataMap);
   }
 
   public TableCellContent() {
-    super();
+    this.strip_insignificant_zeros = false;
+
   }
 
-  public TableCellContent(_Fields setField, java.lang.Object value) {
-    super(setField, value);
+  public TableCellContent(
+    TableCellTypes type,
+    boolean strip_insignificant_zeros)
+  {
+    this();
+    this.type = type;
+    this.strip_insignificant_zeros = strip_insignificant_zeros;
+    setStrip_insignificant_zerosIsSet(true);
   }
 
+  /**
+   * Performs a deep copy on <i>other</i>.
+   */
   public TableCellContent(TableCellContent other) {
-    super(other);
+    __isset_bitfield = other.__isset_bitfield;
+    if (other.isSetType()) {
+      this.type = new TableCellTypes(other.type);
+    }
+    this.strip_insignificant_zeros = other.strip_insignificant_zeros;
   }
+
   public TableCellContent deepCopy() {
     return new TableCellContent(this);
   }
 
-  public static TableCellContent text(java.lang.String value) {
-    TableCellContent x = new TableCellContent();
-    x.setText(value);
-    return x;
-  }
-
-  public static TableCellContent percent(double value) {
-    TableCellContent x = new TableCellContent();
-    x.setPercent(value);
-    return x;
-  }
-
-  public static TableCellContent currency(double value) {
-    TableCellContent x = new TableCellContent();
-    x.setCurrency(value);
-    return x;
-  }
-
-  public static TableCellContent number(double value) {
-    TableCellContent x = new TableCellContent();
-    x.setNumber(value);
-    return x;
-  }
-
-  public static TableCellContent percentage_point(double value) {
-    TableCellContent x = new TableCellContent();
-    x.setPercentage_point(value);
-    return x;
-  }
-
-
   @Override
-  protected void checkType(_Fields setField, java.lang.Object value) throws java.lang.ClassCastException {
-    switch (setField) {
-      case TEXT:
-        if (value instanceof java.lang.String) {
-          break;
-        }
-        throw new java.lang.ClassCastException("Was expecting value of type java.lang.String for field 'text', but got " + value.getClass().getSimpleName());
-      case PERCENT:
-        if (value instanceof java.lang.Double) {
-          break;
-        }
-        throw new java.lang.ClassCastException("Was expecting value of type java.lang.Double for field 'percent', but got " + value.getClass().getSimpleName());
-      case CURRENCY:
-        if (value instanceof java.lang.Double) {
-          break;
-        }
-        throw new java.lang.ClassCastException("Was expecting value of type java.lang.Double for field 'currency', but got " + value.getClass().getSimpleName());
-      case NUMBER:
-        if (value instanceof java.lang.Double) {
-          break;
-        }
-        throw new java.lang.ClassCastException("Was expecting value of type java.lang.Double for field 'number', but got " + value.getClass().getSimpleName());
-      case PERCENTAGE_POINT:
-        if (value instanceof java.lang.Double) {
-          break;
-        }
-        throw new java.lang.ClassCastException("Was expecting value of type java.lang.Double for field 'percentage_point', but got " + value.getClass().getSimpleName());
-      default:
-        throw new java.lang.IllegalArgumentException("Unknown field id " + setField);
+  public void clear() {
+    this.type = null;
+    this.strip_insignificant_zeros = false;
+
+  }
+
+  public TableCellTypes getType() {
+    return this.type;
+  }
+
+  public TableCellContent setType(TableCellTypes type) {
+    this.type = type;
+    return this;
+  }
+
+  public void unsetType() {
+    this.type = null;
+  }
+
+  /** Returns true if field type is set (has been assigned a value) and false otherwise */
+  public boolean isSetType() {
+    return this.type != null;
+  }
+
+  public void setTypeIsSet(boolean value) {
+    if (!value) {
+      this.type = null;
     }
   }
 
-  @Override
-  protected java.lang.Object standardSchemeReadValue(org.apache.thrift.protocol.TProtocol iprot, org.apache.thrift.protocol.TField field) throws org.apache.thrift.TException {
-    _Fields setField = _Fields.findByThriftId(field.id);
-    if (setField != null) {
-      switch (setField) {
-        case TEXT:
-          if (field.type == TEXT_FIELD_DESC.type) {
-            java.lang.String text;
-            text = iprot.readString();
-            return text;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case PERCENT:
-          if (field.type == PERCENT_FIELD_DESC.type) {
-            java.lang.Double percent;
-            percent = iprot.readDouble();
-            return percent;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case CURRENCY:
-          if (field.type == CURRENCY_FIELD_DESC.type) {
-            java.lang.Double currency;
-            currency = iprot.readDouble();
-            return currency;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case NUMBER:
-          if (field.type == NUMBER_FIELD_DESC.type) {
-            java.lang.Double number;
-            number = iprot.readDouble();
-            return number;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        case PERCENTAGE_POINT:
-          if (field.type == PERCENTAGE_POINT_FIELD_DESC.type) {
-            java.lang.Double percentage_point;
-            percentage_point = iprot.readDouble();
-            return percentage_point;
-          } else {
-            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-            return null;
-          }
-        default:
-          throw new java.lang.IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
+  public boolean isStrip_insignificant_zeros() {
+    return this.strip_insignificant_zeros;
+  }
+
+  public TableCellContent setStrip_insignificant_zeros(boolean strip_insignificant_zeros) {
+    this.strip_insignificant_zeros = strip_insignificant_zeros;
+    setStrip_insignificant_zerosIsSet(true);
+    return this;
+  }
+
+  public void unsetStrip_insignificant_zeros() {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __STRIP_INSIGNIFICANT_ZEROS_ISSET_ID);
+  }
+
+  /** Returns true if field strip_insignificant_zeros is set (has been assigned a value) and false otherwise */
+  public boolean isSetStrip_insignificant_zeros() {
+    return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __STRIP_INSIGNIFICANT_ZEROS_ISSET_ID);
+  }
+
+  public void setStrip_insignificant_zerosIsSet(boolean value) {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __STRIP_INSIGNIFICANT_ZEROS_ISSET_ID, value);
+  }
+
+  public void setFieldValue(_Fields field, java.lang.Object value) {
+    switch (field) {
+    case TYPE:
+      if (value == null) {
+        unsetType();
+      } else {
+        setType((TableCellTypes)value);
       }
-    } else {
-      org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
-      return null;
-    }
-  }
+      break;
 
-  @Override
-  protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
-    switch (setField_) {
-      case TEXT:
-        java.lang.String text = (java.lang.String)value_;
-        oprot.writeString(text);
-        return;
-      case PERCENT:
-        java.lang.Double percent = (java.lang.Double)value_;
-        oprot.writeDouble(percent);
-        return;
-      case CURRENCY:
-        java.lang.Double currency = (java.lang.Double)value_;
-        oprot.writeDouble(currency);
-        return;
-      case NUMBER:
-        java.lang.Double number = (java.lang.Double)value_;
-        oprot.writeDouble(number);
-        return;
-      case PERCENTAGE_POINT:
-        java.lang.Double percentage_point = (java.lang.Double)value_;
-        oprot.writeDouble(percentage_point);
-        return;
-      default:
-        throw new java.lang.IllegalStateException("Cannot write union with unknown field " + setField_);
-    }
-  }
-
-  @Override
-  protected java.lang.Object tupleSchemeReadValue(org.apache.thrift.protocol.TProtocol iprot, short fieldID) throws org.apache.thrift.TException {
-    _Fields setField = _Fields.findByThriftId(fieldID);
-    if (setField != null) {
-      switch (setField) {
-        case TEXT:
-          java.lang.String text;
-          text = iprot.readString();
-          return text;
-        case PERCENT:
-          java.lang.Double percent;
-          percent = iprot.readDouble();
-          return percent;
-        case CURRENCY:
-          java.lang.Double currency;
-          currency = iprot.readDouble();
-          return currency;
-        case NUMBER:
-          java.lang.Double number;
-          number = iprot.readDouble();
-          return number;
-        case PERCENTAGE_POINT:
-          java.lang.Double percentage_point;
-          percentage_point = iprot.readDouble();
-          return percentage_point;
-        default:
-          throw new java.lang.IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
+    case STRIP_INSIGNIFICANT_ZEROS:
+      if (value == null) {
+        unsetStrip_insignificant_zeros();
+      } else {
+        setStrip_insignificant_zeros((java.lang.Boolean)value);
       }
-    } else {
-      throw new org.apache.thrift.protocol.TProtocolException("Couldn't find a field with field id " + fieldID);
+      break;
+
     }
   }
 
-  @Override
-  protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
-    switch (setField_) {
-      case TEXT:
-        java.lang.String text = (java.lang.String)value_;
-        oprot.writeString(text);
-        return;
-      case PERCENT:
-        java.lang.Double percent = (java.lang.Double)value_;
-        oprot.writeDouble(percent);
-        return;
-      case CURRENCY:
-        java.lang.Double currency = (java.lang.Double)value_;
-        oprot.writeDouble(currency);
-        return;
-      case NUMBER:
-        java.lang.Double number = (java.lang.Double)value_;
-        oprot.writeDouble(number);
-        return;
-      case PERCENTAGE_POINT:
-        java.lang.Double percentage_point = (java.lang.Double)value_;
-        oprot.writeDouble(percentage_point);
-        return;
-      default:
-        throw new java.lang.IllegalStateException("Cannot write union with unknown field " + setField_);
+  public java.lang.Object getFieldValue(_Fields field) {
+    switch (field) {
+    case TYPE:
+      return getType();
+
+    case STRIP_INSIGNIFICANT_ZEROS:
+      return isStrip_insignificant_zeros();
+
     }
+    throw new java.lang.IllegalStateException();
   }
 
-  @Override
-  protected org.apache.thrift.protocol.TField getFieldDesc(_Fields setField) {
-    switch (setField) {
-      case TEXT:
-        return TEXT_FIELD_DESC;
-      case PERCENT:
-        return PERCENT_FIELD_DESC;
-      case CURRENCY:
-        return CURRENCY_FIELD_DESC;
-      case NUMBER:
-        return NUMBER_FIELD_DESC;
-      case PERCENTAGE_POINT:
-        return PERCENTAGE_POINT_FIELD_DESC;
-      default:
-        throw new java.lang.IllegalArgumentException("Unknown field id " + setField);
+  /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+  public boolean isSet(_Fields field) {
+    if (field == null) {
+      throw new java.lang.IllegalArgumentException();
     }
+
+    switch (field) {
+    case TYPE:
+      return isSetType();
+    case STRIP_INSIGNIFICANT_ZEROS:
+      return isSetStrip_insignificant_zeros();
+    }
+    throw new java.lang.IllegalStateException();
   }
 
   @Override
-  protected org.apache.thrift.protocol.TStruct getStructDesc() {
-    return STRUCT_DESC;
+  public boolean equals(java.lang.Object that) {
+    if (that == null)
+      return false;
+    if (that instanceof TableCellContent)
+      return this.equals((TableCellContent)that);
+    return false;
+  }
+
+  public boolean equals(TableCellContent that) {
+    if (that == null)
+      return false;
+    if (this == that)
+      return true;
+
+    boolean this_present_type = true && this.isSetType();
+    boolean that_present_type = true && that.isSetType();
+    if (this_present_type || that_present_type) {
+      if (!(this_present_type && that_present_type))
+        return false;
+      if (!this.type.equals(that.type))
+        return false;
+    }
+
+    boolean this_present_strip_insignificant_zeros = true;
+    boolean that_present_strip_insignificant_zeros = true;
+    if (this_present_strip_insignificant_zeros || that_present_strip_insignificant_zeros) {
+      if (!(this_present_strip_insignificant_zeros && that_present_strip_insignificant_zeros))
+        return false;
+      if (this.strip_insignificant_zeros != that.strip_insignificant_zeros)
+        return false;
+    }
+
+    return true;
   }
 
   @Override
-  protected _Fields enumForId(short id) {
-    return _Fields.findByThriftIdOrThrow(id);
+  public int hashCode() {
+    int hashCode = 1;
+
+    hashCode = hashCode * 8191 + ((isSetType()) ? 131071 : 524287);
+    if (isSetType())
+      hashCode = hashCode * 8191 + type.hashCode();
+
+    hashCode = hashCode * 8191 + ((strip_insignificant_zeros) ? 131071 : 524287);
+
+    return hashCode;
+  }
+
+  @Override
+  public int compareTo(TableCellContent other) {
+    if (!getClass().equals(other.getClass())) {
+      return getClass().getName().compareTo(other.getClass().getName());
+    }
+
+    int lastComparison = 0;
+
+    lastComparison = java.lang.Boolean.valueOf(isSetType()).compareTo(other.isSetType());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetType()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.type, other.type);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = java.lang.Boolean.valueOf(isSetStrip_insignificant_zeros()).compareTo(other.isSetStrip_insignificant_zeros());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetStrip_insignificant_zeros()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.strip_insignificant_zeros, other.strip_insignificant_zeros);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    return 0;
   }
 
   public _Fields fieldForId(int fieldId) {
     return _Fields.findByThriftId(fieldId);
   }
 
-
-  public java.lang.String getText() {
-    if (getSetField() == _Fields.TEXT) {
-      return (java.lang.String)getFieldValue();
-    } else {
-      throw new java.lang.RuntimeException("Cannot get field 'text' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
+  public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+    scheme(iprot).read(iprot, this);
   }
 
-  public void setText(java.lang.String value) {
-    if (value == null) throw new java.lang.NullPointerException();
-    setField_ = _Fields.TEXT;
-    value_ = value;
-  }
-
-  public double getPercent() {
-    if (getSetField() == _Fields.PERCENT) {
-      return (java.lang.Double)getFieldValue();
-    } else {
-      throw new java.lang.RuntimeException("Cannot get field 'percent' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setPercent(double value) {
-    setField_ = _Fields.PERCENT;
-    value_ = value;
-  }
-
-  public double getCurrency() {
-    if (getSetField() == _Fields.CURRENCY) {
-      return (java.lang.Double)getFieldValue();
-    } else {
-      throw new java.lang.RuntimeException("Cannot get field 'currency' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setCurrency(double value) {
-    setField_ = _Fields.CURRENCY;
-    value_ = value;
-  }
-
-  public double getNumber() {
-    if (getSetField() == _Fields.NUMBER) {
-      return (java.lang.Double)getFieldValue();
-    } else {
-      throw new java.lang.RuntimeException("Cannot get field 'number' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setNumber(double value) {
-    setField_ = _Fields.NUMBER;
-    value_ = value;
-  }
-
-  public double getPercentage_point() {
-    if (getSetField() == _Fields.PERCENTAGE_POINT) {
-      return (java.lang.Double)getFieldValue();
-    } else {
-      throw new java.lang.RuntimeException("Cannot get field 'percentage_point' because union is currently set to " + getFieldDesc(getSetField()).name);
-    }
-  }
-
-  public void setPercentage_point(double value) {
-    setField_ = _Fields.PERCENTAGE_POINT;
-    value_ = value;
-  }
-
-  public boolean isSetText() {
-    return setField_ == _Fields.TEXT;
-  }
-
-
-  public boolean isSetPercent() {
-    return setField_ == _Fields.PERCENT;
-  }
-
-
-  public boolean isSetCurrency() {
-    return setField_ == _Fields.CURRENCY;
-  }
-
-
-  public boolean isSetNumber() {
-    return setField_ == _Fields.NUMBER;
-  }
-
-
-  public boolean isSetPercentage_point() {
-    return setField_ == _Fields.PERCENTAGE_POINT;
-  }
-
-
-  public boolean equals(java.lang.Object other) {
-    if (other instanceof TableCellContent) {
-      return equals((TableCellContent)other);
-    } else {
-      return false;
-    }
-  }
-
-  public boolean equals(TableCellContent other) {
-    return other != null && getSetField() == other.getSetField() && getFieldValue().equals(other.getFieldValue());
+  public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+    scheme(oprot).write(oprot, this);
   }
 
   @Override
-  public int compareTo(TableCellContent other) {
-    int lastComparison = org.apache.thrift.TBaseHelper.compareTo(getSetField(), other.getSetField());
-    if (lastComparison == 0) {
-      return org.apache.thrift.TBaseHelper.compareTo(getFieldValue(), other.getFieldValue());
+  public java.lang.String toString() {
+    java.lang.StringBuilder sb = new java.lang.StringBuilder("TableCellContent(");
+    boolean first = true;
+
+    sb.append("type:");
+    if (this.type == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.type);
     }
-    return lastComparison;
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("strip_insignificant_zeros:");
+    sb.append(this.strip_insignificant_zeros);
+    first = false;
+    sb.append(")");
+    return sb.toString();
   }
 
-
-  @Override
-  public int hashCode() {
-    java.util.List<java.lang.Object> list = new java.util.ArrayList<java.lang.Object>();
-    list.add(this.getClass().getName());
-    org.apache.thrift.TFieldIdEnum setField = getSetField();
-    if (setField != null) {
-      list.add(setField.getThriftFieldId());
-      java.lang.Object value = getFieldValue();
-      if (value instanceof org.apache.thrift.TEnum) {
-        list.add(((org.apache.thrift.TEnum)getFieldValue()).getValue());
-      } else {
-        list.add(value);
-      }
-    }
-    return list.hashCode();
+  public void validate() throws org.apache.thrift.TException {
+    // check for required fields
+    // check for sub-struct validity
   }
+
   private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
     try {
       write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
@@ -499,14 +351,125 @@ public class TableCellContent extends org.apache.thrift.TUnion<TableCellContent,
     }
   }
 
-
   private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
     try {
+      // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+      __isset_bitfield = 0;
       read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
     } catch (org.apache.thrift.TException te) {
       throw new java.io.IOException(te);
     }
   }
 
+  private static class TableCellContentStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public TableCellContentStandardScheme getScheme() {
+      return new TableCellContentStandardScheme();
+    }
+  }
 
+  private static class TableCellContentStandardScheme extends org.apache.thrift.scheme.StandardScheme<TableCellContent> {
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot, TableCellContent struct) throws org.apache.thrift.TException {
+      org.apache.thrift.protocol.TField schemeField;
+      iprot.readStructBegin();
+      while (true)
+      {
+        schemeField = iprot.readFieldBegin();
+        if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+          break;
+        }
+        switch (schemeField.id) {
+          case 1: // TYPE
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+              struct.type = new TableCellTypes();
+              struct.type.read(iprot);
+              struct.setTypeIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 2: // STRIP_INSIGNIFICANT_ZEROS
+            if (schemeField.type == org.apache.thrift.protocol.TType.BOOL) {
+              struct.strip_insignificant_zeros = iprot.readBool();
+              struct.setStrip_insignificant_zerosIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          default:
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+        }
+        iprot.readFieldEnd();
+      }
+      iprot.readStructEnd();
+
+      // check for required fields of primitive type, which can't be checked in the validate method
+      struct.validate();
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot, TableCellContent struct) throws org.apache.thrift.TException {
+      struct.validate();
+
+      oprot.writeStructBegin(STRUCT_DESC);
+      if (struct.type != null) {
+        oprot.writeFieldBegin(TYPE_FIELD_DESC);
+        struct.type.write(oprot);
+        oprot.writeFieldEnd();
+      }
+      oprot.writeFieldBegin(STRIP_INSIGNIFICANT_ZEROS_FIELD_DESC);
+      oprot.writeBool(struct.strip_insignificant_zeros);
+      oprot.writeFieldEnd();
+      oprot.writeFieldStop();
+      oprot.writeStructEnd();
+    }
+
+  }
+
+  private static class TableCellContentTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public TableCellContentTupleScheme getScheme() {
+      return new TableCellContentTupleScheme();
+    }
+  }
+
+  private static class TableCellContentTupleScheme extends org.apache.thrift.scheme.TupleScheme<TableCellContent> {
+
+    @Override
+    public void write(org.apache.thrift.protocol.TProtocol prot, TableCellContent struct) throws org.apache.thrift.TException {
+      org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      java.util.BitSet optionals = new java.util.BitSet();
+      if (struct.isSetType()) {
+        optionals.set(0);
+      }
+      if (struct.isSetStrip_insignificant_zeros()) {
+        optionals.set(1);
+      }
+      oprot.writeBitSet(optionals, 2);
+      if (struct.isSetType()) {
+        struct.type.write(oprot);
+      }
+      if (struct.isSetStrip_insignificant_zeros()) {
+        oprot.writeBool(struct.strip_insignificant_zeros);
+      }
+    }
+
+    @Override
+    public void read(org.apache.thrift.protocol.TProtocol prot, TableCellContent struct) throws org.apache.thrift.TException {
+      org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      java.util.BitSet incoming = iprot.readBitSet(2);
+      if (incoming.get(0)) {
+        struct.type = new TableCellTypes();
+        struct.type.read(iprot);
+        struct.setTypeIsSet(true);
+      }
+      if (incoming.get(1)) {
+        struct.strip_insignificant_zeros = iprot.readBool();
+        struct.setStrip_insignificant_zerosIsSet(true);
+      }
+    }
+  }
+
+  private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+    return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+  }
 }
+

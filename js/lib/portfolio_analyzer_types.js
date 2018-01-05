@@ -929,7 +929,7 @@ Text.prototype.write = function(output) {
   return;
 };
 
-var TableCellContent = module.exports.TableCellContent = function(args) {
+var TableCellTypes = module.exports.TableCellTypes = function(args) {
   this.text = null;
   this.percent = null;
   this.currency = null;
@@ -953,8 +953,8 @@ var TableCellContent = module.exports.TableCellContent = function(args) {
     }
   }
 };
-TableCellContent.prototype = {};
-TableCellContent.prototype.read = function(input) {
+TableCellTypes.prototype = {};
+TableCellTypes.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -1011,8 +1011,8 @@ TableCellContent.prototype.read = function(input) {
   return;
 };
 
-TableCellContent.prototype.write = function(output) {
-  output.writeStructBegin('TableCellContent');
+TableCellTypes.prototype.write = function(output) {
+  output.writeStructBegin('TableCellTypes');
   if (this.text !== null && this.text !== undefined) {
     output.writeFieldBegin('text', Thrift.Type.STRING, 1);
     output.writeString(this.text);
@@ -1036,6 +1036,73 @@ TableCellContent.prototype.write = function(output) {
   if (this.percentage_point !== null && this.percentage_point !== undefined) {
     output.writeFieldBegin('percentage_point', Thrift.Type.DOUBLE, 5);
     output.writeDouble(this.percentage_point);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var TableCellContent = module.exports.TableCellContent = function(args) {
+  this.type = null;
+  this.strip_insignificant_zeros = false;
+  if (args) {
+    if (args.type !== undefined && args.type !== null) {
+      this.type = new ttypes.TableCellTypes(args.type);
+    }
+    if (args.strip_insignificant_zeros !== undefined && args.strip_insignificant_zeros !== null) {
+      this.strip_insignificant_zeros = args.strip_insignificant_zeros;
+    }
+  }
+};
+TableCellContent.prototype = {};
+TableCellContent.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.type = new ttypes.TableCellTypes();
+        this.type.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.BOOL) {
+        this.strip_insignificant_zeros = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TableCellContent.prototype.write = function(output) {
+  output.writeStructBegin('TableCellContent');
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.STRUCT, 1);
+    this.type.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.strip_insignificant_zeros !== null && this.strip_insignificant_zeros !== undefined) {
+    output.writeFieldBegin('strip_insignificant_zeros', Thrift.Type.BOOL, 2);
+    output.writeBool(this.strip_insignificant_zeros);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

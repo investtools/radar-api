@@ -76,12 +76,17 @@ struct Text {
   2: string content
 }
 
-union TableCellContent {
+union TableCellTypes {
   1: string text
   2: double percent
   3: double currency
   4: double number
   5: double percentage_point
+}
+
+struct TableCellContent {
+  1: TableCellTypes type
+  2: bool strip_insignificant_zeros = false
 }
 
 struct TableCellFormat {

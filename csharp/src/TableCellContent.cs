@@ -21,74 +21,32 @@ using Thrift.Transport;
 #endif
 public partial class TableCellContent : TBase
 {
-  private string _text;
-  private double _percent;
-  private double _currency;
-  private double _number;
-  private double _percentage_point;
+  private TableCellTypes _type;
+  private bool _strip_insignificant_zeros;
 
-  public string Text
+  public TableCellTypes Type
   {
     get
     {
-      return _text;
+      return _type;
     }
     set
     {
-      __isset.text = true;
-      this._text = value;
+      __isset.type = true;
+      this._type = value;
     }
   }
 
-  public double Percent
+  public bool Strip_insignificant_zeros
   {
     get
     {
-      return _percent;
+      return _strip_insignificant_zeros;
     }
     set
     {
-      __isset.percent = true;
-      this._percent = value;
-    }
-  }
-
-  public double Currency
-  {
-    get
-    {
-      return _currency;
-    }
-    set
-    {
-      __isset.currency = true;
-      this._currency = value;
-    }
-  }
-
-  public double Number
-  {
-    get
-    {
-      return _number;
-    }
-    set
-    {
-      __isset.number = true;
-      this._number = value;
-    }
-  }
-
-  public double Percentage_point
-  {
-    get
-    {
-      return _percentage_point;
-    }
-    set
-    {
-      __isset.percentage_point = true;
-      this._percentage_point = value;
+      __isset.strip_insignificant_zeros = true;
+      this._strip_insignificant_zeros = value;
     }
   }
 
@@ -98,14 +56,13 @@ public partial class TableCellContent : TBase
   [Serializable]
   #endif
   public struct Isset {
-    public bool text;
-    public bool percent;
-    public bool currency;
-    public bool number;
-    public bool percentage_point;
+    public bool type;
+    public bool strip_insignificant_zeros;
   }
 
   public TableCellContent() {
+    this._strip_insignificant_zeros = false;
+    this.__isset.strip_insignificant_zeros = true;
   }
 
   public void Read (TProtocol iprot)
@@ -124,36 +81,16 @@ public partial class TableCellContent : TBase
         switch (field.ID)
         {
           case 1:
-            if (field.Type == TType.String) {
-              Text = iprot.ReadString();
+            if (field.Type == TType.Struct) {
+              Type = new TableCellTypes();
+              Type.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 2:
-            if (field.Type == TType.Double) {
-              Percent = iprot.ReadDouble();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 3:
-            if (field.Type == TType.Double) {
-              Currency = iprot.ReadDouble();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 4:
-            if (field.Type == TType.Double) {
-              Number = iprot.ReadDouble();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 5:
-            if (field.Type == TType.Double) {
-              Percentage_point = iprot.ReadDouble();
+            if (field.Type == TType.Bool) {
+              Strip_insignificant_zeros = iprot.ReadBool();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -179,44 +116,20 @@ public partial class TableCellContent : TBase
       TStruct struc = new TStruct("TableCellContent");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (Text != null && __isset.text) {
-        field.Name = "text";
-        field.Type = TType.String;
+      if (Type != null && __isset.type) {
+        field.Name = "type";
+        field.Type = TType.Struct;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        oprot.WriteString(Text);
+        Type.Write(oprot);
         oprot.WriteFieldEnd();
       }
-      if (__isset.percent) {
-        field.Name = "percent";
-        field.Type = TType.Double;
+      if (__isset.strip_insignificant_zeros) {
+        field.Name = "strip_insignificant_zeros";
+        field.Type = TType.Bool;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        oprot.WriteDouble(Percent);
-        oprot.WriteFieldEnd();
-      }
-      if (__isset.currency) {
-        field.Name = "currency";
-        field.Type = TType.Double;
-        field.ID = 3;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteDouble(Currency);
-        oprot.WriteFieldEnd();
-      }
-      if (__isset.number) {
-        field.Name = "number";
-        field.Type = TType.Double;
-        field.ID = 4;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteDouble(Number);
-        oprot.WriteFieldEnd();
-      }
-      if (__isset.percentage_point) {
-        field.Name = "percentage_point";
-        field.Type = TType.Double;
-        field.ID = 5;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteDouble(Percentage_point);
+        oprot.WriteBool(Strip_insignificant_zeros);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -231,35 +144,17 @@ public partial class TableCellContent : TBase
   public override string ToString() {
     StringBuilder __sb = new StringBuilder("TableCellContent(");
     bool __first = true;
-    if (Text != null && __isset.text) {
+    if (Type != null && __isset.type) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Text: ");
-      __sb.Append(Text);
+      __sb.Append("Type: ");
+      __sb.Append(Type== null ? "<null>" : Type.ToString());
     }
-    if (__isset.percent) {
+    if (__isset.strip_insignificant_zeros) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Percent: ");
-      __sb.Append(Percent);
-    }
-    if (__isset.currency) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Currency: ");
-      __sb.Append(Currency);
-    }
-    if (__isset.number) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Number: ");
-      __sb.Append(Number);
-    }
-    if (__isset.percentage_point) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Percentage_point: ");
-      __sb.Append(Percentage_point);
+      __sb.Append("Strip_insignificant_zeros: ");
+      __sb.Append(Strip_insignificant_zeros);
     }
     __sb.Append(")");
     return __sb.ToString();
