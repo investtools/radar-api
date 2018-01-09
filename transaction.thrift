@@ -44,9 +44,8 @@ struct StockLending {
   2: string account
   3: common.StockId stock
   4: i32 shares
-  5: double price
-  6: double rate
-  7: common.Date due
+  5: double rate
+  6: common.Date due
 }
 
 struct StockLendingReturning {

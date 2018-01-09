@@ -119,16 +119,14 @@ module Radar
       ACCOUNT = 2
       STOCK = 3
       SHARES = 4
-      PRICE = 5
-      RATE = 6
-      DUE = 7
+      RATE = 5
+      DUE = 6
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
         ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
-        PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'},
         RATE => {:type => ::Thrift::Types::DOUBLE, :name => 'rate'},
         DUE => {:type => ::Thrift::Types::I64, :name => 'due'}
       }

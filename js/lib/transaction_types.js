@@ -435,7 +435,6 @@ var StockLending = module.exports.StockLending = function(args) {
   this.account = null;
   this.stock = null;
   this.shares = null;
-  this.price = null;
   this.rate = null;
   this.due = null;
   if (args) {
@@ -450,9 +449,6 @@ var StockLending = module.exports.StockLending = function(args) {
     }
     if (args.shares !== undefined && args.shares !== null) {
       this.shares = args.shares;
-    }
-    if (args.price !== undefined && args.price !== null) {
-      this.price = args.price;
     }
     if (args.rate !== undefined && args.rate !== null) {
       this.rate = args.rate;
@@ -507,19 +503,12 @@ StockLending.prototype.read = function(input) {
       break;
       case 5:
       if (ftype == Thrift.Type.DOUBLE) {
-        this.price = input.readDouble();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 6:
-      if (ftype == Thrift.Type.DOUBLE) {
         this.rate = input.readDouble();
       } else {
         input.skip(ftype);
       }
       break;
-      case 7:
+      case 6:
       if (ftype == Thrift.Type.I64) {
         this.due = input.readI64();
       } else {
@@ -557,18 +546,13 @@ StockLending.prototype.write = function(output) {
     output.writeI32(this.shares);
     output.writeFieldEnd();
   }
-  if (this.price !== null && this.price !== undefined) {
-    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 5);
-    output.writeDouble(this.price);
-    output.writeFieldEnd();
-  }
   if (this.rate !== null && this.rate !== undefined) {
-    output.writeFieldBegin('rate', Thrift.Type.DOUBLE, 6);
+    output.writeFieldBegin('rate', Thrift.Type.DOUBLE, 5);
     output.writeDouble(this.rate);
     output.writeFieldEnd();
   }
   if (this.due !== null && this.due !== undefined) {
-    output.writeFieldBegin('due', Thrift.Type.I64, 7);
+    output.writeFieldBegin('due', Thrift.Type.I64, 6);
     output.writeI64(this.due);
     output.writeFieldEnd();
   }

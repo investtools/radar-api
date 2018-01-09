@@ -25,7 +25,6 @@ public partial class StockLending : TBase
   private string _account;
   private StockId _stock;
   private int _shares;
-  private double _price;
   private double _rate;
   private long _due;
 
@@ -81,19 +80,6 @@ public partial class StockLending : TBase
     }
   }
 
-  public double Price
-  {
-    get
-    {
-      return _price;
-    }
-    set
-    {
-      __isset.price = true;
-      this._price = value;
-    }
-  }
-
   public double Rate
   {
     get
@@ -130,7 +116,6 @@ public partial class StockLending : TBase
     public bool account;
     public bool stock;
     public bool shares;
-    public bool price;
     public bool rate;
     public bool due;
   }
@@ -184,19 +169,12 @@ public partial class StockLending : TBase
             break;
           case 5:
             if (field.Type == TType.Double) {
-              Price = iprot.ReadDouble();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 6:
-            if (field.Type == TType.Double) {
               Rate = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 7:
+          case 6:
             if (field.Type == TType.I64) {
               Due = iprot.ReadI64();
             } else { 
@@ -256,18 +234,10 @@ public partial class StockLending : TBase
         oprot.WriteI32(Shares);
         oprot.WriteFieldEnd();
       }
-      if (__isset.price) {
-        field.Name = "price";
-        field.Type = TType.Double;
-        field.ID = 5;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteDouble(Price);
-        oprot.WriteFieldEnd();
-      }
       if (__isset.rate) {
         field.Name = "rate";
         field.Type = TType.Double;
-        field.ID = 6;
+        field.ID = 5;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Rate);
         oprot.WriteFieldEnd();
@@ -275,7 +245,7 @@ public partial class StockLending : TBase
       if (__isset.due) {
         field.Name = "due";
         field.Type = TType.I64;
-        field.ID = 7;
+        field.ID = 6;
         oprot.WriteFieldBegin(field);
         oprot.WriteI64(Due);
         oprot.WriteFieldEnd();
@@ -315,12 +285,6 @@ public partial class StockLending : TBase
       __first = false;
       __sb.Append("Shares: ");
       __sb.Append(Shares);
-    }
-    if (__isset.price) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Price: ");
-      __sb.Append(Price);
     }
     if (__isset.rate) {
       if(!__first) { __sb.Append(", "); }
