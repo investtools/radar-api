@@ -104,16 +104,12 @@ Point.prototype.write = function(output) {
 var PieSeries = module.exports.PieSeries = function(args) {
   this.name = null;
   this.value = null;
-  this.percent = null;
   if (args) {
     if (args.name !== undefined && args.name !== null) {
       this.name = args.name;
     }
     if (args.value !== undefined && args.value !== null) {
       this.value = args.value;
-    }
-    if (args.percent !== undefined && args.percent !== null) {
-      this.percent = args.percent;
     }
   }
 };
@@ -145,13 +141,6 @@ PieSeries.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 3:
-      if (ftype == Thrift.Type.DOUBLE) {
-        this.percent = input.readDouble();
-      } else {
-        input.skip(ftype);
-      }
-      break;
       default:
         input.skip(ftype);
     }
@@ -171,11 +160,6 @@ PieSeries.prototype.write = function(output) {
   if (this.value !== null && this.value !== undefined) {
     output.writeFieldBegin('value', Thrift.Type.DOUBLE, 2);
     output.writeDouble(this.value);
-    output.writeFieldEnd();
-  }
-  if (this.percent !== null && this.percent !== undefined) {
-    output.writeFieldBegin('percent', Thrift.Type.DOUBLE, 3);
-    output.writeDouble(this.percent);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -1940,7 +1924,6 @@ var Portfolio = module.exports.Portfolio = function(args) {
   this.nav = null;
   this.cash = null;
   this.provisions = null;
-  this.value = null;
   if (args) {
     if (args.date !== undefined && args.date !== null) {
       this.date = args.date;
@@ -1959,9 +1942,6 @@ var Portfolio = module.exports.Portfolio = function(args) {
     }
     if (args.provisions !== undefined && args.provisions !== null) {
       this.provisions = Thrift.copyList(args.provisions, [ttypes.Provision]);
-    }
-    if (args.value !== undefined && args.value !== null) {
-      this.value = args.value;
     }
   }
 };
@@ -2049,13 +2029,6 @@ Portfolio.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 7:
-      if (ftype == Thrift.Type.DOUBLE) {
-        this.value = input.readDouble();
-      } else {
-        input.skip(ftype);
-      }
-      break;
       default:
         input.skip(ftype);
     }
@@ -2113,11 +2086,6 @@ Portfolio.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
-    output.writeFieldEnd();
-  }
-  if (this.value !== null && this.value !== undefined) {
-    output.writeFieldBegin('value', Thrift.Type.DOUBLE, 7);
-    output.writeDouble(this.value);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

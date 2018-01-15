@@ -23,7 +23,6 @@ public partial class PieSeries : TBase
 {
   private string _name;
   private double _value;
-  private double _percent;
 
   public string Name
   {
@@ -51,19 +50,6 @@ public partial class PieSeries : TBase
     }
   }
 
-  public double Percent
-  {
-    get
-    {
-      return _percent;
-    }
-    set
-    {
-      __isset.percent = true;
-      this._percent = value;
-    }
-  }
-
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -72,7 +58,6 @@ public partial class PieSeries : TBase
   public struct Isset {
     public bool name;
     public bool @value;
-    public bool percent;
   }
 
   public PieSeries() {
@@ -103,13 +88,6 @@ public partial class PieSeries : TBase
           case 2:
             if (field.Type == TType.Double) {
               Value = iprot.ReadDouble();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 3:
-            if (field.Type == TType.Double) {
-              Percent = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -151,14 +129,6 @@ public partial class PieSeries : TBase
         oprot.WriteDouble(Value);
         oprot.WriteFieldEnd();
       }
-      if (__isset.percent) {
-        field.Name = "percent";
-        field.Type = TType.Double;
-        field.ID = 3;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteDouble(Percent);
-        oprot.WriteFieldEnd();
-      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -182,12 +152,6 @@ public partial class PieSeries : TBase
       __first = false;
       __sb.Append("Value: ");
       __sb.Append(Value);
-    }
-    if (__isset.percent) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Percent: ");
-      __sb.Append(Percent);
     }
     __sb.Append(")");
     return __sb.ToString();

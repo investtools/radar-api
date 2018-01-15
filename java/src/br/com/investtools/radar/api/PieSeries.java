@@ -12,20 +12,17 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
 
   private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField VALUE_FIELD_DESC = new org.apache.thrift.protocol.TField("value", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
-  private static final org.apache.thrift.protocol.TField PERCENT_FIELD_DESC = new org.apache.thrift.protocol.TField("percent", org.apache.thrift.protocol.TType.DOUBLE, (short)3);
 
   private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new PieSeriesStandardSchemeFactory();
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new PieSeriesTupleSchemeFactory();
 
   public java.lang.String name; // required
   public double value; // required
-  public double percent; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     NAME((short)1, "name"),
-    VALUE((short)2, "value"),
-    PERCENT((short)3, "percent");
+    VALUE((short)2, "value");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -44,8 +41,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
           return NAME;
         case 2: // VALUE
           return VALUE;
-        case 3: // PERCENT
-          return PERCENT;
         default:
           return null;
       }
@@ -87,7 +82,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
 
   // isset id assignments
   private static final int __VALUE_ISSET_ID = 0;
-  private static final int __PERCENT_ISSET_ID = 1;
   private byte __isset_bitfield = 0;
   public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
@@ -95,8 +89,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
     tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.VALUE, new org.apache.thrift.meta_data.FieldMetaData("value", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
-    tmpMap.put(_Fields.PERCENT, new org.apache.thrift.meta_data.FieldMetaData("percent", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(PieSeries.class, metaDataMap);
@@ -107,15 +99,12 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
 
   public PieSeries(
     java.lang.String name,
-    double value,
-    double percent)
+    double value)
   {
     this();
     this.name = name;
     this.value = value;
     setValueIsSet(true);
-    this.percent = percent;
-    setPercentIsSet(true);
   }
 
   /**
@@ -127,7 +116,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
       this.name = other.name;
     }
     this.value = other.value;
-    this.percent = other.percent;
   }
 
   public PieSeries deepCopy() {
@@ -139,8 +127,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
     this.name = null;
     setValueIsSet(false);
     this.value = 0.0;
-    setPercentIsSet(false);
-    this.percent = 0.0;
   }
 
   public java.lang.String getName() {
@@ -190,29 +176,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
     __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __VALUE_ISSET_ID, value);
   }
 
-  public double getPercent() {
-    return this.percent;
-  }
-
-  public PieSeries setPercent(double percent) {
-    this.percent = percent;
-    setPercentIsSet(true);
-    return this;
-  }
-
-  public void unsetPercent() {
-    __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __PERCENT_ISSET_ID);
-  }
-
-  /** Returns true if field percent is set (has been assigned a value) and false otherwise */
-  public boolean isSetPercent() {
-    return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __PERCENT_ISSET_ID);
-  }
-
-  public void setPercentIsSet(boolean value) {
-    __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __PERCENT_ISSET_ID, value);
-  }
-
   public void setFieldValue(_Fields field, java.lang.Object value) {
     switch (field) {
     case NAME:
@@ -231,14 +194,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
       }
       break;
 
-    case PERCENT:
-      if (value == null) {
-        unsetPercent();
-      } else {
-        setPercent((java.lang.Double)value);
-      }
-      break;
-
     }
   }
 
@@ -249,9 +204,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
 
     case VALUE:
       return getValue();
-
-    case PERCENT:
-      return getPercent();
 
     }
     throw new java.lang.IllegalStateException();
@@ -268,8 +220,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
       return isSetName();
     case VALUE:
       return isSetValue();
-    case PERCENT:
-      return isSetPercent();
     }
     throw new java.lang.IllegalStateException();
   }
@@ -307,15 +257,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
         return false;
     }
 
-    boolean this_present_percent = true;
-    boolean that_present_percent = true;
-    if (this_present_percent || that_present_percent) {
-      if (!(this_present_percent && that_present_percent))
-        return false;
-      if (this.percent != that.percent)
-        return false;
-    }
-
     return true;
   }
 
@@ -328,8 +269,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
       hashCode = hashCode * 8191 + name.hashCode();
 
     hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(value);
-
-    hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(percent);
 
     return hashCode;
   }
@@ -358,16 +297,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
     }
     if (isSetValue()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.value, other.value);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = java.lang.Boolean.valueOf(isSetPercent()).compareTo(other.isSetPercent());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetPercent()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.percent, other.percent);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -402,10 +331,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
     if (!first) sb.append(", ");
     sb.append("value:");
     sb.append(this.value);
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("percent:");
-    sb.append(this.percent);
     first = false;
     sb.append(")");
     return sb.toString();
@@ -468,14 +393,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 3: // PERCENT
-            if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
-              struct.percent = iprot.readDouble();
-              struct.setPercentIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -498,9 +415,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
       }
       oprot.writeFieldBegin(VALUE_FIELD_DESC);
       oprot.writeDouble(struct.value);
-      oprot.writeFieldEnd();
-      oprot.writeFieldBegin(PERCENT_FIELD_DESC);
-      oprot.writeDouble(struct.percent);
       oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -526,25 +440,19 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
       if (struct.isSetValue()) {
         optionals.set(1);
       }
-      if (struct.isSetPercent()) {
-        optionals.set(2);
-      }
-      oprot.writeBitSet(optionals, 3);
+      oprot.writeBitSet(optionals, 2);
       if (struct.isSetName()) {
         oprot.writeString(struct.name);
       }
       if (struct.isSetValue()) {
         oprot.writeDouble(struct.value);
       }
-      if (struct.isSetPercent()) {
-        oprot.writeDouble(struct.percent);
-      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, PieSeries struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(3);
+      java.util.BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
         struct.name = iprot.readString();
         struct.setNameIsSet(true);
@@ -552,10 +460,6 @@ public class PieSeries implements org.apache.thrift.TBase<PieSeries, PieSeries._
       if (incoming.get(1)) {
         struct.value = iprot.readDouble();
         struct.setValueIsSet(true);
-      }
-      if (incoming.get(2)) {
-        struct.percent = iprot.readDouble();
-        struct.setPercentIsSet(true);
       }
     }
   }

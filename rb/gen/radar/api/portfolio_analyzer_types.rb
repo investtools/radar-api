@@ -66,12 +66,10 @@ module Radar
       include ::Thrift::Struct, ::Thrift::Struct_Union
       NAME = 1
       VALUE = 2
-      PERCENT = 3
 
       FIELDS = {
         NAME => {:type => ::Thrift::Types::STRING, :name => 'name'},
-        VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'},
-        PERCENT => {:type => ::Thrift::Types::DOUBLE, :name => 'percent'}
+        VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'}
       }
 
       def struct_fields; FIELDS; end
@@ -517,7 +515,6 @@ module Radar
       NAV = 4
       CASH = 5
       PROVISIONS = 6
-      VALUE = 7
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
@@ -526,8 +523,7 @@ module Radar
         NAV => {:type => ::Thrift::Types::DOUBLE, :name => 'nav'},
         CASH => {:type => ::Thrift::Types::DOUBLE, :name => 'cash'},
         # Criado na versão 0.2.1
-        PROVISIONS => {:type => ::Thrift::Types::LIST, :name => 'provisions', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Provision}},
-        VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'}
+        PROVISIONS => {:type => ::Thrift::Types::LIST, :name => 'provisions', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Provision}}
       }
 
       def struct_fields; FIELDS; end
