@@ -13,6 +13,10 @@ var common_ttypes = require('./common_types');
 
 
 var ttypes = module.exports = {};
+ttypes.PieChartType = {
+  'PERCENT' : 0,
+  'VALUE' : 1
+};
 ttypes.LineSeriesType = {
   'LINE' : 0,
   'AREA' : 1
@@ -169,10 +173,14 @@ PieSeries.prototype.write = function(output) {
 
 var PieChart = module.exports.PieChart = function(args) {
   this.title = null;
+  this.type = 1;
   this.series = null;
   if (args) {
     if (args.title !== undefined && args.title !== null) {
       this.title = args.title;
+    }
+    if (args.type !== undefined && args.type !== null) {
+      this.type = args.type;
     }
     if (args.series !== undefined && args.series !== null) {
       this.series = Thrift.copyList(args.series, [ttypes.PieSeries]);
@@ -201,6 +209,13 @@ PieChart.prototype.read = function(input) {
       }
       break;
       case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
       if (ftype == Thrift.Type.LIST) {
         var _size0 = 0;
         var _rtmp34;
@@ -237,8 +252,13 @@ PieChart.prototype.write = function(output) {
     output.writeString(this.title);
     output.writeFieldEnd();
   }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 2);
+    output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
   if (this.series !== null && this.series !== undefined) {
-    output.writeFieldBegin('series', Thrift.Type.LIST, 2);
+    output.writeFieldBegin('series', Thrift.Type.LIST, 3);
     output.writeListBegin(Thrift.Type.STRUCT, this.series.length);
     for (var iter7 in this.series)
     {

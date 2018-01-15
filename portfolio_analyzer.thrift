@@ -15,9 +15,14 @@ struct PieSeries {
   2: double value
 }
 
+enum PieChartType {
+  PERCENT, VALUE
+}
+
 struct PieChart {
   1: string title
-  2: list<PieSeries> series
+  2: PieChartType type = PieChartType.VALUE
+  3: list<PieSeries> series
 }
 
 enum LineSeriesType {

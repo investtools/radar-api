@@ -22,6 +22,7 @@ using Thrift.Transport;
 public partial class PieChart : TBase
 {
   private string _title;
+  private PieChartType _type;
   private List<PieSeries> _series;
 
   public string Title
@@ -34,6 +35,23 @@ public partial class PieChart : TBase
     {
       __isset.title = true;
       this._title = value;
+    }
+  }
+
+  /// <summary>
+  /// 
+  /// <seealso cref="PieChartType"/>
+  /// </summary>
+  public PieChartType Type
+  {
+    get
+    {
+      return _type;
+    }
+    set
+    {
+      __isset.type = true;
+      this._type = value;
     }
   }
 
@@ -57,10 +75,13 @@ public partial class PieChart : TBase
   #endif
   public struct Isset {
     public bool title;
+    public bool type;
     public bool series;
   }
 
   public PieChart() {
+    this._type = PieChartType.VALUE;
+    this.__isset.type = true;
   }
 
   public void Read (TProtocol iprot)
@@ -86,6 +107,13 @@ public partial class PieChart : TBase
             }
             break;
           case 2:
+            if (field.Type == TType.I32) {
+              Type = (PieChartType)iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 3:
             if (field.Type == TType.List) {
               {
                 Series = new List<PieSeries>();
@@ -132,10 +160,18 @@ public partial class PieChart : TBase
         oprot.WriteString(Title);
         oprot.WriteFieldEnd();
       }
+      if (__isset.type) {
+        field.Name = "type";
+        field.Type = TType.I32;
+        field.ID = 2;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI32((int)Type);
+        oprot.WriteFieldEnd();
+      }
       if (Series != null && __isset.series) {
         field.Name = "series";
         field.Type = TType.List;
-        field.ID = 2;
+        field.ID = 3;
         oprot.WriteFieldBegin(field);
         {
           oprot.WriteListBegin(new TList(TType.Struct, Series.Count));
@@ -164,6 +200,12 @@ public partial class PieChart : TBase
       __first = false;
       __sb.Append("Title: ");
       __sb.Append(Title);
+    }
+    if (__isset.type) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Type: ");
+      __sb.Append(Type);
     }
     if (Series != null && __isset.series) {
       if(!__first) { __sb.Append(", "); }

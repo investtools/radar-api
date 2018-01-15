@@ -11,18 +11,29 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("PieChart");
 
   private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField SERIES_FIELD_DESC = new org.apache.thrift.protocol.TField("series", org.apache.thrift.protocol.TType.LIST, (short)2);
+  private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)2);
+  private static final org.apache.thrift.protocol.TField SERIES_FIELD_DESC = new org.apache.thrift.protocol.TField("series", org.apache.thrift.protocol.TType.LIST, (short)3);
 
   private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new PieChartStandardSchemeFactory();
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new PieChartTupleSchemeFactory();
 
   public java.lang.String title; // required
+  /**
+   * 
+   * @see PieChartType
+   */
+  public PieChartType type; // required
   public java.util.List<PieSeries> series; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     TITLE((short)1, "title"),
-    SERIES((short)2, "series");
+    /**
+     * 
+     * @see PieChartType
+     */
+    TYPE((short)2, "type"),
+    SERIES((short)3, "series");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -39,7 +50,9 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
       switch(fieldId) {
         case 1: // TITLE
           return TITLE;
-        case 2: // SERIES
+        case 2: // TYPE
+          return TYPE;
+        case 3: // SERIES
           return SERIES;
         default:
           return null;
@@ -86,6 +99,8 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
     java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.EnumMetaData(org.apache.thrift.protocol.TType.ENUM, PieChartType.class)));
     tmpMap.put(_Fields.SERIES, new org.apache.thrift.meta_data.FieldMetaData("series", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
             new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, PieSeries.class))));
@@ -94,14 +109,18 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
   }
 
   public PieChart() {
+    this.type = br.com.investtools.radar.api.PieChartType.VALUE;
+
   }
 
   public PieChart(
     java.lang.String title,
+    PieChartType type,
     java.util.List<PieSeries> series)
   {
     this();
     this.title = title;
+    this.type = type;
     this.series = series;
   }
 
@@ -111,6 +130,9 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
   public PieChart(PieChart other) {
     if (other.isSetTitle()) {
       this.title = other.title;
+    }
+    if (other.isSetType()) {
+      this.type = other.type;
     }
     if (other.isSetSeries()) {
       java.util.List<PieSeries> __this__series = new java.util.ArrayList<PieSeries>(other.series.size());
@@ -128,6 +150,8 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
   @Override
   public void clear() {
     this.title = null;
+    this.type = br.com.investtools.radar.api.PieChartType.VALUE;
+
     this.series = null;
   }
 
@@ -152,6 +176,38 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
   public void setTitleIsSet(boolean value) {
     if (!value) {
       this.title = null;
+    }
+  }
+
+  /**
+   * 
+   * @see PieChartType
+   */
+  public PieChartType getType() {
+    return this.type;
+  }
+
+  /**
+   * 
+   * @see PieChartType
+   */
+  public PieChart setType(PieChartType type) {
+    this.type = type;
+    return this;
+  }
+
+  public void unsetType() {
+    this.type = null;
+  }
+
+  /** Returns true if field type is set (has been assigned a value) and false otherwise */
+  public boolean isSetType() {
+    return this.type != null;
+  }
+
+  public void setTypeIsSet(boolean value) {
+    if (!value) {
+      this.type = null;
     }
   }
 
@@ -204,6 +260,14 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
       }
       break;
 
+    case TYPE:
+      if (value == null) {
+        unsetType();
+      } else {
+        setType((PieChartType)value);
+      }
+      break;
+
     case SERIES:
       if (value == null) {
         unsetSeries();
@@ -219,6 +283,9 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
     switch (field) {
     case TITLE:
       return getTitle();
+
+    case TYPE:
+      return getType();
 
     case SERIES:
       return getSeries();
@@ -236,6 +303,8 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
     switch (field) {
     case TITLE:
       return isSetTitle();
+    case TYPE:
+      return isSetType();
     case SERIES:
       return isSetSeries();
     }
@@ -266,6 +335,15 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
         return false;
     }
 
+    boolean this_present_type = true && this.isSetType();
+    boolean that_present_type = true && that.isSetType();
+    if (this_present_type || that_present_type) {
+      if (!(this_present_type && that_present_type))
+        return false;
+      if (!this.type.equals(that.type))
+        return false;
+    }
+
     boolean this_present_series = true && this.isSetSeries();
     boolean that_present_series = true && that.isSetSeries();
     if (this_present_series || that_present_series) {
@@ -285,6 +363,10 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
     hashCode = hashCode * 8191 + ((isSetTitle()) ? 131071 : 524287);
     if (isSetTitle())
       hashCode = hashCode * 8191 + title.hashCode();
+
+    hashCode = hashCode * 8191 + ((isSetType()) ? 131071 : 524287);
+    if (isSetType())
+      hashCode = hashCode * 8191 + type.getValue();
 
     hashCode = hashCode * 8191 + ((isSetSeries()) ? 131071 : 524287);
     if (isSetSeries())
@@ -307,6 +389,16 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
     }
     if (isSetTitle()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.title, other.title);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = java.lang.Boolean.valueOf(isSetType()).compareTo(other.isSetType());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetType()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.type, other.type);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -346,6 +438,14 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
       sb.append("null");
     } else {
       sb.append(this.title);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("type:");
+    if (this.type == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.type);
     }
     first = false;
     if (!first) sb.append(", ");
@@ -407,7 +507,15 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // SERIES
+          case 2: // TYPE
+            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+              struct.type = br.com.investtools.radar.api.PieChartType.findByValue(iprot.readI32());
+              struct.setTypeIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 3: // SERIES
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
                 org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
@@ -446,6 +554,11 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
         oprot.writeString(struct.title);
         oprot.writeFieldEnd();
       }
+      if (struct.type != null) {
+        oprot.writeFieldBegin(TYPE_FIELD_DESC);
+        oprot.writeI32(struct.type.getValue());
+        oprot.writeFieldEnd();
+      }
       if (struct.series != null) {
         oprot.writeFieldBegin(SERIES_FIELD_DESC);
         {
@@ -479,12 +592,18 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
       if (struct.isSetTitle()) {
         optionals.set(0);
       }
-      if (struct.isSetSeries()) {
+      if (struct.isSetType()) {
         optionals.set(1);
       }
-      oprot.writeBitSet(optionals, 2);
+      if (struct.isSetSeries()) {
+        optionals.set(2);
+      }
+      oprot.writeBitSet(optionals, 3);
       if (struct.isSetTitle()) {
         oprot.writeString(struct.title);
+      }
+      if (struct.isSetType()) {
+        oprot.writeI32(struct.type.getValue());
       }
       if (struct.isSetSeries()) {
         {
@@ -500,12 +619,16 @@ public class PieChart implements org.apache.thrift.TBase<PieChart, PieChart._Fie
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, PieChart struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(2);
+      java.util.BitSet incoming = iprot.readBitSet(3);
       if (incoming.get(0)) {
         struct.title = iprot.readString();
         struct.setTitleIsSet(true);
       }
       if (incoming.get(1)) {
+        struct.type = br.com.investtools.radar.api.PieChartType.findByValue(iprot.readI32());
+        struct.setTypeIsSet(true);
+      }
+      if (incoming.get(2)) {
         {
           org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
           struct.series = new java.util.ArrayList<PieSeries>(_list5.size);

@@ -36,6 +36,7 @@
 <a href="#Struct_LineSeries">LineSeries</a><br/>
 <a href="#Enum_LineSeriesType">LineSeriesType</a><br/>
 <a href="#Struct_PieChart">PieChart</a><br/>
+<a href="#Enum_PieChartType">PieChartType</a><br/>
 <a href="#Struct_PieSeries">PieSeries</a><br/>
 <a href="#Struct_Point">Point</a><br/>
 <a href="#Struct_Portfolio">Portfolio</a><br/>
@@ -56,6 +57,13 @@
 <td></code></td>
 </tr></table>
 <hr/><h2 id="Enumerations">Enumerations</h2>
+<div class="definition"><h3 id="Enum_PieChartType">Enumeration: PieChartType</h3>
+<br/><table class="table-bordered table-striped table-condensed">
+<tr><td><code>PERCENT</code></td><td><code>0</code></td><td>
+</td></tr>
+<tr><td><code>VALUE</code></td><td><code>1</code></td><td>
+</td></tr>
+</table></div>
 <div class="definition"><h3 id="Enum_LineSeriesType">Enumeration: LineSeriesType</h3>
 <br/><table class="table-bordered table-striped table-condensed">
 <tr><td><code>LINE</code></td><td><code>0</code></td><td>
@@ -112,7 +120,8 @@
 </table><br/></div><div class="definition"><h3 id="Struct_PieChart">Struct: PieChart</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>title</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>series</td><td><code>list&lt;<code><a href="#Struct_PieSeries">PieSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>type</td><td><code><a href="#Enum_PieChartType">PieChartType</a></code></td><td></td><td>default</td><td><code><code><a href="#Const_PieChartType.VALUE">PieChartType.VALUE</a></code></code></td></tr>
+<tr><td>3</td><td>series</td><td><code>list&lt;<code><a href="#Struct_PieSeries">PieSeries</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_LineSeries">Struct: LineSeries</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>

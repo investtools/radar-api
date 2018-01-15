@@ -10,6 +10,13 @@ require 'radar/api/common_types'
 
 module Radar
   module Api
+    module PieChartType
+      PERCENT = 0
+      VALUE = 1
+      VALUE_MAP = {0 => "PERCENT", 1 => "VALUE"}
+      VALID_VALUES = Set.new([PERCENT, VALUE]).freeze
+    end
+
     module LineSeriesType
       LINE = 0
       AREA = 1
@@ -83,16 +90,21 @@ module Radar
     class PieChart
       include ::Thrift::Struct, ::Thrift::Struct_Union
       TITLE = 1
-      SERIES = 2
+      TYPE = 2
+      SERIES = 3
 
       FIELDS = {
         TITLE => {:type => ::Thrift::Types::STRING, :name => 'title'},
+        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :default =>         1, :enum_class => ::Radar::Api::PieChartType},
         SERIES => {:type => ::Thrift::Types::LIST, :name => 'series', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::PieSeries}}
       }
 
       def struct_fields; FIELDS; end
 
       def validate
+        unless @type.nil? || ::Radar::Api::PieChartType::VALID_VALUES.include?(@type)
+          raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Invalid value of field type!')
+        end
       end
 
       ::Thrift::Struct.generate_accessors self
