@@ -16,6 +16,7 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
   private static final org.apache.thrift.protocol.TField NAV_FIELD_DESC = new org.apache.thrift.protocol.TField("nav", org.apache.thrift.protocol.TType.DOUBLE, (short)4);
   private static final org.apache.thrift.protocol.TField CASH_FIELD_DESC = new org.apache.thrift.protocol.TField("cash", org.apache.thrift.protocol.TType.DOUBLE, (short)5);
   private static final org.apache.thrift.protocol.TField PROVISIONS_FIELD_DESC = new org.apache.thrift.protocol.TField("provisions", org.apache.thrift.protocol.TType.LIST, (short)6);
+  private static final org.apache.thrift.protocol.TField VALUE_FIELD_DESC = new org.apache.thrift.protocol.TField("value", org.apache.thrift.protocol.TType.DOUBLE, (short)7);
 
   private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new PortfolioStandardSchemeFactory();
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new PortfolioTupleSchemeFactory();
@@ -29,6 +30,7 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
    * Criado na versão 0.2.1
    */
   public java.util.List<Provision> provisions; // required
+  public double value; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -40,7 +42,8 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
     /**
      * Criado na versão 0.2.1
      */
-    PROVISIONS((short)6, "provisions");
+    PROVISIONS((short)6, "provisions"),
+    VALUE((short)7, "value");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -67,6 +70,8 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
           return CASH;
         case 6: // PROVISIONS
           return PROVISIONS;
+        case 7: // VALUE
+          return VALUE;
         default:
           return null;
       }
@@ -111,6 +116,7 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
   private static final int __RENTABILITY_ISSET_ID = 1;
   private static final int __NAV_ISSET_ID = 2;
   private static final int __CASH_ISSET_ID = 3;
+  private static final int __VALUE_ISSET_ID = 4;
   private byte __isset_bitfield = 0;
   public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
@@ -129,6 +135,8 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
     tmpMap.put(_Fields.PROVISIONS, new org.apache.thrift.meta_data.FieldMetaData("provisions", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
             new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Provision.class))));
+    tmpMap.put(_Fields.VALUE, new org.apache.thrift.meta_data.FieldMetaData("value", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Portfolio.class, metaDataMap);
   }
@@ -142,7 +150,8 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
     double rentability,
     double nav,
     double cash,
-    java.util.List<Provision> provisions)
+    java.util.List<Provision> provisions,
+    double value)
   {
     this();
     this.date = date;
@@ -155,6 +164,8 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
     this.cash = cash;
     setCashIsSet(true);
     this.provisions = provisions;
+    this.value = value;
+    setValueIsSet(true);
   }
 
   /**
@@ -180,6 +191,7 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
       }
       this.provisions = __this__provisions;
     }
+    this.value = other.value;
   }
 
   public Portfolio deepCopy() {
@@ -198,6 +210,8 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
     setCashIsSet(false);
     this.cash = 0.0;
     this.provisions = null;
+    setValueIsSet(false);
+    this.value = 0.0;
   }
 
   public long getDate() {
@@ -376,6 +390,29 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
     }
   }
 
+  public double getValue() {
+    return this.value;
+  }
+
+  public Portfolio setValue(double value) {
+    this.value = value;
+    setValueIsSet(true);
+    return this;
+  }
+
+  public void unsetValue() {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __VALUE_ISSET_ID);
+  }
+
+  /** Returns true if field value is set (has been assigned a value) and false otherwise */
+  public boolean isSetValue() {
+    return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __VALUE_ISSET_ID);
+  }
+
+  public void setValueIsSet(boolean value) {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __VALUE_ISSET_ID, value);
+  }
+
   public void setFieldValue(_Fields field, java.lang.Object value) {
     switch (field) {
     case DATE:
@@ -426,6 +463,14 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
       }
       break;
 
+    case VALUE:
+      if (value == null) {
+        unsetValue();
+      } else {
+        setValue((java.lang.Double)value);
+      }
+      break;
+
     }
   }
 
@@ -448,6 +493,9 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
 
     case PROVISIONS:
       return getProvisions();
+
+    case VALUE:
+      return getValue();
 
     }
     throw new java.lang.IllegalStateException();
@@ -472,6 +520,8 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
       return isSetCash();
     case PROVISIONS:
       return isSetProvisions();
+    case VALUE:
+      return isSetValue();
     }
     throw new java.lang.IllegalStateException();
   }
@@ -545,6 +595,15 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
         return false;
     }
 
+    boolean this_present_value = true;
+    boolean that_present_value = true;
+    if (this_present_value || that_present_value) {
+      if (!(this_present_value && that_present_value))
+        return false;
+      if (this.value != that.value)
+        return false;
+    }
+
     return true;
   }
 
@@ -567,6 +626,8 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
     hashCode = hashCode * 8191 + ((isSetProvisions()) ? 131071 : 524287);
     if (isSetProvisions())
       hashCode = hashCode * 8191 + provisions.hashCode();
+
+    hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(value);
 
     return hashCode;
   }
@@ -639,6 +700,16 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
         return lastComparison;
       }
     }
+    lastComparison = java.lang.Boolean.valueOf(isSetValue()).compareTo(other.isSetValue());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetValue()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.value, other.value);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -689,6 +760,10 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
     } else {
       sb.append(this.provisions);
     }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("value:");
+    sb.append(this.value);
     first = false;
     sb.append(")");
     return sb.toString();
@@ -805,6 +880,14 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 7: // VALUE
+            if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
+              struct.value = iprot.readDouble();
+              struct.setValueIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -856,6 +939,9 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
         }
         oprot.writeFieldEnd();
       }
+      oprot.writeFieldBegin(VALUE_FIELD_DESC);
+      oprot.writeDouble(struct.value);
+      oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -892,7 +978,10 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
       if (struct.isSetProvisions()) {
         optionals.set(5);
       }
-      oprot.writeBitSet(optionals, 6);
+      if (struct.isSetValue()) {
+        optionals.set(6);
+      }
+      oprot.writeBitSet(optionals, 7);
       if (struct.isSetDate()) {
         oprot.writeI64(struct.date);
       }
@@ -923,12 +1012,15 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
           }
         }
       }
+      if (struct.isSetValue()) {
+        oprot.writeDouble(struct.value);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Portfolio struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(6);
+      java.util.BitSet incoming = iprot.readBitSet(7);
       if (incoming.get(0)) {
         struct.date = iprot.readI64();
         struct.setDateIsSet(true);
@@ -972,6 +1064,10 @@ public class Portfolio implements org.apache.thrift.TBase<Portfolio, Portfolio._
           }
         }
         struct.setProvisionsIsSet(true);
+      }
+      if (incoming.get(6)) {
+        struct.value = iprot.readDouble();
+        struct.setValueIsSet(true);
       }
     }
   }

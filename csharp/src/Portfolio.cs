@@ -27,6 +27,7 @@ public partial class Portfolio : TBase
   private double _nav;
   private double _cash;
   private List<Provision> _provisions;
+  private double _value;
 
   public long Date
   {
@@ -109,6 +110,19 @@ public partial class Portfolio : TBase
     }
   }
 
+  public double Value
+  {
+    get
+    {
+      return _value;
+    }
+    set
+    {
+      __isset.@value = true;
+      this._value = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -121,6 +135,7 @@ public partial class Portfolio : TBase
     public bool nav;
     public bool cash;
     public bool provisions;
+    public bool @value;
   }
 
   public Portfolio() {
@@ -201,6 +216,13 @@ public partial class Portfolio : TBase
                 }
                 iprot.ReadListEnd();
               }
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 7:
+            if (field.Type == TType.Double) {
+              Value = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -288,6 +310,14 @@ public partial class Portfolio : TBase
         }
         oprot.WriteFieldEnd();
       }
+      if (__isset.@value) {
+        field.Name = "value";
+        field.Type = TType.Double;
+        field.ID = 7;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteDouble(Value);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -335,6 +365,12 @@ public partial class Portfolio : TBase
       __first = false;
       __sb.Append("Provisions: ");
       __sb.Append(Provisions);
+    }
+    if (__isset.@value) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Value: ");
+      __sb.Append(Value);
     }
     __sb.Append(")");
     return __sb.ToString();

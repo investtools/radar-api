@@ -13,6 +13,7 @@ struct Point {
 struct PieSeries {
   1: string name
   2: double value
+  3: double percent
 }
 
 struct PieChart {
@@ -165,6 +166,7 @@ struct Portfolio {
    * Criado na versão 0.2.1
    */
   6: list<Provision> provisions
+  7: double value
 }
 
 struct AnalyzerConfig {
