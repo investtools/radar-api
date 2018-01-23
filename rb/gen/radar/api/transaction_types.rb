@@ -24,6 +24,13 @@ module Radar
       VALID_VALUES = Set.new([BUY, SELL]).freeze
     end
 
+    module SecurityLendingAndBorrowingType
+      LENDER = 1
+      BORROWER = 2
+      VALUE_MAP = {1 => "LENDER", 2 => "BORROWER"}
+      VALID_VALUES = Set.new([LENDER, BORROWER]).freeze
+    end
+
     class StockSell
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
@@ -113,7 +120,7 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class StockLending
+    class SecurityLendingAndBorrowing
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
       ACCOUNT = 2
@@ -121,6 +128,7 @@ module Radar
       SHARES = 4
       RATE = 5
       DUE = 6
+      TYPE = 7
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
@@ -128,36 +136,45 @@ module Radar
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         RATE => {:type => ::Thrift::Types::DOUBLE, :name => 'rate'},
-        DUE => {:type => ::Thrift::Types::I64, :name => 'due'}
+        DUE => {:type => ::Thrift::Types::I64, :name => 'due'},
+        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::Api::SecurityLendingAndBorrowingType}
       }
 
       def struct_fields; FIELDS; end
 
       def validate
+        unless @type.nil? || ::Radar::Api::SecurityLendingAndBorrowingType::VALID_VALUES.include?(@type)
+          raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Invalid value of field type!')
+        end
       end
 
       ::Thrift::Struct.generate_accessors self
     end
 
-    class StockLendingReturning
+    class SecurityLendingAndBorrowingReturning
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
       ACCOUNT = 2
       STOCK = 3
       SHARES = 4
-      CREDIT = 5
+      VALUE = 5
+      TYPE = 6
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
         ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
-        CREDIT => {:type => ::Thrift::Types::DOUBLE, :name => 'credit'}
+        VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'},
+        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::Api::SecurityLendingAndBorrowingType}
       }
 
       def struct_fields; FIELDS; end
 
       def validate
+        unless @type.nil? || ::Radar::Api::SecurityLendingAndBorrowingType::VALID_VALUES.include?(@type)
+          raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Invalid value of field type!')
+        end
       end
 
       ::Thrift::Struct.generate_accessors self
@@ -194,12 +211,12 @@ module Radar
           Transaction.new(:stock_sell, val)
         end
 
-        def stock_lending(val)
-          Transaction.new(:stock_lending, val)
+        def slb(val)
+          Transaction.new(:slb, val)
         end
 
-        def stock_lending_returning(val)
-          Transaction.new(:stock_lending_returning, val)
+        def slbr(val)
+          Transaction.new(:slbr, val)
         end
 
         def stock_commission_expense(val)
@@ -213,16 +230,16 @@ module Radar
 
       STOCK_BUY = 1
       STOCK_SELL = 2
-      STOCK_LENDING = 3
-      STOCK_LENDING_RETURNING = 4
+      SLB = 3
+      SLBR = 4
       STOCK_COMMISSION_EXPENSE = 5
       STOCK_OPTION = 6
 
       FIELDS = {
         STOCK_BUY => {:type => ::Thrift::Types::STRUCT, :name => 'stock_buy', :class => ::Radar::Api::StockBuy, :optional => true},
         STOCK_SELL => {:type => ::Thrift::Types::STRUCT, :name => 'stock_sell', :class => ::Radar::Api::StockSell, :optional => true},
-        STOCK_LENDING => {:type => ::Thrift::Types::STRUCT, :name => 'stock_lending', :class => ::Radar::Api::StockLending, :optional => true},
-        STOCK_LENDING_RETURNING => {:type => ::Thrift::Types::STRUCT, :name => 'stock_lending_returning', :class => ::Radar::Api::StockLendingReturning, :optional => true},
+        SLB => {:type => ::Thrift::Types::STRUCT, :name => 'slb', :class => ::Radar::Api::SecurityLendingAndBorrowing, :optional => true},
+        SLBR => {:type => ::Thrift::Types::STRUCT, :name => 'slbr', :class => ::Radar::Api::SecurityLendingAndBorrowingReturning, :optional => true},
         STOCK_COMMISSION_EXPENSE => {:type => ::Thrift::Types::STRUCT, :name => 'stock_commission_expense', :class => ::Radar::Api::CommissionExpense, :optional => true},
         STOCK_OPTION => {:type => ::Thrift::Types::STRUCT, :name => 'stock_option', :class => ::Radar::Api::StockOption, :optional => true}
       }

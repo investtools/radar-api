@@ -7,23 +7,29 @@
 package br.com.investtools.radar.api;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class StockLendingReturning implements org.apache.thrift.TBase<StockLendingReturning, StockLendingReturning._Fields>, java.io.Serializable, Cloneable, Comparable<StockLendingReturning> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("StockLendingReturning");
+public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.TBase<SecurityLendingAndBorrowingReturning, SecurityLendingAndBorrowingReturning._Fields>, java.io.Serializable, Cloneable, Comparable<SecurityLendingAndBorrowingReturning> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("SecurityLendingAndBorrowingReturning");
 
   private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)1);
   private static final org.apache.thrift.protocol.TField ACCOUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("account", org.apache.thrift.protocol.TType.STRING, (short)2);
   private static final org.apache.thrift.protocol.TField STOCK_FIELD_DESC = new org.apache.thrift.protocol.TField("stock", org.apache.thrift.protocol.TType.STRUCT, (short)3);
   private static final org.apache.thrift.protocol.TField SHARES_FIELD_DESC = new org.apache.thrift.protocol.TField("shares", org.apache.thrift.protocol.TType.I32, (short)4);
-  private static final org.apache.thrift.protocol.TField CREDIT_FIELD_DESC = new org.apache.thrift.protocol.TField("credit", org.apache.thrift.protocol.TType.DOUBLE, (short)5);
+  private static final org.apache.thrift.protocol.TField VALUE_FIELD_DESC = new org.apache.thrift.protocol.TField("value", org.apache.thrift.protocol.TType.DOUBLE, (short)5);
+  private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)6);
 
-  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new StockLendingReturningStandardSchemeFactory();
-  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new StockLendingReturningTupleSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new SecurityLendingAndBorrowingReturningStandardSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new SecurityLendingAndBorrowingReturningTupleSchemeFactory();
 
   public long date; // required
   public java.lang.String account; // required
   public br.com.investtools.radar.api.StockId stock; // required
   public int shares; // required
-  public double credit; // required
+  public double value; // required
+  /**
+   * 
+   * @see SecurityLendingAndBorrowingType
+   */
+  public SecurityLendingAndBorrowingType type; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -31,7 +37,12 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
     ACCOUNT((short)2, "account"),
     STOCK((short)3, "stock"),
     SHARES((short)4, "shares"),
-    CREDIT((short)5, "credit");
+    VALUE((short)5, "value"),
+    /**
+     * 
+     * @see SecurityLendingAndBorrowingType
+     */
+    TYPE((short)6, "type");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -54,8 +65,10 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
           return STOCK;
         case 4: // SHARES
           return SHARES;
-        case 5: // CREDIT
-          return CREDIT;
+        case 5: // VALUE
+          return VALUE;
+        case 6: // TYPE
+          return TYPE;
         default:
           return null;
       }
@@ -98,7 +111,7 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
   // isset id assignments
   private static final int __DATE_ISSET_ID = 0;
   private static final int __SHARES_ISSET_ID = 1;
-  private static final int __CREDIT_ISSET_ID = 2;
+  private static final int __VALUE_ISSET_ID = 2;
   private byte __isset_bitfield = 0;
   public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
@@ -111,21 +124,24 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.StockId.class)));
     tmpMap.put(_Fields.SHARES, new org.apache.thrift.meta_data.FieldMetaData("shares", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
-    tmpMap.put(_Fields.CREDIT, new org.apache.thrift.meta_data.FieldMetaData("credit", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+    tmpMap.put(_Fields.VALUE, new org.apache.thrift.meta_data.FieldMetaData("value", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
+    tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.EnumMetaData(org.apache.thrift.protocol.TType.ENUM, SecurityLendingAndBorrowingType.class)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(StockLendingReturning.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(SecurityLendingAndBorrowingReturning.class, metaDataMap);
   }
 
-  public StockLendingReturning() {
+  public SecurityLendingAndBorrowingReturning() {
   }
 
-  public StockLendingReturning(
+  public SecurityLendingAndBorrowingReturning(
     long date,
     java.lang.String account,
     br.com.investtools.radar.api.StockId stock,
     int shares,
-    double credit)
+    double value,
+    SecurityLendingAndBorrowingType type)
   {
     this();
     this.date = date;
@@ -134,14 +150,15 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
     this.stock = stock;
     this.shares = shares;
     setSharesIsSet(true);
-    this.credit = credit;
-    setCreditIsSet(true);
+    this.value = value;
+    setValueIsSet(true);
+    this.type = type;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public StockLendingReturning(StockLendingReturning other) {
+  public SecurityLendingAndBorrowingReturning(SecurityLendingAndBorrowingReturning other) {
     __isset_bitfield = other.__isset_bitfield;
     this.date = other.date;
     if (other.isSetAccount()) {
@@ -151,11 +168,14 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
       this.stock = new br.com.investtools.radar.api.StockId(other.stock);
     }
     this.shares = other.shares;
-    this.credit = other.credit;
+    this.value = other.value;
+    if (other.isSetType()) {
+      this.type = other.type;
+    }
   }
 
-  public StockLendingReturning deepCopy() {
-    return new StockLendingReturning(this);
+  public SecurityLendingAndBorrowingReturning deepCopy() {
+    return new SecurityLendingAndBorrowingReturning(this);
   }
 
   @Override
@@ -166,15 +186,16 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
     this.stock = null;
     setSharesIsSet(false);
     this.shares = 0;
-    setCreditIsSet(false);
-    this.credit = 0.0;
+    setValueIsSet(false);
+    this.value = 0.0;
+    this.type = null;
   }
 
   public long getDate() {
     return this.date;
   }
 
-  public StockLendingReturning setDate(long date) {
+  public SecurityLendingAndBorrowingReturning setDate(long date) {
     this.date = date;
     setDateIsSet(true);
     return this;
@@ -197,7 +218,7 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
     return this.account;
   }
 
-  public StockLendingReturning setAccount(java.lang.String account) {
+  public SecurityLendingAndBorrowingReturning setAccount(java.lang.String account) {
     this.account = account;
     return this;
   }
@@ -221,7 +242,7 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
     return this.stock;
   }
 
-  public StockLendingReturning setStock(br.com.investtools.radar.api.StockId stock) {
+  public SecurityLendingAndBorrowingReturning setStock(br.com.investtools.radar.api.StockId stock) {
     this.stock = stock;
     return this;
   }
@@ -245,7 +266,7 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
     return this.shares;
   }
 
-  public StockLendingReturning setShares(int shares) {
+  public SecurityLendingAndBorrowingReturning setShares(int shares) {
     this.shares = shares;
     setSharesIsSet(true);
     return this;
@@ -264,27 +285,59 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
     __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __SHARES_ISSET_ID, value);
   }
 
-  public double getCredit() {
-    return this.credit;
+  public double getValue() {
+    return this.value;
   }
 
-  public StockLendingReturning setCredit(double credit) {
-    this.credit = credit;
-    setCreditIsSet(true);
+  public SecurityLendingAndBorrowingReturning setValue(double value) {
+    this.value = value;
+    setValueIsSet(true);
     return this;
   }
 
-  public void unsetCredit() {
-    __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __CREDIT_ISSET_ID);
+  public void unsetValue() {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __VALUE_ISSET_ID);
   }
 
-  /** Returns true if field credit is set (has been assigned a value) and false otherwise */
-  public boolean isSetCredit() {
-    return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __CREDIT_ISSET_ID);
+  /** Returns true if field value is set (has been assigned a value) and false otherwise */
+  public boolean isSetValue() {
+    return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __VALUE_ISSET_ID);
   }
 
-  public void setCreditIsSet(boolean value) {
-    __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __CREDIT_ISSET_ID, value);
+  public void setValueIsSet(boolean value) {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __VALUE_ISSET_ID, value);
+  }
+
+  /**
+   * 
+   * @see SecurityLendingAndBorrowingType
+   */
+  public SecurityLendingAndBorrowingType getType() {
+    return this.type;
+  }
+
+  /**
+   * 
+   * @see SecurityLendingAndBorrowingType
+   */
+  public SecurityLendingAndBorrowingReturning setType(SecurityLendingAndBorrowingType type) {
+    this.type = type;
+    return this;
+  }
+
+  public void unsetType() {
+    this.type = null;
+  }
+
+  /** Returns true if field type is set (has been assigned a value) and false otherwise */
+  public boolean isSetType() {
+    return this.type != null;
+  }
+
+  public void setTypeIsSet(boolean value) {
+    if (!value) {
+      this.type = null;
+    }
   }
 
   public void setFieldValue(_Fields field, java.lang.Object value) {
@@ -321,11 +374,19 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
       }
       break;
 
-    case CREDIT:
+    case VALUE:
       if (value == null) {
-        unsetCredit();
+        unsetValue();
       } else {
-        setCredit((java.lang.Double)value);
+        setValue((java.lang.Double)value);
+      }
+      break;
+
+    case TYPE:
+      if (value == null) {
+        unsetType();
+      } else {
+        setType((SecurityLendingAndBorrowingType)value);
       }
       break;
 
@@ -346,8 +407,11 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
     case SHARES:
       return getShares();
 
-    case CREDIT:
-      return getCredit();
+    case VALUE:
+      return getValue();
+
+    case TYPE:
+      return getType();
 
     }
     throw new java.lang.IllegalStateException();
@@ -368,8 +432,10 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
       return isSetStock();
     case SHARES:
       return isSetShares();
-    case CREDIT:
-      return isSetCredit();
+    case VALUE:
+      return isSetValue();
+    case TYPE:
+      return isSetType();
     }
     throw new java.lang.IllegalStateException();
   }
@@ -378,12 +444,12 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
   public boolean equals(java.lang.Object that) {
     if (that == null)
       return false;
-    if (that instanceof StockLendingReturning)
-      return this.equals((StockLendingReturning)that);
+    if (that instanceof SecurityLendingAndBorrowingReturning)
+      return this.equals((SecurityLendingAndBorrowingReturning)that);
     return false;
   }
 
-  public boolean equals(StockLendingReturning that) {
+  public boolean equals(SecurityLendingAndBorrowingReturning that) {
     if (that == null)
       return false;
     if (this == that)
@@ -425,12 +491,21 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
         return false;
     }
 
-    boolean this_present_credit = true;
-    boolean that_present_credit = true;
-    if (this_present_credit || that_present_credit) {
-      if (!(this_present_credit && that_present_credit))
+    boolean this_present_value = true;
+    boolean that_present_value = true;
+    if (this_present_value || that_present_value) {
+      if (!(this_present_value && that_present_value))
         return false;
-      if (this.credit != that.credit)
+      if (this.value != that.value)
+        return false;
+    }
+
+    boolean this_present_type = true && this.isSetType();
+    boolean that_present_type = true && that.isSetType();
+    if (this_present_type || that_present_type) {
+      if (!(this_present_type && that_present_type))
+        return false;
+      if (!this.type.equals(that.type))
         return false;
     }
 
@@ -453,13 +528,17 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
 
     hashCode = hashCode * 8191 + shares;
 
-    hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(credit);
+    hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(value);
+
+    hashCode = hashCode * 8191 + ((isSetType()) ? 131071 : 524287);
+    if (isSetType())
+      hashCode = hashCode * 8191 + type.getValue();
 
     return hashCode;
   }
 
   @Override
-  public int compareTo(StockLendingReturning other) {
+  public int compareTo(SecurityLendingAndBorrowingReturning other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -506,12 +585,22 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
         return lastComparison;
       }
     }
-    lastComparison = java.lang.Boolean.valueOf(isSetCredit()).compareTo(other.isSetCredit());
+    lastComparison = java.lang.Boolean.valueOf(isSetValue()).compareTo(other.isSetValue());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetCredit()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.credit, other.credit);
+    if (isSetValue()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.value, other.value);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = java.lang.Boolean.valueOf(isSetType()).compareTo(other.isSetType());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetType()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.type, other.type);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -533,7 +622,7 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
 
   @Override
   public java.lang.String toString() {
-    java.lang.StringBuilder sb = new java.lang.StringBuilder("StockLendingReturning(");
+    java.lang.StringBuilder sb = new java.lang.StringBuilder("SecurityLendingAndBorrowingReturning(");
     boolean first = true;
 
     sb.append("date:");
@@ -560,8 +649,16 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
     sb.append(this.shares);
     first = false;
     if (!first) sb.append(", ");
-    sb.append("credit:");
-    sb.append(this.credit);
+    sb.append("value:");
+    sb.append(this.value);
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("type:");
+    if (this.type == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.type);
+    }
     first = false;
     sb.append(")");
     return sb.toString();
@@ -593,15 +690,15 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
     }
   }
 
-  private static class StockLendingReturningStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public StockLendingReturningStandardScheme getScheme() {
-      return new StockLendingReturningStandardScheme();
+  private static class SecurityLendingAndBorrowingReturningStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public SecurityLendingAndBorrowingReturningStandardScheme getScheme() {
+      return new SecurityLendingAndBorrowingReturningStandardScheme();
     }
   }
 
-  private static class StockLendingReturningStandardScheme extends org.apache.thrift.scheme.StandardScheme<StockLendingReturning> {
+  private static class SecurityLendingAndBorrowingReturningStandardScheme extends org.apache.thrift.scheme.StandardScheme<SecurityLendingAndBorrowingReturning> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, StockLendingReturning struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, SecurityLendingAndBorrowingReturning struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -644,10 +741,18 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 5: // CREDIT
+          case 5: // VALUE
             if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
-              struct.credit = iprot.readDouble();
-              struct.setCreditIsSet(true);
+              struct.value = iprot.readDouble();
+              struct.setValueIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 6: // TYPE
+            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+              struct.type = br.com.investtools.radar.api.SecurityLendingAndBorrowingType.findByValue(iprot.readI32());
+              struct.setTypeIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -663,7 +768,7 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, StockLendingReturning struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, SecurityLendingAndBorrowingReturning struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -683,25 +788,30 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
       oprot.writeFieldBegin(SHARES_FIELD_DESC);
       oprot.writeI32(struct.shares);
       oprot.writeFieldEnd();
-      oprot.writeFieldBegin(CREDIT_FIELD_DESC);
-      oprot.writeDouble(struct.credit);
+      oprot.writeFieldBegin(VALUE_FIELD_DESC);
+      oprot.writeDouble(struct.value);
       oprot.writeFieldEnd();
+      if (struct.type != null) {
+        oprot.writeFieldBegin(TYPE_FIELD_DESC);
+        oprot.writeI32(struct.type.getValue());
+        oprot.writeFieldEnd();
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
 
   }
 
-  private static class StockLendingReturningTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public StockLendingReturningTupleScheme getScheme() {
-      return new StockLendingReturningTupleScheme();
+  private static class SecurityLendingAndBorrowingReturningTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public SecurityLendingAndBorrowingReturningTupleScheme getScheme() {
+      return new SecurityLendingAndBorrowingReturningTupleScheme();
     }
   }
 
-  private static class StockLendingReturningTupleScheme extends org.apache.thrift.scheme.TupleScheme<StockLendingReturning> {
+  private static class SecurityLendingAndBorrowingReturningTupleScheme extends org.apache.thrift.scheme.TupleScheme<SecurityLendingAndBorrowingReturning> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, StockLendingReturning struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, SecurityLendingAndBorrowingReturning struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet optionals = new java.util.BitSet();
       if (struct.isSetDate()) {
@@ -716,10 +826,13 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
       if (struct.isSetShares()) {
         optionals.set(3);
       }
-      if (struct.isSetCredit()) {
+      if (struct.isSetValue()) {
         optionals.set(4);
       }
-      oprot.writeBitSet(optionals, 5);
+      if (struct.isSetType()) {
+        optionals.set(5);
+      }
+      oprot.writeBitSet(optionals, 6);
       if (struct.isSetDate()) {
         oprot.writeI64(struct.date);
       }
@@ -732,15 +845,18 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
       if (struct.isSetShares()) {
         oprot.writeI32(struct.shares);
       }
-      if (struct.isSetCredit()) {
-        oprot.writeDouble(struct.credit);
+      if (struct.isSetValue()) {
+        oprot.writeDouble(struct.value);
+      }
+      if (struct.isSetType()) {
+        oprot.writeI32(struct.type.getValue());
       }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, StockLendingReturning struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, SecurityLendingAndBorrowingReturning struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(5);
+      java.util.BitSet incoming = iprot.readBitSet(6);
       if (incoming.get(0)) {
         struct.date = iprot.readI64();
         struct.setDateIsSet(true);
@@ -759,8 +875,12 @@ public class StockLendingReturning implements org.apache.thrift.TBase<StockLendi
         struct.setSharesIsSet(true);
       }
       if (incoming.get(4)) {
-        struct.credit = iprot.readDouble();
-        struct.setCreditIsSet(true);
+        struct.value = iprot.readDouble();
+        struct.setValueIsSet(true);
+      }
+      if (incoming.get(5)) {
+        struct.type = br.com.investtools.radar.api.SecurityLendingAndBorrowingType.findByValue(iprot.readI32());
+        struct.setTypeIsSet(true);
       }
     }
   }

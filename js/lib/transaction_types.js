@@ -21,6 +21,10 @@ ttypes.StockOptionTransactionType = {
   'BUY' : 1,
   'SELL' : 2
 };
+ttypes.SecurityLendingAndBorrowingType = {
+  'LENDER' : 1,
+  'BORROWER' : 2
+};
 var StockSell = module.exports.StockSell = function(args) {
   this.date = null;
   this.account = null;
@@ -430,13 +434,14 @@ StockOption.prototype.write = function(output) {
   return;
 };
 
-var StockLending = module.exports.StockLending = function(args) {
+var SecurityLendingAndBorrowing = module.exports.SecurityLendingAndBorrowing = function(args) {
   this.date = null;
   this.account = null;
   this.stock = null;
   this.shares = null;
   this.rate = null;
   this.due = null;
+  this.type = null;
   if (args) {
     if (args.date !== undefined && args.date !== null) {
       this.date = args.date;
@@ -456,10 +461,13 @@ var StockLending = module.exports.StockLending = function(args) {
     if (args.due !== undefined && args.due !== null) {
       this.due = args.due;
     }
+    if (args.type !== undefined && args.type !== null) {
+      this.type = args.type;
+    }
   }
 };
-StockLending.prototype = {};
-StockLending.prototype.read = function(input) {
+SecurityLendingAndBorrowing.prototype = {};
+SecurityLendingAndBorrowing.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -515,6 +523,13 @@ StockLending.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -524,8 +539,8 @@ StockLending.prototype.read = function(input) {
   return;
 };
 
-StockLending.prototype.write = function(output) {
-  output.writeStructBegin('StockLending');
+SecurityLendingAndBorrowing.prototype.write = function(output) {
+  output.writeStructBegin('SecurityLendingAndBorrowing');
   if (this.date !== null && this.date !== undefined) {
     output.writeFieldBegin('date', Thrift.Type.I64, 1);
     output.writeI64(this.date);
@@ -556,17 +571,23 @@ StockLending.prototype.write = function(output) {
     output.writeI64(this.due);
     output.writeFieldEnd();
   }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 7);
+    output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
 };
 
-var StockLendingReturning = module.exports.StockLendingReturning = function(args) {
+var SecurityLendingAndBorrowingReturning = module.exports.SecurityLendingAndBorrowingReturning = function(args) {
   this.date = null;
   this.account = null;
   this.stock = null;
   this.shares = null;
-  this.credit = null;
+  this.value = null;
+  this.type = null;
   if (args) {
     if (args.date !== undefined && args.date !== null) {
       this.date = args.date;
@@ -580,13 +601,16 @@ var StockLendingReturning = module.exports.StockLendingReturning = function(args
     if (args.shares !== undefined && args.shares !== null) {
       this.shares = args.shares;
     }
-    if (args.credit !== undefined && args.credit !== null) {
-      this.credit = args.credit;
+    if (args.value !== undefined && args.value !== null) {
+      this.value = args.value;
+    }
+    if (args.type !== undefined && args.type !== null) {
+      this.type = args.type;
     }
   }
 };
-StockLendingReturning.prototype = {};
-StockLendingReturning.prototype.read = function(input) {
+SecurityLendingAndBorrowingReturning.prototype = {};
+SecurityLendingAndBorrowingReturning.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -630,7 +654,14 @@ StockLendingReturning.prototype.read = function(input) {
       break;
       case 5:
       if (ftype == Thrift.Type.DOUBLE) {
-        this.credit = input.readDouble();
+        this.value = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 6:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -644,8 +675,8 @@ StockLendingReturning.prototype.read = function(input) {
   return;
 };
 
-StockLendingReturning.prototype.write = function(output) {
-  output.writeStructBegin('StockLendingReturning');
+SecurityLendingAndBorrowingReturning.prototype.write = function(output) {
+  output.writeStructBegin('SecurityLendingAndBorrowingReturning');
   if (this.date !== null && this.date !== undefined) {
     output.writeFieldBegin('date', Thrift.Type.I64, 1);
     output.writeI64(this.date);
@@ -666,9 +697,14 @@ StockLendingReturning.prototype.write = function(output) {
     output.writeI32(this.shares);
     output.writeFieldEnd();
   }
-  if (this.credit !== null && this.credit !== undefined) {
-    output.writeFieldBegin('credit', Thrift.Type.DOUBLE, 5);
-    output.writeDouble(this.credit);
+  if (this.value !== null && this.value !== undefined) {
+    output.writeFieldBegin('value', Thrift.Type.DOUBLE, 5);
+    output.writeDouble(this.value);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 6);
+    output.writeI32(this.type);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -761,8 +797,8 @@ CommissionExpense.prototype.write = function(output) {
 var Transaction = module.exports.Transaction = function(args) {
   this.stock_buy = null;
   this.stock_sell = null;
-  this.stock_lending = null;
-  this.stock_lending_returning = null;
+  this.slb = null;
+  this.slbr = null;
   this.stock_commission_expense = null;
   this.stock_option = null;
   if (args) {
@@ -772,11 +808,11 @@ var Transaction = module.exports.Transaction = function(args) {
     if (args.stock_sell !== undefined && args.stock_sell !== null) {
       this.stock_sell = new ttypes.StockSell(args.stock_sell);
     }
-    if (args.stock_lending !== undefined && args.stock_lending !== null) {
-      this.stock_lending = new ttypes.StockLending(args.stock_lending);
+    if (args.slb !== undefined && args.slb !== null) {
+      this.slb = new ttypes.SecurityLendingAndBorrowing(args.slb);
     }
-    if (args.stock_lending_returning !== undefined && args.stock_lending_returning !== null) {
-      this.stock_lending_returning = new ttypes.StockLendingReturning(args.stock_lending_returning);
+    if (args.slbr !== undefined && args.slbr !== null) {
+      this.slbr = new ttypes.SecurityLendingAndBorrowingReturning(args.slbr);
     }
     if (args.stock_commission_expense !== undefined && args.stock_commission_expense !== null) {
       this.stock_commission_expense = new ttypes.CommissionExpense(args.stock_commission_expense);
@@ -818,16 +854,16 @@ Transaction.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.STRUCT) {
-        this.stock_lending = new ttypes.StockLending();
-        this.stock_lending.read(input);
+        this.slb = new ttypes.SecurityLendingAndBorrowing();
+        this.slb.read(input);
       } else {
         input.skip(ftype);
       }
       break;
       case 4:
       if (ftype == Thrift.Type.STRUCT) {
-        this.stock_lending_returning = new ttypes.StockLendingReturning();
-        this.stock_lending_returning.read(input);
+        this.slbr = new ttypes.SecurityLendingAndBorrowingReturning();
+        this.slbr.read(input);
       } else {
         input.skip(ftype);
       }
@@ -869,14 +905,14 @@ Transaction.prototype.write = function(output) {
     this.stock_sell.write(output);
     output.writeFieldEnd();
   }
-  if (this.stock_lending !== null && this.stock_lending !== undefined) {
-    output.writeFieldBegin('stock_lending', Thrift.Type.STRUCT, 3);
-    this.stock_lending.write(output);
+  if (this.slb !== null && this.slb !== undefined) {
+    output.writeFieldBegin('slb', Thrift.Type.STRUCT, 3);
+    this.slb.write(output);
     output.writeFieldEnd();
   }
-  if (this.stock_lending_returning !== null && this.stock_lending_returning !== undefined) {
-    output.writeFieldBegin('stock_lending_returning', Thrift.Type.STRUCT, 4);
-    this.stock_lending_returning.write(output);
+  if (this.slbr !== null && this.slbr !== undefined) {
+    output.writeFieldBegin('slbr', Thrift.Type.STRUCT, 4);
+    this.slbr.write(output);
     output.writeFieldEnd();
   }
   if (this.stock_commission_expense !== null && this.stock_commission_expense !== undefined) {

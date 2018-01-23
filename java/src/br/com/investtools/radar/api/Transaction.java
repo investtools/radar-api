@@ -11,8 +11,8 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Transaction");
   private static final org.apache.thrift.protocol.TField STOCK_BUY_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_buy", org.apache.thrift.protocol.TType.STRUCT, (short)1);
   private static final org.apache.thrift.protocol.TField STOCK_SELL_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_sell", org.apache.thrift.protocol.TType.STRUCT, (short)2);
-  private static final org.apache.thrift.protocol.TField STOCK_LENDING_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_lending", org.apache.thrift.protocol.TType.STRUCT, (short)3);
-  private static final org.apache.thrift.protocol.TField STOCK_LENDING_RETURNING_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_lending_returning", org.apache.thrift.protocol.TType.STRUCT, (short)4);
+  private static final org.apache.thrift.protocol.TField SLB_FIELD_DESC = new org.apache.thrift.protocol.TField("slb", org.apache.thrift.protocol.TType.STRUCT, (short)3);
+  private static final org.apache.thrift.protocol.TField SLBR_FIELD_DESC = new org.apache.thrift.protocol.TField("slbr", org.apache.thrift.protocol.TType.STRUCT, (short)4);
   private static final org.apache.thrift.protocol.TField STOCK_COMMISSION_EXPENSE_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_commission_expense", org.apache.thrift.protocol.TType.STRUCT, (short)5);
   private static final org.apache.thrift.protocol.TField STOCK_OPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_option", org.apache.thrift.protocol.TType.STRUCT, (short)6);
 
@@ -20,8 +20,8 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     STOCK_BUY((short)1, "stock_buy"),
     STOCK_SELL((short)2, "stock_sell"),
-    STOCK_LENDING((short)3, "stock_lending"),
-    STOCK_LENDING_RETURNING((short)4, "stock_lending_returning"),
+    SLB((short)3, "slb"),
+    SLBR((short)4, "slbr"),
     STOCK_COMMISSION_EXPENSE((short)5, "stock_commission_expense"),
     STOCK_OPTION((short)6, "stock_option");
 
@@ -42,10 +42,10 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           return STOCK_BUY;
         case 2: // STOCK_SELL
           return STOCK_SELL;
-        case 3: // STOCK_LENDING
-          return STOCK_LENDING;
-        case 4: // STOCK_LENDING_RETURNING
-          return STOCK_LENDING_RETURNING;
+        case 3: // SLB
+          return SLB;
+        case 4: // SLBR
+          return SLBR;
         case 5: // STOCK_COMMISSION_EXPENSE
           return STOCK_COMMISSION_EXPENSE;
         case 6: // STOCK_OPTION
@@ -96,10 +96,10 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StockBuy.class)));
     tmpMap.put(_Fields.STOCK_SELL, new org.apache.thrift.meta_data.FieldMetaData("stock_sell", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StockSell.class)));
-    tmpMap.put(_Fields.STOCK_LENDING, new org.apache.thrift.meta_data.FieldMetaData("stock_lending", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StockLending.class)));
-    tmpMap.put(_Fields.STOCK_LENDING_RETURNING, new org.apache.thrift.meta_data.FieldMetaData("stock_lending_returning", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StockLendingReturning.class)));
+    tmpMap.put(_Fields.SLB, new org.apache.thrift.meta_data.FieldMetaData("slb", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, SecurityLendingAndBorrowing.class)));
+    tmpMap.put(_Fields.SLBR, new org.apache.thrift.meta_data.FieldMetaData("slbr", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, SecurityLendingAndBorrowingReturning.class)));
     tmpMap.put(_Fields.STOCK_COMMISSION_EXPENSE, new org.apache.thrift.meta_data.FieldMetaData("stock_commission_expense", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CommissionExpense.class)));
     tmpMap.put(_Fields.STOCK_OPTION, new org.apache.thrift.meta_data.FieldMetaData("stock_option", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
@@ -135,15 +135,15 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
     return x;
   }
 
-  public static Transaction stock_lending(StockLending value) {
+  public static Transaction slb(SecurityLendingAndBorrowing value) {
     Transaction x = new Transaction();
-    x.setStock_lending(value);
+    x.setSlb(value);
     return x;
   }
 
-  public static Transaction stock_lending_returning(StockLendingReturning value) {
+  public static Transaction slbr(SecurityLendingAndBorrowingReturning value) {
     Transaction x = new Transaction();
-    x.setStock_lending_returning(value);
+    x.setSlbr(value);
     return x;
   }
 
@@ -173,16 +173,16 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           break;
         }
         throw new java.lang.ClassCastException("Was expecting value of type StockSell for field 'stock_sell', but got " + value.getClass().getSimpleName());
-      case STOCK_LENDING:
-        if (value instanceof StockLending) {
+      case SLB:
+        if (value instanceof SecurityLendingAndBorrowing) {
           break;
         }
-        throw new java.lang.ClassCastException("Was expecting value of type StockLending for field 'stock_lending', but got " + value.getClass().getSimpleName());
-      case STOCK_LENDING_RETURNING:
-        if (value instanceof StockLendingReturning) {
+        throw new java.lang.ClassCastException("Was expecting value of type SecurityLendingAndBorrowing for field 'slb', but got " + value.getClass().getSimpleName());
+      case SLBR:
+        if (value instanceof SecurityLendingAndBorrowingReturning) {
           break;
         }
-        throw new java.lang.ClassCastException("Was expecting value of type StockLendingReturning for field 'stock_lending_returning', but got " + value.getClass().getSimpleName());
+        throw new java.lang.ClassCastException("Was expecting value of type SecurityLendingAndBorrowingReturning for field 'slbr', but got " + value.getClass().getSimpleName());
       case STOCK_COMMISSION_EXPENSE:
         if (value instanceof CommissionExpense) {
           break;
@@ -223,22 +223,22 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case STOCK_LENDING:
-          if (field.type == STOCK_LENDING_FIELD_DESC.type) {
-            StockLending stock_lending;
-            stock_lending = new StockLending();
-            stock_lending.read(iprot);
-            return stock_lending;
+        case SLB:
+          if (field.type == SLB_FIELD_DESC.type) {
+            SecurityLendingAndBorrowing slb;
+            slb = new SecurityLendingAndBorrowing();
+            slb.read(iprot);
+            return slb;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
-        case STOCK_LENDING_RETURNING:
-          if (field.type == STOCK_LENDING_RETURNING_FIELD_DESC.type) {
-            StockLendingReturning stock_lending_returning;
-            stock_lending_returning = new StockLendingReturning();
-            stock_lending_returning.read(iprot);
-            return stock_lending_returning;
+        case SLBR:
+          if (field.type == SLBR_FIELD_DESC.type) {
+            SecurityLendingAndBorrowingReturning slbr;
+            slbr = new SecurityLendingAndBorrowingReturning();
+            slbr.read(iprot);
+            return slbr;
           } else {
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
@@ -283,13 +283,13 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         StockSell stock_sell = (StockSell)value_;
         stock_sell.write(oprot);
         return;
-      case STOCK_LENDING:
-        StockLending stock_lending = (StockLending)value_;
-        stock_lending.write(oprot);
+      case SLB:
+        SecurityLendingAndBorrowing slb = (SecurityLendingAndBorrowing)value_;
+        slb.write(oprot);
         return;
-      case STOCK_LENDING_RETURNING:
-        StockLendingReturning stock_lending_returning = (StockLendingReturning)value_;
-        stock_lending_returning.write(oprot);
+      case SLBR:
+        SecurityLendingAndBorrowingReturning slbr = (SecurityLendingAndBorrowingReturning)value_;
+        slbr.write(oprot);
         return;
       case STOCK_COMMISSION_EXPENSE:
         CommissionExpense stock_commission_expense = (CommissionExpense)value_;
@@ -319,16 +319,16 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           stock_sell = new StockSell();
           stock_sell.read(iprot);
           return stock_sell;
-        case STOCK_LENDING:
-          StockLending stock_lending;
-          stock_lending = new StockLending();
-          stock_lending.read(iprot);
-          return stock_lending;
-        case STOCK_LENDING_RETURNING:
-          StockLendingReturning stock_lending_returning;
-          stock_lending_returning = new StockLendingReturning();
-          stock_lending_returning.read(iprot);
-          return stock_lending_returning;
+        case SLB:
+          SecurityLendingAndBorrowing slb;
+          slb = new SecurityLendingAndBorrowing();
+          slb.read(iprot);
+          return slb;
+        case SLBR:
+          SecurityLendingAndBorrowingReturning slbr;
+          slbr = new SecurityLendingAndBorrowingReturning();
+          slbr.read(iprot);
+          return slbr;
         case STOCK_COMMISSION_EXPENSE:
           CommissionExpense stock_commission_expense;
           stock_commission_expense = new CommissionExpense();
@@ -358,13 +358,13 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         StockSell stock_sell = (StockSell)value_;
         stock_sell.write(oprot);
         return;
-      case STOCK_LENDING:
-        StockLending stock_lending = (StockLending)value_;
-        stock_lending.write(oprot);
+      case SLB:
+        SecurityLendingAndBorrowing slb = (SecurityLendingAndBorrowing)value_;
+        slb.write(oprot);
         return;
-      case STOCK_LENDING_RETURNING:
-        StockLendingReturning stock_lending_returning = (StockLendingReturning)value_;
-        stock_lending_returning.write(oprot);
+      case SLBR:
+        SecurityLendingAndBorrowingReturning slbr = (SecurityLendingAndBorrowingReturning)value_;
+        slbr.write(oprot);
         return;
       case STOCK_COMMISSION_EXPENSE:
         CommissionExpense stock_commission_expense = (CommissionExpense)value_;
@@ -386,10 +386,10 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         return STOCK_BUY_FIELD_DESC;
       case STOCK_SELL:
         return STOCK_SELL_FIELD_DESC;
-      case STOCK_LENDING:
-        return STOCK_LENDING_FIELD_DESC;
-      case STOCK_LENDING_RETURNING:
-        return STOCK_LENDING_RETURNING_FIELD_DESC;
+      case SLB:
+        return SLB_FIELD_DESC;
+      case SLBR:
+        return SLBR_FIELD_DESC;
       case STOCK_COMMISSION_EXPENSE:
         return STOCK_COMMISSION_EXPENSE_FIELD_DESC;
       case STOCK_OPTION:
@@ -442,31 +442,31 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
     value_ = value;
   }
 
-  public StockLending getStock_lending() {
-    if (getSetField() == _Fields.STOCK_LENDING) {
-      return (StockLending)getFieldValue();
+  public SecurityLendingAndBorrowing getSlb() {
+    if (getSetField() == _Fields.SLB) {
+      return (SecurityLendingAndBorrowing)getFieldValue();
     } else {
-      throw new java.lang.RuntimeException("Cannot get field 'stock_lending' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new java.lang.RuntimeException("Cannot get field 'slb' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setStock_lending(StockLending value) {
+  public void setSlb(SecurityLendingAndBorrowing value) {
     if (value == null) throw new java.lang.NullPointerException();
-    setField_ = _Fields.STOCK_LENDING;
+    setField_ = _Fields.SLB;
     value_ = value;
   }
 
-  public StockLendingReturning getStock_lending_returning() {
-    if (getSetField() == _Fields.STOCK_LENDING_RETURNING) {
-      return (StockLendingReturning)getFieldValue();
+  public SecurityLendingAndBorrowingReturning getSlbr() {
+    if (getSetField() == _Fields.SLBR) {
+      return (SecurityLendingAndBorrowingReturning)getFieldValue();
     } else {
-      throw new java.lang.RuntimeException("Cannot get field 'stock_lending_returning' because union is currently set to " + getFieldDesc(getSetField()).name);
+      throw new java.lang.RuntimeException("Cannot get field 'slbr' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setStock_lending_returning(StockLendingReturning value) {
+  public void setSlbr(SecurityLendingAndBorrowingReturning value) {
     if (value == null) throw new java.lang.NullPointerException();
-    setField_ = _Fields.STOCK_LENDING_RETURNING;
+    setField_ = _Fields.SLBR;
     value_ = value;
   }
 
@@ -508,13 +508,13 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
   }
 
 
-  public boolean isSetStock_lending() {
-    return setField_ == _Fields.STOCK_LENDING;
+  public boolean isSetSlb() {
+    return setField_ == _Fields.SLB;
   }
 
 
-  public boolean isSetStock_lending_returning() {
-    return setField_ == _Fields.STOCK_LENDING_RETURNING;
+  public boolean isSetSlbr() {
+    return setField_ == _Fields.SLBR;
   }
 
 

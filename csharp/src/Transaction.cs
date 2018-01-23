@@ -23,8 +23,8 @@ public partial class Transaction : TBase
 {
   private StockBuy _stock_buy;
   private StockSell _stock_sell;
-  private StockLending _stock_lending;
-  private StockLendingReturning _stock_lending_returning;
+  private SecurityLendingAndBorrowing _slb;
+  private SecurityLendingAndBorrowingReturning _slbr;
   private CommissionExpense _stock_commission_expense;
   private StockOption _stock_option;
 
@@ -54,29 +54,29 @@ public partial class Transaction : TBase
     }
   }
 
-  public StockLending Stock_lending
+  public SecurityLendingAndBorrowing Slb
   {
     get
     {
-      return _stock_lending;
+      return _slb;
     }
     set
     {
-      __isset.stock_lending = true;
-      this._stock_lending = value;
+      __isset.slb = true;
+      this._slb = value;
     }
   }
 
-  public StockLendingReturning Stock_lending_returning
+  public SecurityLendingAndBorrowingReturning Slbr
   {
     get
     {
-      return _stock_lending_returning;
+      return _slbr;
     }
     set
     {
-      __isset.stock_lending_returning = true;
-      this._stock_lending_returning = value;
+      __isset.slbr = true;
+      this._slbr = value;
     }
   }
 
@@ -114,8 +114,8 @@ public partial class Transaction : TBase
   public struct Isset {
     public bool stock_buy;
     public bool stock_sell;
-    public bool stock_lending;
-    public bool stock_lending_returning;
+    public bool slb;
+    public bool slbr;
     public bool stock_commission_expense;
     public bool stock_option;
   }
@@ -156,16 +156,16 @@ public partial class Transaction : TBase
             break;
           case 3:
             if (field.Type == TType.Struct) {
-              Stock_lending = new StockLending();
-              Stock_lending.Read(iprot);
+              Slb = new SecurityLendingAndBorrowing();
+              Slb.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 4:
             if (field.Type == TType.Struct) {
-              Stock_lending_returning = new StockLendingReturning();
-              Stock_lending_returning.Read(iprot);
+              Slbr = new SecurityLendingAndBorrowingReturning();
+              Slbr.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -223,20 +223,20 @@ public partial class Transaction : TBase
         Stock_sell.Write(oprot);
         oprot.WriteFieldEnd();
       }
-      if (Stock_lending != null && __isset.stock_lending) {
-        field.Name = "stock_lending";
+      if (Slb != null && __isset.slb) {
+        field.Name = "slb";
         field.Type = TType.Struct;
         field.ID = 3;
         oprot.WriteFieldBegin(field);
-        Stock_lending.Write(oprot);
+        Slb.Write(oprot);
         oprot.WriteFieldEnd();
       }
-      if (Stock_lending_returning != null && __isset.stock_lending_returning) {
-        field.Name = "stock_lending_returning";
+      if (Slbr != null && __isset.slbr) {
+        field.Name = "slbr";
         field.Type = TType.Struct;
         field.ID = 4;
         oprot.WriteFieldBegin(field);
-        Stock_lending_returning.Write(oprot);
+        Slbr.Write(oprot);
         oprot.WriteFieldEnd();
       }
       if (Stock_commission_expense != null && __isset.stock_commission_expense) {
@@ -279,17 +279,17 @@ public partial class Transaction : TBase
       __sb.Append("Stock_sell: ");
       __sb.Append(Stock_sell== null ? "<null>" : Stock_sell.ToString());
     }
-    if (Stock_lending != null && __isset.stock_lending) {
+    if (Slb != null && __isset.slb) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Stock_lending: ");
-      __sb.Append(Stock_lending== null ? "<null>" : Stock_lending.ToString());
+      __sb.Append("Slb: ");
+      __sb.Append(Slb== null ? "<null>" : Slb.ToString());
     }
-    if (Stock_lending_returning != null && __isset.stock_lending_returning) {
+    if (Slbr != null && __isset.slbr) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Stock_lending_returning: ");
-      __sb.Append(Stock_lending_returning== null ? "<null>" : Stock_lending_returning.ToString());
+      __sb.Append("Slbr: ");
+      __sb.Append(Slbr== null ? "<null>" : Slbr.ToString());
     }
     if (Stock_commission_expense != null && __isset.stock_commission_expense) {
       if(!__first) { __sb.Append(", "); }
