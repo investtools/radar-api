@@ -11,6 +11,7 @@ var Q = thrift.Q;
 
 var common_ttypes = require('./common_types');
 var transaction_ttypes = require('./transaction_types');
+var portfolio_ttypes = require('./portfolio_types');
 
 
 var ttypes = module.exports = {};

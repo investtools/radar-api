@@ -3,6 +3,7 @@ namespace java br.com.investtools.radar.api
 
 include 'common.thrift'
 include 'transaction.thrift'
+include 'portfolio.thrift'
 
 struct Account {
   1: string id
@@ -21,4 +22,5 @@ service TransactionImporter {
   string name()
   map<string, string> accounts(1: string username, 2: string password) throws (1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
   list<transaction.Transaction> fetch(1: string username, 2: string password, 3: list<Account> accounts) throws (1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
+  list<portfolio.SimplePosition> portfolio(1: string username, 2: string password, 3: list<Account> accounts) throws (1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
 }

@@ -7,6 +7,7 @@
 require 'thrift'
 require 'radar/api/common_types'
 require 'radar/api/transaction_types'
+require 'radar/api/portfolio_types'
 
 
 module Radar

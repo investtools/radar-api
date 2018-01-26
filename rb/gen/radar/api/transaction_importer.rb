@@ -62,6 +62,23 @@ module Radar
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'fetch failed: unknown result')
         end
 
+        def portfolio(username, password, accounts)
+          send_portfolio(username, password, accounts)
+          return recv_portfolio()
+        end
+
+        def send_portfolio(username, password, accounts)
+          send_message('portfolio', Portfolio_args, :username => username, :password => password, :accounts => accounts)
+        end
+
+        def recv_portfolio()
+          result = receive_message(Portfolio_result)
+          return result.success unless result.success.nil?
+          raise result.auth_error unless result.auth_error.nil?
+          raise result.system_unavailable unless result.system_unavailable.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'portfolio failed: unknown result')
+        end
+
       end
 
       class Processor
@@ -98,6 +115,19 @@ module Radar
             result.system_unavailable = system_unavailable
           end
           write_result(result, oprot, 'fetch', seqid)
+        end
+
+        def process_portfolio(seqid, iprot, oprot)
+          args = read_args(iprot, Portfolio_args)
+          result = Portfolio_result.new()
+          begin
+            result.success = @handler.portfolio(args.username, args.password, args.accounts)
+          rescue ::Radar::Api::AuthenticationError => auth_error
+            result.auth_error = auth_error
+          rescue ::Radar::Api::SystemUnavailableError => system_unavailable
+            result.system_unavailable = system_unavailable
+          end
+          write_result(result, oprot, 'portfolio', seqid)
         end
 
       end
@@ -201,6 +231,46 @@ module Radar
 
         FIELDS = {
           SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Transaction}},
+          AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
+          SYSTEM_UNAVAILABLE => {:type => ::Thrift::Types::STRUCT, :name => 'system_unavailable', :class => ::Radar::Api::SystemUnavailableError}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Portfolio_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        USERNAME = 1
+        PASSWORD = 2
+        ACCOUNTS = 3
+
+        FIELDS = {
+          USERNAME => {:type => ::Thrift::Types::STRING, :name => 'username'},
+          PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'},
+          ACCOUNTS => {:type => ::Thrift::Types::LIST, :name => 'accounts', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Account}}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Portfolio_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+        AUTH_ERROR = 1
+        SYSTEM_UNAVAILABLE = 2
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::SimplePosition}},
           AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
           SYSTEM_UNAVAILABLE => {:type => ::Thrift::Types::STRUCT, :name => 'system_unavailable', :class => ::Radar::Api::SystemUnavailableError}
         }
