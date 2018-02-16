@@ -1659,6 +1659,7 @@ Result.prototype.write = function(output) {
 
 var Position = module.exports.Position = function(args) {
   this.id = null;
+  this.short_name = null;
   this.value = null;
   this.rentability = null;
   this.avg_price = null;
@@ -1667,6 +1668,9 @@ var Position = module.exports.Position = function(args) {
   if (args) {
     if (args.id !== undefined && args.id !== null) {
       this.id = new common_ttypes.SecurityId(args.id);
+    }
+    if (args.short_name !== undefined && args.short_name !== null) {
+      this.short_name = args.short_name;
     }
     if (args.value !== undefined && args.value !== null) {
       this.value = args.value;
@@ -1708,34 +1712,41 @@ Position.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.DOUBLE) {
-        this.value = input.readDouble();
+      if (ftype == Thrift.Type.STRING) {
+        this.short_name = input.readString();
       } else {
         input.skip(ftype);
       }
       break;
       case 3:
       if (ftype == Thrift.Type.DOUBLE) {
-        this.rentability = input.readDouble();
+        this.value = input.readDouble();
       } else {
         input.skip(ftype);
       }
       break;
       case 4:
       if (ftype == Thrift.Type.DOUBLE) {
-        this.avg_price = input.readDouble();
+        this.rentability = input.readDouble();
       } else {
         input.skip(ftype);
       }
       break;
       case 5:
       if (ftype == Thrift.Type.DOUBLE) {
-        this.shares = input.readDouble();
+        this.avg_price = input.readDouble();
       } else {
         input.skip(ftype);
       }
       break;
       case 6:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.shares = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
       if (ftype == Thrift.Type.DOUBLE) {
         this.paid_value = input.readDouble();
       } else {
@@ -1758,28 +1769,33 @@ Position.prototype.write = function(output) {
     this.id.write(output);
     output.writeFieldEnd();
   }
+  if (this.short_name !== null && this.short_name !== undefined) {
+    output.writeFieldBegin('short_name', Thrift.Type.STRING, 2);
+    output.writeString(this.short_name);
+    output.writeFieldEnd();
+  }
   if (this.value !== null && this.value !== undefined) {
-    output.writeFieldBegin('value', Thrift.Type.DOUBLE, 2);
+    output.writeFieldBegin('value', Thrift.Type.DOUBLE, 3);
     output.writeDouble(this.value);
     output.writeFieldEnd();
   }
   if (this.rentability !== null && this.rentability !== undefined) {
-    output.writeFieldBegin('rentability', Thrift.Type.DOUBLE, 3);
+    output.writeFieldBegin('rentability', Thrift.Type.DOUBLE, 4);
     output.writeDouble(this.rentability);
     output.writeFieldEnd();
   }
   if (this.avg_price !== null && this.avg_price !== undefined) {
-    output.writeFieldBegin('avg_price', Thrift.Type.DOUBLE, 4);
+    output.writeFieldBegin('avg_price', Thrift.Type.DOUBLE, 5);
     output.writeDouble(this.avg_price);
     output.writeFieldEnd();
   }
   if (this.shares !== null && this.shares !== undefined) {
-    output.writeFieldBegin('shares', Thrift.Type.DOUBLE, 5);
+    output.writeFieldBegin('shares', Thrift.Type.DOUBLE, 6);
     output.writeDouble(this.shares);
     output.writeFieldEnd();
   }
   if (this.paid_value !== null && this.paid_value !== undefined) {
-    output.writeFieldBegin('paid_value', Thrift.Type.DOUBLE, 6);
+    output.writeFieldBegin('paid_value', Thrift.Type.DOUBLE, 7);
     output.writeDouble(this.paid_value);
     output.writeFieldEnd();
   }

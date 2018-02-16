@@ -445,14 +445,16 @@ module Radar
     class Position
       include ::Thrift::Struct, ::Thrift::Struct_Union
       ID = 1
-      VALUE = 2
-      RENTABILITY = 3
-      AVG_PRICE = 4
-      SHARES = 5
-      PAID_VALUE = 6
+      SHORT_NAME = 2
+      VALUE = 3
+      RENTABILITY = 4
+      AVG_PRICE = 5
+      SHARES = 6
+      PAID_VALUE = 7
 
       FIELDS = {
         ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::Api::SecurityId},
+        SHORT_NAME => {:type => ::Thrift::Types::STRING, :name => 'short_name'},
         VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'},
         RENTABILITY => {:type => ::Thrift::Types::DOUBLE, :name => 'rentability'},
         AVG_PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'avg_price'},

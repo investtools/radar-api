@@ -22,6 +22,7 @@ using Thrift.Transport;
 public partial class Position : TBase
 {
   private SecurityId _id;
+  private string _short_name;
   private double _value;
   private double _rentability;
   private double _avg_price;
@@ -38,6 +39,19 @@ public partial class Position : TBase
     {
       __isset.id = true;
       this._id = value;
+    }
+  }
+
+  public string Short_name
+  {
+    get
+    {
+      return _short_name;
+    }
+    set
+    {
+      __isset.short_name = true;
+      this._short_name = value;
     }
   }
 
@@ -113,6 +127,7 @@ public partial class Position : TBase
   #endif
   public struct Isset {
     public bool id;
+    public bool short_name;
     public bool @value;
     public bool rentability;
     public bool avg_price;
@@ -147,34 +162,41 @@ public partial class Position : TBase
             }
             break;
           case 2:
-            if (field.Type == TType.Double) {
-              Value = iprot.ReadDouble();
+            if (field.Type == TType.String) {
+              Short_name = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 3:
             if (field.Type == TType.Double) {
-              Rentability = iprot.ReadDouble();
+              Value = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 4:
             if (field.Type == TType.Double) {
-              Avg_price = iprot.ReadDouble();
+              Rentability = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 5:
             if (field.Type == TType.Double) {
-              Shares = iprot.ReadDouble();
+              Avg_price = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 6:
+            if (field.Type == TType.Double) {
+              Shares = iprot.ReadDouble();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 7:
             if (field.Type == TType.Double) {
               Paid_value = iprot.ReadDouble();
             } else { 
@@ -210,10 +232,18 @@ public partial class Position : TBase
         Id.Write(oprot);
         oprot.WriteFieldEnd();
       }
+      if (Short_name != null && __isset.short_name) {
+        field.Name = "short_name";
+        field.Type = TType.String;
+        field.ID = 2;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteString(Short_name);
+        oprot.WriteFieldEnd();
+      }
       if (__isset.@value) {
         field.Name = "value";
         field.Type = TType.Double;
-        field.ID = 2;
+        field.ID = 3;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Value);
         oprot.WriteFieldEnd();
@@ -221,7 +251,7 @@ public partial class Position : TBase
       if (__isset.rentability) {
         field.Name = "rentability";
         field.Type = TType.Double;
-        field.ID = 3;
+        field.ID = 4;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Rentability);
         oprot.WriteFieldEnd();
@@ -229,7 +259,7 @@ public partial class Position : TBase
       if (__isset.avg_price) {
         field.Name = "avg_price";
         field.Type = TType.Double;
-        field.ID = 4;
+        field.ID = 5;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Avg_price);
         oprot.WriteFieldEnd();
@@ -237,7 +267,7 @@ public partial class Position : TBase
       if (__isset.shares) {
         field.Name = "shares";
         field.Type = TType.Double;
-        field.ID = 5;
+        field.ID = 6;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Shares);
         oprot.WriteFieldEnd();
@@ -245,7 +275,7 @@ public partial class Position : TBase
       if (__isset.paid_value) {
         field.Name = "paid_value";
         field.Type = TType.Double;
-        field.ID = 6;
+        field.ID = 7;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Paid_value);
         oprot.WriteFieldEnd();
@@ -267,6 +297,12 @@ public partial class Position : TBase
       __first = false;
       __sb.Append("Id: ");
       __sb.Append(Id== null ? "<null>" : Id.ToString());
+    }
+    if (Short_name != null && __isset.short_name) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Short_name: ");
+      __sb.Append(Short_name);
     }
     if (__isset.@value) {
       if(!__first) { __sb.Append(", "); }

@@ -136,11 +136,12 @@ union Result {
 
 struct Position {
   1: common.SecurityId id
-  2: double value
-  3: double rentability
-  4: double avg_price
-  5: double shares
-  6: double paid_value
+  2: string short_name
+  3: double value
+  4: double rentability
+  5: double avg_price
+  6: double shares
+  7: double paid_value
 }
 
 /**
