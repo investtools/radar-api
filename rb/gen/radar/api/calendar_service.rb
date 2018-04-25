@@ -28,6 +28,21 @@ module Radar
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'advance failed: unknown result')
         end
 
+        def back(calendar, date, n)
+          send_back(calendar, date, n)
+          return recv_back()
+        end
+
+        def send_back(calendar, date, n)
+          send_message('back', Back_args, :calendar => calendar, :date => date, :n => n)
+        end
+
+        def recv_back()
+          result = receive_message(Back_result)
+          return result.success unless result.success.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'back failed: unknown result')
+        end
+
         def first_business_day(calendar, date)
           send_first_business_day(calendar, date)
           return recv_first_business_day()
@@ -53,6 +68,13 @@ module Radar
           result = Advance_result.new()
           result.success = @handler.advance(args.calendar, args.date, args.n)
           write_result(result, oprot, 'advance', seqid)
+        end
+
+        def process_back(seqid, iprot, oprot)
+          args = read_args(iprot, Back_args)
+          result = Back_result.new()
+          result.success = @handler.back(args.calendar, args.date, args.n)
+          write_result(result, oprot, 'back', seqid)
         end
 
         def process_first_business_day(seqid, iprot, oprot)
@@ -87,6 +109,42 @@ module Radar
       end
 
       class Advance_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::I64, :name => 'success'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Back_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        CALENDAR = 1
+        DATE = 2
+        N = 3
+
+        FIELDS = {
+          CALENDAR => {:type => ::Thrift::Types::STRING, :name => 'calendar'},
+          DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
+          N => {:type => ::Thrift::Types::I16, :name => 'n'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Back_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
 

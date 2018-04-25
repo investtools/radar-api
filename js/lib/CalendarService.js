@@ -150,6 +150,141 @@ CalendarService_advance_result.prototype.write = function(output) {
   return;
 };
 
+var CalendarService_back_args = function(args) {
+  this.calendar = null;
+  this.date = null;
+  this.n = null;
+  if (args) {
+    if (args.calendar !== undefined && args.calendar !== null) {
+      this.calendar = args.calendar;
+    }
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.n !== undefined && args.n !== null) {
+      this.n = args.n;
+    }
+  }
+};
+CalendarService_back_args.prototype = {};
+CalendarService_back_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.calendar = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I16) {
+        this.n = input.readI16();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CalendarService_back_args.prototype.write = function(output) {
+  output.writeStructBegin('CalendarService_back_args');
+  if (this.calendar !== null && this.calendar !== undefined) {
+    output.writeFieldBegin('calendar', Thrift.Type.STRING, 1);
+    output.writeString(this.calendar);
+    output.writeFieldEnd();
+  }
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 2);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.n !== null && this.n !== undefined) {
+    output.writeFieldBegin('n', Thrift.Type.I16, 3);
+    output.writeI16(this.n);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var CalendarService_back_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = args.success;
+    }
+  }
+};
+CalendarService_back_result.prototype = {};
+CalendarService_back_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.I64) {
+        this.success = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+CalendarService_back_result.prototype.write = function(output) {
+  output.writeStructBegin('CalendarService_back_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.I64, 0);
+    output.writeI64(this.success);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 var CalendarService_first_business_day_args = function(args) {
   this.calendar = null;
   this.date = null;
@@ -327,6 +462,55 @@ CalendarServiceClient.prototype.recv_advance = function(input,mtype,rseqid) {
   }
   return callback('advance failed: unknown result');
 };
+CalendarServiceClient.prototype.back = function(calendar, date, n, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_back(calendar, date, n);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_back(calendar, date, n);
+  }
+};
+
+CalendarServiceClient.prototype.send_back = function(calendar, date, n) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('back', Thrift.MessageType.CALL, this.seqid());
+  var args = new CalendarService_back_args();
+  args.calendar = calendar;
+  args.date = date;
+  args.n = n;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+CalendarServiceClient.prototype.recv_back = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new CalendarService_back_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('back failed: unknown result');
+};
 CalendarServiceClient.prototype.first_business_day = function(calendar, date, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -423,6 +607,42 @@ CalendarServiceProcessor.prototype.process_advance = function(seqid, input, outp
       } else {
         result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
         output.writeMessageBegin("advance", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result_obj.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+};
+CalendarServiceProcessor.prototype.process_back = function(seqid, input, output) {
+  var args = new CalendarService_back_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.back.length === 3) {
+    Q.fcall(this._handler.back, args.calendar, args.date, args.n)
+      .then(function(result) {
+        var result_obj = new CalendarService_back_result({success: result});
+        output.writeMessageBegin("back", Thrift.MessageType.REPLY, seqid);
+        result_obj.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result;
+        result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("back", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.back(args.calendar, args.date, args.n, function (err, result) {
+      var result_obj;
+      if ((err === null || typeof err === 'undefined')) {
+        result_obj = new CalendarService_back_result((err !== null || typeof err === 'undefined') ? err : {success: result});
+        output.writeMessageBegin("back", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("back", Thrift.MessageType.EXCEPTION, seqid);
       }
       result_obj.write(output);
       output.writeMessageEnd();

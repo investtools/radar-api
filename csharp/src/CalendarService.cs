@@ -18,6 +18,7 @@ using Thrift.Transport;
 public partial class CalendarService {
   public interface ISync {
     long advance(string calendar, long date, short n);
+    long back(string calendar, long date, short n);
     long first_business_day(string calendar, long date);
   }
 
@@ -25,6 +26,10 @@ public partial class CalendarService {
     #if SILVERLIGHT
     IAsyncResult Begin_advance(AsyncCallback callback, object state, string calendar, long date, short n);
     long End_advance(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_back(AsyncCallback callback, object state, string calendar, long date, short n);
+    long End_back(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
     IAsyncResult Begin_first_business_day(AsyncCallback callback, object state, string calendar, long date);
@@ -154,6 +159,70 @@ public partial class CalendarService {
 
     
     #if SILVERLIGHT
+    public IAsyncResult Begin_back(AsyncCallback callback, object state, string calendar, long date, short n)
+    {
+      return send_back(callback, state, calendar, date, n);
+    }
+
+    public long End_back(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_back();
+    }
+
+    #endif
+
+    public long back(string calendar, long date, short n)
+    {
+      #if !SILVERLIGHT
+      send_back(calendar, date, n);
+      return recv_back();
+
+      #else
+      var asyncResult = Begin_back(null, null, calendar, date, n);
+      return End_back(asyncResult);
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_back(AsyncCallback callback, object state, string calendar, long date, short n)
+    #else
+    public void send_back(string calendar, long date, short n)
+    #endif
+    {
+      oprot_.WriteMessageBegin(new TMessage("back", TMessageType.Call, seqid_));
+      back_args args = new back_args();
+      args.Calendar = calendar;
+      args.Date = date;
+      args.N = n;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      #if SILVERLIGHT
+      return oprot_.Transport.BeginFlush(callback, state);
+      #else
+      oprot_.Transport.Flush();
+      #endif
+    }
+
+    public long recv_back()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      back_result result = new back_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "back failed: unknown result");
+    }
+
+    
+    #if SILVERLIGHT
     public IAsyncResult Begin_first_business_day(AsyncCallback callback, object state, string calendar, long date)
     {
       return send_first_business_day(callback, state, calendar, date);
@@ -221,6 +290,7 @@ public partial class CalendarService {
     {
       iface_ = iface;
       processMap_["advance"] = advance_Process;
+      processMap_["back"] = back_Process;
       processMap_["first_business_day"] = first_business_day_Process;
     }
 
@@ -276,6 +346,34 @@ public partial class CalendarService {
         Console.Error.WriteLine(ex.ToString());
         TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
         oprot.WriteMessageBegin(new TMessage("advance", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void back_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      back_args args = new back_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      back_result result = new back_result();
+      try
+      {
+        result.Success = iface_.back(args.Calendar, args.Date, args.N);
+        oprot.WriteMessageBegin(new TMessage("back", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("back", TMessageType.Exception, seqid));
         x.Write(oprot);
       }
       oprot.WriteMessageEnd();
@@ -588,6 +686,295 @@ public partial class CalendarService {
 
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("advance_result(");
+      bool __first = true;
+      if (__isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class back_args : TBase
+  {
+    private string _calendar;
+    private long _date;
+    private short _n;
+
+    public string Calendar
+    {
+      get
+      {
+        return _calendar;
+      }
+      set
+      {
+        __isset.calendar = true;
+        this._calendar = value;
+      }
+    }
+
+    public long Date
+    {
+      get
+      {
+        return _date;
+      }
+      set
+      {
+        __isset.date = true;
+        this._date = value;
+      }
+    }
+
+    public short N
+    {
+      get
+      {
+        return _n;
+      }
+      set
+      {
+        __isset.n = true;
+        this._n = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool calendar;
+      public bool date;
+      public bool n;
+    }
+
+    public back_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Calendar = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.I64) {
+                Date = iprot.ReadI64();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.I16) {
+                N = iprot.ReadI16();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("back_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Calendar != null && __isset.calendar) {
+          field.Name = "calendar";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Calendar);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.date) {
+          field.Name = "date";
+          field.Type = TType.I64;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI64(Date);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.n) {
+          field.Name = "n";
+          field.Type = TType.I16;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI16(N);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("back_args(");
+      bool __first = true;
+      if (Calendar != null && __isset.calendar) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Calendar: ");
+        __sb.Append(Calendar);
+      }
+      if (__isset.date) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Date: ");
+        __sb.Append(Date);
+      }
+      if (__isset.n) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("N: ");
+        __sb.Append(N);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class back_result : TBase
+  {
+    private long _success;
+
+    public long Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+    }
+
+    public back_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.I64) {
+                Success = iprot.ReadI64();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("back_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.I64;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI64(Success);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("back_result(");
       bool __first = true;
       if (__isset.success) {
         if(!__first) { __sb.Append(", "); }
