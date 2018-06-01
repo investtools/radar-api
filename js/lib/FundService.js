@@ -10,6 +10,7 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 var common_ttypes = require('./common_types');
+var transaction_ttypes = require('./transaction_types');
 
 
 var ttypes = require('./data_server_types');

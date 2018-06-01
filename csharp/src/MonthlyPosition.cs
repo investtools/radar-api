@@ -19,34 +19,34 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class Position : TBase
+public partial class MonthlyPosition : TBase
 {
-  private string _symbol;
-  private int _shares;
+  private long _date;
+  private List<Position> _position;
 
-  public string Symbol
+  public long Date
   {
     get
     {
-      return _symbol;
+      return _date;
     }
     set
     {
-      __isset.symbol = true;
-      this._symbol = value;
+      __isset.date = true;
+      this._date = value;
     }
   }
 
-  public int Shares
+  public List<Position> Position
   {
     get
     {
-      return _shares;
+      return _position;
     }
     set
     {
-      __isset.shares = true;
-      this._shares = value;
+      __isset.position = true;
+      this._position = value;
     }
   }
 
@@ -56,11 +56,11 @@ public partial class Position : TBase
   [Serializable]
   #endif
   public struct Isset {
-    public bool symbol;
-    public bool shares;
+    public bool date;
+    public bool position;
   }
 
-  public Position() {
+  public MonthlyPosition() {
   }
 
   public void Read (TProtocol iprot)
@@ -79,15 +79,26 @@ public partial class Position : TBase
         switch (field.ID)
         {
           case 1:
-            if (field.Type == TType.String) {
-              Symbol = iprot.ReadString();
+            if (field.Type == TType.I64) {
+              Date = iprot.ReadI64();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 2:
-            if (field.Type == TType.I32) {
-              Shares = iprot.ReadI32();
+            if (field.Type == TType.List) {
+              {
+                Position = new List<Position>();
+                TList _list0 = iprot.ReadListBegin();
+                for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                {
+                  Position _elem2;
+                  _elem2 = new Position();
+                  _elem2.Read(iprot);
+                  Position.Add(_elem2);
+                }
+                iprot.ReadListEnd();
+              }
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -110,23 +121,30 @@ public partial class Position : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("Position");
+      TStruct struc = new TStruct("MonthlyPosition");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (Symbol != null && __isset.symbol) {
-        field.Name = "symbol";
-        field.Type = TType.String;
+      if (__isset.date) {
+        field.Name = "date";
+        field.Type = TType.I64;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        oprot.WriteString(Symbol);
+        oprot.WriteI64(Date);
         oprot.WriteFieldEnd();
       }
-      if (__isset.shares) {
-        field.Name = "shares";
-        field.Type = TType.I32;
+      if (Position != null && __isset.position) {
+        field.Name = "position";
+        field.Type = TType.List;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Shares);
+        {
+          oprot.WriteListBegin(new TList(TType.Struct, Position.Count));
+          foreach (Position _iter3 in Position)
+          {
+            _iter3.Write(oprot);
+          }
+          oprot.WriteListEnd();
+        }
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -139,19 +157,19 @@ public partial class Position : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("Position(");
+    StringBuilder __sb = new StringBuilder("MonthlyPosition(");
     bool __first = true;
-    if (Symbol != null && __isset.symbol) {
+    if (__isset.date) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Symbol: ");
-      __sb.Append(Symbol);
+      __sb.Append("Date: ");
+      __sb.Append(Date);
     }
-    if (__isset.shares) {
+    if (Position != null && __isset.position) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Shares: ");
-      __sb.Append(Shares);
+      __sb.Append("Position: ");
+      __sb.Append(Position);
     }
     __sb.Append(")");
     return __sb.ToString();

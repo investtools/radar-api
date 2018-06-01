@@ -10,6 +10,7 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 var common_ttypes = require('./common_types');
+var transaction_ttypes = require('./transaction_types');
 
 
 var ttypes = require('./data_server_types');
@@ -121,19 +122,19 @@ IndexService_prices_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.LIST) {
-        var _size16 = 0;
-        var _rtmp320;
+        var _size40 = 0;
+        var _rtmp344;
         this.success = [];
-        var _etype19 = 0;
-        _rtmp320 = input.readListBegin();
-        _etype19 = _rtmp320.etype;
-        _size16 = _rtmp320.size;
-        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        var _etype43 = 0;
+        _rtmp344 = input.readListBegin();
+        _etype43 = _rtmp344.etype;
+        _size40 = _rtmp344.size;
+        for (var _i45 = 0; _i45 < _size40; ++_i45)
         {
-          var elem22 = null;
-          elem22 = new ttypes.Price();
-          elem22.read(input);
-          this.success.push(elem22);
+          var elem46 = null;
+          elem46 = new ttypes.Price();
+          elem46.read(input);
+          this.success.push(elem46);
         }
         input.readListEnd();
       } else {
@@ -157,12 +158,12 @@ IndexService_prices_result.prototype.write = function(output) {
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.LIST, 0);
     output.writeListBegin(Thrift.Type.STRUCT, this.success.length);
-    for (var iter23 in this.success)
+    for (var iter47 in this.success)
     {
-      if (this.success.hasOwnProperty(iter23))
+      if (this.success.hasOwnProperty(iter47))
       {
-        iter23 = this.success[iter23];
-        iter23.write(output);
+        iter47 = this.success[iter47];
+        iter47.write(output);
       }
     }
     output.writeListEnd();

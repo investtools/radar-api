@@ -10,6 +10,7 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 var common_ttypes = require('./common_types');
+var transaction_ttypes = require('./transaction_types');
 
 
 var ttypes = module.exports = {};
@@ -154,6 +155,161 @@ DailyFundData.prototype.write = function(output) {
   if (this.nav !== null && this.nav !== undefined) {
     output.writeFieldBegin('nav', Thrift.Type.DOUBLE, 3);
     output.writeDouble(this.nav);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var Position = module.exports.Position = function(args) {
+  this.symbol = null;
+  this.shares = null;
+  if (args) {
+    if (args.symbol !== undefined && args.symbol !== null) {
+      this.symbol = args.symbol;
+    }
+    if (args.shares !== undefined && args.shares !== null) {
+      this.shares = args.shares;
+    }
+  }
+};
+Position.prototype = {};
+Position.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.symbol = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.shares = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+Position.prototype.write = function(output) {
+  output.writeStructBegin('Position');
+  if (this.symbol !== null && this.symbol !== undefined) {
+    output.writeFieldBegin('symbol', Thrift.Type.STRING, 1);
+    output.writeString(this.symbol);
+    output.writeFieldEnd();
+  }
+  if (this.shares !== null && this.shares !== undefined) {
+    output.writeFieldBegin('shares', Thrift.Type.I32, 2);
+    output.writeI32(this.shares);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var MonthlyPosition = module.exports.MonthlyPosition = function(args) {
+  this.date = null;
+  this.position = null;
+  if (args) {
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.position !== undefined && args.position !== null) {
+      this.position = Thrift.copyList(args.position, [ttypes.Position]);
+    }
+  }
+};
+MonthlyPosition.prototype = {};
+MonthlyPosition.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size0 = 0;
+        var _rtmp34;
+        this.position = [];
+        var _etype3 = 0;
+        _rtmp34 = input.readListBegin();
+        _etype3 = _rtmp34.etype;
+        _size0 = _rtmp34.size;
+        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        {
+          var elem6 = null;
+          elem6 = new ttypes.Position();
+          elem6.read(input);
+          this.position.push(elem6);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+MonthlyPosition.prototype.write = function(output) {
+  output.writeStructBegin('MonthlyPosition');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.position !== null && this.position !== undefined) {
+    output.writeFieldBegin('position', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRUCT, this.position.length);
+    for (var iter7 in this.position)
+    {
+      if (this.position.hasOwnProperty(iter7))
+      {
+        iter7 = this.position[iter7];
+        iter7.write(output);
+      }
+    }
+    output.writeListEnd();
     output.writeFieldEnd();
   }
   output.writeFieldStop();

@@ -1155,13 +1155,13 @@ public partial class SecurityService {
               if (field.Type == TType.List) {
                 {
                   Success = new List<Price>();
-                  TList _list0 = iprot.ReadListBegin();
-                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                  TList _list12 = iprot.ReadListBegin();
+                  for( int _i13 = 0; _i13 < _list12.Count; ++_i13)
                   {
-                    Price _elem2;
-                    _elem2 = new Price();
-                    _elem2.Read(iprot);
-                    Success.Add(_elem2);
+                    Price _elem14;
+                    _elem14 = new Price();
+                    _elem14.Read(iprot);
+                    Success.Add(_elem14);
                   }
                   iprot.ReadListEnd();
                 }
@@ -1199,9 +1199,9 @@ public partial class SecurityService {
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
-              foreach (Price _iter3 in Success)
+              foreach (Price _iter15 in Success)
               {
-                _iter3.Write(oprot);
+                _iter15.Write(oprot);
               }
               oprot.WriteListEnd();
             }
@@ -2009,12 +2009,12 @@ public partial class SecurityService {
               if (field.Type == TType.List) {
                 {
                   Success = new List<double>();
-                  TList _list4 = iprot.ReadListBegin();
-                  for( int _i5 = 0; _i5 < _list4.Count; ++_i5)
+                  TList _list16 = iprot.ReadListBegin();
+                  for( int _i17 = 0; _i17 < _list16.Count; ++_i17)
                   {
-                    double _elem6;
-                    _elem6 = iprot.ReadDouble();
-                    Success.Add(_elem6);
+                    double _elem18;
+                    _elem18 = iprot.ReadDouble();
+                    Success.Add(_elem18);
                   }
                   iprot.ReadListEnd();
                 }
@@ -2052,9 +2052,9 @@ public partial class SecurityService {
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteListBegin(new TList(TType.Double, Success.Count));
-              foreach (double _iter7 in Success)
+              foreach (double _iter19 in Success)
               {
-                oprot.WriteDouble(_iter7);
+                oprot.WriteDouble(_iter19);
               }
               oprot.WriteListEnd();
             }

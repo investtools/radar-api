@@ -10,6 +10,7 @@ var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
 var common_ttypes = require('./common_types');
+var transaction_ttypes = require('./transaction_types');
 
 
 var ttypes = require('./data_server_types');
@@ -229,19 +230,19 @@ SecurityService_prices_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.LIST) {
-        var _size0 = 0;
-        var _rtmp34;
+        var _size24 = 0;
+        var _rtmp328;
         this.success = [];
-        var _etype3 = 0;
-        _rtmp34 = input.readListBegin();
-        _etype3 = _rtmp34.etype;
-        _size0 = _rtmp34.size;
-        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
         {
-          var elem6 = null;
-          elem6 = new ttypes.Price();
-          elem6.read(input);
-          this.success.push(elem6);
+          var elem30 = null;
+          elem30 = new ttypes.Price();
+          elem30.read(input);
+          this.success.push(elem30);
         }
         input.readListEnd();
       } else {
@@ -265,12 +266,12 @@ SecurityService_prices_result.prototype.write = function(output) {
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.LIST, 0);
     output.writeListBegin(Thrift.Type.STRUCT, this.success.length);
-    for (var iter7 in this.success)
+    for (var iter31 in this.success)
     {
-      if (this.success.hasOwnProperty(iter7))
+      if (this.success.hasOwnProperty(iter31))
       {
-        iter7 = this.success[iter7];
-        iter7.write(output);
+        iter31 = this.success[iter31];
+        iter31.write(output);
       }
     }
     output.writeListEnd();
@@ -644,18 +645,18 @@ SecurityService_price_changes_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.LIST) {
-        var _size8 = 0;
-        var _rtmp312;
+        var _size32 = 0;
+        var _rtmp336;
         this.success = [];
-        var _etype11 = 0;
-        _rtmp312 = input.readListBegin();
-        _etype11 = _rtmp312.etype;
-        _size8 = _rtmp312.size;
-        for (var _i13 = 0; _i13 < _size8; ++_i13)
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
         {
-          var elem14 = null;
-          elem14 = input.readDouble();
-          this.success.push(elem14);
+          var elem38 = null;
+          elem38 = input.readDouble();
+          this.success.push(elem38);
         }
         input.readListEnd();
       } else {
@@ -679,12 +680,12 @@ SecurityService_price_changes_result.prototype.write = function(output) {
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.LIST, 0);
     output.writeListBegin(Thrift.Type.DOUBLE, this.success.length);
-    for (var iter15 in this.success)
+    for (var iter39 in this.success)
     {
-      if (this.success.hasOwnProperty(iter15))
+      if (this.success.hasOwnProperty(iter39))
       {
-        iter15 = this.success[iter15];
-        output.writeDouble(iter15);
+        iter39 = this.success[iter39];
+        output.writeDouble(iter39);
       }
     }
     output.writeListEnd();
