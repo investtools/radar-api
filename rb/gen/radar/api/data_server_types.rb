@@ -49,7 +49,7 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class Position
+    class SecurityPosition
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SYMBOL = 1
       SHARES = 2
@@ -74,7 +74,7 @@ module Radar
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
-        POSITION => {:type => ::Thrift::Types::LIST, :name => 'position', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Position}}
+        POSITION => {:type => ::Thrift::Types::LIST, :name => 'position', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::SecurityPosition}}
       }
 
       def struct_fields; FIELDS; end

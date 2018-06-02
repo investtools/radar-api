@@ -17,7 +17,7 @@ public class MonthlyPosition implements org.apache.thrift.TBase<MonthlyPosition,
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new MonthlyPositionTupleSchemeFactory();
 
   public long date; // required
-  public java.util.List<Position> position; // required
+  public java.util.List<SecurityPosition> position; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -90,7 +90,7 @@ public class MonthlyPosition implements org.apache.thrift.TBase<MonthlyPosition,
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.POSITION, new org.apache.thrift.meta_data.FieldMetaData("position", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Position.class))));
+            new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, SecurityPosition.class))));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(MonthlyPosition.class, metaDataMap);
   }
@@ -100,7 +100,7 @@ public class MonthlyPosition implements org.apache.thrift.TBase<MonthlyPosition,
 
   public MonthlyPosition(
     long date,
-    java.util.List<Position> position)
+    java.util.List<SecurityPosition> position)
   {
     this();
     this.date = date;
@@ -115,9 +115,9 @@ public class MonthlyPosition implements org.apache.thrift.TBase<MonthlyPosition,
     __isset_bitfield = other.__isset_bitfield;
     this.date = other.date;
     if (other.isSetPosition()) {
-      java.util.List<Position> __this__position = new java.util.ArrayList<Position>(other.position.size());
-      for (Position other_element : other.position) {
-        __this__position.add(new Position(other_element));
+      java.util.List<SecurityPosition> __this__position = new java.util.ArrayList<SecurityPosition>(other.position.size());
+      for (SecurityPosition other_element : other.position) {
+        __this__position.add(new SecurityPosition(other_element));
       }
       this.position = __this__position;
     }
@@ -161,22 +161,22 @@ public class MonthlyPosition implements org.apache.thrift.TBase<MonthlyPosition,
     return (this.position == null) ? 0 : this.position.size();
   }
 
-  public java.util.Iterator<Position> getPositionIterator() {
+  public java.util.Iterator<SecurityPosition> getPositionIterator() {
     return (this.position == null) ? null : this.position.iterator();
   }
 
-  public void addToPosition(Position elem) {
+  public void addToPosition(SecurityPosition elem) {
     if (this.position == null) {
-      this.position = new java.util.ArrayList<Position>();
+      this.position = new java.util.ArrayList<SecurityPosition>();
     }
     this.position.add(elem);
   }
 
-  public java.util.List<Position> getPosition() {
+  public java.util.List<SecurityPosition> getPosition() {
     return this.position;
   }
 
-  public MonthlyPosition setPosition(java.util.List<Position> position) {
+  public MonthlyPosition setPosition(java.util.List<SecurityPosition> position) {
     this.position = position;
     return this;
   }
@@ -210,7 +210,7 @@ public class MonthlyPosition implements org.apache.thrift.TBase<MonthlyPosition,
       if (value == null) {
         unsetPosition();
       } else {
-        setPosition((java.util.List<Position>)value);
+        setPosition((java.util.List<SecurityPosition>)value);
       }
       break;
 
@@ -409,11 +409,11 @@ public class MonthlyPosition implements org.apache.thrift.TBase<MonthlyPosition,
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
                 org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
-                struct.position = new java.util.ArrayList<Position>(_list0.size);
-                Position _elem1;
+                struct.position = new java.util.ArrayList<SecurityPosition>(_list0.size);
+                SecurityPosition _elem1;
                 for (int _i2 = 0; _i2 < _list0.size; ++_i2)
                 {
-                  _elem1 = new Position();
+                  _elem1 = new SecurityPosition();
                   _elem1.read(iprot);
                   struct.position.add(_elem1);
                 }
@@ -446,7 +446,7 @@ public class MonthlyPosition implements org.apache.thrift.TBase<MonthlyPosition,
         oprot.writeFieldBegin(POSITION_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.position.size()));
-          for (Position _iter3 : struct.position)
+          for (SecurityPosition _iter3 : struct.position)
           {
             _iter3.write(oprot);
           }
@@ -485,7 +485,7 @@ public class MonthlyPosition implements org.apache.thrift.TBase<MonthlyPosition,
       if (struct.isSetPosition()) {
         {
           oprot.writeI32(struct.position.size());
-          for (Position _iter4 : struct.position)
+          for (SecurityPosition _iter4 : struct.position)
           {
             _iter4.write(oprot);
           }
@@ -504,11 +504,11 @@ public class MonthlyPosition implements org.apache.thrift.TBase<MonthlyPosition,
       if (incoming.get(1)) {
         {
           org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.position = new java.util.ArrayList<Position>(_list5.size);
-          Position _elem6;
+          struct.position = new java.util.ArrayList<SecurityPosition>(_list5.size);
+          SecurityPosition _elem6;
           for (int _i7 = 0; _i7 < _list5.size; ++_i7)
           {
-            _elem6 = new Position();
+            _elem6 = new SecurityPosition();
             _elem6.read(iprot);
             struct.position.add(_elem6);
           }

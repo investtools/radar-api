@@ -162,7 +162,7 @@ DailyFundData.prototype.write = function(output) {
   return;
 };
 
-var Position = module.exports.Position = function(args) {
+var SecurityPosition = module.exports.SecurityPosition = function(args) {
   this.symbol = null;
   this.shares = null;
   if (args) {
@@ -174,8 +174,8 @@ var Position = module.exports.Position = function(args) {
     }
   }
 };
-Position.prototype = {};
-Position.prototype.read = function(input) {
+SecurityPosition.prototype = {};
+SecurityPosition.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -211,8 +211,8 @@ Position.prototype.read = function(input) {
   return;
 };
 
-Position.prototype.write = function(output) {
-  output.writeStructBegin('Position');
+SecurityPosition.prototype.write = function(output) {
+  output.writeStructBegin('SecurityPosition');
   if (this.symbol !== null && this.symbol !== undefined) {
     output.writeFieldBegin('symbol', Thrift.Type.STRING, 1);
     output.writeString(this.symbol);
@@ -236,7 +236,7 @@ var MonthlyPosition = module.exports.MonthlyPosition = function(args) {
       this.date = args.date;
     }
     if (args.position !== undefined && args.position !== null) {
-      this.position = Thrift.copyList(args.position, [ttypes.Position]);
+      this.position = Thrift.copyList(args.position, [ttypes.SecurityPosition]);
     }
   }
 };
@@ -273,7 +273,7 @@ MonthlyPosition.prototype.read = function(input) {
         for (var _i5 = 0; _i5 < _size0; ++_i5)
         {
           var elem6 = null;
-          elem6 = new ttypes.Position();
+          elem6 = new ttypes.SecurityPosition();
           elem6.read(input);
           this.position.push(elem6);
         }

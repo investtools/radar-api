@@ -15,14 +15,14 @@ struct DailyFundData {
   3: double nav
 }
 
-struct Position {
+struct SecurityPosition {
   1: string symbol
   2: i32 shares 
 }
 
 struct MonthlyPosition {
   1: common.Date date
-  2: list<Position> position
+  2: list<SecurityPosition> position
 }
 
 service PortfolioService {

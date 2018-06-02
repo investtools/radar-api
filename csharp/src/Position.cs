@@ -21,23 +21,80 @@ using Thrift.Transport;
 #endif
 public partial class Position : TBase
 {
-  private string _symbol;
-  private int _shares;
+  private SecurityId _id;
+  private string _short_name;
+  private double _value;
+  private double _rentability;
+  private double _avg_price;
+  private double _shares;
+  private double _paid_value;
 
-  public string Symbol
+  public SecurityId Id
   {
     get
     {
-      return _symbol;
+      return _id;
     }
     set
     {
-      __isset.symbol = true;
-      this._symbol = value;
+      __isset.id = true;
+      this._id = value;
     }
   }
 
-  public int Shares
+  public string Short_name
+  {
+    get
+    {
+      return _short_name;
+    }
+    set
+    {
+      __isset.short_name = true;
+      this._short_name = value;
+    }
+  }
+
+  public double Value
+  {
+    get
+    {
+      return _value;
+    }
+    set
+    {
+      __isset.@value = true;
+      this._value = value;
+    }
+  }
+
+  public double Rentability
+  {
+    get
+    {
+      return _rentability;
+    }
+    set
+    {
+      __isset.rentability = true;
+      this._rentability = value;
+    }
+  }
+
+  public double Avg_price
+  {
+    get
+    {
+      return _avg_price;
+    }
+    set
+    {
+      __isset.avg_price = true;
+      this._avg_price = value;
+    }
+  }
+
+  public double Shares
   {
     get
     {
@@ -50,14 +107,32 @@ public partial class Position : TBase
     }
   }
 
+  public double Paid_value
+  {
+    get
+    {
+      return _paid_value;
+    }
+    set
+    {
+      __isset.paid_value = true;
+      this._paid_value = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
   [Serializable]
   #endif
   public struct Isset {
-    public bool symbol;
+    public bool id;
+    public bool short_name;
+    public bool @value;
+    public bool rentability;
+    public bool avg_price;
     public bool shares;
+    public bool paid_value;
   }
 
   public Position() {
@@ -79,15 +154,51 @@ public partial class Position : TBase
         switch (field.ID)
         {
           case 1:
-            if (field.Type == TType.String) {
-              Symbol = iprot.ReadString();
+            if (field.Type == TType.Struct) {
+              Id = new SecurityId();
+              Id.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 2:
-            if (field.Type == TType.I32) {
-              Shares = iprot.ReadI32();
+            if (field.Type == TType.String) {
+              Short_name = iprot.ReadString();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 3:
+            if (field.Type == TType.Double) {
+              Value = iprot.ReadDouble();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 4:
+            if (field.Type == TType.Double) {
+              Rentability = iprot.ReadDouble();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 5:
+            if (field.Type == TType.Double) {
+              Avg_price = iprot.ReadDouble();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 6:
+            if (field.Type == TType.Double) {
+              Shares = iprot.ReadDouble();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 7:
+            if (field.Type == TType.Double) {
+              Paid_value = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -113,20 +224,60 @@ public partial class Position : TBase
       TStruct struc = new TStruct("Position");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (Symbol != null && __isset.symbol) {
-        field.Name = "symbol";
-        field.Type = TType.String;
+      if (Id != null && __isset.id) {
+        field.Name = "id";
+        field.Type = TType.Struct;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        oprot.WriteString(Symbol);
+        Id.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
+      if (Short_name != null && __isset.short_name) {
+        field.Name = "short_name";
+        field.Type = TType.String;
+        field.ID = 2;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteString(Short_name);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.@value) {
+        field.Name = "value";
+        field.Type = TType.Double;
+        field.ID = 3;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteDouble(Value);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.rentability) {
+        field.Name = "rentability";
+        field.Type = TType.Double;
+        field.ID = 4;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteDouble(Rentability);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.avg_price) {
+        field.Name = "avg_price";
+        field.Type = TType.Double;
+        field.ID = 5;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteDouble(Avg_price);
         oprot.WriteFieldEnd();
       }
       if (__isset.shares) {
         field.Name = "shares";
-        field.Type = TType.I32;
-        field.ID = 2;
+        field.Type = TType.Double;
+        field.ID = 6;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Shares);
+        oprot.WriteDouble(Shares);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.paid_value) {
+        field.Name = "paid_value";
+        field.Type = TType.Double;
+        field.ID = 7;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteDouble(Paid_value);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -141,17 +292,47 @@ public partial class Position : TBase
   public override string ToString() {
     StringBuilder __sb = new StringBuilder("Position(");
     bool __first = true;
-    if (Symbol != null && __isset.symbol) {
+    if (Id != null && __isset.id) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Symbol: ");
-      __sb.Append(Symbol);
+      __sb.Append("Id: ");
+      __sb.Append(Id== null ? "<null>" : Id.ToString());
+    }
+    if (Short_name != null && __isset.short_name) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Short_name: ");
+      __sb.Append(Short_name);
+    }
+    if (__isset.@value) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Value: ");
+      __sb.Append(Value);
+    }
+    if (__isset.rentability) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Rentability: ");
+      __sb.Append(Rentability);
+    }
+    if (__isset.avg_price) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Avg_price: ");
+      __sb.Append(Avg_price);
     }
     if (__isset.shares) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
       __sb.Append("Shares: ");
       __sb.Append(Shares);
+    }
+    if (__isset.paid_value) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Paid_value: ");
+      __sb.Append(Paid_value);
     }
     __sb.Append(")");
     return __sb.ToString();
