@@ -17,12 +17,12 @@ using Thrift.Transport;
 
 public partial class PortfolioService {
   public interface ISync {
-    List<MonthlyPosition> run_portfolio(List<Transaction> trxs);
+    List<MonthlyPosition> run_portfolio(List<Transaction> trxs, List<long> reports_dates);
   }
 
   public interface Iface : ISync {
     #if SILVERLIGHT
-    IAsyncResult Begin_run_portfolio(AsyncCallback callback, object state, List<Transaction> trxs);
+    IAsyncResult Begin_run_portfolio(AsyncCallback callback, object state, List<Transaction> trxs, List<long> reports_dates);
     List<MonthlyPosition> End_run_portfolio(IAsyncResult asyncResult);
     #endif
   }
@@ -85,9 +85,9 @@ public partial class PortfolioService {
 
     
     #if SILVERLIGHT
-    public IAsyncResult Begin_run_portfolio(AsyncCallback callback, object state, List<Transaction> trxs)
+    public IAsyncResult Begin_run_portfolio(AsyncCallback callback, object state, List<Transaction> trxs, List<long> reports_dates)
     {
-      return send_run_portfolio(callback, state, trxs);
+      return send_run_portfolio(callback, state, trxs, reports_dates);
     }
 
     public List<MonthlyPosition> End_run_portfolio(IAsyncResult asyncResult)
@@ -98,27 +98,28 @@ public partial class PortfolioService {
 
     #endif
 
-    public List<MonthlyPosition> run_portfolio(List<Transaction> trxs)
+    public List<MonthlyPosition> run_portfolio(List<Transaction> trxs, List<long> reports_dates)
     {
       #if !SILVERLIGHT
-      send_run_portfolio(trxs);
+      send_run_portfolio(trxs, reports_dates);
       return recv_run_portfolio();
 
       #else
-      var asyncResult = Begin_run_portfolio(null, null, trxs);
+      var asyncResult = Begin_run_portfolio(null, null, trxs, reports_dates);
       return End_run_portfolio(asyncResult);
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_run_portfolio(AsyncCallback callback, object state, List<Transaction> trxs)
+    public IAsyncResult send_run_portfolio(AsyncCallback callback, object state, List<Transaction> trxs, List<long> reports_dates)
     #else
-    public void send_run_portfolio(List<Transaction> trxs)
+    public void send_run_portfolio(List<Transaction> trxs, List<long> reports_dates)
     #endif
     {
       oprot_.WriteMessageBegin(new TMessage("run_portfolio", TMessageType.Call, seqid_));
       run_portfolio_args args = new run_portfolio_args();
       args.Trxs = trxs;
+      args.Reports_dates = reports_dates;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       #if SILVERLIGHT
@@ -191,7 +192,7 @@ public partial class PortfolioService {
       run_portfolio_result result = new run_portfolio_result();
       try
       {
-        result.Success = iface_.run_portfolio(args.Trxs);
+        result.Success = iface_.run_portfolio(args.Trxs, args.Reports_dates);
         oprot.WriteMessageBegin(new TMessage("run_portfolio", TMessageType.Reply, seqid)); 
         result.Write(oprot);
       }
@@ -220,6 +221,7 @@ public partial class PortfolioService {
   public partial class run_portfolio_args : TBase
   {
     private List<Transaction> _trxs;
+    private List<long> _reports_dates;
 
     public List<Transaction> Trxs
     {
@@ -234,6 +236,19 @@ public partial class PortfolioService {
       }
     }
 
+    public List<long> Reports_dates
+    {
+      get
+      {
+        return _reports_dates;
+      }
+      set
+      {
+        __isset.reports_dates = true;
+        this._reports_dates = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -241,6 +256,7 @@ public partial class PortfolioService {
     #endif
     public struct Isset {
       public bool trxs;
+      public bool reports_dates;
     }
 
     public run_portfolio_args() {
@@ -279,6 +295,23 @@ public partial class PortfolioService {
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
+            case 2:
+              if (field.Type == TType.List) {
+                {
+                  Reports_dates = new List<long>();
+                  TList _list7 = iprot.ReadListBegin();
+                  for( int _i8 = 0; _i8 < _list7.Count; ++_i8)
+                  {
+                    long _elem9;
+                    _elem9 = iprot.ReadI64();
+                    Reports_dates.Add(_elem9);
+                  }
+                  iprot.ReadListEnd();
+                }
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
             default: 
               TProtocolUtil.Skip(iprot, field.Type);
               break;
@@ -307,9 +340,24 @@ public partial class PortfolioService {
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Trxs.Count));
-            foreach (Transaction _iter7 in Trxs)
+            foreach (Transaction _iter10 in Trxs)
             {
-              _iter7.Write(oprot);
+              _iter10.Write(oprot);
+            }
+            oprot.WriteListEnd();
+          }
+          oprot.WriteFieldEnd();
+        }
+        if (Reports_dates != null && __isset.reports_dates) {
+          field.Name = "reports_dates";
+          field.Type = TType.List;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          {
+            oprot.WriteListBegin(new TList(TType.I64, Reports_dates.Count));
+            foreach (long _iter11 in Reports_dates)
+            {
+              oprot.WriteI64(_iter11);
             }
             oprot.WriteListEnd();
           }
@@ -332,6 +380,12 @@ public partial class PortfolioService {
         __first = false;
         __sb.Append("Trxs: ");
         __sb.Append(Trxs);
+      }
+      if (Reports_dates != null && __isset.reports_dates) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Reports_dates: ");
+        __sb.Append(Reports_dates);
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -391,13 +445,13 @@ public partial class PortfolioService {
               if (field.Type == TType.List) {
                 {
                   Success = new List<MonthlyPosition>();
-                  TList _list8 = iprot.ReadListBegin();
-                  for( int _i9 = 0; _i9 < _list8.Count; ++_i9)
+                  TList _list12 = iprot.ReadListBegin();
+                  for( int _i13 = 0; _i13 < _list12.Count; ++_i13)
                   {
-                    MonthlyPosition _elem10;
-                    _elem10 = new MonthlyPosition();
-                    _elem10.Read(iprot);
-                    Success.Add(_elem10);
+                    MonthlyPosition _elem14;
+                    _elem14 = new MonthlyPosition();
+                    _elem14.Read(iprot);
+                    Success.Add(_elem14);
                   }
                   iprot.ReadListEnd();
                 }
@@ -435,9 +489,9 @@ public partial class PortfolioService {
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
-              foreach (MonthlyPosition _iter11 in Success)
+              foreach (MonthlyPosition _iter15 in Success)
               {
-                _iter11.Write(oprot);
+                _iter15.Write(oprot);
               }
               oprot.WriteListEnd();
             }

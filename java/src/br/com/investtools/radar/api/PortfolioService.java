@@ -11,13 +11,13 @@ public class PortfolioService {
 
   public interface Iface {
 
-    public java.util.List<MonthlyPosition> run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs) throws org.apache.thrift.TException;
+    public java.util.List<MonthlyPosition> run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.util.List<java.lang.Long> reports_dates) throws org.apache.thrift.TException;
 
   }
 
   public interface AsyncIface {
 
-    public void run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs, org.apache.thrift.async.AsyncMethodCallback<java.util.List<MonthlyPosition>> resultHandler) throws org.apache.thrift.TException;
+    public void run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.util.List<java.lang.Long> reports_dates, org.apache.thrift.async.AsyncMethodCallback<java.util.List<MonthlyPosition>> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -41,16 +41,17 @@ public class PortfolioService {
       super(iprot, oprot);
     }
 
-    public java.util.List<MonthlyPosition> run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs) throws org.apache.thrift.TException
+    public java.util.List<MonthlyPosition> run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.util.List<java.lang.Long> reports_dates) throws org.apache.thrift.TException
     {
-      send_run_portfolio(trxs);
+      send_run_portfolio(trxs, reports_dates);
       return recv_run_portfolio();
     }
 
-    public void send_run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs) throws org.apache.thrift.TException
+    public void send_run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.util.List<java.lang.Long> reports_dates) throws org.apache.thrift.TException
     {
       run_portfolio_args args = new run_portfolio_args();
       args.setTrxs(trxs);
+      args.setReports_dates(reports_dates);
       sendBase("run_portfolio", args);
     }
 
@@ -82,24 +83,27 @@ public class PortfolioService {
       super(protocolFactory, clientManager, transport);
     }
 
-    public void run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs, org.apache.thrift.async.AsyncMethodCallback<java.util.List<MonthlyPosition>> resultHandler) throws org.apache.thrift.TException {
+    public void run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.util.List<java.lang.Long> reports_dates, org.apache.thrift.async.AsyncMethodCallback<java.util.List<MonthlyPosition>> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      run_portfolio_call method_call = new run_portfolio_call(trxs, resultHandler, this, ___protocolFactory, ___transport);
+      run_portfolio_call method_call = new run_portfolio_call(trxs, reports_dates, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     public static class run_portfolio_call extends org.apache.thrift.async.TAsyncMethodCall<java.util.List<MonthlyPosition>> {
       private java.util.List<br.com.investtools.radar.api.Transaction> trxs;
-      public run_portfolio_call(java.util.List<br.com.investtools.radar.api.Transaction> trxs, org.apache.thrift.async.AsyncMethodCallback<java.util.List<MonthlyPosition>> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private java.util.List<java.lang.Long> reports_dates;
+      public run_portfolio_call(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.util.List<java.lang.Long> reports_dates, org.apache.thrift.async.AsyncMethodCallback<java.util.List<MonthlyPosition>> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.trxs = trxs;
+        this.reports_dates = reports_dates;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("run_portfolio", org.apache.thrift.protocol.TMessageType.CALL, 0));
         run_portfolio_args args = new run_portfolio_args();
         args.setTrxs(trxs);
+        args.setReports_dates(reports_dates);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -146,7 +150,7 @@ public class PortfolioService {
 
       public run_portfolio_result getResult(I iface, run_portfolio_args args) throws org.apache.thrift.TException {
         run_portfolio_result result = new run_portfolio_result();
-        result.success = iface.run_portfolio(args.trxs);
+        result.success = iface.run_portfolio(args.trxs, args.reports_dates);
         return result;
       }
     }
@@ -225,7 +229,7 @@ public class PortfolioService {
       }
 
       public void start(I iface, run_portfolio_args args, org.apache.thrift.async.AsyncMethodCallback<java.util.List<MonthlyPosition>> resultHandler) throws org.apache.thrift.TException {
-        iface.run_portfolio(args.trxs,resultHandler);
+        iface.run_portfolio(args.trxs, args.reports_dates,resultHandler);
       }
     }
 
@@ -235,15 +239,18 @@ public class PortfolioService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("run_portfolio_args");
 
     private static final org.apache.thrift.protocol.TField TRXS_FIELD_DESC = new org.apache.thrift.protocol.TField("trxs", org.apache.thrift.protocol.TType.LIST, (short)1);
+    private static final org.apache.thrift.protocol.TField REPORTS_DATES_FIELD_DESC = new org.apache.thrift.protocol.TField("reports_dates", org.apache.thrift.protocol.TType.LIST, (short)2);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new run_portfolio_argsStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new run_portfolio_argsTupleSchemeFactory();
 
     public java.util.List<br.com.investtools.radar.api.Transaction> trxs; // required
+    public java.util.List<java.lang.Long> reports_dates; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      TRXS((short)1, "trxs");
+      TRXS((short)1, "trxs"),
+      REPORTS_DATES((short)2, "reports_dates");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -260,6 +267,8 @@ public class PortfolioService {
         switch(fieldId) {
           case 1: // TRXS
             return TRXS;
+          case 2: // REPORTS_DATES
+            return REPORTS_DATES;
           default:
             return null;
         }
@@ -306,6 +315,9 @@ public class PortfolioService {
       tmpMap.put(_Fields.TRXS, new org.apache.thrift.meta_data.FieldMetaData("trxs", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
               new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.Transaction.class))));
+      tmpMap.put(_Fields.REPORTS_DATES, new org.apache.thrift.meta_data.FieldMetaData("reports_dates", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64              , "Date"))));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(run_portfolio_args.class, metaDataMap);
     }
@@ -314,10 +326,12 @@ public class PortfolioService {
     }
 
     public run_portfolio_args(
-      java.util.List<br.com.investtools.radar.api.Transaction> trxs)
+      java.util.List<br.com.investtools.radar.api.Transaction> trxs,
+      java.util.List<java.lang.Long> reports_dates)
     {
       this();
       this.trxs = trxs;
+      this.reports_dates = reports_dates;
     }
 
     /**
@@ -331,6 +345,13 @@ public class PortfolioService {
         }
         this.trxs = __this__trxs;
       }
+      if (other.isSetReports_dates()) {
+        java.util.List<java.lang.Long> __this__reports_dates = new java.util.ArrayList<java.lang.Long>(other.reports_dates.size());
+        for (java.lang.Long other_element : other.reports_dates) {
+          __this__reports_dates.add(other_element);
+        }
+        this.reports_dates = __this__reports_dates;
+      }
     }
 
     public run_portfolio_args deepCopy() {
@@ -340,6 +361,7 @@ public class PortfolioService {
     @Override
     public void clear() {
       this.trxs = null;
+      this.reports_dates = null;
     }
 
     public int getTrxsSize() {
@@ -381,6 +403,45 @@ public class PortfolioService {
       }
     }
 
+    public int getReports_datesSize() {
+      return (this.reports_dates == null) ? 0 : this.reports_dates.size();
+    }
+
+    public java.util.Iterator<java.lang.Long> getReports_datesIterator() {
+      return (this.reports_dates == null) ? null : this.reports_dates.iterator();
+    }
+
+    public void addToReports_dates(long elem) {
+      if (this.reports_dates == null) {
+        this.reports_dates = new java.util.ArrayList<java.lang.Long>();
+      }
+      this.reports_dates.add(elem);
+    }
+
+    public java.util.List<java.lang.Long> getReports_dates() {
+      return this.reports_dates;
+    }
+
+    public run_portfolio_args setReports_dates(java.util.List<java.lang.Long> reports_dates) {
+      this.reports_dates = reports_dates;
+      return this;
+    }
+
+    public void unsetReports_dates() {
+      this.reports_dates = null;
+    }
+
+    /** Returns true if field reports_dates is set (has been assigned a value) and false otherwise */
+    public boolean isSetReports_dates() {
+      return this.reports_dates != null;
+    }
+
+    public void setReports_datesIsSet(boolean value) {
+      if (!value) {
+        this.reports_dates = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, java.lang.Object value) {
       switch (field) {
       case TRXS:
@@ -391,6 +452,14 @@ public class PortfolioService {
         }
         break;
 
+      case REPORTS_DATES:
+        if (value == null) {
+          unsetReports_dates();
+        } else {
+          setReports_dates((java.util.List<java.lang.Long>)value);
+        }
+        break;
+
       }
     }
 
@@ -398,6 +467,9 @@ public class PortfolioService {
       switch (field) {
       case TRXS:
         return getTrxs();
+
+      case REPORTS_DATES:
+        return getReports_dates();
 
       }
       throw new java.lang.IllegalStateException();
@@ -412,6 +484,8 @@ public class PortfolioService {
       switch (field) {
       case TRXS:
         return isSetTrxs();
+      case REPORTS_DATES:
+        return isSetReports_dates();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -440,6 +514,15 @@ public class PortfolioService {
           return false;
       }
 
+      boolean this_present_reports_dates = true && this.isSetReports_dates();
+      boolean that_present_reports_dates = true && that.isSetReports_dates();
+      if (this_present_reports_dates || that_present_reports_dates) {
+        if (!(this_present_reports_dates && that_present_reports_dates))
+          return false;
+        if (!this.reports_dates.equals(that.reports_dates))
+          return false;
+      }
+
       return true;
     }
 
@@ -450,6 +533,10 @@ public class PortfolioService {
       hashCode = hashCode * 8191 + ((isSetTrxs()) ? 131071 : 524287);
       if (isSetTrxs())
         hashCode = hashCode * 8191 + trxs.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetReports_dates()) ? 131071 : 524287);
+      if (isSetReports_dates())
+        hashCode = hashCode * 8191 + reports_dates.hashCode();
 
       return hashCode;
     }
@@ -468,6 +555,16 @@ public class PortfolioService {
       }
       if (isSetTrxs()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.trxs, other.trxs);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetReports_dates()).compareTo(other.isSetReports_dates());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetReports_dates()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.reports_dates, other.reports_dates);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -497,6 +594,14 @@ public class PortfolioService {
         sb.append("null");
       } else {
         sb.append(this.trxs);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("reports_dates:");
+      if (this.reports_dates == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.reports_dates);
       }
       first = false;
       sb.append(")");
@@ -561,6 +666,24 @@ public class PortfolioService {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 2: // REPORTS_DATES
+              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+                {
+                  org.apache.thrift.protocol.TList _list11 = iprot.readListBegin();
+                  struct.reports_dates = new java.util.ArrayList<java.lang.Long>(_list11.size);
+                  long _elem12;
+                  for (int _i13 = 0; _i13 < _list11.size; ++_i13)
+                  {
+                    _elem12 = iprot.readI64();
+                    struct.reports_dates.add(_elem12);
+                  }
+                  iprot.readListEnd();
+                }
+                struct.setReports_datesIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -580,9 +703,21 @@ public class PortfolioService {
           oprot.writeFieldBegin(TRXS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.trxs.size()));
-            for (br.com.investtools.radar.api.Transaction _iter11 : struct.trxs)
+            for (br.com.investtools.radar.api.Transaction _iter14 : struct.trxs)
             {
-              _iter11.write(oprot);
+              _iter14.write(oprot);
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+        if (struct.reports_dates != null) {
+          oprot.writeFieldBegin(REPORTS_DATES_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, struct.reports_dates.size()));
+            for (long _iter15 : struct.reports_dates)
+            {
+              oprot.writeI64(_iter15);
             }
             oprot.writeListEnd();
           }
@@ -609,13 +744,25 @@ public class PortfolioService {
         if (struct.isSetTrxs()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetReports_dates()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetTrxs()) {
           {
             oprot.writeI32(struct.trxs.size());
-            for (br.com.investtools.radar.api.Transaction _iter12 : struct.trxs)
+            for (br.com.investtools.radar.api.Transaction _iter16 : struct.trxs)
             {
-              _iter12.write(oprot);
+              _iter16.write(oprot);
+            }
+          }
+        }
+        if (struct.isSetReports_dates()) {
+          {
+            oprot.writeI32(struct.reports_dates.size());
+            for (long _iter17 : struct.reports_dates)
+            {
+              oprot.writeI64(_iter17);
             }
           }
         }
@@ -624,20 +771,33 @@ public class PortfolioService {
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, run_portfolio_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(1);
+        java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list13 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.trxs = new java.util.ArrayList<br.com.investtools.radar.api.Transaction>(_list13.size);
-            br.com.investtools.radar.api.Transaction _elem14;
-            for (int _i15 = 0; _i15 < _list13.size; ++_i15)
+            org.apache.thrift.protocol.TList _list18 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.trxs = new java.util.ArrayList<br.com.investtools.radar.api.Transaction>(_list18.size);
+            br.com.investtools.radar.api.Transaction _elem19;
+            for (int _i20 = 0; _i20 < _list18.size; ++_i20)
             {
-              _elem14 = new br.com.investtools.radar.api.Transaction();
-              _elem14.read(iprot);
-              struct.trxs.add(_elem14);
+              _elem19 = new br.com.investtools.radar.api.Transaction();
+              _elem19.read(iprot);
+              struct.trxs.add(_elem19);
             }
           }
           struct.setTrxsIsSet(true);
+        }
+        if (incoming.get(1)) {
+          {
+            org.apache.thrift.protocol.TList _list21 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+            struct.reports_dates = new java.util.ArrayList<java.lang.Long>(_list21.size);
+            long _elem22;
+            for (int _i23 = 0; _i23 < _list21.size; ++_i23)
+            {
+              _elem22 = iprot.readI64();
+              struct.reports_dates.add(_elem22);
+            }
+          }
+          struct.setReports_datesIsSet(true);
         }
       }
     }
@@ -961,14 +1121,14 @@ public class PortfolioService {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list16 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<MonthlyPosition>(_list16.size);
-                  MonthlyPosition _elem17;
-                  for (int _i18 = 0; _i18 < _list16.size; ++_i18)
+                  org.apache.thrift.protocol.TList _list24 = iprot.readListBegin();
+                  struct.success = new java.util.ArrayList<MonthlyPosition>(_list24.size);
+                  MonthlyPosition _elem25;
+                  for (int _i26 = 0; _i26 < _list24.size; ++_i26)
                   {
-                    _elem17 = new MonthlyPosition();
-                    _elem17.read(iprot);
-                    struct.success.add(_elem17);
+                    _elem25 = new MonthlyPosition();
+                    _elem25.read(iprot);
+                    struct.success.add(_elem25);
                   }
                   iprot.readListEnd();
                 }
@@ -996,9 +1156,9 @@ public class PortfolioService {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (MonthlyPosition _iter19 : struct.success)
+            for (MonthlyPosition _iter27 : struct.success)
             {
-              _iter19.write(oprot);
+              _iter27.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -1029,9 +1189,9 @@ public class PortfolioService {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (MonthlyPosition _iter20 : struct.success)
+            for (MonthlyPosition _iter28 : struct.success)
             {
-              _iter20.write(oprot);
+              _iter28.write(oprot);
             }
           }
         }
@@ -1043,14 +1203,14 @@ public class PortfolioService {
         java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list21 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new java.util.ArrayList<MonthlyPosition>(_list21.size);
-            MonthlyPosition _elem22;
-            for (int _i23 = 0; _i23 < _list21.size; ++_i23)
+            org.apache.thrift.protocol.TList _list29 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new java.util.ArrayList<MonthlyPosition>(_list29.size);
+            MonthlyPosition _elem30;
+            for (int _i31 = 0; _i31 < _list29.size; ++_i31)
             {
-              _elem22 = new MonthlyPosition();
-              _elem22.read(iprot);
-              struct.success.add(_elem22);
+              _elem30 = new MonthlyPosition();
+              _elem30.read(iprot);
+              struct.success.add(_elem30);
             }
           }
           struct.setSuccessIsSet(true);

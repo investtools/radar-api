@@ -18,9 +18,13 @@ var ttypes = require('./data_server_types');
 
 var PortfolioService_run_portfolio_args = function(args) {
   this.trxs = null;
+  this.reports_dates = null;
   if (args) {
     if (args.trxs !== undefined && args.trxs !== null) {
       this.trxs = Thrift.copyList(args.trxs, [transaction_ttypes.Transaction]);
+    }
+    if (args.reports_dates !== undefined && args.reports_dates !== null) {
+      this.reports_dates = Thrift.copyList(args.reports_dates, [null]);
     }
   }
 };
@@ -59,9 +63,26 @@ PortfolioService_run_portfolio_args.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 0:
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size15 = 0;
+        var _rtmp319;
+        this.reports_dates = [];
+        var _etype18 = 0;
+        _rtmp319 = input.readListBegin();
+        _etype18 = _rtmp319.etype;
+        _size15 = _rtmp319.size;
+        for (var _i20 = 0; _i20 < _size15; ++_i20)
+        {
+          var elem21 = null;
+          elem21 = input.readI64();
+          this.reports_dates.push(elem21);
+        }
+        input.readListEnd();
+      } else {
         input.skip(ftype);
-        break;
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -76,12 +97,26 @@ PortfolioService_run_portfolio_args.prototype.write = function(output) {
   if (this.trxs !== null && this.trxs !== undefined) {
     output.writeFieldBegin('trxs', Thrift.Type.LIST, 1);
     output.writeListBegin(Thrift.Type.STRUCT, this.trxs.length);
-    for (var iter15 in this.trxs)
+    for (var iter22 in this.trxs)
     {
-      if (this.trxs.hasOwnProperty(iter15))
+      if (this.trxs.hasOwnProperty(iter22))
       {
-        iter15 = this.trxs[iter15];
-        iter15.write(output);
+        iter22 = this.trxs[iter22];
+        iter22.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.reports_dates !== null && this.reports_dates !== undefined) {
+    output.writeFieldBegin('reports_dates', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.I64, this.reports_dates.length);
+    for (var iter23 in this.reports_dates)
+    {
+      if (this.reports_dates.hasOwnProperty(iter23))
+      {
+        iter23 = this.reports_dates[iter23];
+        output.writeI64(iter23);
       }
     }
     output.writeListEnd();
@@ -116,19 +151,19 @@ PortfolioService_run_portfolio_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.LIST) {
-        var _size16 = 0;
-        var _rtmp320;
+        var _size24 = 0;
+        var _rtmp328;
         this.success = [];
-        var _etype19 = 0;
-        _rtmp320 = input.readListBegin();
-        _etype19 = _rtmp320.etype;
-        _size16 = _rtmp320.size;
-        for (var _i21 = 0; _i21 < _size16; ++_i21)
+        var _etype27 = 0;
+        _rtmp328 = input.readListBegin();
+        _etype27 = _rtmp328.etype;
+        _size24 = _rtmp328.size;
+        for (var _i29 = 0; _i29 < _size24; ++_i29)
         {
-          var elem22 = null;
-          elem22 = new ttypes.MonthlyPosition();
-          elem22.read(input);
-          this.success.push(elem22);
+          var elem30 = null;
+          elem30 = new ttypes.MonthlyPosition();
+          elem30.read(input);
+          this.success.push(elem30);
         }
         input.readListEnd();
       } else {
@@ -152,12 +187,12 @@ PortfolioService_run_portfolio_result.prototype.write = function(output) {
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.LIST, 0);
     output.writeListBegin(Thrift.Type.STRUCT, this.success.length);
-    for (var iter23 in this.success)
+    for (var iter31 in this.success)
     {
-      if (this.success.hasOwnProperty(iter23))
+      if (this.success.hasOwnProperty(iter31))
       {
-        iter23 = this.success[iter23];
-        iter23.write(output);
+        iter31 = this.success[iter31];
+        iter31.write(output);
       }
     }
     output.writeListEnd();
@@ -177,7 +212,7 @@ var PortfolioServiceClient = exports.Client = function(output, pClass) {
 PortfolioServiceClient.prototype = {};
 PortfolioServiceClient.prototype.seqid = function() { return this._seqid; };
 PortfolioServiceClient.prototype.new_seqid = function() { return this._seqid += 1; };
-PortfolioServiceClient.prototype.run_portfolio = function(trxs, callback) {
+PortfolioServiceClient.prototype.run_portfolio = function(trxs, reports_dates, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -188,19 +223,20 @@ PortfolioServiceClient.prototype.run_portfolio = function(trxs, callback) {
         _defer.resolve(result);
       }
     };
-    this.send_run_portfolio(trxs);
+    this.send_run_portfolio(trxs, reports_dates);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_run_portfolio(trxs);
+    this.send_run_portfolio(trxs, reports_dates);
   }
 };
 
-PortfolioServiceClient.prototype.send_run_portfolio = function(trxs) {
+PortfolioServiceClient.prototype.send_run_portfolio = function(trxs, reports_dates) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('run_portfolio', Thrift.MessageType.CALL, this.seqid());
   var args = new PortfolioService_run_portfolio_args();
   args.trxs = trxs;
+  args.reports_dates = reports_dates;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -247,8 +283,8 @@ PortfolioServiceProcessor.prototype.process_run_portfolio = function(seqid, inpu
   var args = new PortfolioService_run_portfolio_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.run_portfolio.length === 1) {
-    Q.fcall(this._handler.run_portfolio, args.trxs)
+  if (this._handler.run_portfolio.length === 2) {
+    Q.fcall(this._handler.run_portfolio, args.trxs, args.reports_dates)
       .then(function(result) {
         var result_obj = new PortfolioService_run_portfolio_result({success: result});
         output.writeMessageBegin("run_portfolio", Thrift.MessageType.REPLY, seqid);
@@ -264,7 +300,7 @@ PortfolioServiceProcessor.prototype.process_run_portfolio = function(seqid, inpu
         output.flush();
       });
   } else {
-    this._handler.run_portfolio(args.trxs, function (err, result) {
+    this._handler.run_portfolio(args.trxs, args.reports_dates, function (err, result) {
       var result_obj;
       if ((err === null || typeof err === 'undefined')) {
         result_obj = new PortfolioService_run_portfolio_result((err !== null || typeof err === 'undefined') ? err : {success: result});

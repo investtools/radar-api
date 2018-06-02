@@ -13,13 +13,13 @@ module Radar
       class Client
         include ::Thrift::Client
 
-        def run_portfolio(trxs)
-          send_run_portfolio(trxs)
+        def run_portfolio(trxs, reports_dates)
+          send_run_portfolio(trxs, reports_dates)
           return recv_run_portfolio()
         end
 
-        def send_run_portfolio(trxs)
-          send_message('run_portfolio', Run_portfolio_args, :trxs => trxs)
+        def send_run_portfolio(trxs, reports_dates)
+          send_message('run_portfolio', Run_portfolio_args, :trxs => trxs, :reports_dates => reports_dates)
         end
 
         def recv_run_portfolio()
@@ -36,7 +36,7 @@ module Radar
         def process_run_portfolio(seqid, iprot, oprot)
           args = read_args(iprot, Run_portfolio_args)
           result = Run_portfolio_result.new()
-          result.success = @handler.run_portfolio(args.trxs)
+          result.success = @handler.run_portfolio(args.trxs, args.reports_dates)
           write_result(result, oprot, 'run_portfolio', seqid)
         end
 
@@ -47,9 +47,11 @@ module Radar
       class Run_portfolio_args
         include ::Thrift::Struct, ::Thrift::Struct_Union
         TRXS = 1
+        REPORTS_DATES = 2
 
         FIELDS = {
-          TRXS => {:type => ::Thrift::Types::LIST, :name => 'trxs', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Transaction}}
+          TRXS => {:type => ::Thrift::Types::LIST, :name => 'trxs', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Transaction}},
+          REPORTS_DATES => {:type => ::Thrift::Types::LIST, :name => 'reports_dates', :element => {:type => ::Thrift::Types::I64}}
         }
 
         def struct_fields; FIELDS; end
