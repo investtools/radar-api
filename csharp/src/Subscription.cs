@@ -19,14 +19,11 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class SecurityLendingAndBorrowing : TBase
+public partial class Subscription : TBase
 {
   private long _date;
   private StockId _stock;
   private int _shares;
-  private double _rate;
-  private long _due;
-  private SecurityLendingAndBorrowingType _type;
 
   public long Date
   {
@@ -67,49 +64,6 @@ public partial class SecurityLendingAndBorrowing : TBase
     }
   }
 
-  public double Rate
-  {
-    get
-    {
-      return _rate;
-    }
-    set
-    {
-      __isset.rate = true;
-      this._rate = value;
-    }
-  }
-
-  public long Due
-  {
-    get
-    {
-      return _due;
-    }
-    set
-    {
-      __isset.due = true;
-      this._due = value;
-    }
-  }
-
-  /// <summary>
-  /// 
-  /// <seealso cref="SecurityLendingAndBorrowingType"/>
-  /// </summary>
-  public SecurityLendingAndBorrowingType Type
-  {
-    get
-    {
-      return _type;
-    }
-    set
-    {
-      __isset.type = true;
-      this._type = value;
-    }
-  }
-
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -119,12 +73,9 @@ public partial class SecurityLendingAndBorrowing : TBase
     public bool date;
     public bool stock;
     public bool shares;
-    public bool rate;
-    public bool due;
-    public bool type;
   }
 
-  public SecurityLendingAndBorrowing() {
+  public Subscription() {
   }
 
   public void Read (TProtocol iprot)
@@ -164,27 +115,6 @@ public partial class SecurityLendingAndBorrowing : TBase
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 4:
-            if (field.Type == TType.Double) {
-              Rate = iprot.ReadDouble();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 5:
-            if (field.Type == TType.I64) {
-              Due = iprot.ReadI64();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 6:
-            if (field.Type == TType.I32) {
-              Type = (SecurityLendingAndBorrowingType)iprot.ReadI32();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
           default: 
             TProtocolUtil.Skip(iprot, field.Type);
             break;
@@ -203,7 +133,7 @@ public partial class SecurityLendingAndBorrowing : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("SecurityLendingAndBorrowing");
+      TStruct struc = new TStruct("Subscription");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
       if (__isset.date) {
@@ -230,30 +160,6 @@ public partial class SecurityLendingAndBorrowing : TBase
         oprot.WriteI32(Shares);
         oprot.WriteFieldEnd();
       }
-      if (__isset.rate) {
-        field.Name = "rate";
-        field.Type = TType.Double;
-        field.ID = 4;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteDouble(Rate);
-        oprot.WriteFieldEnd();
-      }
-      if (__isset.due) {
-        field.Name = "due";
-        field.Type = TType.I64;
-        field.ID = 5;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI64(Due);
-        oprot.WriteFieldEnd();
-      }
-      if (__isset.type) {
-        field.Name = "type";
-        field.Type = TType.I32;
-        field.ID = 6;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI32((int)Type);
-        oprot.WriteFieldEnd();
-      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -264,7 +170,7 @@ public partial class SecurityLendingAndBorrowing : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("SecurityLendingAndBorrowing(");
+    StringBuilder __sb = new StringBuilder("Subscription(");
     bool __first = true;
     if (__isset.date) {
       if(!__first) { __sb.Append(", "); }
@@ -283,24 +189,6 @@ public partial class SecurityLendingAndBorrowing : TBase
       __first = false;
       __sb.Append("Shares: ");
       __sb.Append(Shares);
-    }
-    if (__isset.rate) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Rate: ");
-      __sb.Append(Rate);
-    }
-    if (__isset.due) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Due: ");
-      __sb.Append(Due);
-    }
-    if (__isset.type) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Type: ");
-      __sb.Append(Type);
     }
     __sb.Append(")");
     return __sb.ToString();

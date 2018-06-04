@@ -11,17 +11,15 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("SecurityLendingAndBorrowingReturning");
 
   private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)1);
-  private static final org.apache.thrift.protocol.TField ACCOUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("account", org.apache.thrift.protocol.TType.STRING, (short)2);
-  private static final org.apache.thrift.protocol.TField STOCK_FIELD_DESC = new org.apache.thrift.protocol.TField("stock", org.apache.thrift.protocol.TType.STRUCT, (short)3);
-  private static final org.apache.thrift.protocol.TField SHARES_FIELD_DESC = new org.apache.thrift.protocol.TField("shares", org.apache.thrift.protocol.TType.I32, (short)4);
-  private static final org.apache.thrift.protocol.TField VALUE_FIELD_DESC = new org.apache.thrift.protocol.TField("value", org.apache.thrift.protocol.TType.DOUBLE, (short)5);
-  private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)6);
+  private static final org.apache.thrift.protocol.TField STOCK_FIELD_DESC = new org.apache.thrift.protocol.TField("stock", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField SHARES_FIELD_DESC = new org.apache.thrift.protocol.TField("shares", org.apache.thrift.protocol.TType.I32, (short)3);
+  private static final org.apache.thrift.protocol.TField VALUE_FIELD_DESC = new org.apache.thrift.protocol.TField("value", org.apache.thrift.protocol.TType.DOUBLE, (short)4);
+  private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)5);
 
   private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new SecurityLendingAndBorrowingReturningStandardSchemeFactory();
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new SecurityLendingAndBorrowingReturningTupleSchemeFactory();
 
   public long date; // required
-  public java.lang.String account; // required
   public br.com.investtools.radar.api.StockId stock; // required
   public int shares; // required
   public double value; // required
@@ -34,15 +32,14 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     DATE((short)1, "date"),
-    ACCOUNT((short)2, "account"),
-    STOCK((short)3, "stock"),
-    SHARES((short)4, "shares"),
-    VALUE((short)5, "value"),
+    STOCK((short)2, "stock"),
+    SHARES((short)3, "shares"),
+    VALUE((short)4, "value"),
     /**
      * 
      * @see SecurityLendingAndBorrowingType
      */
-    TYPE((short)6, "type");
+    TYPE((short)5, "type");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -59,15 +56,13 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
       switch(fieldId) {
         case 1: // DATE
           return DATE;
-        case 2: // ACCOUNT
-          return ACCOUNT;
-        case 3: // STOCK
+        case 2: // STOCK
           return STOCK;
-        case 4: // SHARES
+        case 3: // SHARES
           return SHARES;
-        case 5: // VALUE
+        case 4: // VALUE
           return VALUE;
-        case 6: // TYPE
+        case 5: // TYPE
           return TYPE;
         default:
           return null;
@@ -118,8 +113,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
     java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
-    tmpMap.put(_Fields.ACCOUNT, new org.apache.thrift.meta_data.FieldMetaData("account", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.STOCK, new org.apache.thrift.meta_data.FieldMetaData("stock", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.StockId.class)));
     tmpMap.put(_Fields.SHARES, new org.apache.thrift.meta_data.FieldMetaData("shares", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -137,7 +130,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
 
   public SecurityLendingAndBorrowingReturning(
     long date,
-    java.lang.String account,
     br.com.investtools.radar.api.StockId stock,
     int shares,
     double value,
@@ -146,7 +138,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
     this();
     this.date = date;
     setDateIsSet(true);
-    this.account = account;
     this.stock = stock;
     this.shares = shares;
     setSharesIsSet(true);
@@ -161,9 +152,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
   public SecurityLendingAndBorrowingReturning(SecurityLendingAndBorrowingReturning other) {
     __isset_bitfield = other.__isset_bitfield;
     this.date = other.date;
-    if (other.isSetAccount()) {
-      this.account = other.account;
-    }
     if (other.isSetStock()) {
       this.stock = new br.com.investtools.radar.api.StockId(other.stock);
     }
@@ -182,7 +170,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
   public void clear() {
     setDateIsSet(false);
     this.date = 0;
-    this.account = null;
     this.stock = null;
     setSharesIsSet(false);
     this.shares = 0;
@@ -212,30 +199,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
 
   public void setDateIsSet(boolean value) {
     __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __DATE_ISSET_ID, value);
-  }
-
-  public java.lang.String getAccount() {
-    return this.account;
-  }
-
-  public SecurityLendingAndBorrowingReturning setAccount(java.lang.String account) {
-    this.account = account;
-    return this;
-  }
-
-  public void unsetAccount() {
-    this.account = null;
-  }
-
-  /** Returns true if field account is set (has been assigned a value) and false otherwise */
-  public boolean isSetAccount() {
-    return this.account != null;
-  }
-
-  public void setAccountIsSet(boolean value) {
-    if (!value) {
-      this.account = null;
-    }
   }
 
   public br.com.investtools.radar.api.StockId getStock() {
@@ -350,14 +313,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
       }
       break;
 
-    case ACCOUNT:
-      if (value == null) {
-        unsetAccount();
-      } else {
-        setAccount((java.lang.String)value);
-      }
-      break;
-
     case STOCK:
       if (value == null) {
         unsetStock();
@@ -398,9 +353,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
     case DATE:
       return getDate();
 
-    case ACCOUNT:
-      return getAccount();
-
     case STOCK:
       return getStock();
 
@@ -426,8 +378,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
     switch (field) {
     case DATE:
       return isSetDate();
-    case ACCOUNT:
-      return isSetAccount();
     case STOCK:
       return isSetStock();
     case SHARES:
@@ -461,15 +411,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
       if (!(this_present_date && that_present_date))
         return false;
       if (this.date != that.date)
-        return false;
-    }
-
-    boolean this_present_account = true && this.isSetAccount();
-    boolean that_present_account = true && that.isSetAccount();
-    if (this_present_account || that_present_account) {
-      if (!(this_present_account && that_present_account))
-        return false;
-      if (!this.account.equals(that.account))
         return false;
     }
 
@@ -518,10 +459,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
 
     hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(date);
 
-    hashCode = hashCode * 8191 + ((isSetAccount()) ? 131071 : 524287);
-    if (isSetAccount())
-      hashCode = hashCode * 8191 + account.hashCode();
-
     hashCode = hashCode * 8191 + ((isSetStock()) ? 131071 : 524287);
     if (isSetStock())
       hashCode = hashCode * 8191 + stock.hashCode();
@@ -551,16 +488,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
     }
     if (isSetDate()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.date, other.date);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = java.lang.Boolean.valueOf(isSetAccount()).compareTo(other.isSetAccount());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetAccount()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.account, other.account);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -627,14 +554,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
 
     sb.append("date:");
     sb.append(this.date);
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("account:");
-    if (this.account == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.account);
-    }
     first = false;
     if (!first) sb.append(", ");
     sb.append("stock:");
@@ -716,15 +635,7 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // ACCOUNT
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.account = iprot.readString();
-              struct.setAccountIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 3: // STOCK
+          case 2: // STOCK
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
               struct.stock = new br.com.investtools.radar.api.StockId();
               struct.stock.read(iprot);
@@ -733,7 +644,7 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 4: // SHARES
+          case 3: // SHARES
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
               struct.shares = iprot.readI32();
               struct.setSharesIsSet(true);
@@ -741,7 +652,7 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 5: // VALUE
+          case 4: // VALUE
             if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
               struct.value = iprot.readDouble();
               struct.setValueIsSet(true);
@@ -749,7 +660,7 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 6: // TYPE
+          case 5: // TYPE
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
               struct.type = br.com.investtools.radar.api.SecurityLendingAndBorrowingType.findByValue(iprot.readI32());
               struct.setTypeIsSet(true);
@@ -775,11 +686,6 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
       oprot.writeFieldBegin(DATE_FIELD_DESC);
       oprot.writeI64(struct.date);
       oprot.writeFieldEnd();
-      if (struct.account != null) {
-        oprot.writeFieldBegin(ACCOUNT_FIELD_DESC);
-        oprot.writeString(struct.account);
-        oprot.writeFieldEnd();
-      }
       if (struct.stock != null) {
         oprot.writeFieldBegin(STOCK_FIELD_DESC);
         struct.stock.write(oprot);
@@ -817,27 +723,21 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
       if (struct.isSetDate()) {
         optionals.set(0);
       }
-      if (struct.isSetAccount()) {
+      if (struct.isSetStock()) {
         optionals.set(1);
       }
-      if (struct.isSetStock()) {
+      if (struct.isSetShares()) {
         optionals.set(2);
       }
-      if (struct.isSetShares()) {
+      if (struct.isSetValue()) {
         optionals.set(3);
       }
-      if (struct.isSetValue()) {
+      if (struct.isSetType()) {
         optionals.set(4);
       }
-      if (struct.isSetType()) {
-        optionals.set(5);
-      }
-      oprot.writeBitSet(optionals, 6);
+      oprot.writeBitSet(optionals, 5);
       if (struct.isSetDate()) {
         oprot.writeI64(struct.date);
-      }
-      if (struct.isSetAccount()) {
-        oprot.writeString(struct.account);
       }
       if (struct.isSetStock()) {
         struct.stock.write(oprot);
@@ -856,29 +756,25 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, SecurityLendingAndBorrowingReturning struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(6);
+      java.util.BitSet incoming = iprot.readBitSet(5);
       if (incoming.get(0)) {
         struct.date = iprot.readI64();
         struct.setDateIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.account = iprot.readString();
-        struct.setAccountIsSet(true);
-      }
-      if (incoming.get(2)) {
         struct.stock = new br.com.investtools.radar.api.StockId();
         struct.stock.read(iprot);
         struct.setStockIsSet(true);
       }
-      if (incoming.get(3)) {
+      if (incoming.get(2)) {
         struct.shares = iprot.readI32();
         struct.setSharesIsSet(true);
       }
-      if (incoming.get(4)) {
+      if (incoming.get(3)) {
         struct.value = iprot.readDouble();
         struct.setValueIsSet(true);
       }
-      if (incoming.get(5)) {
+      if (incoming.get(4)) {
         struct.type = br.com.investtools.radar.api.SecurityLendingAndBorrowingType.findByValue(iprot.readI32());
         struct.setTypeIsSet(true);
       }

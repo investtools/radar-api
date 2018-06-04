@@ -17,49 +17,50 @@ enum SecurityLendingAndBorrowingType {
 
 struct StockSell {
   1: common.Date date
-  2: string account
-  3: common.StockId stock
-  4: i32 shares
-  5: double price
+  2: common.StockId stock
+  3: i32 shares
+  4: double price
 }
 
 struct StockBuy {
   1: common.Date date
-  2: string account
-  3: common.StockId stock
-  4: i32 shares
-  5: double price
-  6: StockBuyTransactionType type = 1
+  2: common.StockId stock
+  3: i32 shares
+  4: double price
+  5: StockBuyTransactionType type = 1
+}
+
+struct Subscription {
+  1: common.Date date
+  2: common.StockId stock
+  3: i32 shares
 }
 
 struct StockOption {
   1: common.Date date
-  2: string account
-  3: common.StockId stock
-  4: i32 shares
-  5: double price
-  6: common.Date maturity
-  7: StockOptionTransactionType transaction_type
-  8: StockBuyTransactionType type = 1
+  2: common.StockId stock
+  3: i32 shares
+  4: double price
+  5: common.Date maturity
+  6: StockOptionTransactionType transaction_type
+  7: StockBuyTransactionType type = 1
 }
 
 struct SecurityLendingAndBorrowing {
   1: common.Date date
-  2: string account
-  3: common.StockId stock
-  4: i32 shares
-  5: double rate
-  6: common.Date due
-  7: SecurityLendingAndBorrowingType type
+  2: common.StockId stock
+  3: i32 shares
+  4: double rate
+  5: common.Date due
+  6: SecurityLendingAndBorrowingType type
 }
 
 struct SecurityLendingAndBorrowingReturning {
   1: common.Date date
-  2: string account
-  3: common.StockId stock
-  4: i32 shares
-  5: double value
-  6: SecurityLendingAndBorrowingType type
+  2: common.StockId stock
+  3: i32 shares
+  4: double value
+  5: SecurityLendingAndBorrowingType type
 }
 
 struct CommissionExpense {
@@ -75,4 +76,5 @@ union Transaction {
   4: SecurityLendingAndBorrowingReturning slbr
   5: CommissionExpense stock_commission_expense
   6: StockOption stock_option
+  7: Subscription subscription
 }

@@ -27,6 +27,7 @@ public partial class Transaction : TBase
   private SecurityLendingAndBorrowingReturning _slbr;
   private CommissionExpense _stock_commission_expense;
   private StockOption _stock_option;
+  private Subscription _subscription;
 
   public StockBuy Stock_buy
   {
@@ -106,6 +107,19 @@ public partial class Transaction : TBase
     }
   }
 
+  public Subscription Subscription
+  {
+    get
+    {
+      return _subscription;
+    }
+    set
+    {
+      __isset.subscription = true;
+      this._subscription = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -118,6 +132,7 @@ public partial class Transaction : TBase
     public bool slbr;
     public bool stock_commission_expense;
     public bool stock_option;
+    public bool subscription;
   }
 
   public Transaction() {
@@ -182,6 +197,14 @@ public partial class Transaction : TBase
             if (field.Type == TType.Struct) {
               Stock_option = new StockOption();
               Stock_option.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 7:
+            if (field.Type == TType.Struct) {
+              Subscription = new Subscription();
+              Subscription.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -255,6 +278,14 @@ public partial class Transaction : TBase
         Stock_option.Write(oprot);
         oprot.WriteFieldEnd();
       }
+      if (Subscription != null && __isset.subscription) {
+        field.Name = "subscription";
+        field.Type = TType.Struct;
+        field.ID = 7;
+        oprot.WriteFieldBegin(field);
+        Subscription.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -302,6 +333,12 @@ public partial class Transaction : TBase
       __first = false;
       __sb.Append("Stock_option: ");
       __sb.Append(Stock_option== null ? "<null>" : Stock_option.ToString());
+    }
+    if (Subscription != null && __isset.subscription) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Subscription: ");
+      __sb.Append(Subscription== null ? "<null>" : Subscription.ToString());
     }
     __sb.Append(")");
     return __sb.ToString();

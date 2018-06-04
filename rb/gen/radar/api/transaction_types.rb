@@ -34,14 +34,12 @@ module Radar
     class StockSell
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
-      ACCOUNT = 2
-      STOCK = 3
-      SHARES = 4
-      PRICE = 5
+      STOCK = 2
+      SHARES = 3
+      PRICE = 4
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
-        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'}
@@ -58,15 +56,13 @@ module Radar
     class StockBuy
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
-      ACCOUNT = 2
-      STOCK = 3
-      SHARES = 4
-      PRICE = 5
-      TYPE = 6
+      STOCK = 2
+      SHARES = 3
+      PRICE = 4
+      TYPE = 5
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
-        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'},
@@ -84,20 +80,38 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class StockOption
+    class Subscription
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
-      ACCOUNT = 2
-      STOCK = 3
-      SHARES = 4
-      PRICE = 5
-      MATURITY = 6
-      TRANSACTION_TYPE = 7
-      TYPE = 8
+      STOCK = 2
+      SHARES = 3
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
-        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
+        STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
+        SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class StockOption
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DATE = 1
+      STOCK = 2
+      SHARES = 3
+      PRICE = 4
+      MATURITY = 5
+      TRANSACTION_TYPE = 6
+      TYPE = 7
+
+      FIELDS = {
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'},
@@ -123,16 +137,14 @@ module Radar
     class SecurityLendingAndBorrowing
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
-      ACCOUNT = 2
-      STOCK = 3
-      SHARES = 4
-      RATE = 5
-      DUE = 6
-      TYPE = 7
+      STOCK = 2
+      SHARES = 3
+      RATE = 4
+      DUE = 5
+      TYPE = 6
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
-        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         RATE => {:type => ::Thrift::Types::DOUBLE, :name => 'rate'},
@@ -154,15 +166,13 @@ module Radar
     class SecurityLendingAndBorrowingReturning
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
-      ACCOUNT = 2
-      STOCK = 3
-      SHARES = 4
-      VALUE = 5
-      TYPE = 6
+      STOCK = 2
+      SHARES = 3
+      VALUE = 4
+      TYPE = 5
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
-        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'value'},
@@ -226,6 +236,10 @@ module Radar
         def stock_option(val)
           Transaction.new(:stock_option, val)
         end
+
+        def subscription(val)
+          Transaction.new(:subscription, val)
+        end
       end
 
       STOCK_BUY = 1
@@ -234,6 +248,7 @@ module Radar
       SLBR = 4
       STOCK_COMMISSION_EXPENSE = 5
       STOCK_OPTION = 6
+      SUBSCRIPTION = 7
 
       FIELDS = {
         STOCK_BUY => {:type => ::Thrift::Types::STRUCT, :name => 'stock_buy', :class => ::Radar::Api::StockBuy, :optional => true},
@@ -241,7 +256,8 @@ module Radar
         SLB => {:type => ::Thrift::Types::STRUCT, :name => 'slb', :class => ::Radar::Api::SecurityLendingAndBorrowing, :optional => true},
         SLBR => {:type => ::Thrift::Types::STRUCT, :name => 'slbr', :class => ::Radar::Api::SecurityLendingAndBorrowingReturning, :optional => true},
         STOCK_COMMISSION_EXPENSE => {:type => ::Thrift::Types::STRUCT, :name => 'stock_commission_expense', :class => ::Radar::Api::CommissionExpense, :optional => true},
-        STOCK_OPTION => {:type => ::Thrift::Types::STRUCT, :name => 'stock_option', :class => ::Radar::Api::StockOption, :optional => true}
+        STOCK_OPTION => {:type => ::Thrift::Types::STRUCT, :name => 'stock_option', :class => ::Radar::Api::StockOption, :optional => true},
+        SUBSCRIPTION => {:type => ::Thrift::Types::STRUCT, :name => 'subscription', :class => ::Radar::Api::Subscription, :optional => true}
       }
 
       def struct_fields; FIELDS; end

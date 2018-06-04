@@ -22,7 +22,6 @@ using Thrift.Transport;
 public partial class StockBuy : TBase
 {
   private long _date;
-  private string _account;
   private StockId _stock;
   private int _shares;
   private double _price;
@@ -38,19 +37,6 @@ public partial class StockBuy : TBase
     {
       __isset.date = true;
       this._date = value;
-    }
-  }
-
-  public string Account
-  {
-    get
-    {
-      return _account;
-    }
-    set
-    {
-      __isset.account = true;
-      this._account = value;
     }
   }
 
@@ -117,7 +103,6 @@ public partial class StockBuy : TBase
   #endif
   public struct Isset {
     public bool date;
-    public bool account;
     public bool stock;
     public bool shares;
     public bool price;
@@ -152,13 +137,6 @@ public partial class StockBuy : TBase
             }
             break;
           case 2:
-            if (field.Type == TType.String) {
-              Account = iprot.ReadString();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 3:
             if (field.Type == TType.Struct) {
               Stock = new StockId();
               Stock.Read(iprot);
@@ -166,21 +144,21 @@ public partial class StockBuy : TBase
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 4:
+          case 3:
             if (field.Type == TType.I32) {
               Shares = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 5:
+          case 4:
             if (field.Type == TType.Double) {
               Price = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 6:
+          case 5:
             if (field.Type == TType.I32) {
               Type = (StockBuyTransactionType)iprot.ReadI32();
             } else { 
@@ -216,18 +194,10 @@ public partial class StockBuy : TBase
         oprot.WriteI64(Date);
         oprot.WriteFieldEnd();
       }
-      if (Account != null && __isset.account) {
-        field.Name = "account";
-        field.Type = TType.String;
-        field.ID = 2;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteString(Account);
-        oprot.WriteFieldEnd();
-      }
       if (Stock != null && __isset.stock) {
         field.Name = "stock";
         field.Type = TType.Struct;
-        field.ID = 3;
+        field.ID = 2;
         oprot.WriteFieldBegin(field);
         Stock.Write(oprot);
         oprot.WriteFieldEnd();
@@ -235,7 +205,7 @@ public partial class StockBuy : TBase
       if (__isset.shares) {
         field.Name = "shares";
         field.Type = TType.I32;
-        field.ID = 4;
+        field.ID = 3;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32(Shares);
         oprot.WriteFieldEnd();
@@ -243,7 +213,7 @@ public partial class StockBuy : TBase
       if (__isset.price) {
         field.Name = "price";
         field.Type = TType.Double;
-        field.ID = 5;
+        field.ID = 4;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Price);
         oprot.WriteFieldEnd();
@@ -251,7 +221,7 @@ public partial class StockBuy : TBase
       if (__isset.type) {
         field.Name = "type";
         field.Type = TType.I32;
-        field.ID = 6;
+        field.ID = 5;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32((int)Type);
         oprot.WriteFieldEnd();
@@ -273,12 +243,6 @@ public partial class StockBuy : TBase
       __first = false;
       __sb.Append("Date: ");
       __sb.Append(Date);
-    }
-    if (Account != null && __isset.account) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Account: ");
-      __sb.Append(Account);
     }
     if (Stock != null && __isset.stock) {
       if(!__first) { __sb.Append(", "); }

@@ -27,16 +27,12 @@ ttypes.SecurityLendingAndBorrowingType = {
 };
 var StockSell = module.exports.StockSell = function(args) {
   this.date = null;
-  this.account = null;
   this.stock = null;
   this.shares = null;
   this.price = null;
   if (args) {
     if (args.date !== undefined && args.date !== null) {
       this.date = args.date;
-    }
-    if (args.account !== undefined && args.account !== null) {
-      this.account = args.account;
     }
     if (args.stock !== undefined && args.stock !== null) {
       this.stock = new common_ttypes.StockId(args.stock);
@@ -71,13 +67,6 @@ StockSell.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.account = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
       if (ftype == Thrift.Type.STRUCT) {
         this.stock = new common_ttypes.StockId();
         this.stock.read(input);
@@ -85,14 +74,14 @@ StockSell.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 4:
+      case 3:
       if (ftype == Thrift.Type.I32) {
         this.shares = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 5:
+      case 4:
       if (ftype == Thrift.Type.DOUBLE) {
         this.price = input.readDouble();
       } else {
@@ -115,23 +104,18 @@ StockSell.prototype.write = function(output) {
     output.writeI64(this.date);
     output.writeFieldEnd();
   }
-  if (this.account !== null && this.account !== undefined) {
-    output.writeFieldBegin('account', Thrift.Type.STRING, 2);
-    output.writeString(this.account);
-    output.writeFieldEnd();
-  }
   if (this.stock !== null && this.stock !== undefined) {
-    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 3);
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
     this.stock.write(output);
     output.writeFieldEnd();
   }
   if (this.shares !== null && this.shares !== undefined) {
-    output.writeFieldBegin('shares', Thrift.Type.I32, 4);
+    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
     output.writeI32(this.shares);
     output.writeFieldEnd();
   }
   if (this.price !== null && this.price !== undefined) {
-    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 5);
+    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 4);
     output.writeDouble(this.price);
     output.writeFieldEnd();
   }
@@ -142,7 +126,6 @@ StockSell.prototype.write = function(output) {
 
 var StockBuy = module.exports.StockBuy = function(args) {
   this.date = null;
-  this.account = null;
   this.stock = null;
   this.shares = null;
   this.price = null;
@@ -150,9 +133,6 @@ var StockBuy = module.exports.StockBuy = function(args) {
   if (args) {
     if (args.date !== undefined && args.date !== null) {
       this.date = args.date;
-    }
-    if (args.account !== undefined && args.account !== null) {
-      this.account = args.account;
     }
     if (args.stock !== undefined && args.stock !== null) {
       this.stock = new common_ttypes.StockId(args.stock);
@@ -190,13 +170,6 @@ StockBuy.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.account = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
       if (ftype == Thrift.Type.STRUCT) {
         this.stock = new common_ttypes.StockId();
         this.stock.read(input);
@@ -204,21 +177,21 @@ StockBuy.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 4:
+      case 3:
       if (ftype == Thrift.Type.I32) {
         this.shares = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 5:
+      case 4:
       if (ftype == Thrift.Type.DOUBLE) {
         this.price = input.readDouble();
       } else {
         input.skip(ftype);
       }
       break;
-      case 6:
+      case 5:
       if (ftype == Thrift.Type.I32) {
         this.type = input.readI32();
       } else {
@@ -241,29 +214,107 @@ StockBuy.prototype.write = function(output) {
     output.writeI64(this.date);
     output.writeFieldEnd();
   }
-  if (this.account !== null && this.account !== undefined) {
-    output.writeFieldBegin('account', Thrift.Type.STRING, 2);
-    output.writeString(this.account);
-    output.writeFieldEnd();
-  }
   if (this.stock !== null && this.stock !== undefined) {
-    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 3);
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
     this.stock.write(output);
     output.writeFieldEnd();
   }
   if (this.shares !== null && this.shares !== undefined) {
-    output.writeFieldBegin('shares', Thrift.Type.I32, 4);
+    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
     output.writeI32(this.shares);
     output.writeFieldEnd();
   }
   if (this.price !== null && this.price !== undefined) {
-    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 5);
+    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 4);
     output.writeDouble(this.price);
     output.writeFieldEnd();
   }
   if (this.type !== null && this.type !== undefined) {
-    output.writeFieldBegin('type', Thrift.Type.I32, 6);
+    output.writeFieldBegin('type', Thrift.Type.I32, 5);
     output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var Subscription = module.exports.Subscription = function(args) {
+  this.date = null;
+  this.stock = null;
+  this.shares = null;
+  if (args) {
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.stock !== undefined && args.stock !== null) {
+      this.stock = new common_ttypes.StockId(args.stock);
+    }
+    if (args.shares !== undefined && args.shares !== null) {
+      this.shares = args.shares;
+    }
+  }
+};
+Subscription.prototype = {};
+Subscription.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock = new common_ttypes.StockId();
+        this.stock.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.shares = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+Subscription.prototype.write = function(output) {
+  output.writeStructBegin('Subscription');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.stock !== null && this.stock !== undefined) {
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
+    this.stock.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.shares !== null && this.shares !== undefined) {
+    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
+    output.writeI32(this.shares);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -273,7 +324,6 @@ StockBuy.prototype.write = function(output) {
 
 var StockOption = module.exports.StockOption = function(args) {
   this.date = null;
-  this.account = null;
   this.stock = null;
   this.shares = null;
   this.price = null;
@@ -283,9 +333,6 @@ var StockOption = module.exports.StockOption = function(args) {
   if (args) {
     if (args.date !== undefined && args.date !== null) {
       this.date = args.date;
-    }
-    if (args.account !== undefined && args.account !== null) {
-      this.account = args.account;
     }
     if (args.stock !== undefined && args.stock !== null) {
       this.stock = new common_ttypes.StockId(args.stock);
@@ -329,13 +376,6 @@ StockOption.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.account = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
       if (ftype == Thrift.Type.STRUCT) {
         this.stock = new common_ttypes.StockId();
         this.stock.read(input);
@@ -343,35 +383,35 @@ StockOption.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 4:
+      case 3:
       if (ftype == Thrift.Type.I32) {
         this.shares = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 5:
+      case 4:
       if (ftype == Thrift.Type.DOUBLE) {
         this.price = input.readDouble();
       } else {
         input.skip(ftype);
       }
       break;
-      case 6:
+      case 5:
       if (ftype == Thrift.Type.I64) {
         this.maturity = input.readI64();
       } else {
         input.skip(ftype);
       }
       break;
-      case 7:
+      case 6:
       if (ftype == Thrift.Type.I32) {
         this.transaction_type = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 8:
+      case 7:
       if (ftype == Thrift.Type.I32) {
         this.type = input.readI32();
       } else {
@@ -394,38 +434,33 @@ StockOption.prototype.write = function(output) {
     output.writeI64(this.date);
     output.writeFieldEnd();
   }
-  if (this.account !== null && this.account !== undefined) {
-    output.writeFieldBegin('account', Thrift.Type.STRING, 2);
-    output.writeString(this.account);
-    output.writeFieldEnd();
-  }
   if (this.stock !== null && this.stock !== undefined) {
-    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 3);
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
     this.stock.write(output);
     output.writeFieldEnd();
   }
   if (this.shares !== null && this.shares !== undefined) {
-    output.writeFieldBegin('shares', Thrift.Type.I32, 4);
+    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
     output.writeI32(this.shares);
     output.writeFieldEnd();
   }
   if (this.price !== null && this.price !== undefined) {
-    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 5);
+    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 4);
     output.writeDouble(this.price);
     output.writeFieldEnd();
   }
   if (this.maturity !== null && this.maturity !== undefined) {
-    output.writeFieldBegin('maturity', Thrift.Type.I64, 6);
+    output.writeFieldBegin('maturity', Thrift.Type.I64, 5);
     output.writeI64(this.maturity);
     output.writeFieldEnd();
   }
   if (this.transaction_type !== null && this.transaction_type !== undefined) {
-    output.writeFieldBegin('transaction_type', Thrift.Type.I32, 7);
+    output.writeFieldBegin('transaction_type', Thrift.Type.I32, 6);
     output.writeI32(this.transaction_type);
     output.writeFieldEnd();
   }
   if (this.type !== null && this.type !== undefined) {
-    output.writeFieldBegin('type', Thrift.Type.I32, 8);
+    output.writeFieldBegin('type', Thrift.Type.I32, 7);
     output.writeI32(this.type);
     output.writeFieldEnd();
   }
@@ -436,7 +471,6 @@ StockOption.prototype.write = function(output) {
 
 var SecurityLendingAndBorrowing = module.exports.SecurityLendingAndBorrowing = function(args) {
   this.date = null;
-  this.account = null;
   this.stock = null;
   this.shares = null;
   this.rate = null;
@@ -445,9 +479,6 @@ var SecurityLendingAndBorrowing = module.exports.SecurityLendingAndBorrowing = f
   if (args) {
     if (args.date !== undefined && args.date !== null) {
       this.date = args.date;
-    }
-    if (args.account !== undefined && args.account !== null) {
-      this.account = args.account;
     }
     if (args.stock !== undefined && args.stock !== null) {
       this.stock = new common_ttypes.StockId(args.stock);
@@ -488,13 +519,6 @@ SecurityLendingAndBorrowing.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.account = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
       if (ftype == Thrift.Type.STRUCT) {
         this.stock = new common_ttypes.StockId();
         this.stock.read(input);
@@ -502,28 +526,28 @@ SecurityLendingAndBorrowing.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 4:
+      case 3:
       if (ftype == Thrift.Type.I32) {
         this.shares = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 5:
+      case 4:
       if (ftype == Thrift.Type.DOUBLE) {
         this.rate = input.readDouble();
       } else {
         input.skip(ftype);
       }
       break;
-      case 6:
+      case 5:
       if (ftype == Thrift.Type.I64) {
         this.due = input.readI64();
       } else {
         input.skip(ftype);
       }
       break;
-      case 7:
+      case 6:
       if (ftype == Thrift.Type.I32) {
         this.type = input.readI32();
       } else {
@@ -546,33 +570,28 @@ SecurityLendingAndBorrowing.prototype.write = function(output) {
     output.writeI64(this.date);
     output.writeFieldEnd();
   }
-  if (this.account !== null && this.account !== undefined) {
-    output.writeFieldBegin('account', Thrift.Type.STRING, 2);
-    output.writeString(this.account);
-    output.writeFieldEnd();
-  }
   if (this.stock !== null && this.stock !== undefined) {
-    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 3);
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
     this.stock.write(output);
     output.writeFieldEnd();
   }
   if (this.shares !== null && this.shares !== undefined) {
-    output.writeFieldBegin('shares', Thrift.Type.I32, 4);
+    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
     output.writeI32(this.shares);
     output.writeFieldEnd();
   }
   if (this.rate !== null && this.rate !== undefined) {
-    output.writeFieldBegin('rate', Thrift.Type.DOUBLE, 5);
+    output.writeFieldBegin('rate', Thrift.Type.DOUBLE, 4);
     output.writeDouble(this.rate);
     output.writeFieldEnd();
   }
   if (this.due !== null && this.due !== undefined) {
-    output.writeFieldBegin('due', Thrift.Type.I64, 6);
+    output.writeFieldBegin('due', Thrift.Type.I64, 5);
     output.writeI64(this.due);
     output.writeFieldEnd();
   }
   if (this.type !== null && this.type !== undefined) {
-    output.writeFieldBegin('type', Thrift.Type.I32, 7);
+    output.writeFieldBegin('type', Thrift.Type.I32, 6);
     output.writeI32(this.type);
     output.writeFieldEnd();
   }
@@ -583,7 +602,6 @@ SecurityLendingAndBorrowing.prototype.write = function(output) {
 
 var SecurityLendingAndBorrowingReturning = module.exports.SecurityLendingAndBorrowingReturning = function(args) {
   this.date = null;
-  this.account = null;
   this.stock = null;
   this.shares = null;
   this.value = null;
@@ -591,9 +609,6 @@ var SecurityLendingAndBorrowingReturning = module.exports.SecurityLendingAndBorr
   if (args) {
     if (args.date !== undefined && args.date !== null) {
       this.date = args.date;
-    }
-    if (args.account !== undefined && args.account !== null) {
-      this.account = args.account;
     }
     if (args.stock !== undefined && args.stock !== null) {
       this.stock = new common_ttypes.StockId(args.stock);
@@ -631,13 +646,6 @@ SecurityLendingAndBorrowingReturning.prototype.read = function(input) {
       }
       break;
       case 2:
-      if (ftype == Thrift.Type.STRING) {
-        this.account = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 3:
       if (ftype == Thrift.Type.STRUCT) {
         this.stock = new common_ttypes.StockId();
         this.stock.read(input);
@@ -645,21 +653,21 @@ SecurityLendingAndBorrowingReturning.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 4:
+      case 3:
       if (ftype == Thrift.Type.I32) {
         this.shares = input.readI32();
       } else {
         input.skip(ftype);
       }
       break;
-      case 5:
+      case 4:
       if (ftype == Thrift.Type.DOUBLE) {
         this.value = input.readDouble();
       } else {
         input.skip(ftype);
       }
       break;
-      case 6:
+      case 5:
       if (ftype == Thrift.Type.I32) {
         this.type = input.readI32();
       } else {
@@ -682,28 +690,23 @@ SecurityLendingAndBorrowingReturning.prototype.write = function(output) {
     output.writeI64(this.date);
     output.writeFieldEnd();
   }
-  if (this.account !== null && this.account !== undefined) {
-    output.writeFieldBegin('account', Thrift.Type.STRING, 2);
-    output.writeString(this.account);
-    output.writeFieldEnd();
-  }
   if (this.stock !== null && this.stock !== undefined) {
-    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 3);
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
     this.stock.write(output);
     output.writeFieldEnd();
   }
   if (this.shares !== null && this.shares !== undefined) {
-    output.writeFieldBegin('shares', Thrift.Type.I32, 4);
+    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
     output.writeI32(this.shares);
     output.writeFieldEnd();
   }
   if (this.value !== null && this.value !== undefined) {
-    output.writeFieldBegin('value', Thrift.Type.DOUBLE, 5);
+    output.writeFieldBegin('value', Thrift.Type.DOUBLE, 4);
     output.writeDouble(this.value);
     output.writeFieldEnd();
   }
   if (this.type !== null && this.type !== undefined) {
-    output.writeFieldBegin('type', Thrift.Type.I32, 6);
+    output.writeFieldBegin('type', Thrift.Type.I32, 5);
     output.writeI32(this.type);
     output.writeFieldEnd();
   }
@@ -801,6 +804,7 @@ var Transaction = module.exports.Transaction = function(args) {
   this.slbr = null;
   this.stock_commission_expense = null;
   this.stock_option = null;
+  this.subscription = null;
   if (args) {
     if (args.stock_buy !== undefined && args.stock_buy !== null) {
       this.stock_buy = new ttypes.StockBuy(args.stock_buy);
@@ -819,6 +823,9 @@ var Transaction = module.exports.Transaction = function(args) {
     }
     if (args.stock_option !== undefined && args.stock_option !== null) {
       this.stock_option = new ttypes.StockOption(args.stock_option);
+    }
+    if (args.subscription !== undefined && args.subscription !== null) {
+      this.subscription = new ttypes.Subscription(args.subscription);
     }
   }
 };
@@ -884,6 +891,14 @@ Transaction.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 7:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.subscription = new ttypes.Subscription();
+        this.subscription.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -923,6 +938,11 @@ Transaction.prototype.write = function(output) {
   if (this.stock_option !== null && this.stock_option !== undefined) {
     output.writeFieldBegin('stock_option', Thrift.Type.STRUCT, 6);
     this.stock_option.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.subscription !== null && this.subscription !== undefined) {
+    output.writeFieldBegin('subscription', Thrift.Type.STRUCT, 7);
+    this.subscription.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

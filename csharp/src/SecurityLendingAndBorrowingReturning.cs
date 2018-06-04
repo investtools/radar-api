@@ -22,7 +22,6 @@ using Thrift.Transport;
 public partial class SecurityLendingAndBorrowingReturning : TBase
 {
   private long _date;
-  private string _account;
   private StockId _stock;
   private int _shares;
   private double _value;
@@ -38,19 +37,6 @@ public partial class SecurityLendingAndBorrowingReturning : TBase
     {
       __isset.date = true;
       this._date = value;
-    }
-  }
-
-  public string Account
-  {
-    get
-    {
-      return _account;
-    }
-    set
-    {
-      __isset.account = true;
-      this._account = value;
     }
   }
 
@@ -117,7 +103,6 @@ public partial class SecurityLendingAndBorrowingReturning : TBase
   #endif
   public struct Isset {
     public bool date;
-    public bool account;
     public bool stock;
     public bool shares;
     public bool @value;
@@ -150,13 +135,6 @@ public partial class SecurityLendingAndBorrowingReturning : TBase
             }
             break;
           case 2:
-            if (field.Type == TType.String) {
-              Account = iprot.ReadString();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 3:
             if (field.Type == TType.Struct) {
               Stock = new StockId();
               Stock.Read(iprot);
@@ -164,21 +142,21 @@ public partial class SecurityLendingAndBorrowingReturning : TBase
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 4:
+          case 3:
             if (field.Type == TType.I32) {
               Shares = iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 5:
+          case 4:
             if (field.Type == TType.Double) {
               Value = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 6:
+          case 5:
             if (field.Type == TType.I32) {
               Type = (SecurityLendingAndBorrowingType)iprot.ReadI32();
             } else { 
@@ -214,18 +192,10 @@ public partial class SecurityLendingAndBorrowingReturning : TBase
         oprot.WriteI64(Date);
         oprot.WriteFieldEnd();
       }
-      if (Account != null && __isset.account) {
-        field.Name = "account";
-        field.Type = TType.String;
-        field.ID = 2;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteString(Account);
-        oprot.WriteFieldEnd();
-      }
       if (Stock != null && __isset.stock) {
         field.Name = "stock";
         field.Type = TType.Struct;
-        field.ID = 3;
+        field.ID = 2;
         oprot.WriteFieldBegin(field);
         Stock.Write(oprot);
         oprot.WriteFieldEnd();
@@ -233,7 +203,7 @@ public partial class SecurityLendingAndBorrowingReturning : TBase
       if (__isset.shares) {
         field.Name = "shares";
         field.Type = TType.I32;
-        field.ID = 4;
+        field.ID = 3;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32(Shares);
         oprot.WriteFieldEnd();
@@ -241,7 +211,7 @@ public partial class SecurityLendingAndBorrowingReturning : TBase
       if (__isset.@value) {
         field.Name = "value";
         field.Type = TType.Double;
-        field.ID = 5;
+        field.ID = 4;
         oprot.WriteFieldBegin(field);
         oprot.WriteDouble(Value);
         oprot.WriteFieldEnd();
@@ -249,7 +219,7 @@ public partial class SecurityLendingAndBorrowingReturning : TBase
       if (__isset.type) {
         field.Name = "type";
         field.Type = TType.I32;
-        field.ID = 6;
+        field.ID = 5;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32((int)Type);
         oprot.WriteFieldEnd();
@@ -271,12 +241,6 @@ public partial class SecurityLendingAndBorrowingReturning : TBase
       __first = false;
       __sb.Append("Date: ");
       __sb.Append(Date);
-    }
-    if (Account != null && __isset.account) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Account: ");
-      __sb.Append(Account);
     }
     if (Stock != null && __isset.stock) {
       if(!__first) { __sb.Append(", "); }
