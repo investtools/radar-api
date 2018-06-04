@@ -28,6 +28,7 @@ public partial class Transaction : TBase
   private CommissionExpense _stock_commission_expense;
   private StockOption _stock_option;
   private Subscription _subscription;
+  private Transfer _transfer;
 
   public StockBuy Stock_buy
   {
@@ -120,6 +121,19 @@ public partial class Transaction : TBase
     }
   }
 
+  public Transfer Transfer
+  {
+    get
+    {
+      return _transfer;
+    }
+    set
+    {
+      __isset.transfer = true;
+      this._transfer = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -133,6 +147,7 @@ public partial class Transaction : TBase
     public bool stock_commission_expense;
     public bool stock_option;
     public bool subscription;
+    public bool transfer;
   }
 
   public Transaction() {
@@ -205,6 +220,14 @@ public partial class Transaction : TBase
             if (field.Type == TType.Struct) {
               Subscription = new Subscription();
               Subscription.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 8:
+            if (field.Type == TType.Struct) {
+              Transfer = new Transfer();
+              Transfer.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -286,6 +309,14 @@ public partial class Transaction : TBase
         Subscription.Write(oprot);
         oprot.WriteFieldEnd();
       }
+      if (Transfer != null && __isset.transfer) {
+        field.Name = "transfer";
+        field.Type = TType.Struct;
+        field.ID = 8;
+        oprot.WriteFieldBegin(field);
+        Transfer.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -339,6 +370,12 @@ public partial class Transaction : TBase
       __first = false;
       __sb.Append("Subscription: ");
       __sb.Append(Subscription== null ? "<null>" : Subscription.ToString());
+    }
+    if (Transfer != null && __isset.transfer) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Transfer: ");
+      __sb.Append(Transfer== null ? "<null>" : Transfer.ToString());
     }
     __sb.Append(")");
     return __sb.ToString();

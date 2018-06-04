@@ -31,6 +31,13 @@ module Radar
       VALID_VALUES = Set.new([LENDER, BORROWER]).freeze
     end
 
+    module TransferType
+      IN = 1
+      OUT = 2
+      VALUE_MAP = {1 => "IN", 2 => "OUT"}
+      VALID_VALUES = Set.new([IN, OUT]).freeze
+    end
+
     class StockSell
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
@@ -210,6 +217,31 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
+    class Transfer
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DATE = 1
+      STOCK = 2
+      SHARES = 3
+      TYPE = 4
+
+      FIELDS = {
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
+        STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
+        SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
+        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::Api::TransferType}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+        unless @type.nil? || ::Radar::Api::TransferType::VALID_VALUES.include?(@type)
+          raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Invalid value of field type!')
+        end
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class Transaction < ::Thrift::Union
       include ::Thrift::Struct_Union
       class << self
@@ -240,6 +272,10 @@ module Radar
         def subscription(val)
           Transaction.new(:subscription, val)
         end
+
+        def transfer(val)
+          Transaction.new(:transfer, val)
+        end
       end
 
       STOCK_BUY = 1
@@ -249,6 +285,7 @@ module Radar
       STOCK_COMMISSION_EXPENSE = 5
       STOCK_OPTION = 6
       SUBSCRIPTION = 7
+      TRANSFER = 8
 
       FIELDS = {
         STOCK_BUY => {:type => ::Thrift::Types::STRUCT, :name => 'stock_buy', :class => ::Radar::Api::StockBuy, :optional => true},
@@ -257,7 +294,8 @@ module Radar
         SLBR => {:type => ::Thrift::Types::STRUCT, :name => 'slbr', :class => ::Radar::Api::SecurityLendingAndBorrowingReturning, :optional => true},
         STOCK_COMMISSION_EXPENSE => {:type => ::Thrift::Types::STRUCT, :name => 'stock_commission_expense', :class => ::Radar::Api::CommissionExpense, :optional => true},
         STOCK_OPTION => {:type => ::Thrift::Types::STRUCT, :name => 'stock_option', :class => ::Radar::Api::StockOption, :optional => true},
-        SUBSCRIPTION => {:type => ::Thrift::Types::STRUCT, :name => 'subscription', :class => ::Radar::Api::Subscription, :optional => true}
+        SUBSCRIPTION => {:type => ::Thrift::Types::STRUCT, :name => 'subscription', :class => ::Radar::Api::Subscription, :optional => true},
+        TRANSFER => {:type => ::Thrift::Types::STRUCT, :name => 'transfer', :class => ::Radar::Api::Transfer, :optional => true}
       }
 
       def struct_fields; FIELDS; end

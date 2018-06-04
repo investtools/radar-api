@@ -25,6 +25,10 @@ ttypes.SecurityLendingAndBorrowingType = {
   'LENDER' : 1,
   'BORROWER' : 2
 };
+ttypes.TransferType = {
+  'IN' : 1,
+  'OUT' : 2
+};
 var StockSell = module.exports.StockSell = function(args) {
   this.date = null;
   this.stock = null;
@@ -797,6 +801,105 @@ CommissionExpense.prototype.write = function(output) {
   return;
 };
 
+var Transfer = module.exports.Transfer = function(args) {
+  this.date = null;
+  this.stock = null;
+  this.shares = null;
+  this.type = null;
+  if (args) {
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.stock !== undefined && args.stock !== null) {
+      this.stock = new common_ttypes.StockId(args.stock);
+    }
+    if (args.shares !== undefined && args.shares !== null) {
+      this.shares = args.shares;
+    }
+    if (args.type !== undefined && args.type !== null) {
+      this.type = args.type;
+    }
+  }
+};
+Transfer.prototype = {};
+Transfer.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock = new common_ttypes.StockId();
+        this.stock.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.shares = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+Transfer.prototype.write = function(output) {
+  output.writeStructBegin('Transfer');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.stock !== null && this.stock !== undefined) {
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
+    this.stock.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.shares !== null && this.shares !== undefined) {
+    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
+    output.writeI32(this.shares);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 4);
+    output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 var Transaction = module.exports.Transaction = function(args) {
   this.stock_buy = null;
   this.stock_sell = null;
@@ -805,6 +908,7 @@ var Transaction = module.exports.Transaction = function(args) {
   this.stock_commission_expense = null;
   this.stock_option = null;
   this.subscription = null;
+  this.transfer = null;
   if (args) {
     if (args.stock_buy !== undefined && args.stock_buy !== null) {
       this.stock_buy = new ttypes.StockBuy(args.stock_buy);
@@ -826,6 +930,9 @@ var Transaction = module.exports.Transaction = function(args) {
     }
     if (args.subscription !== undefined && args.subscription !== null) {
       this.subscription = new ttypes.Subscription(args.subscription);
+    }
+    if (args.transfer !== undefined && args.transfer !== null) {
+      this.transfer = new ttypes.Transfer(args.transfer);
     }
   }
 };
@@ -899,6 +1006,14 @@ Transaction.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 8:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.transfer = new ttypes.Transfer();
+        this.transfer.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -943,6 +1058,11 @@ Transaction.prototype.write = function(output) {
   if (this.subscription !== null && this.subscription !== undefined) {
     output.writeFieldBegin('subscription', Thrift.Type.STRUCT, 7);
     this.subscription.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.transfer !== null && this.transfer !== undefined) {
+    output.writeFieldBegin('transfer', Thrift.Type.STRUCT, 8);
+    this.transfer.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

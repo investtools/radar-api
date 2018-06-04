@@ -16,6 +16,7 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
   private static final org.apache.thrift.protocol.TField STOCK_COMMISSION_EXPENSE_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_commission_expense", org.apache.thrift.protocol.TType.STRUCT, (short)5);
   private static final org.apache.thrift.protocol.TField STOCK_OPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_option", org.apache.thrift.protocol.TType.STRUCT, (short)6);
   private static final org.apache.thrift.protocol.TField SUBSCRIPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("subscription", org.apache.thrift.protocol.TType.STRUCT, (short)7);
+  private static final org.apache.thrift.protocol.TField TRANSFER_FIELD_DESC = new org.apache.thrift.protocol.TField("transfer", org.apache.thrift.protocol.TType.STRUCT, (short)8);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -25,7 +26,8 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
     SLBR((short)4, "slbr"),
     STOCK_COMMISSION_EXPENSE((short)5, "stock_commission_expense"),
     STOCK_OPTION((short)6, "stock_option"),
-    SUBSCRIPTION((short)7, "subscription");
+    SUBSCRIPTION((short)7, "subscription"),
+    TRANSFER((short)8, "transfer");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -54,6 +56,8 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           return STOCK_OPTION;
         case 7: // SUBSCRIPTION
           return SUBSCRIPTION;
+        case 8: // TRANSFER
+          return TRANSFER;
         default:
           return null;
       }
@@ -110,6 +114,8 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StockOption.class)));
     tmpMap.put(_Fields.SUBSCRIPTION, new org.apache.thrift.meta_data.FieldMetaData("subscription", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Subscription.class)));
+    tmpMap.put(_Fields.TRANSFER, new org.apache.thrift.meta_data.FieldMetaData("transfer", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Transfer.class)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Transaction.class, metaDataMap);
   }
@@ -171,6 +177,12 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
     return x;
   }
 
+  public static Transaction transfer(Transfer value) {
+    Transaction x = new Transaction();
+    x.setTransfer(value);
+    return x;
+  }
+
 
   @Override
   protected void checkType(_Fields setField, java.lang.Object value) throws java.lang.ClassCastException {
@@ -210,6 +222,11 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           break;
         }
         throw new java.lang.ClassCastException("Was expecting value of type Subscription for field 'subscription', but got " + value.getClass().getSimpleName());
+      case TRANSFER:
+        if (value instanceof Transfer) {
+          break;
+        }
+        throw new java.lang.ClassCastException("Was expecting value of type Transfer for field 'transfer', but got " + value.getClass().getSimpleName());
       default:
         throw new java.lang.IllegalArgumentException("Unknown field id " + setField);
     }
@@ -290,6 +307,16 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
+        case TRANSFER:
+          if (field.type == TRANSFER_FIELD_DESC.type) {
+            Transfer transfer;
+            transfer = new Transfer();
+            transfer.read(iprot);
+            return transfer;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
         default:
           throw new java.lang.IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -329,6 +356,10 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
       case SUBSCRIPTION:
         Subscription subscription = (Subscription)value_;
         subscription.write(oprot);
+        return;
+      case TRANSFER:
+        Transfer transfer = (Transfer)value_;
+        transfer.write(oprot);
         return;
       default:
         throw new java.lang.IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -375,6 +406,11 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           subscription = new Subscription();
           subscription.read(iprot);
           return subscription;
+        case TRANSFER:
+          Transfer transfer;
+          transfer = new Transfer();
+          transfer.read(iprot);
+          return transfer;
         default:
           throw new java.lang.IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -414,6 +450,10 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         Subscription subscription = (Subscription)value_;
         subscription.write(oprot);
         return;
+      case TRANSFER:
+        Transfer transfer = (Transfer)value_;
+        transfer.write(oprot);
+        return;
       default:
         throw new java.lang.IllegalStateException("Cannot write union with unknown field " + setField_);
     }
@@ -436,6 +476,8 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         return STOCK_OPTION_FIELD_DESC;
       case SUBSCRIPTION:
         return SUBSCRIPTION_FIELD_DESC;
+      case TRANSFER:
+        return TRANSFER_FIELD_DESC;
       default:
         throw new java.lang.IllegalArgumentException("Unknown field id " + setField);
     }
@@ -554,6 +596,20 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
     value_ = value;
   }
 
+  public Transfer getTransfer() {
+    if (getSetField() == _Fields.TRANSFER) {
+      return (Transfer)getFieldValue();
+    } else {
+      throw new java.lang.RuntimeException("Cannot get field 'transfer' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setTransfer(Transfer value) {
+    if (value == null) throw new java.lang.NullPointerException();
+    setField_ = _Fields.TRANSFER;
+    value_ = value;
+  }
+
   public boolean isSetStock_buy() {
     return setField_ == _Fields.STOCK_BUY;
   }
@@ -586,6 +642,11 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
 
   public boolean isSetSubscription() {
     return setField_ == _Fields.SUBSCRIPTION;
+  }
+
+
+  public boolean isSetTransfer() {
+    return setField_ == _Fields.TRANSFER;
   }
 
 

@@ -15,6 +15,10 @@ enum SecurityLendingAndBorrowingType {
   LENDER = 1, BORROWER = 2
 }
 
+enum TransferType {
+  IN = 1, OUT = 2
+}
+
 struct StockSell {
   1: common.Date date
   2: common.StockId stock
@@ -69,6 +73,13 @@ struct CommissionExpense {
   3: string description
 }
 
+struct Transfer {
+  1: common.Date date
+  2: common.StockId stock
+  3: i32 shares
+  4: TransferType type
+}
+
 union Transaction {
   1: StockBuy stock_buy
   2: StockSell stock_sell
@@ -77,4 +88,5 @@ union Transaction {
   5: CommissionExpense stock_commission_expense
   6: StockOption stock_option
   7: Subscription subscription
+  8: Transfer transfer
 }
