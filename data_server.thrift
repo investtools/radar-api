@@ -26,7 +26,7 @@ struct MonthlyPosition {
 }
 
 service PortfolioService {
-  list<MonthlyPosition> run_portfolio(1: list<transaction.Transaction> trxs, 2: list<common.Date> reports_dates)
+  list<MonthlyPosition> run_portfolio(1: list<transaction.Transaction> trxs, 2: list<common.Date> reports_dates, 3: string user, 4: string portfolio)
 }
 
 service FundService {

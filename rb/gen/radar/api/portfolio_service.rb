@@ -13,13 +13,13 @@ module Radar
       class Client
         include ::Thrift::Client
 
-        def run_portfolio(trxs, reports_dates)
-          send_run_portfolio(trxs, reports_dates)
+        def run_portfolio(trxs, reports_dates, user, portfolio)
+          send_run_portfolio(trxs, reports_dates, user, portfolio)
           return recv_run_portfolio()
         end
 
-        def send_run_portfolio(trxs, reports_dates)
-          send_message('run_portfolio', Run_portfolio_args, :trxs => trxs, :reports_dates => reports_dates)
+        def send_run_portfolio(trxs, reports_dates, user, portfolio)
+          send_message('run_portfolio', Run_portfolio_args, :trxs => trxs, :reports_dates => reports_dates, :user => user, :portfolio => portfolio)
         end
 
         def recv_run_portfolio()
@@ -36,7 +36,7 @@ module Radar
         def process_run_portfolio(seqid, iprot, oprot)
           args = read_args(iprot, Run_portfolio_args)
           result = Run_portfolio_result.new()
-          result.success = @handler.run_portfolio(args.trxs, args.reports_dates)
+          result.success = @handler.run_portfolio(args.trxs, args.reports_dates, args.user, args.portfolio)
           write_result(result, oprot, 'run_portfolio', seqid)
         end
 
@@ -48,10 +48,14 @@ module Radar
         include ::Thrift::Struct, ::Thrift::Struct_Union
         TRXS = 1
         REPORTS_DATES = 2
+        USER = 3
+        PORTFOLIO = 4
 
         FIELDS = {
           TRXS => {:type => ::Thrift::Types::LIST, :name => 'trxs', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Transaction}},
-          REPORTS_DATES => {:type => ::Thrift::Types::LIST, :name => 'reports_dates', :element => {:type => ::Thrift::Types::I64}}
+          REPORTS_DATES => {:type => ::Thrift::Types::LIST, :name => 'reports_dates', :element => {:type => ::Thrift::Types::I64}},
+          USER => {:type => ::Thrift::Types::STRING, :name => 'user'},
+          PORTFOLIO => {:type => ::Thrift::Types::STRING, :name => 'portfolio'}
         }
 
         def struct_fields; FIELDS; end

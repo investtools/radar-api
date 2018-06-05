@@ -19,7 +19,7 @@ public partial class TransactionImporter {
   public interface ISync {
     string name();
     Dictionary<string, string> accounts(string username, string password);
-    List<Transaction> fetch(string username, string password, List<Account> accounts);
+    List<Transaction> fetch(string username, string password, string user, string portfolio);
     List<SimplePosition> portfolio(string username, string password, List<Account> accounts);
   }
 
@@ -33,7 +33,7 @@ public partial class TransactionImporter {
     Dictionary<string, string> End_accounts(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_fetch(AsyncCallback callback, object state, string username, string password, List<Account> accounts);
+    IAsyncResult Begin_fetch(AsyncCallback callback, object state, string username, string password, string user, string portfolio);
     List<Transaction> End_fetch(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
@@ -230,9 +230,9 @@ public partial class TransactionImporter {
 
     
     #if SILVERLIGHT
-    public IAsyncResult Begin_fetch(AsyncCallback callback, object state, string username, string password, List<Account> accounts)
+    public IAsyncResult Begin_fetch(AsyncCallback callback, object state, string username, string password, string user, string portfolio)
     {
-      return send_fetch(callback, state, username, password, accounts);
+      return send_fetch(callback, state, username, password, user, portfolio);
     }
 
     public List<Transaction> End_fetch(IAsyncResult asyncResult)
@@ -243,29 +243,30 @@ public partial class TransactionImporter {
 
     #endif
 
-    public List<Transaction> fetch(string username, string password, List<Account> accounts)
+    public List<Transaction> fetch(string username, string password, string user, string portfolio)
     {
       #if !SILVERLIGHT
-      send_fetch(username, password, accounts);
+      send_fetch(username, password, user, portfolio);
       return recv_fetch();
 
       #else
-      var asyncResult = Begin_fetch(null, null, username, password, accounts);
+      var asyncResult = Begin_fetch(null, null, username, password, user, portfolio);
       return End_fetch(asyncResult);
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_fetch(AsyncCallback callback, object state, string username, string password, List<Account> accounts)
+    public IAsyncResult send_fetch(AsyncCallback callback, object state, string username, string password, string user, string portfolio)
     #else
-    public void send_fetch(string username, string password, List<Account> accounts)
+    public void send_fetch(string username, string password, string user, string portfolio)
     #endif
     {
       oprot_.WriteMessageBegin(new TMessage("fetch", TMessageType.Call, seqid_));
       fetch_args args = new fetch_args();
       args.Username = username;
       args.Password = password;
-      args.Accounts = accounts;
+      args.User = user;
+      args.Portfolio = portfolio;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       #if SILVERLIGHT
@@ -486,7 +487,7 @@ public partial class TransactionImporter {
       {
         try
         {
-          result.Success = iface_.fetch(args.Username, args.Password, args.Accounts);
+          result.Success = iface_.fetch(args.Username, args.Password, args.User, args.Portfolio);
         }
         catch (AuthenticationError auth_error)
         {
@@ -1088,7 +1089,8 @@ public partial class TransactionImporter {
   {
     private string _username;
     private string _password;
-    private List<Account> _accounts;
+    private string _user;
+    private string _portfolio;
 
     public string Username
     {
@@ -1116,16 +1118,29 @@ public partial class TransactionImporter {
       }
     }
 
-    public List<Account> Accounts
+    public string User
     {
       get
       {
-        return _accounts;
+        return _user;
       }
       set
       {
-        __isset.accounts = true;
-        this._accounts = value;
+        __isset.user = true;
+        this._user = value;
+      }
+    }
+
+    public string Portfolio
+    {
+      get
+      {
+        return _portfolio;
+      }
+      set
+      {
+        __isset.portfolio = true;
+        this._portfolio = value;
       }
     }
 
@@ -1137,7 +1152,8 @@ public partial class TransactionImporter {
     public struct Isset {
       public bool username;
       public bool password;
-      public bool accounts;
+      public bool user;
+      public bool portfolio;
     }
 
     public fetch_args() {
@@ -1173,19 +1189,15 @@ public partial class TransactionImporter {
               }
               break;
             case 3:
-              if (field.Type == TType.List) {
-                {
-                  Accounts = new List<Account>();
-                  TList _list5 = iprot.ReadListBegin();
-                  for( int _i6 = 0; _i6 < _list5.Count; ++_i6)
-                  {
-                    Account _elem7;
-                    _elem7 = new Account();
-                    _elem7.Read(iprot);
-                    Accounts.Add(_elem7);
-                  }
-                  iprot.ReadListEnd();
-                }
+              if (field.Type == TType.String) {
+                User = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 4:
+              if (field.Type == TType.String) {
+                Portfolio = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1227,19 +1239,20 @@ public partial class TransactionImporter {
           oprot.WriteString(Password);
           oprot.WriteFieldEnd();
         }
-        if (Accounts != null && __isset.accounts) {
-          field.Name = "accounts";
-          field.Type = TType.List;
+        if (User != null && __isset.user) {
+          field.Name = "user";
+          field.Type = TType.String;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Struct, Accounts.Count));
-            foreach (Account _iter8 in Accounts)
-            {
-              _iter8.Write(oprot);
-            }
-            oprot.WriteListEnd();
-          }
+          oprot.WriteString(User);
+          oprot.WriteFieldEnd();
+        }
+        if (Portfolio != null && __isset.portfolio) {
+          field.Name = "portfolio";
+          field.Type = TType.String;
+          field.ID = 4;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Portfolio);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -1266,11 +1279,17 @@ public partial class TransactionImporter {
         __sb.Append("Password: ");
         __sb.Append(Password);
       }
-      if (Accounts != null && __isset.accounts) {
+      if (User != null && __isset.user) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Accounts: ");
-        __sb.Append(Accounts);
+        __sb.Append("User: ");
+        __sb.Append(User);
+      }
+      if (Portfolio != null && __isset.portfolio) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Portfolio: ");
+        __sb.Append(Portfolio);
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -1360,13 +1379,13 @@ public partial class TransactionImporter {
               if (field.Type == TType.List) {
                 {
                   Success = new List<Transaction>();
-                  TList _list9 = iprot.ReadListBegin();
-                  for( int _i10 = 0; _i10 < _list9.Count; ++_i10)
+                  TList _list5 = iprot.ReadListBegin();
+                  for( int _i6 = 0; _i6 < _list5.Count; ++_i6)
                   {
-                    Transaction _elem11;
-                    _elem11 = new Transaction();
-                    _elem11.Read(iprot);
-                    Success.Add(_elem11);
+                    Transaction _elem7;
+                    _elem7 = new Transaction();
+                    _elem7.Read(iprot);
+                    Success.Add(_elem7);
                   }
                   iprot.ReadListEnd();
                 }
@@ -1420,9 +1439,9 @@ public partial class TransactionImporter {
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
-              foreach (Transaction _iter12 in Success)
+              foreach (Transaction _iter8 in Success)
               {
-                _iter12.Write(oprot);
+                _iter8.Write(oprot);
               }
               oprot.WriteListEnd();
             }
@@ -1579,13 +1598,13 @@ public partial class TransactionImporter {
               if (field.Type == TType.List) {
                 {
                   Accounts = new List<Account>();
-                  TList _list13 = iprot.ReadListBegin();
-                  for( int _i14 = 0; _i14 < _list13.Count; ++_i14)
+                  TList _list9 = iprot.ReadListBegin();
+                  for( int _i10 = 0; _i10 < _list9.Count; ++_i10)
                   {
-                    Account _elem15;
-                    _elem15 = new Account();
-                    _elem15.Read(iprot);
-                    Accounts.Add(_elem15);
+                    Account _elem11;
+                    _elem11 = new Account();
+                    _elem11.Read(iprot);
+                    Accounts.Add(_elem11);
                   }
                   iprot.ReadListEnd();
                 }
@@ -1637,9 +1656,9 @@ public partial class TransactionImporter {
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Accounts.Count));
-            foreach (Account _iter16 in Accounts)
+            foreach (Account _iter12 in Accounts)
             {
-              _iter16.Write(oprot);
+              _iter12.Write(oprot);
             }
             oprot.WriteListEnd();
           }
@@ -1763,13 +1782,13 @@ public partial class TransactionImporter {
               if (field.Type == TType.List) {
                 {
                   Success = new List<SimplePosition>();
-                  TList _list17 = iprot.ReadListBegin();
-                  for( int _i18 = 0; _i18 < _list17.Count; ++_i18)
+                  TList _list13 = iprot.ReadListBegin();
+                  for( int _i14 = 0; _i14 < _list13.Count; ++_i14)
                   {
-                    SimplePosition _elem19;
-                    _elem19 = new SimplePosition();
-                    _elem19.Read(iprot);
-                    Success.Add(_elem19);
+                    SimplePosition _elem15;
+                    _elem15 = new SimplePosition();
+                    _elem15.Read(iprot);
+                    Success.Add(_elem15);
                   }
                   iprot.ReadListEnd();
                 }
@@ -1823,9 +1842,9 @@ public partial class TransactionImporter {
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
-              foreach (SimplePosition _iter20 in Success)
+              foreach (SimplePosition _iter16 in Success)
               {
-                _iter20.Write(oprot);
+                _iter16.Write(oprot);
               }
               oprot.WriteListEnd();
             }

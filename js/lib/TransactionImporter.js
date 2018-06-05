@@ -286,7 +286,8 @@ TransactionImporter_accounts_result.prototype.write = function(output) {
 var TransactionImporter_fetch_args = function(args) {
   this.username = null;
   this.password = null;
-  this.accounts = null;
+  this.user = null;
+  this.portfolio = null;
   if (args) {
     if (args.username !== undefined && args.username !== null) {
       this.username = args.username;
@@ -294,8 +295,11 @@ var TransactionImporter_fetch_args = function(args) {
     if (args.password !== undefined && args.password !== null) {
       this.password = args.password;
     }
-    if (args.accounts !== undefined && args.accounts !== null) {
-      this.accounts = Thrift.copyList(args.accounts, [ttypes.Account]);
+    if (args.user !== undefined && args.user !== null) {
+      this.user = args.user;
+    }
+    if (args.portfolio !== undefined && args.portfolio !== null) {
+      this.portfolio = args.portfolio;
     }
   }
 };
@@ -328,22 +332,15 @@ TransactionImporter_fetch_args.prototype.read = function(input) {
       }
       break;
       case 3:
-      if (ftype == Thrift.Type.LIST) {
-        var _size10 = 0;
-        var _rtmp314;
-        this.accounts = [];
-        var _etype13 = 0;
-        _rtmp314 = input.readListBegin();
-        _etype13 = _rtmp314.etype;
-        _size10 = _rtmp314.size;
-        for (var _i15 = 0; _i15 < _size10; ++_i15)
-        {
-          var elem16 = null;
-          elem16 = new ttypes.Account();
-          elem16.read(input);
-          this.accounts.push(elem16);
-        }
-        input.readListEnd();
+      if (ftype == Thrift.Type.STRING) {
+        this.user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.STRING) {
+        this.portfolio = input.readString();
       } else {
         input.skip(ftype);
       }
@@ -369,18 +366,14 @@ TransactionImporter_fetch_args.prototype.write = function(output) {
     output.writeString(this.password);
     output.writeFieldEnd();
   }
-  if (this.accounts !== null && this.accounts !== undefined) {
-    output.writeFieldBegin('accounts', Thrift.Type.LIST, 3);
-    output.writeListBegin(Thrift.Type.STRUCT, this.accounts.length);
-    for (var iter17 in this.accounts)
-    {
-      if (this.accounts.hasOwnProperty(iter17))
-      {
-        iter17 = this.accounts[iter17];
-        iter17.write(output);
-      }
-    }
-    output.writeListEnd();
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 3);
+    output.writeString(this.user);
+    output.writeFieldEnd();
+  }
+  if (this.portfolio !== null && this.portfolio !== undefined) {
+    output.writeFieldBegin('portfolio', Thrift.Type.STRING, 4);
+    output.writeString(this.portfolio);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -428,19 +421,19 @@ TransactionImporter_fetch_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.LIST) {
-        var _size18 = 0;
-        var _rtmp322;
+        var _size10 = 0;
+        var _rtmp314;
         this.success = [];
-        var _etype21 = 0;
-        _rtmp322 = input.readListBegin();
-        _etype21 = _rtmp322.etype;
-        _size18 = _rtmp322.size;
-        for (var _i23 = 0; _i23 < _size18; ++_i23)
+        var _etype13 = 0;
+        _rtmp314 = input.readListBegin();
+        _etype13 = _rtmp314.etype;
+        _size10 = _rtmp314.size;
+        for (var _i15 = 0; _i15 < _size10; ++_i15)
         {
-          var elem24 = null;
-          elem24 = new transaction_ttypes.Transaction();
-          elem24.read(input);
-          this.success.push(elem24);
+          var elem16 = null;
+          elem16 = new transaction_ttypes.Transaction();
+          elem16.read(input);
+          this.success.push(elem16);
         }
         input.readListEnd();
       } else {
@@ -477,12 +470,12 @@ TransactionImporter_fetch_result.prototype.write = function(output) {
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.LIST, 0);
     output.writeListBegin(Thrift.Type.STRUCT, this.success.length);
-    for (var iter25 in this.success)
+    for (var iter17 in this.success)
     {
-      if (this.success.hasOwnProperty(iter25))
+      if (this.success.hasOwnProperty(iter17))
       {
-        iter25 = this.success[iter25];
-        iter25.write(output);
+        iter17 = this.success[iter17];
+        iter17.write(output);
       }
     }
     output.writeListEnd();
@@ -549,19 +542,19 @@ TransactionImporter_portfolio_args.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.LIST) {
-        var _size26 = 0;
-        var _rtmp330;
+        var _size18 = 0;
+        var _rtmp322;
         this.accounts = [];
-        var _etype29 = 0;
-        _rtmp330 = input.readListBegin();
-        _etype29 = _rtmp330.etype;
-        _size26 = _rtmp330.size;
-        for (var _i31 = 0; _i31 < _size26; ++_i31)
+        var _etype21 = 0;
+        _rtmp322 = input.readListBegin();
+        _etype21 = _rtmp322.etype;
+        _size18 = _rtmp322.size;
+        for (var _i23 = 0; _i23 < _size18; ++_i23)
         {
-          var elem32 = null;
-          elem32 = new ttypes.Account();
-          elem32.read(input);
-          this.accounts.push(elem32);
+          var elem24 = null;
+          elem24 = new ttypes.Account();
+          elem24.read(input);
+          this.accounts.push(elem24);
         }
         input.readListEnd();
       } else {
@@ -592,12 +585,12 @@ TransactionImporter_portfolio_args.prototype.write = function(output) {
   if (this.accounts !== null && this.accounts !== undefined) {
     output.writeFieldBegin('accounts', Thrift.Type.LIST, 3);
     output.writeListBegin(Thrift.Type.STRUCT, this.accounts.length);
-    for (var iter33 in this.accounts)
+    for (var iter25 in this.accounts)
     {
-      if (this.accounts.hasOwnProperty(iter33))
+      if (this.accounts.hasOwnProperty(iter25))
       {
-        iter33 = this.accounts[iter33];
-        iter33.write(output);
+        iter25 = this.accounts[iter25];
+        iter25.write(output);
       }
     }
     output.writeListEnd();
@@ -648,19 +641,19 @@ TransactionImporter_portfolio_result.prototype.read = function(input) {
     {
       case 0:
       if (ftype == Thrift.Type.LIST) {
-        var _size34 = 0;
-        var _rtmp338;
+        var _size26 = 0;
+        var _rtmp330;
         this.success = [];
-        var _etype37 = 0;
-        _rtmp338 = input.readListBegin();
-        _etype37 = _rtmp338.etype;
-        _size34 = _rtmp338.size;
-        for (var _i39 = 0; _i39 < _size34; ++_i39)
+        var _etype29 = 0;
+        _rtmp330 = input.readListBegin();
+        _etype29 = _rtmp330.etype;
+        _size26 = _rtmp330.size;
+        for (var _i31 = 0; _i31 < _size26; ++_i31)
         {
-          var elem40 = null;
-          elem40 = new portfolio_ttypes.SimplePosition();
-          elem40.read(input);
-          this.success.push(elem40);
+          var elem32 = null;
+          elem32 = new portfolio_ttypes.SimplePosition();
+          elem32.read(input);
+          this.success.push(elem32);
         }
         input.readListEnd();
       } else {
@@ -697,12 +690,12 @@ TransactionImporter_portfolio_result.prototype.write = function(output) {
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.LIST, 0);
     output.writeListBegin(Thrift.Type.STRUCT, this.success.length);
-    for (var iter41 in this.success)
+    for (var iter33 in this.success)
     {
-      if (this.success.hasOwnProperty(iter41))
+      if (this.success.hasOwnProperty(iter33))
       {
-        iter41 = this.success[iter41];
-        iter41.write(output);
+        iter33 = this.success[iter33];
+        iter33.write(output);
       }
     }
     output.writeListEnd();
@@ -832,7 +825,7 @@ TransactionImporterClient.prototype.recv_accounts = function(input,mtype,rseqid)
   }
   return callback('accounts failed: unknown result');
 };
-TransactionImporterClient.prototype.fetch = function(username, password, accounts, callback) {
+TransactionImporterClient.prototype.fetch = function(username, password, user, portfolio, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -843,21 +836,22 @@ TransactionImporterClient.prototype.fetch = function(username, password, account
         _defer.resolve(result);
       }
     };
-    this.send_fetch(username, password, accounts);
+    this.send_fetch(username, password, user, portfolio);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_fetch(username, password, accounts);
+    this.send_fetch(username, password, user, portfolio);
   }
 };
 
-TransactionImporterClient.prototype.send_fetch = function(username, password, accounts) {
+TransactionImporterClient.prototype.send_fetch = function(username, password, user, portfolio) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('fetch', Thrift.MessageType.CALL, this.seqid());
   var args = new TransactionImporter_fetch_args();
   args.username = username;
   args.password = password;
-  args.accounts = accounts;
+  args.user = user;
+  args.portfolio = portfolio;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -1042,8 +1036,8 @@ TransactionImporterProcessor.prototype.process_fetch = function(seqid, input, ou
   var args = new TransactionImporter_fetch_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.fetch.length === 3) {
-    Q.fcall(this._handler.fetch, args.username, args.password, args.accounts)
+  if (this._handler.fetch.length === 4) {
+    Q.fcall(this._handler.fetch, args.username, args.password, args.user, args.portfolio)
       .then(function(result) {
         var result_obj = new TransactionImporter_fetch_result({success: result});
         output.writeMessageBegin("fetch", Thrift.MessageType.REPLY, seqid);
@@ -1064,7 +1058,7 @@ TransactionImporterProcessor.prototype.process_fetch = function(seqid, input, ou
         output.flush();
       });
   } else {
-    this._handler.fetch(args.username, args.password, args.accounts, function (err, result) {
+    this._handler.fetch(args.username, args.password, args.user, args.portfolio, function (err, result) {
       var result_obj;
       if ((err === null || typeof err === 'undefined') || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
         result_obj = new TransactionImporter_fetch_result((err !== null || typeof err === 'undefined') ? err : {success: result});

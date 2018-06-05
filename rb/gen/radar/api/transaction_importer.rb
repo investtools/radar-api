@@ -45,13 +45,13 @@ module Radar
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'accounts failed: unknown result')
         end
 
-        def fetch(username, password, accounts)
-          send_fetch(username, password, accounts)
+        def fetch(username, password, user, portfolio)
+          send_fetch(username, password, user, portfolio)
           return recv_fetch()
         end
 
-        def send_fetch(username, password, accounts)
-          send_message('fetch', Fetch_args, :username => username, :password => password, :accounts => accounts)
+        def send_fetch(username, password, user, portfolio)
+          send_message('fetch', Fetch_args, :username => username, :password => password, :user => user, :portfolio => portfolio)
         end
 
         def recv_fetch()
@@ -108,7 +108,7 @@ module Radar
           args = read_args(iprot, Fetch_args)
           result = Fetch_result.new()
           begin
-            result.success = @handler.fetch(args.username, args.password, args.accounts)
+            result.success = @handler.fetch(args.username, args.password, args.user, args.portfolio)
           rescue ::Radar::Api::AuthenticationError => auth_error
             result.auth_error = auth_error
           rescue ::Radar::Api::SystemUnavailableError => system_unavailable
@@ -207,12 +207,14 @@ module Radar
         include ::Thrift::Struct, ::Thrift::Struct_Union
         USERNAME = 1
         PASSWORD = 2
-        ACCOUNTS = 3
+        USER = 3
+        PORTFOLIO = 4
 
         FIELDS = {
           USERNAME => {:type => ::Thrift::Types::STRING, :name => 'username'},
           PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'},
-          ACCOUNTS => {:type => ::Thrift::Types::LIST, :name => 'accounts', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Account}}
+          USER => {:type => ::Thrift::Types::STRING, :name => 'user'},
+          PORTFOLIO => {:type => ::Thrift::Types::STRING, :name => 'portfolio'}
         }
 
         def struct_fields; FIELDS; end
