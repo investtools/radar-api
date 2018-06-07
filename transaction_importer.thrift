@@ -5,11 +5,6 @@ include 'common.thrift'
 include 'transaction.thrift'
 include 'portfolio.thrift'
 
-struct Account {
-  1: string id
-  2: common.Date last_transaction_date
-}
-
 exception AuthenticationError {
   1: string message
 }
@@ -20,7 +15,6 @@ exception SystemUnavailableError {
 
 service TransactionImporter {
   string name()
-  map<string, string> accounts(1: string username, 2: string password) throws (1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
-  list<transaction.Transaction> fetch(1: string username, 2: string password, 3: string user, 4: string portfolio) throws (1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
-  list<portfolio.SimplePosition> portfolio(1: string username, 2: string password, 3: list<Account> accounts) throws (1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
+  void fetch(1: string username, 2: string password, 3: string user, 4: common.Date last_transaction_date) throws (1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
+  list<portfolio.SimplePosition> portfolio(1: string username, 2: string password) throws (1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
 }

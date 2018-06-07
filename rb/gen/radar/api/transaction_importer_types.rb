@@ -12,24 +12,6 @@ require 'radar/api/portfolio_types'
 
 module Radar
   module Api
-    class Account
-      include ::Thrift::Struct, ::Thrift::Struct_Union
-      ID = 1
-      LAST_TRANSACTION_DATE = 2
-
-      FIELDS = {
-        ID => {:type => ::Thrift::Types::STRING, :name => 'id'},
-        LAST_TRANSACTION_DATE => {:type => ::Thrift::Types::I64, :name => 'last_transaction_date'}
-      }
-
-      def struct_fields; FIELDS; end
-
-      def validate
-      end
-
-      ::Thrift::Struct.generate_accessors self
-    end
-
     class AuthenticationError < ::Thrift::Exception
       include ::Thrift::Struct, ::Thrift::Struct_Union
       def initialize(message=nil)

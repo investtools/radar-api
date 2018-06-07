@@ -20,7 +20,6 @@ var PortfolioService_run_portfolio_args = function(args) {
   this.trxs = null;
   this.reports_dates = null;
   this.user = null;
-  this.portfolio = null;
   if (args) {
     if (args.trxs !== undefined && args.trxs !== null) {
       this.trxs = Thrift.copyList(args.trxs, [transaction_ttypes.Transaction]);
@@ -30,9 +29,6 @@ var PortfolioService_run_portfolio_args = function(args) {
     }
     if (args.user !== undefined && args.user !== null) {
       this.user = args.user;
-    }
-    if (args.portfolio !== undefined && args.portfolio !== null) {
-      this.portfolio = args.portfolio;
     }
   }
 };
@@ -98,13 +94,6 @@ PortfolioService_run_portfolio_args.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 4:
-      if (ftype == Thrift.Type.STRING) {
-        this.portfolio = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
       default:
         input.skip(ftype);
     }
@@ -147,11 +136,6 @@ PortfolioService_run_portfolio_args.prototype.write = function(output) {
   if (this.user !== null && this.user !== undefined) {
     output.writeFieldBegin('user', Thrift.Type.STRING, 3);
     output.writeString(this.user);
-    output.writeFieldEnd();
-  }
-  if (this.portfolio !== null && this.portfolio !== undefined) {
-    output.writeFieldBegin('portfolio', Thrift.Type.STRING, 4);
-    output.writeString(this.portfolio);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -244,7 +228,7 @@ var PortfolioServiceClient = exports.Client = function(output, pClass) {
 PortfolioServiceClient.prototype = {};
 PortfolioServiceClient.prototype.seqid = function() { return this._seqid; };
 PortfolioServiceClient.prototype.new_seqid = function() { return this._seqid += 1; };
-PortfolioServiceClient.prototype.run_portfolio = function(trxs, reports_dates, user, portfolio, callback) {
+PortfolioServiceClient.prototype.run_portfolio = function(trxs, reports_dates, user, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -255,22 +239,21 @@ PortfolioServiceClient.prototype.run_portfolio = function(trxs, reports_dates, u
         _defer.resolve(result);
       }
     };
-    this.send_run_portfolio(trxs, reports_dates, user, portfolio);
+    this.send_run_portfolio(trxs, reports_dates, user);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_run_portfolio(trxs, reports_dates, user, portfolio);
+    this.send_run_portfolio(trxs, reports_dates, user);
   }
 };
 
-PortfolioServiceClient.prototype.send_run_portfolio = function(trxs, reports_dates, user, portfolio) {
+PortfolioServiceClient.prototype.send_run_portfolio = function(trxs, reports_dates, user) {
   var output = new this.pClass(this.output);
   output.writeMessageBegin('run_portfolio', Thrift.MessageType.CALL, this.seqid());
   var args = new PortfolioService_run_portfolio_args();
   args.trxs = trxs;
   args.reports_dates = reports_dates;
   args.user = user;
-  args.portfolio = portfolio;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
@@ -317,8 +300,8 @@ PortfolioServiceProcessor.prototype.process_run_portfolio = function(seqid, inpu
   var args = new PortfolioService_run_portfolio_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.run_portfolio.length === 4) {
-    Q.fcall(this._handler.run_portfolio, args.trxs, args.reports_dates, args.user, args.portfolio)
+  if (this._handler.run_portfolio.length === 3) {
+    Q.fcall(this._handler.run_portfolio, args.trxs, args.reports_dates, args.user)
       .then(function(result) {
         var result_obj = new PortfolioService_run_portfolio_result({success: result});
         output.writeMessageBegin("run_portfolio", Thrift.MessageType.REPLY, seqid);
@@ -334,7 +317,7 @@ PortfolioServiceProcessor.prototype.process_run_portfolio = function(seqid, inpu
         output.flush();
       });
   } else {
-    this._handler.run_portfolio(args.trxs, args.reports_dates, args.user, args.portfolio, function (err, result) {
+    this._handler.run_portfolio(args.trxs, args.reports_dates, args.user, function (err, result) {
       var result_obj;
       if ((err === null || typeof err === 'undefined')) {
         result_obj = new PortfolioService_run_portfolio_result((err !== null || typeof err === 'undefined') ? err : {success: result});

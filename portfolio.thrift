@@ -4,21 +4,18 @@ namespace java br.com.investtools.radar.api
 include 'common.thrift'
 
 struct Security {
-  1: string account
-  2: common.StockId stock
-  3: i32 shares
+  1: common.StockId stock
+  2: i32 shares
 }
 
 struct Lending {
-  1: string account
-  2: common.StockId stock
-  3: i32 shares
+  1: common.StockId stock
+  2: i32 shares
 }
 
 struct Borrowing {
-  1: string account
-  2: common.StockId stock
-  3: i32 shares
+  1: common.StockId stock
+  2: i32 shares
 }
 
 union SimplePosition {

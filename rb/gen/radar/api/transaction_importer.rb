@@ -28,47 +28,29 @@ module Radar
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'name failed: unknown result')
         end
 
-        def accounts(username, password)
-          send_accounts(username, password)
-          return recv_accounts()
+        def fetch(username, password, user, last_transaction_date)
+          send_fetch(username, password, user, last_transaction_date)
+          recv_fetch()
         end
 
-        def send_accounts(username, password)
-          send_message('accounts', Accounts_args, :username => username, :password => password)
-        end
-
-        def recv_accounts()
-          result = receive_message(Accounts_result)
-          return result.success unless result.success.nil?
-          raise result.auth_error unless result.auth_error.nil?
-          raise result.system_unavailable unless result.system_unavailable.nil?
-          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'accounts failed: unknown result')
-        end
-
-        def fetch(username, password, user, portfolio)
-          send_fetch(username, password, user, portfolio)
-          return recv_fetch()
-        end
-
-        def send_fetch(username, password, user, portfolio)
-          send_message('fetch', Fetch_args, :username => username, :password => password, :user => user, :portfolio => portfolio)
+        def send_fetch(username, password, user, last_transaction_date)
+          send_message('fetch', Fetch_args, :username => username, :password => password, :user => user, :last_transaction_date => last_transaction_date)
         end
 
         def recv_fetch()
           result = receive_message(Fetch_result)
-          return result.success unless result.success.nil?
           raise result.auth_error unless result.auth_error.nil?
           raise result.system_unavailable unless result.system_unavailable.nil?
-          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'fetch failed: unknown result')
+          return
         end
 
-        def portfolio(username, password, accounts)
-          send_portfolio(username, password, accounts)
+        def portfolio(username, password)
+          send_portfolio(username, password)
           return recv_portfolio()
         end
 
-        def send_portfolio(username, password, accounts)
-          send_message('portfolio', Portfolio_args, :username => username, :password => password, :accounts => accounts)
+        def send_portfolio(username, password)
+          send_message('portfolio', Portfolio_args, :username => username, :password => password)
         end
 
         def recv_portfolio()
@@ -91,24 +73,11 @@ module Radar
           write_result(result, oprot, 'name', seqid)
         end
 
-        def process_accounts(seqid, iprot, oprot)
-          args = read_args(iprot, Accounts_args)
-          result = Accounts_result.new()
-          begin
-            result.success = @handler.accounts(args.username, args.password)
-          rescue ::Radar::Api::AuthenticationError => auth_error
-            result.auth_error = auth_error
-          rescue ::Radar::Api::SystemUnavailableError => system_unavailable
-            result.system_unavailable = system_unavailable
-          end
-          write_result(result, oprot, 'accounts', seqid)
-        end
-
         def process_fetch(seqid, iprot, oprot)
           args = read_args(iprot, Fetch_args)
           result = Fetch_result.new()
           begin
-            result.success = @handler.fetch(args.username, args.password, args.user, args.portfolio)
+            @handler.fetch(args.username, args.password, args.user, args.last_transaction_date)
           rescue ::Radar::Api::AuthenticationError => auth_error
             result.auth_error = auth_error
           rescue ::Radar::Api::SystemUnavailableError => system_unavailable
@@ -121,7 +90,7 @@ module Radar
           args = read_args(iprot, Portfolio_args)
           result = Portfolio_result.new()
           begin
-            result.success = @handler.portfolio(args.username, args.password, args.accounts)
+            result.success = @handler.portfolio(args.username, args.password)
           rescue ::Radar::Api::AuthenticationError => auth_error
             result.auth_error = auth_error
           rescue ::Radar::Api::SystemUnavailableError => system_unavailable
@@ -165,56 +134,18 @@ module Radar
         ::Thrift::Struct.generate_accessors self
       end
 
-      class Accounts_args
-        include ::Thrift::Struct, ::Thrift::Struct_Union
-        USERNAME = 1
-        PASSWORD = 2
-
-        FIELDS = {
-          USERNAME => {:type => ::Thrift::Types::STRING, :name => 'username'},
-          PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'}
-        }
-
-        def struct_fields; FIELDS; end
-
-        def validate
-        end
-
-        ::Thrift::Struct.generate_accessors self
-      end
-
-      class Accounts_result
-        include ::Thrift::Struct, ::Thrift::Struct_Union
-        SUCCESS = 0
-        AUTH_ERROR = 1
-        SYSTEM_UNAVAILABLE = 2
-
-        FIELDS = {
-          SUCCESS => {:type => ::Thrift::Types::MAP, :name => 'success', :key => {:type => ::Thrift::Types::STRING}, :value => {:type => ::Thrift::Types::STRING}},
-          AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
-          SYSTEM_UNAVAILABLE => {:type => ::Thrift::Types::STRUCT, :name => 'system_unavailable', :class => ::Radar::Api::SystemUnavailableError}
-        }
-
-        def struct_fields; FIELDS; end
-
-        def validate
-        end
-
-        ::Thrift::Struct.generate_accessors self
-      end
-
       class Fetch_args
         include ::Thrift::Struct, ::Thrift::Struct_Union
         USERNAME = 1
         PASSWORD = 2
         USER = 3
-        PORTFOLIO = 4
+        LAST_TRANSACTION_DATE = 4
 
         FIELDS = {
           USERNAME => {:type => ::Thrift::Types::STRING, :name => 'username'},
           PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'},
           USER => {:type => ::Thrift::Types::STRING, :name => 'user'},
-          PORTFOLIO => {:type => ::Thrift::Types::STRING, :name => 'portfolio'}
+          LAST_TRANSACTION_DATE => {:type => ::Thrift::Types::I64, :name => 'last_transaction_date'}
         }
 
         def struct_fields; FIELDS; end
@@ -227,12 +158,10 @@ module Radar
 
       class Fetch_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
-        SUCCESS = 0
         AUTH_ERROR = 1
         SYSTEM_UNAVAILABLE = 2
 
         FIELDS = {
-          SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Transaction}},
           AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
           SYSTEM_UNAVAILABLE => {:type => ::Thrift::Types::STRUCT, :name => 'system_unavailable', :class => ::Radar::Api::SystemUnavailableError}
         }
@@ -249,12 +178,10 @@ module Radar
         include ::Thrift::Struct, ::Thrift::Struct_Union
         USERNAME = 1
         PASSWORD = 2
-        ACCOUNTS = 3
 
         FIELDS = {
           USERNAME => {:type => ::Thrift::Types::STRING, :name => 'username'},
-          PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'},
-          ACCOUNTS => {:type => ::Thrift::Types::LIST, :name => 'accounts', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Account}}
+          PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'}
         }
 
         def struct_fields; FIELDS; end

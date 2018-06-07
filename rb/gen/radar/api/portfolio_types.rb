@@ -12,12 +12,10 @@ module Radar
   module Api
     class Security
       include ::Thrift::Struct, ::Thrift::Struct_Union
-      ACCOUNT = 1
-      STOCK = 2
-      SHARES = 3
+      STOCK = 1
+      SHARES = 2
 
       FIELDS = {
-        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'}
       }
@@ -32,12 +30,10 @@ module Radar
 
     class Lending
       include ::Thrift::Struct, ::Thrift::Struct_Union
-      ACCOUNT = 1
-      STOCK = 2
-      SHARES = 3
+      STOCK = 1
+      SHARES = 2
 
       FIELDS = {
-        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'}
       }
@@ -52,12 +48,10 @@ module Radar
 
     class Borrowing
       include ::Thrift::Struct, ::Thrift::Struct_Union
-      ACCOUNT = 1
-      STOCK = 2
-      SHARES = 3
+      STOCK = 1
+      SHARES = 2
 
       FIELDS = {
-        ACCOUNT => {:type => ::Thrift::Types::STRING, :name => 'account'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'}
       }

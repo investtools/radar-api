@@ -21,22 +21,8 @@ using Thrift.Transport;
 #endif
 public partial class Security : TBase
 {
-  private string _account;
   private StockId _stock;
   private int _shares;
-
-  public string Account
-  {
-    get
-    {
-      return _account;
-    }
-    set
-    {
-      __isset.account = true;
-      this._account = value;
-    }
-  }
 
   public StockId Stock
   {
@@ -70,7 +56,6 @@ public partial class Security : TBase
   [Serializable]
   #endif
   public struct Isset {
-    public bool account;
     public bool stock;
     public bool shares;
   }
@@ -94,13 +79,6 @@ public partial class Security : TBase
         switch (field.ID)
         {
           case 1:
-            if (field.Type == TType.String) {
-              Account = iprot.ReadString();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 2:
             if (field.Type == TType.Struct) {
               Stock = new StockId();
               Stock.Read(iprot);
@@ -108,7 +86,7 @@ public partial class Security : TBase
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 3:
+          case 2:
             if (field.Type == TType.I32) {
               Shares = iprot.ReadI32();
             } else { 
@@ -136,18 +114,10 @@ public partial class Security : TBase
       TStruct struc = new TStruct("Security");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (Account != null && __isset.account) {
-        field.Name = "account";
-        field.Type = TType.String;
-        field.ID = 1;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteString(Account);
-        oprot.WriteFieldEnd();
-      }
       if (Stock != null && __isset.stock) {
         field.Name = "stock";
         field.Type = TType.Struct;
-        field.ID = 2;
+        field.ID = 1;
         oprot.WriteFieldBegin(field);
         Stock.Write(oprot);
         oprot.WriteFieldEnd();
@@ -155,7 +125,7 @@ public partial class Security : TBase
       if (__isset.shares) {
         field.Name = "shares";
         field.Type = TType.I32;
-        field.ID = 3;
+        field.ID = 2;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32(Shares);
         oprot.WriteFieldEnd();
@@ -172,12 +142,6 @@ public partial class Security : TBase
   public override string ToString() {
     StringBuilder __sb = new StringBuilder("Security(");
     bool __first = true;
-    if (Account != null && __isset.account) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Account: ");
-      __sb.Append(Account);
-    }
     if (Stock != null && __isset.stock) {
       if(!__first) { __sb.Append(", "); }
       __first = false;

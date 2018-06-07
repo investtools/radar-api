@@ -18,9 +18,8 @@ using Thrift.Transport;
 public partial class TransactionImporter {
   public interface ISync {
     string name();
-    Dictionary<string, string> accounts(string username, string password);
-    List<Transaction> fetch(string username, string password, string user, string portfolio);
-    List<SimplePosition> portfolio(string username, string password, List<Account> accounts);
+    void fetch(string username, string password, string user, long last_transaction_date);
+    List<SimplePosition> portfolio(string username, string password);
   }
 
   public interface Iface : ISync {
@@ -29,15 +28,11 @@ public partial class TransactionImporter {
     string End_name(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_accounts(AsyncCallback callback, object state, string username, string password);
-    Dictionary<string, string> End_accounts(IAsyncResult asyncResult);
+    IAsyncResult Begin_fetch(AsyncCallback callback, object state, string username, string password, string user, long last_transaction_date);
+    void End_fetch(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_fetch(AsyncCallback callback, object state, string username, string password, string user, string portfolio);
-    List<Transaction> End_fetch(IAsyncResult asyncResult);
-    #endif
-    #if SILVERLIGHT
-    IAsyncResult Begin_portfolio(AsyncCallback callback, object state, string username, string password, List<Account> accounts);
+    IAsyncResult Begin_portfolio(AsyncCallback callback, object state, string username, string password);
     List<SimplePosition> End_portfolio(IAsyncResult asyncResult);
     #endif
   }
@@ -161,104 +156,35 @@ public partial class TransactionImporter {
 
     
     #if SILVERLIGHT
-    public IAsyncResult Begin_accounts(AsyncCallback callback, object state, string username, string password)
+    public IAsyncResult Begin_fetch(AsyncCallback callback, object state, string username, string password, string user, long last_transaction_date)
     {
-      return send_accounts(callback, state, username, password);
+      return send_fetch(callback, state, username, password, user, last_transaction_date);
     }
 
-    public Dictionary<string, string> End_accounts(IAsyncResult asyncResult)
-    {
-      oprot_.Transport.EndFlush(asyncResult);
-      return recv_accounts();
-    }
-
-    #endif
-
-    public Dictionary<string, string> accounts(string username, string password)
-    {
-      #if !SILVERLIGHT
-      send_accounts(username, password);
-      return recv_accounts();
-
-      #else
-      var asyncResult = Begin_accounts(null, null, username, password);
-      return End_accounts(asyncResult);
-
-      #endif
-    }
-    #if SILVERLIGHT
-    public IAsyncResult send_accounts(AsyncCallback callback, object state, string username, string password)
-    #else
-    public void send_accounts(string username, string password)
-    #endif
-    {
-      oprot_.WriteMessageBegin(new TMessage("accounts", TMessageType.Call, seqid_));
-      accounts_args args = new accounts_args();
-      args.Username = username;
-      args.Password = password;
-      args.Write(oprot_);
-      oprot_.WriteMessageEnd();
-      #if SILVERLIGHT
-      return oprot_.Transport.BeginFlush(callback, state);
-      #else
-      oprot_.Transport.Flush();
-      #endif
-    }
-
-    public Dictionary<string, string> recv_accounts()
-    {
-      TMessage msg = iprot_.ReadMessageBegin();
-      if (msg.Type == TMessageType.Exception) {
-        TApplicationException x = TApplicationException.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        throw x;
-      }
-      accounts_result result = new accounts_result();
-      result.Read(iprot_);
-      iprot_.ReadMessageEnd();
-      if (result.__isset.success) {
-        return result.Success;
-      }
-      if (result.__isset.auth_error) {
-        throw result.Auth_error;
-      }
-      if (result.__isset.system_unavailable) {
-        throw result.System_unavailable;
-      }
-      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "accounts failed: unknown result");
-    }
-
-    
-    #if SILVERLIGHT
-    public IAsyncResult Begin_fetch(AsyncCallback callback, object state, string username, string password, string user, string portfolio)
-    {
-      return send_fetch(callback, state, username, password, user, portfolio);
-    }
-
-    public List<Transaction> End_fetch(IAsyncResult asyncResult)
+    public void End_fetch(IAsyncResult asyncResult)
     {
       oprot_.Transport.EndFlush(asyncResult);
-      return recv_fetch();
+      recv_fetch();
     }
 
     #endif
 
-    public List<Transaction> fetch(string username, string password, string user, string portfolio)
+    public void fetch(string username, string password, string user, long last_transaction_date)
     {
       #if !SILVERLIGHT
-      send_fetch(username, password, user, portfolio);
-      return recv_fetch();
+      send_fetch(username, password, user, last_transaction_date);
+      recv_fetch();
 
       #else
-      var asyncResult = Begin_fetch(null, null, username, password, user, portfolio);
-      return End_fetch(asyncResult);
+      var asyncResult = Begin_fetch(null, null, username, password, user, last_transaction_date);
+      End_fetch(asyncResult);
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_fetch(AsyncCallback callback, object state, string username, string password, string user, string portfolio)
+    public IAsyncResult send_fetch(AsyncCallback callback, object state, string username, string password, string user, long last_transaction_date)
     #else
-    public void send_fetch(string username, string password, string user, string portfolio)
+    public void send_fetch(string username, string password, string user, long last_transaction_date)
     #endif
     {
       oprot_.WriteMessageBegin(new TMessage("fetch", TMessageType.Call, seqid_));
@@ -266,7 +192,7 @@ public partial class TransactionImporter {
       args.Username = username;
       args.Password = password;
       args.User = user;
-      args.Portfolio = portfolio;
+      args.Last_transaction_date = last_transaction_date;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       #if SILVERLIGHT
@@ -276,7 +202,7 @@ public partial class TransactionImporter {
       #endif
     }
 
-    public List<Transaction> recv_fetch()
+    public void recv_fetch()
     {
       TMessage msg = iprot_.ReadMessageBegin();
       if (msg.Type == TMessageType.Exception) {
@@ -287,23 +213,20 @@ public partial class TransactionImporter {
       fetch_result result = new fetch_result();
       result.Read(iprot_);
       iprot_.ReadMessageEnd();
-      if (result.__isset.success) {
-        return result.Success;
-      }
       if (result.__isset.auth_error) {
         throw result.Auth_error;
       }
       if (result.__isset.system_unavailable) {
         throw result.System_unavailable;
       }
-      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "fetch failed: unknown result");
+      return;
     }
 
     
     #if SILVERLIGHT
-    public IAsyncResult Begin_portfolio(AsyncCallback callback, object state, string username, string password, List<Account> accounts)
+    public IAsyncResult Begin_portfolio(AsyncCallback callback, object state, string username, string password)
     {
-      return send_portfolio(callback, state, username, password, accounts);
+      return send_portfolio(callback, state, username, password);
     }
 
     public List<SimplePosition> End_portfolio(IAsyncResult asyncResult)
@@ -314,29 +237,28 @@ public partial class TransactionImporter {
 
     #endif
 
-    public List<SimplePosition> portfolio(string username, string password, List<Account> accounts)
+    public List<SimplePosition> portfolio(string username, string password)
     {
       #if !SILVERLIGHT
-      send_portfolio(username, password, accounts);
+      send_portfolio(username, password);
       return recv_portfolio();
 
       #else
-      var asyncResult = Begin_portfolio(null, null, username, password, accounts);
+      var asyncResult = Begin_portfolio(null, null, username, password);
       return End_portfolio(asyncResult);
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_portfolio(AsyncCallback callback, object state, string username, string password, List<Account> accounts)
+    public IAsyncResult send_portfolio(AsyncCallback callback, object state, string username, string password)
     #else
-    public void send_portfolio(string username, string password, List<Account> accounts)
+    public void send_portfolio(string username, string password)
     #endif
     {
       oprot_.WriteMessageBegin(new TMessage("portfolio", TMessageType.Call, seqid_));
       portfolio_args args = new portfolio_args();
       args.Username = username;
       args.Password = password;
-      args.Accounts = accounts;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       #if SILVERLIGHT
@@ -375,7 +297,6 @@ public partial class TransactionImporter {
     {
       iface_ = iface;
       processMap_["name"] = name_Process;
-      processMap_["accounts"] = accounts_Process;
       processMap_["fetch"] = fetch_Process;
       processMap_["portfolio"] = portfolio_Process;
     }
@@ -438,45 +359,6 @@ public partial class TransactionImporter {
       oprot.Transport.Flush();
     }
 
-    public void accounts_Process(int seqid, TProtocol iprot, TProtocol oprot)
-    {
-      accounts_args args = new accounts_args();
-      args.Read(iprot);
-      iprot.ReadMessageEnd();
-      accounts_result result = new accounts_result();
-      try
-      {
-        try
-        {
-          result.Success = iface_.accounts(args.Username, args.Password);
-        }
-        catch (AuthenticationError auth_error)
-        {
-          result.Auth_error = auth_error;
-        }
-        catch (SystemUnavailableError system_unavailable)
-        {
-          result.System_unavailable = system_unavailable;
-        }
-        oprot.WriteMessageBegin(new TMessage("accounts", TMessageType.Reply, seqid)); 
-        result.Write(oprot);
-      }
-      catch (TTransportException)
-      {
-        throw;
-      }
-      catch (Exception ex)
-      {
-        Console.Error.WriteLine("Error occurred in processor:");
-        Console.Error.WriteLine(ex.ToString());
-        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
-        oprot.WriteMessageBegin(new TMessage("accounts", TMessageType.Exception, seqid));
-        x.Write(oprot);
-      }
-      oprot.WriteMessageEnd();
-      oprot.Transport.Flush();
-    }
-
     public void fetch_Process(int seqid, TProtocol iprot, TProtocol oprot)
     {
       fetch_args args = new fetch_args();
@@ -487,7 +369,7 @@ public partial class TransactionImporter {
       {
         try
         {
-          result.Success = iface_.fetch(args.Username, args.Password, args.User, args.Portfolio);
+          iface_.fetch(args.Username, args.Password, args.User, args.Last_transaction_date);
         }
         catch (AuthenticationError auth_error)
         {
@@ -526,7 +408,7 @@ public partial class TransactionImporter {
       {
         try
         {
-          result.Success = iface_.portfolio(args.Username, args.Password, args.Accounts);
+          result.Success = iface_.portfolio(args.Username, args.Password);
         }
         catch (AuthenticationError auth_error)
         {
@@ -734,363 +616,12 @@ public partial class TransactionImporter {
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class accounts_args : TBase
-  {
-    private string _username;
-    private string _password;
-
-    public string Username
-    {
-      get
-      {
-        return _username;
-      }
-      set
-      {
-        __isset.username = true;
-        this._username = value;
-      }
-    }
-
-    public string Password
-    {
-      get
-      {
-        return _password;
-      }
-      set
-      {
-        __isset.password = true;
-        this._password = value;
-      }
-    }
-
-
-    public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
-      public bool username;
-      public bool password;
-    }
-
-    public accounts_args() {
-    }
-
-    public void Read (TProtocol iprot)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        TField field;
-        iprot.ReadStructBegin();
-        while (true)
-        {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
-            break;
-          }
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.String) {
-                Username = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.String) {
-                Password = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            default: 
-              TProtocolUtil.Skip(iprot, field.Type);
-              break;
-          }
-          iprot.ReadFieldEnd();
-        }
-        iprot.ReadStructEnd();
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
-
-    public void Write(TProtocol oprot) {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        TStruct struc = new TStruct("accounts_args");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (Username != null && __isset.username) {
-          field.Name = "username";
-          field.Type = TType.String;
-          field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Username);
-          oprot.WriteFieldEnd();
-        }
-        if (Password != null && __isset.password) {
-          field.Name = "password";
-          field.Type = TType.String;
-          field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Password);
-          oprot.WriteFieldEnd();
-        }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
-
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("accounts_args(");
-      bool __first = true;
-      if (Username != null && __isset.username) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Username: ");
-        __sb.Append(Username);
-      }
-      if (Password != null && __isset.password) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Password: ");
-        __sb.Append(Password);
-      }
-      __sb.Append(")");
-      return __sb.ToString();
-    }
-
-  }
-
-
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
-  public partial class accounts_result : TBase
-  {
-    private Dictionary<string, string> _success;
-    private AuthenticationError _auth_error;
-    private SystemUnavailableError _system_unavailable;
-
-    public Dictionary<string, string> Success
-    {
-      get
-      {
-        return _success;
-      }
-      set
-      {
-        __isset.success = true;
-        this._success = value;
-      }
-    }
-
-    public AuthenticationError Auth_error
-    {
-      get
-      {
-        return _auth_error;
-      }
-      set
-      {
-        __isset.auth_error = true;
-        this._auth_error = value;
-      }
-    }
-
-    public SystemUnavailableError System_unavailable
-    {
-      get
-      {
-        return _system_unavailable;
-      }
-      set
-      {
-        __isset.system_unavailable = true;
-        this._system_unavailable = value;
-      }
-    }
-
-
-    public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
-      public bool success;
-      public bool auth_error;
-      public bool system_unavailable;
-    }
-
-    public accounts_result() {
-    }
-
-    public void Read (TProtocol iprot)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        TField field;
-        iprot.ReadStructBegin();
-        while (true)
-        {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
-            break;
-          }
-          switch (field.ID)
-          {
-            case 0:
-              if (field.Type == TType.Map) {
-                {
-                  Success = new Dictionary<string, string>();
-                  TMap _map0 = iprot.ReadMapBegin();
-                  for( int _i1 = 0; _i1 < _map0.Count; ++_i1)
-                  {
-                    string _key2;
-                    string _val3;
-                    _key2 = iprot.ReadString();
-                    _val3 = iprot.ReadString();
-                    Success[_key2] = _val3;
-                  }
-                  iprot.ReadMapEnd();
-                }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 1:
-              if (field.Type == TType.Struct) {
-                Auth_error = new AuthenticationError();
-                Auth_error.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.Struct) {
-                System_unavailable = new SystemUnavailableError();
-                System_unavailable.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            default: 
-              TProtocolUtil.Skip(iprot, field.Type);
-              break;
-          }
-          iprot.ReadFieldEnd();
-        }
-        iprot.ReadStructEnd();
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
-
-    public void Write(TProtocol oprot) {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        TStruct struc = new TStruct("accounts_result");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-
-        if (this.__isset.success) {
-          if (Success != null) {
-            field.Name = "Success";
-            field.Type = TType.Map;
-            field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            {
-              oprot.WriteMapBegin(new TMap(TType.String, TType.String, Success.Count));
-              foreach (string _iter4 in Success.Keys)
-              {
-                oprot.WriteString(_iter4);
-                oprot.WriteString(Success[_iter4]);
-              }
-              oprot.WriteMapEnd();
-            }
-            oprot.WriteFieldEnd();
-          }
-        } else if (this.__isset.auth_error) {
-          if (Auth_error != null) {
-            field.Name = "Auth_error";
-            field.Type = TType.Struct;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            Auth_error.Write(oprot);
-            oprot.WriteFieldEnd();
-          }
-        } else if (this.__isset.system_unavailable) {
-          if (System_unavailable != null) {
-            field.Name = "System_unavailable";
-            field.Type = TType.Struct;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            System_unavailable.Write(oprot);
-            oprot.WriteFieldEnd();
-          }
-        }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
-
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("accounts_result(");
-      bool __first = true;
-      if (Success != null && __isset.success) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Success: ");
-        __sb.Append(Success);
-      }
-      if (Auth_error != null && __isset.auth_error) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Auth_error: ");
-        __sb.Append(Auth_error== null ? "<null>" : Auth_error.ToString());
-      }
-      if (System_unavailable != null && __isset.system_unavailable) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("System_unavailable: ");
-        __sb.Append(System_unavailable== null ? "<null>" : System_unavailable.ToString());
-      }
-      __sb.Append(")");
-      return __sb.ToString();
-    }
-
-  }
-
-
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class fetch_args : TBase
   {
     private string _username;
     private string _password;
     private string _user;
-    private string _portfolio;
+    private long _last_transaction_date;
 
     public string Username
     {
@@ -1131,16 +662,16 @@ public partial class TransactionImporter {
       }
     }
 
-    public string Portfolio
+    public long Last_transaction_date
     {
       get
       {
-        return _portfolio;
+        return _last_transaction_date;
       }
       set
       {
-        __isset.portfolio = true;
-        this._portfolio = value;
+        __isset.last_transaction_date = true;
+        this._last_transaction_date = value;
       }
     }
 
@@ -1153,7 +684,7 @@ public partial class TransactionImporter {
       public bool username;
       public bool password;
       public bool user;
-      public bool portfolio;
+      public bool last_transaction_date;
     }
 
     public fetch_args() {
@@ -1196,8 +727,8 @@ public partial class TransactionImporter {
               }
               break;
             case 4:
-              if (field.Type == TType.String) {
-                Portfolio = iprot.ReadString();
+              if (field.Type == TType.I64) {
+                Last_transaction_date = iprot.ReadI64();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1247,12 +778,12 @@ public partial class TransactionImporter {
           oprot.WriteString(User);
           oprot.WriteFieldEnd();
         }
-        if (Portfolio != null && __isset.portfolio) {
-          field.Name = "portfolio";
-          field.Type = TType.String;
+        if (__isset.last_transaction_date) {
+          field.Name = "last_transaction_date";
+          field.Type = TType.I64;
           field.ID = 4;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Portfolio);
+          oprot.WriteI64(Last_transaction_date);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -1285,11 +816,11 @@ public partial class TransactionImporter {
         __sb.Append("User: ");
         __sb.Append(User);
       }
-      if (Portfolio != null && __isset.portfolio) {
+      if (__isset.last_transaction_date) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Portfolio: ");
-        __sb.Append(Portfolio);
+        __sb.Append("Last_transaction_date: ");
+        __sb.Append(Last_transaction_date);
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -1303,22 +834,8 @@ public partial class TransactionImporter {
   #endif
   public partial class fetch_result : TBase
   {
-    private List<Transaction> _success;
     private AuthenticationError _auth_error;
     private SystemUnavailableError _system_unavailable;
-
-    public List<Transaction> Success
-    {
-      get
-      {
-        return _success;
-      }
-      set
-      {
-        __isset.success = true;
-        this._success = value;
-      }
-    }
 
     public AuthenticationError Auth_error
     {
@@ -1352,7 +869,6 @@ public partial class TransactionImporter {
     [Serializable]
     #endif
     public struct Isset {
-      public bool success;
       public bool auth_error;
       public bool system_unavailable;
     }
@@ -1375,24 +891,6 @@ public partial class TransactionImporter {
           }
           switch (field.ID)
           {
-            case 0:
-              if (field.Type == TType.List) {
-                {
-                  Success = new List<Transaction>();
-                  TList _list5 = iprot.ReadListBegin();
-                  for( int _i6 = 0; _i6 < _list5.Count; ++_i6)
-                  {
-                    Transaction _elem7;
-                    _elem7 = new Transaction();
-                    _elem7.Read(iprot);
-                    Success.Add(_elem7);
-                  }
-                  iprot.ReadListEnd();
-                }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
             case 1:
               if (field.Type == TType.Struct) {
                 Auth_error = new AuthenticationError();
@@ -1431,23 +929,7 @@ public partial class TransactionImporter {
         oprot.WriteStructBegin(struc);
         TField field = new TField();
 
-        if (this.__isset.success) {
-          if (Success != null) {
-            field.Name = "Success";
-            field.Type = TType.List;
-            field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            {
-              oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
-              foreach (Transaction _iter8 in Success)
-              {
-                _iter8.Write(oprot);
-              }
-              oprot.WriteListEnd();
-            }
-            oprot.WriteFieldEnd();
-          }
-        } else if (this.__isset.auth_error) {
+        if (this.__isset.auth_error) {
           if (Auth_error != null) {
             field.Name = "Auth_error";
             field.Type = TType.Struct;
@@ -1478,12 +960,6 @@ public partial class TransactionImporter {
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("fetch_result(");
       bool __first = true;
-      if (Success != null && __isset.success) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Success: ");
-        __sb.Append(Success);
-      }
       if (Auth_error != null && __isset.auth_error) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
@@ -1510,7 +986,6 @@ public partial class TransactionImporter {
   {
     private string _username;
     private string _password;
-    private List<Account> _accounts;
 
     public string Username
     {
@@ -1538,19 +1013,6 @@ public partial class TransactionImporter {
       }
     }
 
-    public List<Account> Accounts
-    {
-      get
-      {
-        return _accounts;
-      }
-      set
-      {
-        __isset.accounts = true;
-        this._accounts = value;
-      }
-    }
-
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -1559,7 +1021,6 @@ public partial class TransactionImporter {
     public struct Isset {
       public bool username;
       public bool password;
-      public bool accounts;
     }
 
     public portfolio_args() {
@@ -1590,24 +1051,6 @@ public partial class TransactionImporter {
             case 2:
               if (field.Type == TType.String) {
                 Password = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 3:
-              if (field.Type == TType.List) {
-                {
-                  Accounts = new List<Account>();
-                  TList _list9 = iprot.ReadListBegin();
-                  for( int _i10 = 0; _i10 < _list9.Count; ++_i10)
-                  {
-                    Account _elem11;
-                    _elem11 = new Account();
-                    _elem11.Read(iprot);
-                    Accounts.Add(_elem11);
-                  }
-                  iprot.ReadListEnd();
-                }
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1649,21 +1092,6 @@ public partial class TransactionImporter {
           oprot.WriteString(Password);
           oprot.WriteFieldEnd();
         }
-        if (Accounts != null && __isset.accounts) {
-          field.Name = "accounts";
-          field.Type = TType.List;
-          field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Struct, Accounts.Count));
-            foreach (Account _iter12 in Accounts)
-            {
-              _iter12.Write(oprot);
-            }
-            oprot.WriteListEnd();
-          }
-          oprot.WriteFieldEnd();
-        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -1687,12 +1115,6 @@ public partial class TransactionImporter {
         __first = false;
         __sb.Append("Password: ");
         __sb.Append(Password);
-      }
-      if (Accounts != null && __isset.accounts) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Accounts: ");
-        __sb.Append(Accounts);
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -1782,13 +1204,13 @@ public partial class TransactionImporter {
               if (field.Type == TType.List) {
                 {
                   Success = new List<SimplePosition>();
-                  TList _list13 = iprot.ReadListBegin();
-                  for( int _i14 = 0; _i14 < _list13.Count; ++_i14)
+                  TList _list0 = iprot.ReadListBegin();
+                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
-                    SimplePosition _elem15;
-                    _elem15 = new SimplePosition();
-                    _elem15.Read(iprot);
-                    Success.Add(_elem15);
+                    SimplePosition _elem2;
+                    _elem2 = new SimplePosition();
+                    _elem2.Read(iprot);
+                    Success.Add(_elem2);
                   }
                   iprot.ReadListEnd();
                 }
@@ -1842,9 +1264,9 @@ public partial class TransactionImporter {
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
-              foreach (SimplePosition _iter16 in Success)
+              foreach (SimplePosition _iter3 in Success)
               {
-                _iter16.Write(oprot);
+                _iter3.Write(oprot);
               }
               oprot.WriteListEnd();
             }

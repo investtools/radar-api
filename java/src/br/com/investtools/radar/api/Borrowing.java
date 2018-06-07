@@ -10,22 +10,19 @@ package br.com.investtools.radar.api;
 public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._Fields>, java.io.Serializable, Cloneable, Comparable<Borrowing> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Borrowing");
 
-  private static final org.apache.thrift.protocol.TField ACCOUNT_FIELD_DESC = new org.apache.thrift.protocol.TField("account", org.apache.thrift.protocol.TType.STRING, (short)1);
-  private static final org.apache.thrift.protocol.TField STOCK_FIELD_DESC = new org.apache.thrift.protocol.TField("stock", org.apache.thrift.protocol.TType.STRUCT, (short)2);
-  private static final org.apache.thrift.protocol.TField SHARES_FIELD_DESC = new org.apache.thrift.protocol.TField("shares", org.apache.thrift.protocol.TType.I32, (short)3);
+  private static final org.apache.thrift.protocol.TField STOCK_FIELD_DESC = new org.apache.thrift.protocol.TField("stock", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+  private static final org.apache.thrift.protocol.TField SHARES_FIELD_DESC = new org.apache.thrift.protocol.TField("shares", org.apache.thrift.protocol.TType.I32, (short)2);
 
   private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new BorrowingStandardSchemeFactory();
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new BorrowingTupleSchemeFactory();
 
-  public java.lang.String account; // required
   public br.com.investtools.radar.api.StockId stock; // required
   public int shares; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    ACCOUNT((short)1, "account"),
-    STOCK((short)2, "stock"),
-    SHARES((short)3, "shares");
+    STOCK((short)1, "stock"),
+    SHARES((short)2, "shares");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -40,11 +37,9 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // ACCOUNT
-          return ACCOUNT;
-        case 2: // STOCK
+        case 1: // STOCK
           return STOCK;
-        case 3: // SHARES
+        case 2: // SHARES
           return SHARES;
         default:
           return null;
@@ -91,8 +86,6 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
   public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-    tmpMap.put(_Fields.ACCOUNT, new org.apache.thrift.meta_data.FieldMetaData("account", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.STOCK, new org.apache.thrift.meta_data.FieldMetaData("stock", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.StockId.class)));
     tmpMap.put(_Fields.SHARES, new org.apache.thrift.meta_data.FieldMetaData("shares", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -105,12 +98,10 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
   }
 
   public Borrowing(
-    java.lang.String account,
     br.com.investtools.radar.api.StockId stock,
     int shares)
   {
     this();
-    this.account = account;
     this.stock = stock;
     this.shares = shares;
     setSharesIsSet(true);
@@ -121,9 +112,6 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
    */
   public Borrowing(Borrowing other) {
     __isset_bitfield = other.__isset_bitfield;
-    if (other.isSetAccount()) {
-      this.account = other.account;
-    }
     if (other.isSetStock()) {
       this.stock = new br.com.investtools.radar.api.StockId(other.stock);
     }
@@ -136,34 +124,9 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
 
   @Override
   public void clear() {
-    this.account = null;
     this.stock = null;
     setSharesIsSet(false);
     this.shares = 0;
-  }
-
-  public java.lang.String getAccount() {
-    return this.account;
-  }
-
-  public Borrowing setAccount(java.lang.String account) {
-    this.account = account;
-    return this;
-  }
-
-  public void unsetAccount() {
-    this.account = null;
-  }
-
-  /** Returns true if field account is set (has been assigned a value) and false otherwise */
-  public boolean isSetAccount() {
-    return this.account != null;
-  }
-
-  public void setAccountIsSet(boolean value) {
-    if (!value) {
-      this.account = null;
-    }
   }
 
   public br.com.investtools.radar.api.StockId getStock() {
@@ -215,14 +178,6 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
 
   public void setFieldValue(_Fields field, java.lang.Object value) {
     switch (field) {
-    case ACCOUNT:
-      if (value == null) {
-        unsetAccount();
-      } else {
-        setAccount((java.lang.String)value);
-      }
-      break;
-
     case STOCK:
       if (value == null) {
         unsetStock();
@@ -244,9 +199,6 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
 
   public java.lang.Object getFieldValue(_Fields field) {
     switch (field) {
-    case ACCOUNT:
-      return getAccount();
-
     case STOCK:
       return getStock();
 
@@ -264,8 +216,6 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
     }
 
     switch (field) {
-    case ACCOUNT:
-      return isSetAccount();
     case STOCK:
       return isSetStock();
     case SHARES:
@@ -288,15 +238,6 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
       return false;
     if (this == that)
       return true;
-
-    boolean this_present_account = true && this.isSetAccount();
-    boolean that_present_account = true && that.isSetAccount();
-    if (this_present_account || that_present_account) {
-      if (!(this_present_account && that_present_account))
-        return false;
-      if (!this.account.equals(that.account))
-        return false;
-    }
 
     boolean this_present_stock = true && this.isSetStock();
     boolean that_present_stock = true && that.isSetStock();
@@ -323,10 +264,6 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
   public int hashCode() {
     int hashCode = 1;
 
-    hashCode = hashCode * 8191 + ((isSetAccount()) ? 131071 : 524287);
-    if (isSetAccount())
-      hashCode = hashCode * 8191 + account.hashCode();
-
     hashCode = hashCode * 8191 + ((isSetStock()) ? 131071 : 524287);
     if (isSetStock())
       hashCode = hashCode * 8191 + stock.hashCode();
@@ -344,16 +281,6 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
 
     int lastComparison = 0;
 
-    lastComparison = java.lang.Boolean.valueOf(isSetAccount()).compareTo(other.isSetAccount());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetAccount()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.account, other.account);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
     lastComparison = java.lang.Boolean.valueOf(isSetStock()).compareTo(other.isSetStock());
     if (lastComparison != 0) {
       return lastComparison;
@@ -394,14 +321,6 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
     java.lang.StringBuilder sb = new java.lang.StringBuilder("Borrowing(");
     boolean first = true;
 
-    sb.append("account:");
-    if (this.account == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.account);
-    }
-    first = false;
-    if (!first) sb.append(", ");
     sb.append("stock:");
     if (this.stock == null) {
       sb.append("null");
@@ -461,15 +380,7 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
           break;
         }
         switch (schemeField.id) {
-          case 1: // ACCOUNT
-            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-              struct.account = iprot.readString();
-              struct.setAccountIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 2: // STOCK
+          case 1: // STOCK
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
               struct.stock = new br.com.investtools.radar.api.StockId();
               struct.stock.read(iprot);
@@ -478,7 +389,7 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 3: // SHARES
+          case 2: // SHARES
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
               struct.shares = iprot.readI32();
               struct.setSharesIsSet(true);
@@ -501,11 +412,6 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
-      if (struct.account != null) {
-        oprot.writeFieldBegin(ACCOUNT_FIELD_DESC);
-        oprot.writeString(struct.account);
-        oprot.writeFieldEnd();
-      }
       if (struct.stock != null) {
         oprot.writeFieldBegin(STOCK_FIELD_DESC);
         struct.stock.write(oprot);
@@ -532,19 +438,13 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
     public void write(org.apache.thrift.protocol.TProtocol prot, Borrowing struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet optionals = new java.util.BitSet();
-      if (struct.isSetAccount()) {
+      if (struct.isSetStock()) {
         optionals.set(0);
       }
-      if (struct.isSetStock()) {
+      if (struct.isSetShares()) {
         optionals.set(1);
       }
-      if (struct.isSetShares()) {
-        optionals.set(2);
-      }
-      oprot.writeBitSet(optionals, 3);
-      if (struct.isSetAccount()) {
-        oprot.writeString(struct.account);
-      }
+      oprot.writeBitSet(optionals, 2);
       if (struct.isSetStock()) {
         struct.stock.write(oprot);
       }
@@ -556,17 +456,13 @@ public class Borrowing implements org.apache.thrift.TBase<Borrowing, Borrowing._
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Borrowing struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(3);
+      java.util.BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
-        struct.account = iprot.readString();
-        struct.setAccountIsSet(true);
-      }
-      if (incoming.get(1)) {
         struct.stock = new br.com.investtools.radar.api.StockId();
         struct.stock.read(iprot);
         struct.setStockIsSet(true);
       }
-      if (incoming.get(2)) {
+      if (incoming.get(1)) {
         struct.shares = iprot.readI32();
         struct.setSharesIsSet(true);
       }

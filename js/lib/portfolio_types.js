@@ -14,13 +14,9 @@ var common_ttypes = require('./common_types');
 
 var ttypes = module.exports = {};
 var Security = module.exports.Security = function(args) {
-  this.account = null;
   this.stock = null;
   this.shares = null;
   if (args) {
-    if (args.account !== undefined && args.account !== null) {
-      this.account = args.account;
-    }
     if (args.stock !== undefined && args.stock !== null) {
       this.stock = new common_ttypes.StockId(args.stock);
     }
@@ -44,13 +40,6 @@ Security.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.account = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
       if (ftype == Thrift.Type.STRUCT) {
         this.stock = new common_ttypes.StockId();
         this.stock.read(input);
@@ -58,7 +47,7 @@ Security.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 3:
+      case 2:
       if (ftype == Thrift.Type.I32) {
         this.shares = input.readI32();
       } else {
@@ -76,18 +65,13 @@ Security.prototype.read = function(input) {
 
 Security.prototype.write = function(output) {
   output.writeStructBegin('Security');
-  if (this.account !== null && this.account !== undefined) {
-    output.writeFieldBegin('account', Thrift.Type.STRING, 1);
-    output.writeString(this.account);
-    output.writeFieldEnd();
-  }
   if (this.stock !== null && this.stock !== undefined) {
-    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 1);
     this.stock.write(output);
     output.writeFieldEnd();
   }
   if (this.shares !== null && this.shares !== undefined) {
-    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
+    output.writeFieldBegin('shares', Thrift.Type.I32, 2);
     output.writeI32(this.shares);
     output.writeFieldEnd();
   }
@@ -97,13 +81,9 @@ Security.prototype.write = function(output) {
 };
 
 var Lending = module.exports.Lending = function(args) {
-  this.account = null;
   this.stock = null;
   this.shares = null;
   if (args) {
-    if (args.account !== undefined && args.account !== null) {
-      this.account = args.account;
-    }
     if (args.stock !== undefined && args.stock !== null) {
       this.stock = new common_ttypes.StockId(args.stock);
     }
@@ -127,13 +107,6 @@ Lending.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.account = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
       if (ftype == Thrift.Type.STRUCT) {
         this.stock = new common_ttypes.StockId();
         this.stock.read(input);
@@ -141,7 +114,7 @@ Lending.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 3:
+      case 2:
       if (ftype == Thrift.Type.I32) {
         this.shares = input.readI32();
       } else {
@@ -159,18 +132,13 @@ Lending.prototype.read = function(input) {
 
 Lending.prototype.write = function(output) {
   output.writeStructBegin('Lending');
-  if (this.account !== null && this.account !== undefined) {
-    output.writeFieldBegin('account', Thrift.Type.STRING, 1);
-    output.writeString(this.account);
-    output.writeFieldEnd();
-  }
   if (this.stock !== null && this.stock !== undefined) {
-    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 1);
     this.stock.write(output);
     output.writeFieldEnd();
   }
   if (this.shares !== null && this.shares !== undefined) {
-    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
+    output.writeFieldBegin('shares', Thrift.Type.I32, 2);
     output.writeI32(this.shares);
     output.writeFieldEnd();
   }
@@ -180,13 +148,9 @@ Lending.prototype.write = function(output) {
 };
 
 var Borrowing = module.exports.Borrowing = function(args) {
-  this.account = null;
   this.stock = null;
   this.shares = null;
   if (args) {
-    if (args.account !== undefined && args.account !== null) {
-      this.account = args.account;
-    }
     if (args.stock !== undefined && args.stock !== null) {
       this.stock = new common_ttypes.StockId(args.stock);
     }
@@ -210,13 +174,6 @@ Borrowing.prototype.read = function(input) {
     switch (fid)
     {
       case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.account = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
       if (ftype == Thrift.Type.STRUCT) {
         this.stock = new common_ttypes.StockId();
         this.stock.read(input);
@@ -224,7 +181,7 @@ Borrowing.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 3:
+      case 2:
       if (ftype == Thrift.Type.I32) {
         this.shares = input.readI32();
       } else {
@@ -242,18 +199,13 @@ Borrowing.prototype.read = function(input) {
 
 Borrowing.prototype.write = function(output) {
   output.writeStructBegin('Borrowing');
-  if (this.account !== null && this.account !== undefined) {
-    output.writeFieldBegin('account', Thrift.Type.STRING, 1);
-    output.writeString(this.account);
-    output.writeFieldEnd();
-  }
   if (this.stock !== null && this.stock !== undefined) {
-    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 1);
     this.stock.write(output);
     output.writeFieldEnd();
   }
   if (this.shares !== null && this.shares !== undefined) {
-    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
+    output.writeFieldBegin('shares', Thrift.Type.I32, 2);
     output.writeI32(this.shares);
     output.writeFieldEnd();
   }
