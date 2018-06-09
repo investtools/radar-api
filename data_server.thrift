@@ -29,6 +29,10 @@ service PortfolioService {
   list<MonthlyPosition> run_portfolio(1: list<transaction.Transaction> trxs, 2: list<common.Date> reports_dates, 3: string user)
 }
 
+service IntegrationStatusService {
+  oneway void report_status(1: string message, 2: string user)
+}
+
 service FundService {
   string name(1: common.FundId id)
   string short_name(1: common.FundId id)

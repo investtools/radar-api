@@ -7,5 +7,6 @@ require 'radar/api/fund_service'
 require 'radar/api/index_service'
 require 'radar/api/calendar_service'
 require 'radar/api/portfolio_service'
+require 'radar/api/integration_status_service'
 
 Radar::API = Radar::Api
