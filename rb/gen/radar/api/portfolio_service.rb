@@ -28,6 +28,20 @@ module Radar
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'run_portfolio failed: unknown result')
         end
 
+        def persist(trxs, user)
+          send_persist(trxs, user)
+          recv_persist()
+        end
+
+        def send_persist(trxs, user)
+          send_message('persist', Persist_args, :trxs => trxs, :user => user)
+        end
+
+        def recv_persist()
+          result = receive_message(Persist_result)
+          return
+        end
+
       end
 
       class Processor
@@ -38,6 +52,13 @@ module Radar
           result = Run_portfolio_result.new()
           result.success = @handler.run_portfolio(args.trxs, args.reports_dates, args.user)
           write_result(result, oprot, 'run_portfolio', seqid)
+        end
+
+        def process_persist(seqid, iprot, oprot)
+          args = read_args(iprot, Persist_args)
+          result = Persist_result.new()
+          @handler.persist(args.trxs, args.user)
+          write_result(result, oprot, 'persist', seqid)
         end
 
       end
@@ -70,6 +91,39 @@ module Radar
 
         FIELDS = {
           SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::MonthlyPosition}}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Persist_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        TRXS = 1
+        USER = 2
+
+        FIELDS = {
+          TRXS => {:type => ::Thrift::Types::LIST, :name => 'trxs', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Transaction}},
+          USER => {:type => ::Thrift::Types::STRING, :name => 'user'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Persist_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+
+        FIELDS = {
+
         }
 
         def struct_fields; FIELDS; end

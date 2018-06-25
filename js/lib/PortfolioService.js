@@ -219,6 +219,123 @@ PortfolioService_run_portfolio_result.prototype.write = function(output) {
   return;
 };
 
+var PortfolioService_persist_args = function(args) {
+  this.trxs = null;
+  this.user = null;
+  if (args) {
+    if (args.trxs !== undefined && args.trxs !== null) {
+      this.trxs = Thrift.copyList(args.trxs, [transaction_ttypes.Transaction]);
+    }
+    if (args.user !== undefined && args.user !== null) {
+      this.user = args.user;
+    }
+  }
+};
+PortfolioService_persist_args.prototype = {};
+PortfolioService_persist_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        var _size32 = 0;
+        var _rtmp336;
+        this.trxs = [];
+        var _etype35 = 0;
+        _rtmp336 = input.readListBegin();
+        _etype35 = _rtmp336.etype;
+        _size32 = _rtmp336.size;
+        for (var _i37 = 0; _i37 < _size32; ++_i37)
+        {
+          var elem38 = null;
+          elem38 = new transaction_ttypes.Transaction();
+          elem38.read(input);
+          this.trxs.push(elem38);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+PortfolioService_persist_args.prototype.write = function(output) {
+  output.writeStructBegin('PortfolioService_persist_args');
+  if (this.trxs !== null && this.trxs !== undefined) {
+    output.writeFieldBegin('trxs', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRUCT, this.trxs.length);
+    for (var iter39 in this.trxs)
+    {
+      if (this.trxs.hasOwnProperty(iter39))
+      {
+        iter39 = this.trxs[iter39];
+        iter39.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 2);
+    output.writeString(this.user);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var PortfolioService_persist_result = function(args) {
+};
+PortfolioService_persist_result.prototype = {};
+PortfolioService_persist_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    input.skip(ftype);
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+PortfolioService_persist_result.prototype.write = function(output) {
+  output.writeStructBegin('PortfolioService_persist_result');
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 var PortfolioServiceClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -277,6 +394,51 @@ PortfolioServiceClient.prototype.recv_run_portfolio = function(input,mtype,rseqi
   }
   return callback('run_portfolio failed: unknown result');
 };
+PortfolioServiceClient.prototype.persist = function(trxs, user, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_persist(trxs, user);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_persist(trxs, user);
+  }
+};
+
+PortfolioServiceClient.prototype.send_persist = function(trxs, user) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('persist', Thrift.MessageType.CALL, this.seqid());
+  var args = new PortfolioService_persist_args();
+  args.trxs = trxs;
+  args.user = user;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+PortfolioServiceClient.prototype.recv_persist = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new PortfolioService_persist_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  callback(null);
+};
 var PortfolioServiceProcessor = exports.Processor = function(handler) {
   this._handler = handler;
 }
@@ -325,6 +487,42 @@ PortfolioServiceProcessor.prototype.process_run_portfolio = function(seqid, inpu
       } else {
         result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
         output.writeMessageBegin("run_portfolio", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result_obj.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+};
+PortfolioServiceProcessor.prototype.process_persist = function(seqid, input, output) {
+  var args = new PortfolioService_persist_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.persist.length === 2) {
+    Q.fcall(this._handler.persist, args.trxs, args.user)
+      .then(function(result) {
+        var result_obj = new PortfolioService_persist_result({success: result});
+        output.writeMessageBegin("persist", Thrift.MessageType.REPLY, seqid);
+        result_obj.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      }, function (err) {
+        var result;
+        result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("persist", Thrift.MessageType.EXCEPTION, seqid);
+        result.write(output);
+        output.writeMessageEnd();
+        output.flush();
+      });
+  } else {
+    this._handler.persist(args.trxs, args.user, function (err, result) {
+      var result_obj;
+      if ((err === null || typeof err === 'undefined')) {
+        result_obj = new PortfolioService_persist_result((err !== null || typeof err === 'undefined') ? err : {success: result});
+        output.writeMessageBegin("persist", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("persist", Thrift.MessageType.EXCEPTION, seqid);
       }
       result_obj.write(output);
       output.writeMessageEnd();

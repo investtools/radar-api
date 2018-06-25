@@ -2583,14 +2583,14 @@ public class SecurityService {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list32 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<Price>(_list32.size);
-                  Price _elem33;
-                  for (int _i34 = 0; _i34 < _list32.size; ++_i34)
+                  org.apache.thrift.protocol.TList _list40 = iprot.readListBegin();
+                  struct.success = new java.util.ArrayList<Price>(_list40.size);
+                  Price _elem41;
+                  for (int _i42 = 0; _i42 < _list40.size; ++_i42)
                   {
-                    _elem33 = new Price();
-                    _elem33.read(iprot);
-                    struct.success.add(_elem33);
+                    _elem41 = new Price();
+                    _elem41.read(iprot);
+                    struct.success.add(_elem41);
                   }
                   iprot.readListEnd();
                 }
@@ -2618,9 +2618,9 @@ public class SecurityService {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Price _iter35 : struct.success)
+            for (Price _iter43 : struct.success)
             {
-              _iter35.write(oprot);
+              _iter43.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -2651,9 +2651,9 @@ public class SecurityService {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Price _iter36 : struct.success)
+            for (Price _iter44 : struct.success)
             {
-              _iter36.write(oprot);
+              _iter44.write(oprot);
             }
           }
         }
@@ -2665,14 +2665,14 @@ public class SecurityService {
         java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list37 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new java.util.ArrayList<Price>(_list37.size);
-            Price _elem38;
-            for (int _i39 = 0; _i39 < _list37.size; ++_i39)
+            org.apache.thrift.protocol.TList _list45 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new java.util.ArrayList<Price>(_list45.size);
+            Price _elem46;
+            for (int _i47 = 0; _i47 < _list45.size; ++_i47)
             {
-              _elem38 = new Price();
-              _elem38.read(iprot);
-              struct.success.add(_elem38);
+              _elem46 = new Price();
+              _elem46.read(iprot);
+              struct.success.add(_elem46);
             }
           }
           struct.setSuccessIsSet(true);
@@ -5300,13 +5300,13 @@ public class SecurityService {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list40 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<java.lang.Double>(_list40.size);
-                  double _elem41;
-                  for (int _i42 = 0; _i42 < _list40.size; ++_i42)
+                  org.apache.thrift.protocol.TList _list48 = iprot.readListBegin();
+                  struct.success = new java.util.ArrayList<java.lang.Double>(_list48.size);
+                  double _elem49;
+                  for (int _i50 = 0; _i50 < _list48.size; ++_i50)
                   {
-                    _elem41 = iprot.readDouble();
-                    struct.success.add(_elem41);
+                    _elem49 = iprot.readDouble();
+                    struct.success.add(_elem49);
                   }
                   iprot.readListEnd();
                 }
@@ -5334,9 +5334,9 @@ public class SecurityService {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.DOUBLE, struct.success.size()));
-            for (double _iter43 : struct.success)
+            for (double _iter51 : struct.success)
             {
-              oprot.writeDouble(_iter43);
+              oprot.writeDouble(_iter51);
             }
             oprot.writeListEnd();
           }
@@ -5367,9 +5367,9 @@ public class SecurityService {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (double _iter44 : struct.success)
+            for (double _iter52 : struct.success)
             {
-              oprot.writeDouble(_iter44);
+              oprot.writeDouble(_iter52);
             }
           }
         }
@@ -5381,13 +5381,13 @@ public class SecurityService {
         java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list45 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.DOUBLE, iprot.readI32());
-            struct.success = new java.util.ArrayList<java.lang.Double>(_list45.size);
-            double _elem46;
-            for (int _i47 = 0; _i47 < _list45.size; ++_i47)
+            org.apache.thrift.protocol.TList _list53 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.DOUBLE, iprot.readI32());
+            struct.success = new java.util.ArrayList<java.lang.Double>(_list53.size);
+            double _elem54;
+            for (int _i55 = 0; _i55 < _list53.size; ++_i55)
             {
-              _elem46 = iprot.readDouble();
-              struct.success.add(_elem46);
+              _elem54 = iprot.readDouble();
+              struct.success.add(_elem54);
             }
           }
           struct.setSuccessIsSet(true);

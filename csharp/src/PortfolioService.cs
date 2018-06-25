@@ -18,12 +18,17 @@ using Thrift.Transport;
 public partial class PortfolioService {
   public interface ISync {
     List<MonthlyPosition> run_portfolio(List<Transaction> trxs, List<long> reports_dates, string user);
+    void persist(List<Transaction> trxs, string user);
   }
 
   public interface Iface : ISync {
     #if SILVERLIGHT
     IAsyncResult Begin_run_portfolio(AsyncCallback callback, object state, List<Transaction> trxs, List<long> reports_dates, string user);
     List<MonthlyPosition> End_run_portfolio(IAsyncResult asyncResult);
+    #endif
+    #if SILVERLIGHT
+    IAsyncResult Begin_persist(AsyncCallback callback, object state, List<Transaction> trxs, string user);
+    void End_persist(IAsyncResult asyncResult);
     #endif
   }
 
@@ -147,12 +152,73 @@ public partial class PortfolioService {
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "run_portfolio failed: unknown result");
     }
 
+    
+    #if SILVERLIGHT
+    public IAsyncResult Begin_persist(AsyncCallback callback, object state, List<Transaction> trxs, string user)
+    {
+      return send_persist(callback, state, trxs, user);
+    }
+
+    public void End_persist(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      recv_persist();
+    }
+
+    #endif
+
+    public void persist(List<Transaction> trxs, string user)
+    {
+      #if !SILVERLIGHT
+      send_persist(trxs, user);
+      recv_persist();
+
+      #else
+      var asyncResult = Begin_persist(null, null, trxs, user);
+      End_persist(asyncResult);
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_persist(AsyncCallback callback, object state, List<Transaction> trxs, string user)
+    #else
+    public void send_persist(List<Transaction> trxs, string user)
+    #endif
+    {
+      oprot_.WriteMessageBegin(new TMessage("persist", TMessageType.Call, seqid_));
+      persist_args args = new persist_args();
+      args.Trxs = trxs;
+      args.User = user;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      #if SILVERLIGHT
+      return oprot_.Transport.BeginFlush(callback, state);
+      #else
+      oprot_.Transport.Flush();
+      #endif
+    }
+
+    public void recv_persist()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      persist_result result = new persist_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      return;
+    }
+
   }
   public class Processor : TProcessor {
     public Processor(ISync iface)
     {
       iface_ = iface;
       processMap_["run_portfolio"] = run_portfolio_Process;
+      processMap_["persist"] = persist_Process;
     }
 
     protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -207,6 +273,34 @@ public partial class PortfolioService {
         Console.Error.WriteLine(ex.ToString());
         TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
         oprot.WriteMessageBegin(new TMessage("run_portfolio", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
+    }
+
+    public void persist_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      persist_args args = new persist_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      persist_result result = new persist_result();
+      try
+      {
+        iface_.persist(args.Trxs, args.User);
+        oprot.WriteMessageBegin(new TMessage("persist", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("persist", TMessageType.Exception, seqid));
         x.Write(oprot);
       }
       oprot.WriteMessageEnd();
@@ -553,6 +647,231 @@ public partial class PortfolioService {
         __sb.Append("Success: ");
         __sb.Append(Success);
       }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class persist_args : TBase
+  {
+    private List<Transaction> _trxs;
+    private string _user;
+
+    public List<Transaction> Trxs
+    {
+      get
+      {
+        return _trxs;
+      }
+      set
+      {
+        __isset.trxs = true;
+        this._trxs = value;
+      }
+    }
+
+    public string User
+    {
+      get
+      {
+        return _user;
+      }
+      set
+      {
+        __isset.user = true;
+        this._user = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool trxs;
+      public bool user;
+    }
+
+    public persist_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.List) {
+                {
+                  Trxs = new List<Transaction>();
+                  TList _list16 = iprot.ReadListBegin();
+                  for( int _i17 = 0; _i17 < _list16.Count; ++_i17)
+                  {
+                    Transaction _elem18;
+                    _elem18 = new Transaction();
+                    _elem18.Read(iprot);
+                    Trxs.Add(_elem18);
+                  }
+                  iprot.ReadListEnd();
+                }
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.String) {
+                User = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("persist_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Trxs != null && __isset.trxs) {
+          field.Name = "trxs";
+          field.Type = TType.List;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          {
+            oprot.WriteListBegin(new TList(TType.Struct, Trxs.Count));
+            foreach (Transaction _iter19 in Trxs)
+            {
+              _iter19.Write(oprot);
+            }
+            oprot.WriteListEnd();
+          }
+          oprot.WriteFieldEnd();
+        }
+        if (User != null && __isset.user) {
+          field.Name = "user";
+          field.Type = TType.String;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(User);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("persist_args(");
+      bool __first = true;
+      if (Trxs != null && __isset.trxs) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Trxs: ");
+        __sb.Append(Trxs);
+      }
+      if (User != null && __isset.user) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("User: ");
+        __sb.Append(User);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class persist_result : TBase
+  {
+
+    public persist_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("persist_result");
+        oprot.WriteStructBegin(struc);
+
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("persist_result(");
       __sb.Append(")");
       return __sb.ToString();
     }

@@ -13,11 +13,15 @@ public class PortfolioService {
 
     public java.util.List<MonthlyPosition> run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.util.List<java.lang.Long> reports_dates, java.lang.String user) throws org.apache.thrift.TException;
 
+    public void persist(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.lang.String user) throws org.apache.thrift.TException;
+
   }
 
   public interface AsyncIface {
 
     public void run_portfolio(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.util.List<java.lang.Long> reports_dates, java.lang.String user, org.apache.thrift.async.AsyncMethodCallback<java.util.List<MonthlyPosition>> resultHandler) throws org.apache.thrift.TException;
+
+    public void persist(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.lang.String user, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -64,6 +68,27 @@ public class PortfolioService {
         return result.success;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "run_portfolio failed: unknown result");
+    }
+
+    public void persist(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.lang.String user) throws org.apache.thrift.TException
+    {
+      send_persist(trxs, user);
+      recv_persist();
+    }
+
+    public void send_persist(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.lang.String user) throws org.apache.thrift.TException
+    {
+      persist_args args = new persist_args();
+      args.setTrxs(trxs);
+      args.setUser(user);
+      sendBase("persist", args);
+    }
+
+    public void recv_persist() throws org.apache.thrift.TException
+    {
+      persist_result result = new persist_result();
+      receiveBase(result, "persist");
+      return;
     }
 
   }
@@ -122,6 +147,41 @@ public class PortfolioService {
       }
     }
 
+    public void persist(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.lang.String user, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      persist_call method_call = new persist_call(trxs, user, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class persist_call extends org.apache.thrift.async.TAsyncMethodCall<Void> {
+      private java.util.List<br.com.investtools.radar.api.Transaction> trxs;
+      private java.lang.String user;
+      public persist_call(java.util.List<br.com.investtools.radar.api.Transaction> trxs, java.lang.String user, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.trxs = trxs;
+        this.user = user;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("persist", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        persist_args args = new persist_args();
+        args.setTrxs(trxs);
+        args.setUser(user);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Void getResult() throws org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return null;
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends org.apache.thrift.TBaseProcessor<I> implements org.apache.thrift.TProcessor {
@@ -136,6 +196,7 @@ public class PortfolioService {
 
     private static <I extends Iface> java.util.Map<java.lang.String,  org.apache.thrift.ProcessFunction<I, ? extends org.apache.thrift.TBase>> getProcessMap(java.util.Map<java.lang.String, org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
       processMap.put("run_portfolio", new run_portfolio());
+      processMap.put("persist", new persist());
       return processMap;
     }
 
@@ -159,6 +220,26 @@ public class PortfolioService {
       }
     }
 
+    public static class persist<I extends Iface> extends org.apache.thrift.ProcessFunction<I, persist_args> {
+      public persist() {
+        super("persist");
+      }
+
+      public persist_args getEmptyArgsInstance() {
+        return new persist_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public persist_result getResult(I iface, persist_args args) throws org.apache.thrift.TException {
+        persist_result result = new persist_result();
+        iface.persist(args.trxs, args.user);
+        return result;
+      }
+    }
+
   }
 
   public static class AsyncProcessor<I extends AsyncIface> extends org.apache.thrift.TBaseAsyncProcessor<I> {
@@ -173,6 +254,7 @@ public class PortfolioService {
 
     private static <I extends AsyncIface> java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
       processMap.put("run_portfolio", new run_portfolio());
+      processMap.put("persist", new persist());
       return processMap;
     }
 
@@ -234,6 +316,66 @@ public class PortfolioService {
 
       public void start(I iface, run_portfolio_args args, org.apache.thrift.async.AsyncMethodCallback<java.util.List<MonthlyPosition>> resultHandler) throws org.apache.thrift.TException {
         iface.run_portfolio(args.trxs, args.reports_dates, args.user,resultHandler);
+      }
+    }
+
+    public static class persist<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, persist_args, Void> {
+      public persist() {
+        super("persist");
+      }
+
+      public persist_args getEmptyArgsInstance() {
+        return new persist_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<Void> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<Void>() { 
+          public void onComplete(Void o) {
+            persist_result result = new persist_result();
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            persist_result result = new persist_result();
+            if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, persist_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
+        iface.persist(args.trxs, args.user,resultHandler);
       }
     }
 
@@ -1323,6 +1465,776 @@ public class PortfolioService {
           }
           struct.setSuccessIsSet(true);
         }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class persist_args implements org.apache.thrift.TBase<persist_args, persist_args._Fields>, java.io.Serializable, Cloneable, Comparable<persist_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("persist_args");
+
+    private static final org.apache.thrift.protocol.TField TRXS_FIELD_DESC = new org.apache.thrift.protocol.TField("trxs", org.apache.thrift.protocol.TType.LIST, (short)1);
+    private static final org.apache.thrift.protocol.TField USER_FIELD_DESC = new org.apache.thrift.protocol.TField("user", org.apache.thrift.protocol.TType.STRING, (short)2);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new persist_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new persist_argsTupleSchemeFactory();
+
+    public java.util.List<br.com.investtools.radar.api.Transaction> trxs; // required
+    public java.lang.String user; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      TRXS((short)1, "trxs"),
+      USER((short)2, "user");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // TRXS
+            return TRXS;
+          case 2: // USER
+            return USER;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.TRXS, new org.apache.thrift.meta_data.FieldMetaData("trxs", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.Transaction.class))));
+      tmpMap.put(_Fields.USER, new org.apache.thrift.meta_data.FieldMetaData("user", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(persist_args.class, metaDataMap);
+    }
+
+    public persist_args() {
+    }
+
+    public persist_args(
+      java.util.List<br.com.investtools.radar.api.Transaction> trxs,
+      java.lang.String user)
+    {
+      this();
+      this.trxs = trxs;
+      this.user = user;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public persist_args(persist_args other) {
+      if (other.isSetTrxs()) {
+        java.util.List<br.com.investtools.radar.api.Transaction> __this__trxs = new java.util.ArrayList<br.com.investtools.radar.api.Transaction>(other.trxs.size());
+        for (br.com.investtools.radar.api.Transaction other_element : other.trxs) {
+          __this__trxs.add(new br.com.investtools.radar.api.Transaction(other_element));
+        }
+        this.trxs = __this__trxs;
+      }
+      if (other.isSetUser()) {
+        this.user = other.user;
+      }
+    }
+
+    public persist_args deepCopy() {
+      return new persist_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.trxs = null;
+      this.user = null;
+    }
+
+    public int getTrxsSize() {
+      return (this.trxs == null) ? 0 : this.trxs.size();
+    }
+
+    public java.util.Iterator<br.com.investtools.radar.api.Transaction> getTrxsIterator() {
+      return (this.trxs == null) ? null : this.trxs.iterator();
+    }
+
+    public void addToTrxs(br.com.investtools.radar.api.Transaction elem) {
+      if (this.trxs == null) {
+        this.trxs = new java.util.ArrayList<br.com.investtools.radar.api.Transaction>();
+      }
+      this.trxs.add(elem);
+    }
+
+    public java.util.List<br.com.investtools.radar.api.Transaction> getTrxs() {
+      return this.trxs;
+    }
+
+    public persist_args setTrxs(java.util.List<br.com.investtools.radar.api.Transaction> trxs) {
+      this.trxs = trxs;
+      return this;
+    }
+
+    public void unsetTrxs() {
+      this.trxs = null;
+    }
+
+    /** Returns true if field trxs is set (has been assigned a value) and false otherwise */
+    public boolean isSetTrxs() {
+      return this.trxs != null;
+    }
+
+    public void setTrxsIsSet(boolean value) {
+      if (!value) {
+        this.trxs = null;
+      }
+    }
+
+    public java.lang.String getUser() {
+      return this.user;
+    }
+
+    public persist_args setUser(java.lang.String user) {
+      this.user = user;
+      return this;
+    }
+
+    public void unsetUser() {
+      this.user = null;
+    }
+
+    /** Returns true if field user is set (has been assigned a value) and false otherwise */
+    public boolean isSetUser() {
+      return this.user != null;
+    }
+
+    public void setUserIsSet(boolean value) {
+      if (!value) {
+        this.user = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, java.lang.Object value) {
+      switch (field) {
+      case TRXS:
+        if (value == null) {
+          unsetTrxs();
+        } else {
+          setTrxs((java.util.List<br.com.investtools.radar.api.Transaction>)value);
+        }
+        break;
+
+      case USER:
+        if (value == null) {
+          unsetUser();
+        } else {
+          setUser((java.lang.String)value);
+        }
+        break;
+
+      }
+    }
+
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case TRXS:
+        return getTrxs();
+
+      case USER:
+        return getUser();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case TRXS:
+        return isSetTrxs();
+      case USER:
+        return isSetUser();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof persist_args)
+        return this.equals((persist_args)that);
+      return false;
+    }
+
+    public boolean equals(persist_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_trxs = true && this.isSetTrxs();
+      boolean that_present_trxs = true && that.isSetTrxs();
+      if (this_present_trxs || that_present_trxs) {
+        if (!(this_present_trxs && that_present_trxs))
+          return false;
+        if (!this.trxs.equals(that.trxs))
+          return false;
+      }
+
+      boolean this_present_user = true && this.isSetUser();
+      boolean that_present_user = true && that.isSetUser();
+      if (this_present_user || that_present_user) {
+        if (!(this_present_user && that_present_user))
+          return false;
+        if (!this.user.equals(that.user))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetTrxs()) ? 131071 : 524287);
+      if (isSetTrxs())
+        hashCode = hashCode * 8191 + trxs.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetUser()) ? 131071 : 524287);
+      if (isSetUser())
+        hashCode = hashCode * 8191 + user.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(persist_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.valueOf(isSetTrxs()).compareTo(other.isSetTrxs());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTrxs()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.trxs, other.trxs);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetUser()).compareTo(other.isSetUser());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUser()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.user, other.user);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("persist_args(");
+      boolean first = true;
+
+      sb.append("trxs:");
+      if (this.trxs == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.trxs);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("user:");
+      if (this.user == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.user);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class persist_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public persist_argsStandardScheme getScheme() {
+        return new persist_argsStandardScheme();
+      }
+    }
+
+    private static class persist_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<persist_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, persist_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // TRXS
+              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+                {
+                  org.apache.thrift.protocol.TList _list32 = iprot.readListBegin();
+                  struct.trxs = new java.util.ArrayList<br.com.investtools.radar.api.Transaction>(_list32.size);
+                  br.com.investtools.radar.api.Transaction _elem33;
+                  for (int _i34 = 0; _i34 < _list32.size; ++_i34)
+                  {
+                    _elem33 = new br.com.investtools.radar.api.Transaction();
+                    _elem33.read(iprot);
+                    struct.trxs.add(_elem33);
+                  }
+                  iprot.readListEnd();
+                }
+                struct.setTrxsIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // USER
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.user = iprot.readString();
+                struct.setUserIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, persist_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.trxs != null) {
+          oprot.writeFieldBegin(TRXS_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.trxs.size()));
+            for (br.com.investtools.radar.api.Transaction _iter35 : struct.trxs)
+            {
+              _iter35.write(oprot);
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+        if (struct.user != null) {
+          oprot.writeFieldBegin(USER_FIELD_DESC);
+          oprot.writeString(struct.user);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class persist_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public persist_argsTupleScheme getScheme() {
+        return new persist_argsTupleScheme();
+      }
+    }
+
+    private static class persist_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<persist_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, persist_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetTrxs()) {
+          optionals.set(0);
+        }
+        if (struct.isSetUser()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetTrxs()) {
+          {
+            oprot.writeI32(struct.trxs.size());
+            for (br.com.investtools.radar.api.Transaction _iter36 : struct.trxs)
+            {
+              _iter36.write(oprot);
+            }
+          }
+        }
+        if (struct.isSetUser()) {
+          oprot.writeString(struct.user);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, persist_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          {
+            org.apache.thrift.protocol.TList _list37 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.trxs = new java.util.ArrayList<br.com.investtools.radar.api.Transaction>(_list37.size);
+            br.com.investtools.radar.api.Transaction _elem38;
+            for (int _i39 = 0; _i39 < _list37.size; ++_i39)
+            {
+              _elem38 = new br.com.investtools.radar.api.Transaction();
+              _elem38.read(iprot);
+              struct.trxs.add(_elem38);
+            }
+          }
+          struct.setTrxsIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.user = iprot.readString();
+          struct.setUserIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class persist_result implements org.apache.thrift.TBase<persist_result, persist_result._Fields>, java.io.Serializable, Cloneable, Comparable<persist_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("persist_result");
+
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new persist_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new persist_resultTupleSchemeFactory();
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(persist_result.class, metaDataMap);
+    }
+
+    public persist_result() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public persist_result(persist_result other) {
+    }
+
+    public persist_result deepCopy() {
+      return new persist_result(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, java.lang.Object value) {
+      switch (field) {
+      }
+    }
+
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof persist_result)
+        return this.equals((persist_result)that);
+      return false;
+    }
+
+    public boolean equals(persist_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(persist_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("persist_result(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class persist_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public persist_resultStandardScheme getScheme() {
+        return new persist_resultStandardScheme();
+      }
+    }
+
+    private static class persist_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<persist_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, persist_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, persist_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class persist_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public persist_resultTupleScheme getScheme() {
+        return new persist_resultTupleScheme();
+      }
+    }
+
+    private static class persist_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<persist_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, persist_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, persist_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       }
     }
 

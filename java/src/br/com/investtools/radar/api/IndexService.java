@@ -1411,14 +1411,14 @@ public class IndexService {
             case 0: // SUCCESS
               if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
                 {
-                  org.apache.thrift.protocol.TList _list48 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<Price>(_list48.size);
-                  Price _elem49;
-                  for (int _i50 = 0; _i50 < _list48.size; ++_i50)
+                  org.apache.thrift.protocol.TList _list56 = iprot.readListBegin();
+                  struct.success = new java.util.ArrayList<Price>(_list56.size);
+                  Price _elem57;
+                  for (int _i58 = 0; _i58 < _list56.size; ++_i58)
                   {
-                    _elem49 = new Price();
-                    _elem49.read(iprot);
-                    struct.success.add(_elem49);
+                    _elem57 = new Price();
+                    _elem57.read(iprot);
+                    struct.success.add(_elem57);
                   }
                   iprot.readListEnd();
                 }
@@ -1446,9 +1446,9 @@ public class IndexService {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Price _iter51 : struct.success)
+            for (Price _iter59 : struct.success)
             {
-              _iter51.write(oprot);
+              _iter59.write(oprot);
             }
             oprot.writeListEnd();
           }
@@ -1479,9 +1479,9 @@ public class IndexService {
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
-            for (Price _iter52 : struct.success)
+            for (Price _iter60 : struct.success)
             {
-              _iter52.write(oprot);
+              _iter60.write(oprot);
             }
           }
         }
@@ -1493,14 +1493,14 @@ public class IndexService {
         java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
           {
-            org.apache.thrift.protocol.TList _list53 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new java.util.ArrayList<Price>(_list53.size);
-            Price _elem54;
-            for (int _i55 = 0; _i55 < _list53.size; ++_i55)
+            org.apache.thrift.protocol.TList _list61 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new java.util.ArrayList<Price>(_list61.size);
+            Price _elem62;
+            for (int _i63 = 0; _i63 < _list61.size; ++_i63)
             {
-              _elem54 = new Price();
-              _elem54.read(iprot);
-              struct.success.add(_elem54);
+              _elem62 = new Price();
+              _elem62.read(iprot);
+              struct.success.add(_elem62);
             }
           }
           struct.setSuccessIsSet(true);
