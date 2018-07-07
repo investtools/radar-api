@@ -16,6 +16,7 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
   private static final org.apache.thrift.protocol.TField RATE_FIELD_DESC = new org.apache.thrift.protocol.TField("rate", org.apache.thrift.protocol.TType.DOUBLE, (short)4);
   private static final org.apache.thrift.protocol.TField DUE_FIELD_DESC = new org.apache.thrift.protocol.TField("due", org.apache.thrift.protocol.TType.I64, (short)5);
   private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)6);
+  private static final org.apache.thrift.protocol.TField CONTRACT_FIELD_DESC = new org.apache.thrift.protocol.TField("contract", org.apache.thrift.protocol.TType.STRING, (short)7);
 
   private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new SecurityLendingAndBorrowingStandardSchemeFactory();
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new SecurityLendingAndBorrowingTupleSchemeFactory();
@@ -30,6 +31,7 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
    * @see SecurityLendingAndBorrowingType
    */
   public SecurityLendingAndBorrowingType type; // required
+  public java.lang.String contract; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -42,7 +44,8 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
      * 
      * @see SecurityLendingAndBorrowingType
      */
-    TYPE((short)6, "type");
+    TYPE((short)6, "type"),
+    CONTRACT((short)7, "contract");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -69,6 +72,8 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
           return DUE;
         case 6: // TYPE
           return TYPE;
+        case 7: // CONTRACT
+          return CONTRACT;
         default:
           return null;
       }
@@ -129,6 +134,8 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.EnumMetaData(org.apache.thrift.protocol.TType.ENUM, SecurityLendingAndBorrowingType.class)));
+    tmpMap.put(_Fields.CONTRACT, new org.apache.thrift.meta_data.FieldMetaData("contract", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(SecurityLendingAndBorrowing.class, metaDataMap);
   }
@@ -142,7 +149,8 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
     int shares,
     double rate,
     long due,
-    SecurityLendingAndBorrowingType type)
+    SecurityLendingAndBorrowingType type,
+    java.lang.String contract)
   {
     this();
     this.date = date;
@@ -155,6 +163,7 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
     this.due = due;
     setDueIsSet(true);
     this.type = type;
+    this.contract = contract;
   }
 
   /**
@@ -171,6 +180,9 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
     this.due = other.due;
     if (other.isSetType()) {
       this.type = other.type;
+    }
+    if (other.isSetContract()) {
+      this.contract = other.contract;
     }
   }
 
@@ -190,6 +202,7 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
     setDueIsSet(false);
     this.due = 0;
     this.type = null;
+    this.contract = null;
   }
 
   public long getDate() {
@@ -340,6 +353,30 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
     }
   }
 
+  public java.lang.String getContract() {
+    return this.contract;
+  }
+
+  public SecurityLendingAndBorrowing setContract(java.lang.String contract) {
+    this.contract = contract;
+    return this;
+  }
+
+  public void unsetContract() {
+    this.contract = null;
+  }
+
+  /** Returns true if field contract is set (has been assigned a value) and false otherwise */
+  public boolean isSetContract() {
+    return this.contract != null;
+  }
+
+  public void setContractIsSet(boolean value) {
+    if (!value) {
+      this.contract = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, java.lang.Object value) {
     switch (field) {
     case DATE:
@@ -390,6 +427,14 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
       }
       break;
 
+    case CONTRACT:
+      if (value == null) {
+        unsetContract();
+      } else {
+        setContract((java.lang.String)value);
+      }
+      break;
+
     }
   }
 
@@ -412,6 +457,9 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
 
     case TYPE:
       return getType();
+
+    case CONTRACT:
+      return getContract();
 
     }
     throw new java.lang.IllegalStateException();
@@ -436,6 +484,8 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
       return isSetDue();
     case TYPE:
       return isSetType();
+    case CONTRACT:
+      return isSetContract();
     }
     throw new java.lang.IllegalStateException();
   }
@@ -509,6 +559,15 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
         return false;
     }
 
+    boolean this_present_contract = true && this.isSetContract();
+    boolean that_present_contract = true && that.isSetContract();
+    if (this_present_contract || that_present_contract) {
+      if (!(this_present_contract && that_present_contract))
+        return false;
+      if (!this.contract.equals(that.contract))
+        return false;
+    }
+
     return true;
   }
 
@@ -531,6 +590,10 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
     hashCode = hashCode * 8191 + ((isSetType()) ? 131071 : 524287);
     if (isSetType())
       hashCode = hashCode * 8191 + type.getValue();
+
+    hashCode = hashCode * 8191 + ((isSetContract()) ? 131071 : 524287);
+    if (isSetContract())
+      hashCode = hashCode * 8191 + contract.hashCode();
 
     return hashCode;
   }
@@ -603,6 +666,16 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
         return lastComparison;
       }
     }
+    lastComparison = java.lang.Boolean.valueOf(isSetContract()).compareTo(other.isSetContract());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetContract()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.contract, other.contract);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -652,6 +725,14 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
       sb.append("null");
     } else {
       sb.append(this.type);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("contract:");
+    if (this.contract == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.contract);
     }
     first = false;
     sb.append(")");
@@ -751,6 +832,14 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 7: // CONTRACT
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.contract = iprot.readString();
+              struct.setContractIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -786,6 +875,11 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
       if (struct.type != null) {
         oprot.writeFieldBegin(TYPE_FIELD_DESC);
         oprot.writeI32(struct.type.getValue());
+        oprot.writeFieldEnd();
+      }
+      if (struct.contract != null) {
+        oprot.writeFieldBegin(CONTRACT_FIELD_DESC);
+        oprot.writeString(struct.contract);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
@@ -824,7 +918,10 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
       if (struct.isSetType()) {
         optionals.set(5);
       }
-      oprot.writeBitSet(optionals, 6);
+      if (struct.isSetContract()) {
+        optionals.set(6);
+      }
+      oprot.writeBitSet(optionals, 7);
       if (struct.isSetDate()) {
         oprot.writeI64(struct.date);
       }
@@ -843,12 +940,15 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
       if (struct.isSetType()) {
         oprot.writeI32(struct.type.getValue());
       }
+      if (struct.isSetContract()) {
+        oprot.writeString(struct.contract);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, SecurityLendingAndBorrowing struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(6);
+      java.util.BitSet incoming = iprot.readBitSet(7);
       if (incoming.get(0)) {
         struct.date = iprot.readI64();
         struct.setDateIsSet(true);
@@ -873,6 +973,10 @@ public class SecurityLendingAndBorrowing implements org.apache.thrift.TBase<Secu
       if (incoming.get(5)) {
         struct.type = br.com.investtools.radar.api.SecurityLendingAndBorrowingType.findByValue(iprot.readI32());
         struct.setTypeIsSet(true);
+      }
+      if (incoming.get(6)) {
+        struct.contract = iprot.readString();
+        struct.setContractIsSet(true);
       }
     }
   }

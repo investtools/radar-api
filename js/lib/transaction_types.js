@@ -480,6 +480,7 @@ var SecurityLendingAndBorrowing = module.exports.SecurityLendingAndBorrowing = f
   this.rate = null;
   this.due = null;
   this.type = null;
+  this.contract = null;
   if (args) {
     if (args.date !== undefined && args.date !== null) {
       this.date = args.date;
@@ -498,6 +499,9 @@ var SecurityLendingAndBorrowing = module.exports.SecurityLendingAndBorrowing = f
     }
     if (args.type !== undefined && args.type !== null) {
       this.type = args.type;
+    }
+    if (args.contract !== undefined && args.contract !== null) {
+      this.contract = args.contract;
     }
   }
 };
@@ -558,6 +562,13 @@ SecurityLendingAndBorrowing.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 7:
+      if (ftype == Thrift.Type.STRING) {
+        this.contract = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -597,6 +608,11 @@ SecurityLendingAndBorrowing.prototype.write = function(output) {
   if (this.type !== null && this.type !== undefined) {
     output.writeFieldBegin('type', Thrift.Type.I32, 6);
     output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  if (this.contract !== null && this.contract !== undefined) {
+    output.writeFieldBegin('contract', Thrift.Type.STRING, 7);
+    output.writeString(this.contract);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

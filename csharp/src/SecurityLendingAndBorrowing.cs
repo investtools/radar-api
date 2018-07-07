@@ -27,6 +27,7 @@ public partial class SecurityLendingAndBorrowing : TBase
   private double _rate;
   private long _due;
   private SecurityLendingAndBorrowingType _type;
+  private string _contract;
 
   public long Date
   {
@@ -110,6 +111,19 @@ public partial class SecurityLendingAndBorrowing : TBase
     }
   }
 
+  public string Contract
+  {
+    get
+    {
+      return _contract;
+    }
+    set
+    {
+      __isset.contract = true;
+      this._contract = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -122,6 +136,7 @@ public partial class SecurityLendingAndBorrowing : TBase
     public bool rate;
     public bool due;
     public bool type;
+    public bool contract;
   }
 
   public SecurityLendingAndBorrowing() {
@@ -181,6 +196,13 @@ public partial class SecurityLendingAndBorrowing : TBase
           case 6:
             if (field.Type == TType.I32) {
               Type = (SecurityLendingAndBorrowingType)iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 7:
+            if (field.Type == TType.String) {
+              Contract = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -254,6 +276,14 @@ public partial class SecurityLendingAndBorrowing : TBase
         oprot.WriteI32((int)Type);
         oprot.WriteFieldEnd();
       }
+      if (Contract != null && __isset.contract) {
+        field.Name = "contract";
+        field.Type = TType.String;
+        field.ID = 7;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteString(Contract);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -301,6 +331,12 @@ public partial class SecurityLendingAndBorrowing : TBase
       __first = false;
       __sb.Append("Type: ");
       __sb.Append(Type);
+    }
+    if (Contract != null && __isset.contract) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Contract: ");
+      __sb.Append(Contract);
     }
     __sb.Append(")");
     return __sb.ToString();

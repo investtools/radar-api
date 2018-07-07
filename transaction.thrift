@@ -57,6 +57,7 @@ struct SecurityLendingAndBorrowing {
   4: double rate
   5: common.Date due
   6: SecurityLendingAndBorrowingType type
+  7: string contract
 }
 
 struct SecurityLendingAndBorrowingReturning {

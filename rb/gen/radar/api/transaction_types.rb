@@ -149,6 +149,7 @@ module Radar
       RATE = 4
       DUE = 5
       TYPE = 6
+      CONTRACT = 7
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
@@ -156,7 +157,8 @@ module Radar
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         RATE => {:type => ::Thrift::Types::DOUBLE, :name => 'rate'},
         DUE => {:type => ::Thrift::Types::I64, :name => 'due'},
-        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::Api::SecurityLendingAndBorrowingType}
+        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::Api::SecurityLendingAndBorrowingType},
+        CONTRACT => {:type => ::Thrift::Types::STRING, :name => 'contract'}
       }
 
       def struct_fields; FIELDS; end
