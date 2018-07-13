@@ -11,21 +11,17 @@ public class TransactionImporter {
 
   public interface Iface {
 
-    public java.lang.String name() throws org.apache.thrift.TException;
-
     public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
 
-    public java.util.List<br.com.investtools.radar.api.SimplePosition> portfolio(java.lang.String username, java.lang.String password) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
+    public RenewResult renew_password(java.lang.String username, java.lang.String password, java.lang.String original_pwd) throws org.apache.thrift.TException;
 
   }
 
   public interface AsyncIface {
 
-    public void name(org.apache.thrift.async.AsyncMethodCallback<java.lang.String> resultHandler) throws org.apache.thrift.TException;
-
     public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
-    public void portfolio(java.lang.String username, java.lang.String password, org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.SimplePosition>> resultHandler) throws org.apache.thrift.TException;
+    public void renew_password(java.lang.String username, java.lang.String password, java.lang.String original_pwd, org.apache.thrift.async.AsyncMethodCallback<RenewResult> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -47,28 +43,6 @@ public class TransactionImporter {
 
     public Client(org.apache.thrift.protocol.TProtocol iprot, org.apache.thrift.protocol.TProtocol oprot) {
       super(iprot, oprot);
-    }
-
-    public java.lang.String name() throws org.apache.thrift.TException
-    {
-      send_name();
-      return recv_name();
-    }
-
-    public void send_name() throws org.apache.thrift.TException
-    {
-      name_args args = new name_args();
-      sendBase("name", args);
-    }
-
-    public java.lang.String recv_name() throws org.apache.thrift.TException
-    {
-      name_result result = new name_result();
-      receiveBase(result, "name");
-      if (result.isSetSuccess()) {
-        return result.success;
-      }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "name failed: unknown result");
     }
 
     public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
@@ -100,34 +74,29 @@ public class TransactionImporter {
       return;
     }
 
-    public java.util.List<br.com.investtools.radar.api.SimplePosition> portfolio(java.lang.String username, java.lang.String password) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    public RenewResult renew_password(java.lang.String username, java.lang.String password, java.lang.String original_pwd) throws org.apache.thrift.TException
     {
-      send_portfolio(username, password);
-      return recv_portfolio();
+      send_renew_password(username, password, original_pwd);
+      return recv_renew_password();
     }
 
-    public void send_portfolio(java.lang.String username, java.lang.String password) throws org.apache.thrift.TException
+    public void send_renew_password(java.lang.String username, java.lang.String password, java.lang.String original_pwd) throws org.apache.thrift.TException
     {
-      portfolio_args args = new portfolio_args();
+      renew_password_args args = new renew_password_args();
       args.setUsername(username);
       args.setPassword(password);
-      sendBase("portfolio", args);
+      args.setOriginal_pwd(original_pwd);
+      sendBase("renew_password", args);
     }
 
-    public java.util.List<br.com.investtools.radar.api.SimplePosition> recv_portfolio() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    public RenewResult recv_renew_password() throws org.apache.thrift.TException
     {
-      portfolio_result result = new portfolio_result();
-      receiveBase(result, "portfolio");
+      renew_password_result result = new renew_password_result();
+      receiveBase(result, "renew_password");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      if (result.auth_error != null) {
-        throw result.auth_error;
-      }
-      if (result.system_unavailable != null) {
-        throw result.system_unavailable;
-      }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "portfolio failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "renew_password failed: unknown result");
     }
 
   }
@@ -146,35 +115,6 @@ public class TransactionImporter {
 
     public AsyncClient(org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.async.TAsyncClientManager clientManager, org.apache.thrift.transport.TNonblockingTransport transport) {
       super(protocolFactory, clientManager, transport);
-    }
-
-    public void name(org.apache.thrift.async.AsyncMethodCallback<java.lang.String> resultHandler) throws org.apache.thrift.TException {
-      checkReady();
-      name_call method_call = new name_call(resultHandler, this, ___protocolFactory, ___transport);
-      this.___currentMethod = method_call;
-      ___manager.call(method_call);
-    }
-
-    public static class name_call extends org.apache.thrift.async.TAsyncMethodCall<java.lang.String> {
-      public name_call(org.apache.thrift.async.AsyncMethodCallback<java.lang.String> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
-        super(client, protocolFactory, transport, resultHandler, false);
-      }
-
-      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("name", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        name_args args = new name_args();
-        args.write(prot);
-        prot.writeMessageEnd();
-      }
-
-      public java.lang.String getResult() throws org.apache.thrift.TException {
-        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
-          throw new java.lang.IllegalStateException("Method call not finished!");
-        }
-        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
-        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_name();
-      }
     }
 
     public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
@@ -218,38 +158,41 @@ public class TransactionImporter {
       }
     }
 
-    public void portfolio(java.lang.String username, java.lang.String password, org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.SimplePosition>> resultHandler) throws org.apache.thrift.TException {
+    public void renew_password(java.lang.String username, java.lang.String password, java.lang.String original_pwd, org.apache.thrift.async.AsyncMethodCallback<RenewResult> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      portfolio_call method_call = new portfolio_call(username, password, resultHandler, this, ___protocolFactory, ___transport);
+      renew_password_call method_call = new renew_password_call(username, password, original_pwd, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class portfolio_call extends org.apache.thrift.async.TAsyncMethodCall<java.util.List<br.com.investtools.radar.api.SimplePosition>> {
+    public static class renew_password_call extends org.apache.thrift.async.TAsyncMethodCall<RenewResult> {
       private java.lang.String username;
       private java.lang.String password;
-      public portfolio_call(java.lang.String username, java.lang.String password, org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.SimplePosition>> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private java.lang.String original_pwd;
+      public renew_password_call(java.lang.String username, java.lang.String password, java.lang.String original_pwd, org.apache.thrift.async.AsyncMethodCallback<RenewResult> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.username = username;
         this.password = password;
+        this.original_pwd = original_pwd;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("portfolio", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        portfolio_args args = new portfolio_args();
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("renew_password", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        renew_password_args args = new renew_password_args();
         args.setUsername(username);
         args.setPassword(password);
+        args.setOriginal_pwd(original_pwd);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public java.util.List<br.com.investtools.radar.api.SimplePosition> getResult() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
+      public RenewResult getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_portfolio();
+        return (new Client(prot)).recv_renew_password();
       }
     }
 
@@ -266,30 +209,9 @@ public class TransactionImporter {
     }
 
     private static <I extends Iface> java.util.Map<java.lang.String,  org.apache.thrift.ProcessFunction<I, ? extends org.apache.thrift.TBase>> getProcessMap(java.util.Map<java.lang.String, org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
-      processMap.put("name", new name());
       processMap.put("fetch", new fetch());
-      processMap.put("portfolio", new portfolio());
+      processMap.put("renew_password", new renew_password());
       return processMap;
-    }
-
-    public static class name<I extends Iface> extends org.apache.thrift.ProcessFunction<I, name_args> {
-      public name() {
-        super("name");
-      }
-
-      public name_args getEmptyArgsInstance() {
-        return new name_args();
-      }
-
-      protected boolean isOneway() {
-        return false;
-      }
-
-      public name_result getResult(I iface, name_args args) throws org.apache.thrift.TException {
-        name_result result = new name_result();
-        result.success = iface.name();
-        return result;
-      }
     }
 
     public static class fetch<I extends Iface> extends org.apache.thrift.ProcessFunction<I, fetch_args> {
@@ -318,28 +240,22 @@ public class TransactionImporter {
       }
     }
 
-    public static class portfolio<I extends Iface> extends org.apache.thrift.ProcessFunction<I, portfolio_args> {
-      public portfolio() {
-        super("portfolio");
+    public static class renew_password<I extends Iface> extends org.apache.thrift.ProcessFunction<I, renew_password_args> {
+      public renew_password() {
+        super("renew_password");
       }
 
-      public portfolio_args getEmptyArgsInstance() {
-        return new portfolio_args();
+      public renew_password_args getEmptyArgsInstance() {
+        return new renew_password_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public portfolio_result getResult(I iface, portfolio_args args) throws org.apache.thrift.TException {
-        portfolio_result result = new portfolio_result();
-        try {
-          result.success = iface.portfolio(args.username, args.password);
-        } catch (AuthenticationError auth_error) {
-          result.auth_error = auth_error;
-        } catch (SystemUnavailableError system_unavailable) {
-          result.system_unavailable = system_unavailable;
-        }
+      public renew_password_result getResult(I iface, renew_password_args args) throws org.apache.thrift.TException {
+        renew_password_result result = new renew_password_result();
+        result.success = iface.renew_password(args.username, args.password, args.original_pwd);
         return result;
       }
     }
@@ -357,71 +273,9 @@ public class TransactionImporter {
     }
 
     private static <I extends AsyncIface> java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
-      processMap.put("name", new name());
       processMap.put("fetch", new fetch());
-      processMap.put("portfolio", new portfolio());
+      processMap.put("renew_password", new renew_password());
       return processMap;
-    }
-
-    public static class name<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, name_args, java.lang.String> {
-      public name() {
-        super("name");
-      }
-
-      public name_args getEmptyArgsInstance() {
-        return new name_args();
-      }
-
-      public org.apache.thrift.async.AsyncMethodCallback<java.lang.String> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
-        final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new org.apache.thrift.async.AsyncMethodCallback<java.lang.String>() { 
-          public void onComplete(java.lang.String o) {
-            name_result result = new name_result();
-            result.success = o;
-            try {
-              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
-            } catch (org.apache.thrift.transport.TTransportException e) {
-              _LOGGER.error("TTransportException writing to internal frame buffer", e);
-              fb.close();
-            } catch (java.lang.Exception e) {
-              _LOGGER.error("Exception writing to internal frame buffer", e);
-              onError(e);
-            }
-          }
-          public void onError(java.lang.Exception e) {
-            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
-            org.apache.thrift.TSerializable msg;
-            name_result result = new name_result();
-            if (e instanceof org.apache.thrift.transport.TTransportException) {
-              _LOGGER.error("TTransportException inside handler", e);
-              fb.close();
-              return;
-            } else if (e instanceof org.apache.thrift.TApplicationException) {
-              _LOGGER.error("TApplicationException inside handler", e);
-              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
-              msg = (org.apache.thrift.TApplicationException)e;
-            } else {
-              _LOGGER.error("Exception inside handler", e);
-              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
-              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
-            }
-            try {
-              fcall.sendResponse(fb,msg,msgType,seqid);
-            } catch (java.lang.Exception ex) {
-              _LOGGER.error("Exception writing to internal frame buffer", ex);
-              fb.close();
-            }
-          }
-        };
-      }
-
-      protected boolean isOneway() {
-        return false;
-      }
-
-      public void start(I iface, name_args args, org.apache.thrift.async.AsyncMethodCallback<java.lang.String> resultHandler) throws org.apache.thrift.TException {
-        iface.name(resultHandler);
-      }
     }
 
     public static class fetch<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, fetch_args, Void> {
@@ -492,20 +346,20 @@ public class TransactionImporter {
       }
     }
 
-    public static class portfolio<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, portfolio_args, java.util.List<br.com.investtools.radar.api.SimplePosition>> {
-      public portfolio() {
-        super("portfolio");
+    public static class renew_password<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, renew_password_args, RenewResult> {
+      public renew_password() {
+        super("renew_password");
       }
 
-      public portfolio_args getEmptyArgsInstance() {
-        return new portfolio_args();
+      public renew_password_args getEmptyArgsInstance() {
+        return new renew_password_args();
       }
 
-      public org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.SimplePosition>> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+      public org.apache.thrift.async.AsyncMethodCallback<RenewResult> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.SimplePosition>>() { 
-          public void onComplete(java.util.List<br.com.investtools.radar.api.SimplePosition> o) {
-            portfolio_result result = new portfolio_result();
+        return new org.apache.thrift.async.AsyncMethodCallback<RenewResult>() { 
+          public void onComplete(RenewResult o) {
+            renew_password_result result = new renew_password_result();
             result.success = o;
             try {
               fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
@@ -520,16 +374,8 @@ public class TransactionImporter {
           public void onError(java.lang.Exception e) {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
-            portfolio_result result = new portfolio_result();
-            if (e instanceof AuthenticationError) {
-              result.auth_error = (AuthenticationError) e;
-              result.setAuth_errorIsSet(true);
-              msg = result;
-            } else if (e instanceof SystemUnavailableError) {
-              result.system_unavailable = (SystemUnavailableError) e;
-              result.setSystem_unavailableIsSet(true);
-              msg = result;
-            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
+            renew_password_result result = new renew_password_result();
+            if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
               fb.close();
               return;
@@ -556,623 +402,11 @@ public class TransactionImporter {
         return false;
       }
 
-      public void start(I iface, portfolio_args args, org.apache.thrift.async.AsyncMethodCallback<java.util.List<br.com.investtools.radar.api.SimplePosition>> resultHandler) throws org.apache.thrift.TException {
-        iface.portfolio(args.username, args.password,resultHandler);
+      public void start(I iface, renew_password_args args, org.apache.thrift.async.AsyncMethodCallback<RenewResult> resultHandler) throws org.apache.thrift.TException {
+        iface.renew_password(args.username, args.password, args.original_pwd,resultHandler);
       }
     }
 
-  }
-
-  public static class name_args implements org.apache.thrift.TBase<name_args, name_args._Fields>, java.io.Serializable, Cloneable, Comparable<name_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("name_args");
-
-
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new name_argsStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new name_argsTupleSchemeFactory();
-
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-;
-
-      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
-
-      static {
-        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(java.lang.String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final java.lang.String _fieldName;
-
-      _Fields(short thriftId, java.lang.String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public java.lang.String getFieldName() {
-        return _fieldName;
-      }
-    }
-    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
-    static {
-      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(name_args.class, metaDataMap);
-    }
-
-    public name_args() {
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public name_args(name_args other) {
-    }
-
-    public name_args deepCopy() {
-      return new name_args(this);
-    }
-
-    @Override
-    public void clear() {
-    }
-
-    public void setFieldValue(_Fields field, java.lang.Object value) {
-      switch (field) {
-      }
-    }
-
-    public java.lang.Object getFieldValue(_Fields field) {
-      switch (field) {
-      }
-      throw new java.lang.IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new java.lang.IllegalArgumentException();
-      }
-
-      switch (field) {
-      }
-      throw new java.lang.IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(java.lang.Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof name_args)
-        return this.equals((name_args)that);
-      return false;
-    }
-
-    public boolean equals(name_args that) {
-      if (that == null)
-        return false;
-      if (this == that)
-        return true;
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      int hashCode = 1;
-
-      return hashCode;
-    }
-
-    @Override
-    public int compareTo(name_args other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
-      scheme(iprot).read(iprot, this);
-    }
-
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
-      scheme(oprot).write(oprot, this);
-    }
-
-    @Override
-    public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("name_args(");
-      boolean first = true;
-
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws org.apache.thrift.TException {
-      // check for required fields
-      // check for sub-struct validity
-    }
-
-    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-      try {
-        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
-      try {
-        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private static class name_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public name_argsStandardScheme getScheme() {
-        return new name_argsStandardScheme();
-      }
-    }
-
-    private static class name_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<name_args> {
-
-      public void read(org.apache.thrift.protocol.TProtocol iprot, name_args struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TField schemeField;
-        iprot.readStructBegin();
-        while (true)
-        {
-          schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
-            break;
-          }
-          switch (schemeField.id) {
-            default:
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-          }
-          iprot.readFieldEnd();
-        }
-        iprot.readStructEnd();
-
-        // check for required fields of primitive type, which can't be checked in the validate method
-        struct.validate();
-      }
-
-      public void write(org.apache.thrift.protocol.TProtocol oprot, name_args struct) throws org.apache.thrift.TException {
-        struct.validate();
-
-        oprot.writeStructBegin(STRUCT_DESC);
-        oprot.writeFieldStop();
-        oprot.writeStructEnd();
-      }
-
-    }
-
-    private static class name_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public name_argsTupleScheme getScheme() {
-        return new name_argsTupleScheme();
-      }
-    }
-
-    private static class name_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<name_args> {
-
-      @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, name_args struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      }
-
-      @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, name_args struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      }
-    }
-
-    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
-      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
-    }
-  }
-
-  public static class name_result implements org.apache.thrift.TBase<name_result, name_result._Fields>, java.io.Serializable, Cloneable, Comparable<name_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("name_result");
-
-    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRING, (short)0);
-
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new name_resultStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new name_resultTupleSchemeFactory();
-
-    public java.lang.String success; // required
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success");
-
-      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
-
-      static {
-        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 0: // SUCCESS
-            return SUCCESS;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(java.lang.String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final java.lang.String _fieldName;
-
-      _Fields(short thriftId, java.lang.String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public java.lang.String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
-    static {
-      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(name_result.class, metaDataMap);
-    }
-
-    public name_result() {
-    }
-
-    public name_result(
-      java.lang.String success)
-    {
-      this();
-      this.success = success;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public name_result(name_result other) {
-      if (other.isSetSuccess()) {
-        this.success = other.success;
-      }
-    }
-
-    public name_result deepCopy() {
-      return new name_result(this);
-    }
-
-    @Override
-    public void clear() {
-      this.success = null;
-    }
-
-    public java.lang.String getSuccess() {
-      return this.success;
-    }
-
-    public name_result setSuccess(java.lang.String success) {
-      this.success = success;
-      return this;
-    }
-
-    public void unsetSuccess() {
-      this.success = null;
-    }
-
-    /** Returns true if field success is set (has been assigned a value) and false otherwise */
-    public boolean isSetSuccess() {
-      return this.success != null;
-    }
-
-    public void setSuccessIsSet(boolean value) {
-      if (!value) {
-        this.success = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, java.lang.Object value) {
-      switch (field) {
-      case SUCCESS:
-        if (value == null) {
-          unsetSuccess();
-        } else {
-          setSuccess((java.lang.String)value);
-        }
-        break;
-
-      }
-    }
-
-    public java.lang.Object getFieldValue(_Fields field) {
-      switch (field) {
-      case SUCCESS:
-        return getSuccess();
-
-      }
-      throw new java.lang.IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new java.lang.IllegalArgumentException();
-      }
-
-      switch (field) {
-      case SUCCESS:
-        return isSetSuccess();
-      }
-      throw new java.lang.IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(java.lang.Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof name_result)
-        return this.equals((name_result)that);
-      return false;
-    }
-
-    public boolean equals(name_result that) {
-      if (that == null)
-        return false;
-      if (this == that)
-        return true;
-
-      boolean this_present_success = true && this.isSetSuccess();
-      boolean that_present_success = true && that.isSetSuccess();
-      if (this_present_success || that_present_success) {
-        if (!(this_present_success && that_present_success))
-          return false;
-        if (!this.success.equals(that.success))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      int hashCode = 1;
-
-      hashCode = hashCode * 8191 + ((isSetSuccess()) ? 131071 : 524287);
-      if (isSetSuccess())
-        hashCode = hashCode * 8191 + success.hashCode();
-
-      return hashCode;
-    }
-
-    @Override
-    public int compareTo(name_result other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-
-      lastComparison = java.lang.Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetSuccess()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
-      scheme(iprot).read(iprot, this);
-    }
-
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
-      scheme(oprot).write(oprot, this);
-      }
-
-    @Override
-    public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("name_result(");
-      boolean first = true;
-
-      sb.append("success:");
-      if (this.success == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.success);
-      }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws org.apache.thrift.TException {
-      // check for required fields
-      // check for sub-struct validity
-    }
-
-    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-      try {
-        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
-      try {
-        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private static class name_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public name_resultStandardScheme getScheme() {
-        return new name_resultStandardScheme();
-      }
-    }
-
-    private static class name_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<name_result> {
-
-      public void read(org.apache.thrift.protocol.TProtocol iprot, name_result struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TField schemeField;
-        iprot.readStructBegin();
-        while (true)
-        {
-          schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
-            break;
-          }
-          switch (schemeField.id) {
-            case 0: // SUCCESS
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.success = iprot.readString();
-                struct.setSuccessIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            default:
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-          }
-          iprot.readFieldEnd();
-        }
-        iprot.readStructEnd();
-
-        // check for required fields of primitive type, which can't be checked in the validate method
-        struct.validate();
-      }
-
-      public void write(org.apache.thrift.protocol.TProtocol oprot, name_result struct) throws org.apache.thrift.TException {
-        struct.validate();
-
-        oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.success != null) {
-          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-          oprot.writeString(struct.success);
-          oprot.writeFieldEnd();
-        }
-        oprot.writeFieldStop();
-        oprot.writeStructEnd();
-      }
-
-    }
-
-    private static class name_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public name_resultTupleScheme getScheme() {
-        return new name_resultTupleScheme();
-      }
-    }
-
-    private static class name_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<name_result> {
-
-      @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, name_result struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet optionals = new java.util.BitSet();
-        if (struct.isSetSuccess()) {
-          optionals.set(0);
-        }
-        oprot.writeBitSet(optionals, 1);
-        if (struct.isSetSuccess()) {
-          oprot.writeString(struct.success);
-        }
-      }
-
-      @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, name_result struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(1);
-        if (incoming.get(0)) {
-          struct.success = iprot.readString();
-          struct.setSuccessIsSet(true);
-        }
-      }
-    }
-
-    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
-      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
-    }
   }
 
   public static class fetch_args implements org.apache.thrift.TBase<fetch_args, fetch_args._Fields>, java.io.Serializable, Cloneable, Comparable<fetch_args>   {
@@ -2315,22 +1549,25 @@ public class TransactionImporter {
     }
   }
 
-  public static class portfolio_args implements org.apache.thrift.TBase<portfolio_args, portfolio_args._Fields>, java.io.Serializable, Cloneable, Comparable<portfolio_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("portfolio_args");
+  public static class renew_password_args implements org.apache.thrift.TBase<renew_password_args, renew_password_args._Fields>, java.io.Serializable, Cloneable, Comparable<renew_password_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("renew_password_args");
 
     private static final org.apache.thrift.protocol.TField USERNAME_FIELD_DESC = new org.apache.thrift.protocol.TField("username", org.apache.thrift.protocol.TType.STRING, (short)1);
     private static final org.apache.thrift.protocol.TField PASSWORD_FIELD_DESC = new org.apache.thrift.protocol.TField("password", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField ORIGINAL_PWD_FIELD_DESC = new org.apache.thrift.protocol.TField("original_pwd", org.apache.thrift.protocol.TType.STRING, (short)3);
 
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new portfolio_argsStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new portfolio_argsTupleSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new renew_password_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new renew_password_argsTupleSchemeFactory();
 
     public java.lang.String username; // required
     public java.lang.String password; // required
+    public java.lang.String original_pwd; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       USERNAME((short)1, "username"),
-      PASSWORD((short)2, "password");
+      PASSWORD((short)2, "password"),
+      ORIGINAL_PWD((short)3, "original_pwd");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -2349,6 +1586,8 @@ public class TransactionImporter {
             return USERNAME;
           case 2: // PASSWORD
             return PASSWORD;
+          case 3: // ORIGINAL_PWD
+            return ORIGINAL_PWD;
           default:
             return null;
         }
@@ -2396,49 +1635,57 @@ public class TransactionImporter {
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.PASSWORD, new org.apache.thrift.meta_data.FieldMetaData("password", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.ORIGINAL_PWD, new org.apache.thrift.meta_data.FieldMetaData("original_pwd", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(portfolio_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(renew_password_args.class, metaDataMap);
     }
 
-    public portfolio_args() {
+    public renew_password_args() {
     }
 
-    public portfolio_args(
+    public renew_password_args(
       java.lang.String username,
-      java.lang.String password)
+      java.lang.String password,
+      java.lang.String original_pwd)
     {
       this();
       this.username = username;
       this.password = password;
+      this.original_pwd = original_pwd;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public portfolio_args(portfolio_args other) {
+    public renew_password_args(renew_password_args other) {
       if (other.isSetUsername()) {
         this.username = other.username;
       }
       if (other.isSetPassword()) {
         this.password = other.password;
       }
+      if (other.isSetOriginal_pwd()) {
+        this.original_pwd = other.original_pwd;
+      }
     }
 
-    public portfolio_args deepCopy() {
-      return new portfolio_args(this);
+    public renew_password_args deepCopy() {
+      return new renew_password_args(this);
     }
 
     @Override
     public void clear() {
       this.username = null;
       this.password = null;
+      this.original_pwd = null;
     }
 
     public java.lang.String getUsername() {
       return this.username;
     }
 
-    public portfolio_args setUsername(java.lang.String username) {
+    public renew_password_args setUsername(java.lang.String username) {
       this.username = username;
       return this;
     }
@@ -2462,7 +1709,7 @@ public class TransactionImporter {
       return this.password;
     }
 
-    public portfolio_args setPassword(java.lang.String password) {
+    public renew_password_args setPassword(java.lang.String password) {
       this.password = password;
       return this;
     }
@@ -2479,6 +1726,30 @@ public class TransactionImporter {
     public void setPasswordIsSet(boolean value) {
       if (!value) {
         this.password = null;
+      }
+    }
+
+    public java.lang.String getOriginal_pwd() {
+      return this.original_pwd;
+    }
+
+    public renew_password_args setOriginal_pwd(java.lang.String original_pwd) {
+      this.original_pwd = original_pwd;
+      return this;
+    }
+
+    public void unsetOriginal_pwd() {
+      this.original_pwd = null;
+    }
+
+    /** Returns true if field original_pwd is set (has been assigned a value) and false otherwise */
+    public boolean isSetOriginal_pwd() {
+      return this.original_pwd != null;
+    }
+
+    public void setOriginal_pwdIsSet(boolean value) {
+      if (!value) {
+        this.original_pwd = null;
       }
     }
 
@@ -2500,6 +1771,14 @@ public class TransactionImporter {
         }
         break;
 
+      case ORIGINAL_PWD:
+        if (value == null) {
+          unsetOriginal_pwd();
+        } else {
+          setOriginal_pwd((java.lang.String)value);
+        }
+        break;
+
       }
     }
 
@@ -2510,6 +1789,9 @@ public class TransactionImporter {
 
       case PASSWORD:
         return getPassword();
+
+      case ORIGINAL_PWD:
+        return getOriginal_pwd();
 
       }
       throw new java.lang.IllegalStateException();
@@ -2526,6 +1808,8 @@ public class TransactionImporter {
         return isSetUsername();
       case PASSWORD:
         return isSetPassword();
+      case ORIGINAL_PWD:
+        return isSetOriginal_pwd();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -2534,12 +1818,12 @@ public class TransactionImporter {
     public boolean equals(java.lang.Object that) {
       if (that == null)
         return false;
-      if (that instanceof portfolio_args)
-        return this.equals((portfolio_args)that);
+      if (that instanceof renew_password_args)
+        return this.equals((renew_password_args)that);
       return false;
     }
 
-    public boolean equals(portfolio_args that) {
+    public boolean equals(renew_password_args that) {
       if (that == null)
         return false;
       if (this == that)
@@ -2563,6 +1847,15 @@ public class TransactionImporter {
           return false;
       }
 
+      boolean this_present_original_pwd = true && this.isSetOriginal_pwd();
+      boolean that_present_original_pwd = true && that.isSetOriginal_pwd();
+      if (this_present_original_pwd || that_present_original_pwd) {
+        if (!(this_present_original_pwd && that_present_original_pwd))
+          return false;
+        if (!this.original_pwd.equals(that.original_pwd))
+          return false;
+      }
+
       return true;
     }
 
@@ -2578,11 +1871,15 @@ public class TransactionImporter {
       if (isSetPassword())
         hashCode = hashCode * 8191 + password.hashCode();
 
+      hashCode = hashCode * 8191 + ((isSetOriginal_pwd()) ? 131071 : 524287);
+      if (isSetOriginal_pwd())
+        hashCode = hashCode * 8191 + original_pwd.hashCode();
+
       return hashCode;
     }
 
     @Override
-    public int compareTo(portfolio_args other) {
+    public int compareTo(renew_password_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -2609,6 +1906,16 @@ public class TransactionImporter {
           return lastComparison;
         }
       }
+      lastComparison = java.lang.Boolean.valueOf(isSetOriginal_pwd()).compareTo(other.isSetOriginal_pwd());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetOriginal_pwd()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.original_pwd, other.original_pwd);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
       return 0;
     }
 
@@ -2626,7 +1933,7 @@ public class TransactionImporter {
 
     @Override
     public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("portfolio_args(");
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("renew_password_args(");
       boolean first = true;
 
       sb.append("username:");
@@ -2642,6 +1949,14 @@ public class TransactionImporter {
         sb.append("null");
       } else {
         sb.append(this.password);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("original_pwd:");
+      if (this.original_pwd == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.original_pwd);
       }
       first = false;
       sb.append(")");
@@ -2669,15 +1984,15 @@ public class TransactionImporter {
       }
     }
 
-    private static class portfolio_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public portfolio_argsStandardScheme getScheme() {
-        return new portfolio_argsStandardScheme();
+    private static class renew_password_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public renew_password_argsStandardScheme getScheme() {
+        return new renew_password_argsStandardScheme();
       }
     }
 
-    private static class portfolio_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<portfolio_args> {
+    private static class renew_password_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<renew_password_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, portfolio_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, renew_password_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -2703,6 +2018,14 @@ public class TransactionImporter {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 3: // ORIGINAL_PWD
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.original_pwd = iprot.readString();
+                struct.setOriginal_pwdIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -2714,7 +2037,7 @@ public class TransactionImporter {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, portfolio_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, renew_password_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -2728,22 +2051,27 @@ public class TransactionImporter {
           oprot.writeString(struct.password);
           oprot.writeFieldEnd();
         }
+        if (struct.original_pwd != null) {
+          oprot.writeFieldBegin(ORIGINAL_PWD_FIELD_DESC);
+          oprot.writeString(struct.original_pwd);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
 
     }
 
-    private static class portfolio_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public portfolio_argsTupleScheme getScheme() {
-        return new portfolio_argsTupleScheme();
+    private static class renew_password_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public renew_password_argsTupleScheme getScheme() {
+        return new renew_password_argsTupleScheme();
       }
     }
 
-    private static class portfolio_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<portfolio_args> {
+    private static class renew_password_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<renew_password_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, portfolio_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, renew_password_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet optionals = new java.util.BitSet();
         if (struct.isSetUsername()) {
@@ -2752,19 +2080,25 @@ public class TransactionImporter {
         if (struct.isSetPassword()) {
           optionals.set(1);
         }
-        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetOriginal_pwd()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
         if (struct.isSetUsername()) {
           oprot.writeString(struct.username);
         }
         if (struct.isSetPassword()) {
           oprot.writeString(struct.password);
         }
+        if (struct.isSetOriginal_pwd()) {
+          oprot.writeString(struct.original_pwd);
+        }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, portfolio_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, renew_password_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
+        java.util.BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           struct.username = iprot.readString();
           struct.setUsernameIsSet(true);
@@ -2772,6 +2106,10 @@ public class TransactionImporter {
         if (incoming.get(1)) {
           struct.password = iprot.readString();
           struct.setPasswordIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.original_pwd = iprot.readString();
+          struct.setOriginal_pwdIsSet(true);
         }
       }
     }
@@ -2781,25 +2119,19 @@ public class TransactionImporter {
     }
   }
 
-  public static class portfolio_result implements org.apache.thrift.TBase<portfolio_result, portfolio_result._Fields>, java.io.Serializable, Cloneable, Comparable<portfolio_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("portfolio_result");
+  public static class renew_password_result implements org.apache.thrift.TBase<renew_password_result, renew_password_result._Fields>, java.io.Serializable, Cloneable, Comparable<renew_password_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("renew_password_result");
 
-    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
-    private static final org.apache.thrift.protocol.TField AUTH_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("auth_error", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-    private static final org.apache.thrift.protocol.TField SYSTEM_UNAVAILABLE_FIELD_DESC = new org.apache.thrift.protocol.TField("system_unavailable", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
 
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new portfolio_resultStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new portfolio_resultTupleSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new renew_password_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new renew_password_resultTupleSchemeFactory();
 
-    public java.util.List<br.com.investtools.radar.api.SimplePosition> success; // required
-    public AuthenticationError auth_error; // required
-    public SystemUnavailableError system_unavailable; // required
+    public RenewResult success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success"),
-      AUTH_ERROR((short)1, "auth_error"),
-      SYSTEM_UNAVAILABLE((short)2, "system_unavailable");
+      SUCCESS((short)0, "success");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -2816,10 +2148,6 @@ public class TransactionImporter {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
-          case 1: // AUTH_ERROR
-            return AUTH_ERROR;
-          case 2: // SYSTEM_UNAVAILABLE
-            return SYSTEM_UNAVAILABLE;
           default:
             return null;
         }
@@ -2864,80 +2192,44 @@ public class TransactionImporter {
     static {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.SimplePosition.class))));
-      tmpMap.put(_Fields.AUTH_ERROR, new org.apache.thrift.meta_data.FieldMetaData("auth_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AuthenticationError.class)));
-      tmpMap.put(_Fields.SYSTEM_UNAVAILABLE, new org.apache.thrift.meta_data.FieldMetaData("system_unavailable", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, SystemUnavailableError.class)));
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, RenewResult.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(portfolio_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(renew_password_result.class, metaDataMap);
     }
 
-    public portfolio_result() {
+    public renew_password_result() {
     }
 
-    public portfolio_result(
-      java.util.List<br.com.investtools.radar.api.SimplePosition> success,
-      AuthenticationError auth_error,
-      SystemUnavailableError system_unavailable)
+    public renew_password_result(
+      RenewResult success)
     {
       this();
       this.success = success;
-      this.auth_error = auth_error;
-      this.system_unavailable = system_unavailable;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public portfolio_result(portfolio_result other) {
+    public renew_password_result(renew_password_result other) {
       if (other.isSetSuccess()) {
-        java.util.List<br.com.investtools.radar.api.SimplePosition> __this__success = new java.util.ArrayList<br.com.investtools.radar.api.SimplePosition>(other.success.size());
-        for (br.com.investtools.radar.api.SimplePosition other_element : other.success) {
-          __this__success.add(new br.com.investtools.radar.api.SimplePosition(other_element));
-        }
-        this.success = __this__success;
-      }
-      if (other.isSetAuth_error()) {
-        this.auth_error = new AuthenticationError(other.auth_error);
-      }
-      if (other.isSetSystem_unavailable()) {
-        this.system_unavailable = new SystemUnavailableError(other.system_unavailable);
+        this.success = new RenewResult(other.success);
       }
     }
 
-    public portfolio_result deepCopy() {
-      return new portfolio_result(this);
+    public renew_password_result deepCopy() {
+      return new renew_password_result(this);
     }
 
     @Override
     public void clear() {
       this.success = null;
-      this.auth_error = null;
-      this.system_unavailable = null;
     }
 
-    public int getSuccessSize() {
-      return (this.success == null) ? 0 : this.success.size();
-    }
-
-    public java.util.Iterator<br.com.investtools.radar.api.SimplePosition> getSuccessIterator() {
-      return (this.success == null) ? null : this.success.iterator();
-    }
-
-    public void addToSuccess(br.com.investtools.radar.api.SimplePosition elem) {
-      if (this.success == null) {
-        this.success = new java.util.ArrayList<br.com.investtools.radar.api.SimplePosition>();
-      }
-      this.success.add(elem);
-    }
-
-    public java.util.List<br.com.investtools.radar.api.SimplePosition> getSuccess() {
+    public RenewResult getSuccess() {
       return this.success;
     }
 
-    public portfolio_result setSuccess(java.util.List<br.com.investtools.radar.api.SimplePosition> success) {
+    public renew_password_result setSuccess(RenewResult success) {
       this.success = success;
       return this;
     }
@@ -2957,77 +2249,13 @@ public class TransactionImporter {
       }
     }
 
-    public AuthenticationError getAuth_error() {
-      return this.auth_error;
-    }
-
-    public portfolio_result setAuth_error(AuthenticationError auth_error) {
-      this.auth_error = auth_error;
-      return this;
-    }
-
-    public void unsetAuth_error() {
-      this.auth_error = null;
-    }
-
-    /** Returns true if field auth_error is set (has been assigned a value) and false otherwise */
-    public boolean isSetAuth_error() {
-      return this.auth_error != null;
-    }
-
-    public void setAuth_errorIsSet(boolean value) {
-      if (!value) {
-        this.auth_error = null;
-      }
-    }
-
-    public SystemUnavailableError getSystem_unavailable() {
-      return this.system_unavailable;
-    }
-
-    public portfolio_result setSystem_unavailable(SystemUnavailableError system_unavailable) {
-      this.system_unavailable = system_unavailable;
-      return this;
-    }
-
-    public void unsetSystem_unavailable() {
-      this.system_unavailable = null;
-    }
-
-    /** Returns true if field system_unavailable is set (has been assigned a value) and false otherwise */
-    public boolean isSetSystem_unavailable() {
-      return this.system_unavailable != null;
-    }
-
-    public void setSystem_unavailableIsSet(boolean value) {
-      if (!value) {
-        this.system_unavailable = null;
-      }
-    }
-
     public void setFieldValue(_Fields field, java.lang.Object value) {
       switch (field) {
       case SUCCESS:
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((java.util.List<br.com.investtools.radar.api.SimplePosition>)value);
-        }
-        break;
-
-      case AUTH_ERROR:
-        if (value == null) {
-          unsetAuth_error();
-        } else {
-          setAuth_error((AuthenticationError)value);
-        }
-        break;
-
-      case SYSTEM_UNAVAILABLE:
-        if (value == null) {
-          unsetSystem_unavailable();
-        } else {
-          setSystem_unavailable((SystemUnavailableError)value);
+          setSuccess((RenewResult)value);
         }
         break;
 
@@ -3038,12 +2266,6 @@ public class TransactionImporter {
       switch (field) {
       case SUCCESS:
         return getSuccess();
-
-      case AUTH_ERROR:
-        return getAuth_error();
-
-      case SYSTEM_UNAVAILABLE:
-        return getSystem_unavailable();
 
       }
       throw new java.lang.IllegalStateException();
@@ -3058,10 +2280,6 @@ public class TransactionImporter {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
-      case AUTH_ERROR:
-        return isSetAuth_error();
-      case SYSTEM_UNAVAILABLE:
-        return isSetSystem_unavailable();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -3070,12 +2288,12 @@ public class TransactionImporter {
     public boolean equals(java.lang.Object that) {
       if (that == null)
         return false;
-      if (that instanceof portfolio_result)
-        return this.equals((portfolio_result)that);
+      if (that instanceof renew_password_result)
+        return this.equals((renew_password_result)that);
       return false;
     }
 
-    public boolean equals(portfolio_result that) {
+    public boolean equals(renew_password_result that) {
       if (that == null)
         return false;
       if (this == that)
@@ -3090,24 +2308,6 @@ public class TransactionImporter {
           return false;
       }
 
-      boolean this_present_auth_error = true && this.isSetAuth_error();
-      boolean that_present_auth_error = true && that.isSetAuth_error();
-      if (this_present_auth_error || that_present_auth_error) {
-        if (!(this_present_auth_error && that_present_auth_error))
-          return false;
-        if (!this.auth_error.equals(that.auth_error))
-          return false;
-      }
-
-      boolean this_present_system_unavailable = true && this.isSetSystem_unavailable();
-      boolean that_present_system_unavailable = true && that.isSetSystem_unavailable();
-      if (this_present_system_unavailable || that_present_system_unavailable) {
-        if (!(this_present_system_unavailable && that_present_system_unavailable))
-          return false;
-        if (!this.system_unavailable.equals(that.system_unavailable))
-          return false;
-      }
-
       return true;
     }
 
@@ -3119,19 +2319,11 @@ public class TransactionImporter {
       if (isSetSuccess())
         hashCode = hashCode * 8191 + success.hashCode();
 
-      hashCode = hashCode * 8191 + ((isSetAuth_error()) ? 131071 : 524287);
-      if (isSetAuth_error())
-        hashCode = hashCode * 8191 + auth_error.hashCode();
-
-      hashCode = hashCode * 8191 + ((isSetSystem_unavailable()) ? 131071 : 524287);
-      if (isSetSystem_unavailable())
-        hashCode = hashCode * 8191 + system_unavailable.hashCode();
-
       return hashCode;
     }
 
     @Override
-    public int compareTo(portfolio_result other) {
+    public int compareTo(renew_password_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -3144,26 +2336,6 @@ public class TransactionImporter {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = java.lang.Boolean.valueOf(isSetAuth_error()).compareTo(other.isSetAuth_error());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetAuth_error()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.auth_error, other.auth_error);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = java.lang.Boolean.valueOf(isSetSystem_unavailable()).compareTo(other.isSetSystem_unavailable());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetSystem_unavailable()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.system_unavailable, other.system_unavailable);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -3185,7 +2357,7 @@ public class TransactionImporter {
 
     @Override
     public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("portfolio_result(");
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("renew_password_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -3195,22 +2367,6 @@ public class TransactionImporter {
         sb.append(this.success);
       }
       first = false;
-      if (!first) sb.append(", ");
-      sb.append("auth_error:");
-      if (this.auth_error == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.auth_error);
-      }
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("system_unavailable:");
-      if (this.system_unavailable == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.system_unavailable);
-      }
-      first = false;
       sb.append(")");
       return sb.toString();
     }
@@ -3218,6 +2374,9 @@ public class TransactionImporter {
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -3236,15 +2395,15 @@ public class TransactionImporter {
       }
     }
 
-    private static class portfolio_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public portfolio_resultStandardScheme getScheme() {
-        return new portfolio_resultStandardScheme();
+    private static class renew_password_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public renew_password_resultStandardScheme getScheme() {
+        return new renew_password_resultStandardScheme();
       }
     }
 
-    private static class portfolio_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<portfolio_result> {
+    private static class renew_password_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<renew_password_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, portfolio_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, renew_password_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -3255,38 +2414,10 @@ public class TransactionImporter {
           }
           switch (schemeField.id) {
             case 0: // SUCCESS
-              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
-                {
-                  org.apache.thrift.protocol.TList _list0 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<br.com.investtools.radar.api.SimplePosition>(_list0.size);
-                  br.com.investtools.radar.api.SimplePosition _elem1;
-                  for (int _i2 = 0; _i2 < _list0.size; ++_i2)
-                  {
-                    _elem1 = new br.com.investtools.radar.api.SimplePosition();
-                    _elem1.read(iprot);
-                    struct.success.add(_elem1);
-                  }
-                  iprot.readListEnd();
-                }
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new RenewResult();
+                struct.success.read(iprot);
                 struct.setSuccessIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            case 1: // AUTH_ERROR
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.auth_error = new AuthenticationError();
-                struct.auth_error.read(iprot);
-                struct.setAuth_errorIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            case 2: // SYSTEM_UNAVAILABLE
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.system_unavailable = new SystemUnavailableError();
-                struct.system_unavailable.read(iprot);
-                struct.setSystem_unavailableIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -3302,30 +2433,13 @@ public class TransactionImporter {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, portfolio_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, renew_password_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
         if (struct.success != null) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-          {
-            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (br.com.investtools.radar.api.SimplePosition _iter3 : struct.success)
-            {
-              _iter3.write(oprot);
-            }
-            oprot.writeListEnd();
-          }
-          oprot.writeFieldEnd();
-        }
-        if (struct.auth_error != null) {
-          oprot.writeFieldBegin(AUTH_ERROR_FIELD_DESC);
-          struct.auth_error.write(oprot);
-          oprot.writeFieldEnd();
-        }
-        if (struct.system_unavailable != null) {
-          oprot.writeFieldBegin(SYSTEM_UNAVAILABLE_FIELD_DESC);
-          struct.system_unavailable.write(oprot);
+          struct.success.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -3334,72 +2448,35 @@ public class TransactionImporter {
 
     }
 
-    private static class portfolio_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public portfolio_resultTupleScheme getScheme() {
-        return new portfolio_resultTupleScheme();
+    private static class renew_password_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public renew_password_resultTupleScheme getScheme() {
+        return new renew_password_resultTupleScheme();
       }
     }
 
-    private static class portfolio_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<portfolio_result> {
+    private static class renew_password_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<renew_password_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, portfolio_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, renew_password_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet optionals = new java.util.BitSet();
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        if (struct.isSetAuth_error()) {
-          optionals.set(1);
-        }
-        if (struct.isSetSystem_unavailable()) {
-          optionals.set(2);
-        }
-        oprot.writeBitSet(optionals, 3);
+        oprot.writeBitSet(optionals, 1);
         if (struct.isSetSuccess()) {
-          {
-            oprot.writeI32(struct.success.size());
-            for (br.com.investtools.radar.api.SimplePosition _iter4 : struct.success)
-            {
-              _iter4.write(oprot);
-            }
-          }
-        }
-        if (struct.isSetAuth_error()) {
-          struct.auth_error.write(oprot);
-        }
-        if (struct.isSetSystem_unavailable()) {
-          struct.system_unavailable.write(oprot);
+          struct.success.write(oprot);
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, portfolio_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, renew_password_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(3);
+        java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          {
-            org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new java.util.ArrayList<br.com.investtools.radar.api.SimplePosition>(_list5.size);
-            br.com.investtools.radar.api.SimplePosition _elem6;
-            for (int _i7 = 0; _i7 < _list5.size; ++_i7)
-            {
-              _elem6 = new br.com.investtools.radar.api.SimplePosition();
-              _elem6.read(iprot);
-              struct.success.add(_elem6);
-            }
-          }
+          struct.success = new RenewResult();
+          struct.success.read(iprot);
           struct.setSuccessIsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.auth_error = new AuthenticationError();
-          struct.auth_error.read(iprot);
-          struct.setAuth_errorIsSet(true);
-        }
-        if (incoming.get(2)) {
-          struct.system_unavailable = new SystemUnavailableError();
-          struct.system_unavailable.read(iprot);
-          struct.setSystem_unavailableIsSet(true);
         }
       }
     }

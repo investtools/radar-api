@@ -17,23 +17,18 @@ using Thrift.Transport;
 
 public partial class TransactionImporter {
   public interface ISync {
-    string name();
     void fetch(string username, string password, string user, long last_transaction_date);
-    List<SimplePosition> portfolio(string username, string password);
+    RenewResult renew_password(string username, string password, string original_pwd);
   }
 
   public interface Iface : ISync {
-    #if SILVERLIGHT
-    IAsyncResult Begin_name(AsyncCallback callback, object state);
-    string End_name(IAsyncResult asyncResult);
-    #endif
     #if SILVERLIGHT
     IAsyncResult Begin_fetch(AsyncCallback callback, object state, string username, string password, string user, long last_transaction_date);
     void End_fetch(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_portfolio(AsyncCallback callback, object state, string username, string password);
-    List<SimplePosition> End_portfolio(IAsyncResult asyncResult);
+    IAsyncResult Begin_renew_password(AsyncCallback callback, object state, string username, string password, string original_pwd);
+    RenewResult End_renew_password(IAsyncResult asyncResult);
     #endif
   }
 
@@ -92,67 +87,6 @@ public partial class TransactionImporter {
     }
     #endregion
 
-
-    
-    #if SILVERLIGHT
-    public IAsyncResult Begin_name(AsyncCallback callback, object state)
-    {
-      return send_name(callback, state);
-    }
-
-    public string End_name(IAsyncResult asyncResult)
-    {
-      oprot_.Transport.EndFlush(asyncResult);
-      return recv_name();
-    }
-
-    #endif
-
-    public string name()
-    {
-      #if !SILVERLIGHT
-      send_name();
-      return recv_name();
-
-      #else
-      var asyncResult = Begin_name(null, null);
-      return End_name(asyncResult);
-
-      #endif
-    }
-    #if SILVERLIGHT
-    public IAsyncResult send_name(AsyncCallback callback, object state)
-    #else
-    public void send_name()
-    #endif
-    {
-      oprot_.WriteMessageBegin(new TMessage("name", TMessageType.Call, seqid_));
-      name_args args = new name_args();
-      args.Write(oprot_);
-      oprot_.WriteMessageEnd();
-      #if SILVERLIGHT
-      return oprot_.Transport.BeginFlush(callback, state);
-      #else
-      oprot_.Transport.Flush();
-      #endif
-    }
-
-    public string recv_name()
-    {
-      TMessage msg = iprot_.ReadMessageBegin();
-      if (msg.Type == TMessageType.Exception) {
-        TApplicationException x = TApplicationException.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        throw x;
-      }
-      name_result result = new name_result();
-      result.Read(iprot_);
-      iprot_.ReadMessageEnd();
-      if (result.__isset.success) {
-        return result.Success;
-      }
-      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "name failed: unknown result");
-    }
 
     
     #if SILVERLIGHT
@@ -224,41 +158,42 @@ public partial class TransactionImporter {
 
     
     #if SILVERLIGHT
-    public IAsyncResult Begin_portfolio(AsyncCallback callback, object state, string username, string password)
+    public IAsyncResult Begin_renew_password(AsyncCallback callback, object state, string username, string password, string original_pwd)
     {
-      return send_portfolio(callback, state, username, password);
+      return send_renew_password(callback, state, username, password, original_pwd);
     }
 
-    public List<SimplePosition> End_portfolio(IAsyncResult asyncResult)
+    public RenewResult End_renew_password(IAsyncResult asyncResult)
     {
       oprot_.Transport.EndFlush(asyncResult);
-      return recv_portfolio();
+      return recv_renew_password();
     }
 
     #endif
 
-    public List<SimplePosition> portfolio(string username, string password)
+    public RenewResult renew_password(string username, string password, string original_pwd)
     {
       #if !SILVERLIGHT
-      send_portfolio(username, password);
-      return recv_portfolio();
+      send_renew_password(username, password, original_pwd);
+      return recv_renew_password();
 
       #else
-      var asyncResult = Begin_portfolio(null, null, username, password);
-      return End_portfolio(asyncResult);
+      var asyncResult = Begin_renew_password(null, null, username, password, original_pwd);
+      return End_renew_password(asyncResult);
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_portfolio(AsyncCallback callback, object state, string username, string password)
+    public IAsyncResult send_renew_password(AsyncCallback callback, object state, string username, string password, string original_pwd)
     #else
-    public void send_portfolio(string username, string password)
+    public void send_renew_password(string username, string password, string original_pwd)
     #endif
     {
-      oprot_.WriteMessageBegin(new TMessage("portfolio", TMessageType.Call, seqid_));
-      portfolio_args args = new portfolio_args();
+      oprot_.WriteMessageBegin(new TMessage("renew_password", TMessageType.Call, seqid_));
+      renew_password_args args = new renew_password_args();
       args.Username = username;
       args.Password = password;
+      args.Original_pwd = original_pwd;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       #if SILVERLIGHT
@@ -268,7 +203,7 @@ public partial class TransactionImporter {
       #endif
     }
 
-    public List<SimplePosition> recv_portfolio()
+    public RenewResult recv_renew_password()
     {
       TMessage msg = iprot_.ReadMessageBegin();
       if (msg.Type == TMessageType.Exception) {
@@ -276,19 +211,13 @@ public partial class TransactionImporter {
         iprot_.ReadMessageEnd();
         throw x;
       }
-      portfolio_result result = new portfolio_result();
+      renew_password_result result = new renew_password_result();
       result.Read(iprot_);
       iprot_.ReadMessageEnd();
       if (result.__isset.success) {
         return result.Success;
       }
-      if (result.__isset.auth_error) {
-        throw result.Auth_error;
-      }
-      if (result.__isset.system_unavailable) {
-        throw result.System_unavailable;
-      }
-      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "portfolio failed: unknown result");
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "renew_password failed: unknown result");
     }
 
   }
@@ -296,9 +225,8 @@ public partial class TransactionImporter {
     public Processor(ISync iface)
     {
       iface_ = iface;
-      processMap_["name"] = name_Process;
       processMap_["fetch"] = fetch_Process;
-      processMap_["portfolio"] = portfolio_Process;
+      processMap_["renew_password"] = renew_password_Process;
     }
 
     protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -329,34 +257,6 @@ public partial class TransactionImporter {
         return false;
       }
       return true;
-    }
-
-    public void name_Process(int seqid, TProtocol iprot, TProtocol oprot)
-    {
-      name_args args = new name_args();
-      args.Read(iprot);
-      iprot.ReadMessageEnd();
-      name_result result = new name_result();
-      try
-      {
-        result.Success = iface_.name();
-        oprot.WriteMessageBegin(new TMessage("name", TMessageType.Reply, seqid)); 
-        result.Write(oprot);
-      }
-      catch (TTransportException)
-      {
-        throw;
-      }
-      catch (Exception ex)
-      {
-        Console.Error.WriteLine("Error occurred in processor:");
-        Console.Error.WriteLine(ex.ToString());
-        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
-        oprot.WriteMessageBegin(new TMessage("name", TMessageType.Exception, seqid));
-        x.Write(oprot);
-      }
-      oprot.WriteMessageEnd();
-      oprot.Transport.Flush();
     }
 
     public void fetch_Process(int seqid, TProtocol iprot, TProtocol oprot)
@@ -398,27 +298,16 @@ public partial class TransactionImporter {
       oprot.Transport.Flush();
     }
 
-    public void portfolio_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    public void renew_password_Process(int seqid, TProtocol iprot, TProtocol oprot)
     {
-      portfolio_args args = new portfolio_args();
+      renew_password_args args = new renew_password_args();
       args.Read(iprot);
       iprot.ReadMessageEnd();
-      portfolio_result result = new portfolio_result();
+      renew_password_result result = new renew_password_result();
       try
       {
-        try
-        {
-          result.Success = iface_.portfolio(args.Username, args.Password);
-        }
-        catch (AuthenticationError auth_error)
-        {
-          result.Auth_error = auth_error;
-        }
-        catch (SystemUnavailableError system_unavailable)
-        {
-          result.System_unavailable = system_unavailable;
-        }
-        oprot.WriteMessageBegin(new TMessage("portfolio", TMessageType.Reply, seqid)); 
+        result.Success = iface_.renew_password(args.Username, args.Password, args.Original_pwd);
+        oprot.WriteMessageBegin(new TMessage("renew_password", TMessageType.Reply, seqid)); 
         result.Write(oprot);
       }
       catch (TTransportException)
@@ -430,184 +319,11 @@ public partial class TransactionImporter {
         Console.Error.WriteLine("Error occurred in processor:");
         Console.Error.WriteLine(ex.ToString());
         TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
-        oprot.WriteMessageBegin(new TMessage("portfolio", TMessageType.Exception, seqid));
+        oprot.WriteMessageBegin(new TMessage("renew_password", TMessageType.Exception, seqid));
         x.Write(oprot);
       }
       oprot.WriteMessageEnd();
       oprot.Transport.Flush();
-    }
-
-  }
-
-
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
-  public partial class name_args : TBase
-  {
-
-    public name_args() {
-    }
-
-    public void Read (TProtocol iprot)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        TField field;
-        iprot.ReadStructBegin();
-        while (true)
-        {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
-            break;
-          }
-          switch (field.ID)
-          {
-            default: 
-              TProtocolUtil.Skip(iprot, field.Type);
-              break;
-          }
-          iprot.ReadFieldEnd();
-        }
-        iprot.ReadStructEnd();
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
-
-    public void Write(TProtocol oprot) {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        TStruct struc = new TStruct("name_args");
-        oprot.WriteStructBegin(struc);
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
-
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("name_args(");
-      __sb.Append(")");
-      return __sb.ToString();
-    }
-
-  }
-
-
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
-  public partial class name_result : TBase
-  {
-    private string _success;
-
-    public string Success
-    {
-      get
-      {
-        return _success;
-      }
-      set
-      {
-        __isset.success = true;
-        this._success = value;
-      }
-    }
-
-
-    public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
-      public bool success;
-    }
-
-    public name_result() {
-    }
-
-    public void Read (TProtocol iprot)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        TField field;
-        iprot.ReadStructBegin();
-        while (true)
-        {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
-            break;
-          }
-          switch (field.ID)
-          {
-            case 0:
-              if (field.Type == TType.String) {
-                Success = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            default: 
-              TProtocolUtil.Skip(iprot, field.Type);
-              break;
-          }
-          iprot.ReadFieldEnd();
-        }
-        iprot.ReadStructEnd();
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
-
-    public void Write(TProtocol oprot) {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        TStruct struc = new TStruct("name_result");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-
-        if (this.__isset.success) {
-          if (Success != null) {
-            field.Name = "Success";
-            field.Type = TType.String;
-            field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Success);
-            oprot.WriteFieldEnd();
-          }
-        }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
-
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("name_result(");
-      bool __first = true;
-      if (Success != null && __isset.success) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Success: ");
-        __sb.Append(Success);
-      }
-      __sb.Append(")");
-      return __sb.ToString();
     }
 
   }
@@ -982,10 +698,11 @@ public partial class TransactionImporter {
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class portfolio_args : TBase
+  public partial class renew_password_args : TBase
   {
     private string _username;
     private string _password;
+    private string _original_pwd;
 
     public string Username
     {
@@ -1013,6 +730,19 @@ public partial class TransactionImporter {
       }
     }
 
+    public string Original_pwd
+    {
+      get
+      {
+        return _original_pwd;
+      }
+      set
+      {
+        __isset.original_pwd = true;
+        this._original_pwd = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -1021,9 +751,10 @@ public partial class TransactionImporter {
     public struct Isset {
       public bool username;
       public bool password;
+      public bool original_pwd;
     }
 
-    public portfolio_args() {
+    public renew_password_args() {
     }
 
     public void Read (TProtocol iprot)
@@ -1055,6 +786,13 @@ public partial class TransactionImporter {
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
+            case 3:
+              if (field.Type == TType.String) {
+                Original_pwd = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
             default: 
               TProtocolUtil.Skip(iprot, field.Type);
               break;
@@ -1073,7 +811,7 @@ public partial class TransactionImporter {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("portfolio_args");
+        TStruct struc = new TStruct("renew_password_args");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
         if (Username != null && __isset.username) {
@@ -1092,6 +830,14 @@ public partial class TransactionImporter {
           oprot.WriteString(Password);
           oprot.WriteFieldEnd();
         }
+        if (Original_pwd != null && __isset.original_pwd) {
+          field.Name = "original_pwd";
+          field.Type = TType.String;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Original_pwd);
+          oprot.WriteFieldEnd();
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -1102,7 +848,7 @@ public partial class TransactionImporter {
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("portfolio_args(");
+      StringBuilder __sb = new StringBuilder("renew_password_args(");
       bool __first = true;
       if (Username != null && __isset.username) {
         if(!__first) { __sb.Append(", "); }
@@ -1116,6 +862,12 @@ public partial class TransactionImporter {
         __sb.Append("Password: ");
         __sb.Append(Password);
       }
+      if (Original_pwd != null && __isset.original_pwd) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Original_pwd: ");
+        __sb.Append(Original_pwd);
+      }
       __sb.Append(")");
       return __sb.ToString();
     }
@@ -1126,13 +878,11 @@ public partial class TransactionImporter {
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class portfolio_result : TBase
+  public partial class renew_password_result : TBase
   {
-    private List<SimplePosition> _success;
-    private AuthenticationError _auth_error;
-    private SystemUnavailableError _system_unavailable;
+    private RenewResult _success;
 
-    public List<SimplePosition> Success
+    public RenewResult Success
     {
       get
       {
@@ -1145,32 +895,6 @@ public partial class TransactionImporter {
       }
     }
 
-    public AuthenticationError Auth_error
-    {
-      get
-      {
-        return _auth_error;
-      }
-      set
-      {
-        __isset.auth_error = true;
-        this._auth_error = value;
-      }
-    }
-
-    public SystemUnavailableError System_unavailable
-    {
-      get
-      {
-        return _system_unavailable;
-      }
-      set
-      {
-        __isset.system_unavailable = true;
-        this._system_unavailable = value;
-      }
-    }
-
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -1178,11 +902,9 @@ public partial class TransactionImporter {
     #endif
     public struct Isset {
       public bool success;
-      public bool auth_error;
-      public bool system_unavailable;
     }
 
-    public portfolio_result() {
+    public renew_password_result() {
     }
 
     public void Read (TProtocol iprot)
@@ -1201,35 +923,9 @@ public partial class TransactionImporter {
           switch (field.ID)
           {
             case 0:
-              if (field.Type == TType.List) {
-                {
-                  Success = new List<SimplePosition>();
-                  TList _list0 = iprot.ReadListBegin();
-                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
-                  {
-                    SimplePosition _elem2;
-                    _elem2 = new SimplePosition();
-                    _elem2.Read(iprot);
-                    Success.Add(_elem2);
-                  }
-                  iprot.ReadListEnd();
-                }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 1:
               if (field.Type == TType.Struct) {
-                Auth_error = new AuthenticationError();
-                Auth_error.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.Struct) {
-                System_unavailable = new SystemUnavailableError();
-                System_unavailable.Read(iprot);
+                Success = new RenewResult();
+                Success.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1252,42 +948,17 @@ public partial class TransactionImporter {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("portfolio_result");
+        TStruct struc = new TStruct("renew_password_result");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
 
         if (this.__isset.success) {
           if (Success != null) {
             field.Name = "Success";
-            field.Type = TType.List;
+            field.Type = TType.Struct;
             field.ID = 0;
             oprot.WriteFieldBegin(field);
-            {
-              oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
-              foreach (SimplePosition _iter3 in Success)
-              {
-                _iter3.Write(oprot);
-              }
-              oprot.WriteListEnd();
-            }
-            oprot.WriteFieldEnd();
-          }
-        } else if (this.__isset.auth_error) {
-          if (Auth_error != null) {
-            field.Name = "Auth_error";
-            field.Type = TType.Struct;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            Auth_error.Write(oprot);
-            oprot.WriteFieldEnd();
-          }
-        } else if (this.__isset.system_unavailable) {
-          if (System_unavailable != null) {
-            field.Name = "System_unavailable";
-            field.Type = TType.Struct;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            System_unavailable.Write(oprot);
+            Success.Write(oprot);
             oprot.WriteFieldEnd();
           }
         }
@@ -1301,25 +972,13 @@ public partial class TransactionImporter {
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("portfolio_result(");
+      StringBuilder __sb = new StringBuilder("renew_password_result(");
       bool __first = true;
       if (Success != null && __isset.success) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("Success: ");
-        __sb.Append(Success);
-      }
-      if (Auth_error != null && __isset.auth_error) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Auth_error: ");
-        __sb.Append(Auth_error== null ? "<null>" : Auth_error.ToString());
-      }
-      if (System_unavailable != null && __isset.system_unavailable) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("System_unavailable: ");
-        __sb.Append(System_unavailable== null ? "<null>" : System_unavailable.ToString());
+        __sb.Append(Success== null ? "<null>" : Success.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();

@@ -19,34 +19,48 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class Security : TBase
+public partial class RenewResult : TBase
 {
-  private StockId _stock;
-  private int _shares;
+  private bool _error;
+  private string _original;
+  private string _current;
 
-  public StockId Stock
+  public bool Error
   {
     get
     {
-      return _stock;
+      return _error;
     }
     set
     {
-      __isset.stock = true;
-      this._stock = value;
+      __isset.error = true;
+      this._error = value;
     }
   }
 
-  public int Shares
+  public string Original
   {
     get
     {
-      return _shares;
+      return _original;
     }
     set
     {
-      __isset.shares = true;
-      this._shares = value;
+      __isset.original = true;
+      this._original = value;
+    }
+  }
+
+  public string Current
+  {
+    get
+    {
+      return _current;
+    }
+    set
+    {
+      __isset.current = true;
+      this._current = value;
     }
   }
 
@@ -56,11 +70,12 @@ public partial class Security : TBase
   [Serializable]
   #endif
   public struct Isset {
-    public bool stock;
-    public bool shares;
+    public bool error;
+    public bool original;
+    public bool current;
   }
 
-  public Security() {
+  public RenewResult() {
   }
 
   public void Read (TProtocol iprot)
@@ -79,16 +94,22 @@ public partial class Security : TBase
         switch (field.ID)
         {
           case 1:
-            if (field.Type == TType.Struct) {
-              Stock = new StockId();
-              Stock.Read(iprot);
+            if (field.Type == TType.Bool) {
+              Error = iprot.ReadBool();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 2:
-            if (field.Type == TType.I32) {
-              Shares = iprot.ReadI32();
+            if (field.Type == TType.String) {
+              Original = iprot.ReadString();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 3:
+            if (field.Type == TType.String) {
+              Current = iprot.ReadString();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -111,23 +132,31 @@ public partial class Security : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("Security");
+      TStruct struc = new TStruct("RenewResult");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (Stock != null && __isset.stock) {
-        field.Name = "stock";
-        field.Type = TType.Struct;
+      if (__isset.error) {
+        field.Name = "error";
+        field.Type = TType.Bool;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        Stock.Write(oprot);
+        oprot.WriteBool(Error);
         oprot.WriteFieldEnd();
       }
-      if (__isset.shares) {
-        field.Name = "shares";
-        field.Type = TType.I32;
+      if (Original != null && __isset.original) {
+        field.Name = "original";
+        field.Type = TType.String;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        oprot.WriteI32(Shares);
+        oprot.WriteString(Original);
+        oprot.WriteFieldEnd();
+      }
+      if (Current != null && __isset.current) {
+        field.Name = "current";
+        field.Type = TType.String;
+        field.ID = 3;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteString(Current);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -140,19 +169,25 @@ public partial class Security : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("Security(");
+    StringBuilder __sb = new StringBuilder("RenewResult(");
     bool __first = true;
-    if (Stock != null && __isset.stock) {
+    if (__isset.error) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Stock: ");
-      __sb.Append(Stock== null ? "<null>" : Stock.ToString());
+      __sb.Append("Error: ");
+      __sb.Append(Error);
     }
-    if (__isset.shares) {
+    if (Original != null && __isset.original) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Shares: ");
-      __sb.Append(Shares);
+      __sb.Append("Original: ");
+      __sb.Append(Original);
+    }
+    if (Current != null && __isset.current) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Current: ");
+      __sb.Append(Current);
     }
     __sb.Append(")");
     return __sb.ToString();

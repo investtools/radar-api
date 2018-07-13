@@ -11,92 +11,10 @@ var Q = thrift.Q;
 
 var common_ttypes = require('./common_types');
 var transaction_ttypes = require('./transaction_types');
-var portfolio_ttypes = require('./portfolio_types');
 
 
 var ttypes = require('./transaction_importer_types');
 //HELPER FUNCTIONS AND STRUCTURES
-
-var TransactionImporter_name_args = function(args) {
-};
-TransactionImporter_name_args.prototype = {};
-TransactionImporter_name_args.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    input.skip(ftype);
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-TransactionImporter_name_args.prototype.write = function(output) {
-  output.writeStructBegin('TransactionImporter_name_args');
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-var TransactionImporter_name_result = function(args) {
-  this.success = null;
-  if (args) {
-    if (args.success !== undefined && args.success !== null) {
-      this.success = args.success;
-    }
-  }
-};
-TransactionImporter_name_result.prototype = {};
-TransactionImporter_name_result.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-      if (ftype == Thrift.Type.STRING) {
-        this.success = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 0:
-        input.skip(ftype);
-        break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-TransactionImporter_name_result.prototype.write = function(output) {
-  output.writeStructBegin('TransactionImporter_name_result');
-  if (this.success !== null && this.success !== undefined) {
-    output.writeFieldBegin('success', Thrift.Type.STRING, 0);
-    output.writeString(this.success);
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
 
 var TransactionImporter_fetch_args = function(args) {
   this.username = null;
@@ -272,9 +190,10 @@ TransactionImporter_fetch_result.prototype.write = function(output) {
   return;
 };
 
-var TransactionImporter_portfolio_args = function(args) {
+var TransactionImporter_renew_password_args = function(args) {
   this.username = null;
   this.password = null;
+  this.original_pwd = null;
   if (args) {
     if (args.username !== undefined && args.username !== null) {
       this.username = args.username;
@@ -282,10 +201,13 @@ var TransactionImporter_portfolio_args = function(args) {
     if (args.password !== undefined && args.password !== null) {
       this.password = args.password;
     }
+    if (args.original_pwd !== undefined && args.original_pwd !== null) {
+      this.original_pwd = args.original_pwd;
+    }
   }
 };
-TransactionImporter_portfolio_args.prototype = {};
-TransactionImporter_portfolio_args.prototype.read = function(input) {
+TransactionImporter_renew_password_args.prototype = {};
+TransactionImporter_renew_password_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -312,6 +234,13 @@ TransactionImporter_portfolio_args.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.original_pwd = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -321,8 +250,8 @@ TransactionImporter_portfolio_args.prototype.read = function(input) {
   return;
 };
 
-TransactionImporter_portfolio_args.prototype.write = function(output) {
-  output.writeStructBegin('TransactionImporter_portfolio_args');
+TransactionImporter_renew_password_args.prototype.write = function(output) {
+  output.writeStructBegin('TransactionImporter_renew_password_args');
   if (this.username !== null && this.username !== undefined) {
     output.writeFieldBegin('username', Thrift.Type.STRING, 1);
     output.writeString(this.username);
@@ -333,37 +262,26 @@ TransactionImporter_portfolio_args.prototype.write = function(output) {
     output.writeString(this.password);
     output.writeFieldEnd();
   }
+  if (this.original_pwd !== null && this.original_pwd !== undefined) {
+    output.writeFieldBegin('original_pwd', Thrift.Type.STRING, 3);
+    output.writeString(this.original_pwd);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
 };
 
-var TransactionImporter_portfolio_result = function(args) {
+var TransactionImporter_renew_password_result = function(args) {
   this.success = null;
-  this.auth_error = null;
-  this.system_unavailable = null;
-  if (args instanceof ttypes.AuthenticationError) {
-    this.auth_error = args;
-    return;
-  }
-  if (args instanceof ttypes.SystemUnavailableError) {
-    this.system_unavailable = args;
-    return;
-  }
   if (args) {
     if (args.success !== undefined && args.success !== null) {
-      this.success = Thrift.copyList(args.success, [portfolio_ttypes.SimplePosition]);
-    }
-    if (args.auth_error !== undefined && args.auth_error !== null) {
-      this.auth_error = args.auth_error;
-    }
-    if (args.system_unavailable !== undefined && args.system_unavailable !== null) {
-      this.system_unavailable = args.system_unavailable;
+      this.success = new ttypes.RenewResult(args.success);
     }
   }
 };
-TransactionImporter_portfolio_result.prototype = {};
-TransactionImporter_portfolio_result.prototype.read = function(input) {
+TransactionImporter_renew_password_result.prototype = {};
+TransactionImporter_renew_password_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -377,42 +295,16 @@ TransactionImporter_portfolio_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.LIST) {
-        var _size0 = 0;
-        var _rtmp34;
-        this.success = [];
-        var _etype3 = 0;
-        _rtmp34 = input.readListBegin();
-        _etype3 = _rtmp34.etype;
-        _size0 = _rtmp34.size;
-        for (var _i5 = 0; _i5 < _size0; ++_i5)
-        {
-          var elem6 = null;
-          elem6 = new portfolio_ttypes.SimplePosition();
-          elem6.read(input);
-          this.success.push(elem6);
-        }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.auth_error = new ttypes.AuthenticationError();
-        this.auth_error.read(input);
+        this.success = new ttypes.RenewResult();
+        this.success.read(input);
       } else {
         input.skip(ftype);
       }
       break;
-      case 2:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.system_unavailable = new ttypes.SystemUnavailableError();
-        this.system_unavailable.read(input);
-      } else {
+      case 0:
         input.skip(ftype);
-      }
-      break;
+        break;
       default:
         input.skip(ftype);
     }
@@ -422,30 +314,11 @@ TransactionImporter_portfolio_result.prototype.read = function(input) {
   return;
 };
 
-TransactionImporter_portfolio_result.prototype.write = function(output) {
-  output.writeStructBegin('TransactionImporter_portfolio_result');
+TransactionImporter_renew_password_result.prototype.write = function(output) {
+  output.writeStructBegin('TransactionImporter_renew_password_result');
   if (this.success !== null && this.success !== undefined) {
-    output.writeFieldBegin('success', Thrift.Type.LIST, 0);
-    output.writeListBegin(Thrift.Type.STRUCT, this.success.length);
-    for (var iter7 in this.success)
-    {
-      if (this.success.hasOwnProperty(iter7))
-      {
-        iter7 = this.success[iter7];
-        iter7.write(output);
-      }
-    }
-    output.writeListEnd();
-    output.writeFieldEnd();
-  }
-  if (this.auth_error !== null && this.auth_error !== undefined) {
-    output.writeFieldBegin('auth_error', Thrift.Type.STRUCT, 1);
-    this.auth_error.write(output);
-    output.writeFieldEnd();
-  }
-  if (this.system_unavailable !== null && this.system_unavailable !== undefined) {
-    output.writeFieldBegin('system_unavailable', Thrift.Type.STRUCT, 2);
-    this.system_unavailable.write(output);
+    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
+    this.success.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -462,52 +335,6 @@ var TransactionImporterClient = exports.Client = function(output, pClass) {
 TransactionImporterClient.prototype = {};
 TransactionImporterClient.prototype.seqid = function() { return this._seqid; };
 TransactionImporterClient.prototype.new_seqid = function() { return this._seqid += 1; };
-TransactionImporterClient.prototype.name = function(callback) {
-  this._seqid = this.new_seqid();
-  if (callback === undefined) {
-    var _defer = Q.defer();
-    this._reqs[this.seqid()] = function(error, result) {
-      if (error) {
-        _defer.reject(error);
-      } else {
-        _defer.resolve(result);
-      }
-    };
-    this.send_name();
-    return _defer.promise;
-  } else {
-    this._reqs[this.seqid()] = callback;
-    this.send_name();
-  }
-};
-
-TransactionImporterClient.prototype.send_name = function() {
-  var output = new this.pClass(this.output);
-  output.writeMessageBegin('name', Thrift.MessageType.CALL, this.seqid());
-  var args = new TransactionImporter_name_args();
-  args.write(output);
-  output.writeMessageEnd();
-  return this.output.flush();
-};
-
-TransactionImporterClient.prototype.recv_name = function(input,mtype,rseqid) {
-  var callback = this._reqs[rseqid] || function() {};
-  delete this._reqs[rseqid];
-  if (mtype == Thrift.MessageType.EXCEPTION) {
-    var x = new Thrift.TApplicationException();
-    x.read(input);
-    input.readMessageEnd();
-    return callback(x);
-  }
-  var result = new TransactionImporter_name_result();
-  result.read(input);
-  input.readMessageEnd();
-
-  if (null !== result.success) {
-    return callback(null, result.success);
-  }
-  return callback('name failed: unknown result');
-};
 TransactionImporterClient.prototype.fetch = function(username, password, user, last_transaction_date, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -561,7 +388,7 @@ TransactionImporterClient.prototype.recv_fetch = function(input,mtype,rseqid) {
   }
   callback(null);
 };
-TransactionImporterClient.prototype.portfolio = function(username, password, callback) {
+TransactionImporterClient.prototype.renew_password = function(username, password, original_pwd, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -572,26 +399,27 @@ TransactionImporterClient.prototype.portfolio = function(username, password, cal
         _defer.resolve(result);
       }
     };
-    this.send_portfolio(username, password);
+    this.send_renew_password(username, password, original_pwd);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_portfolio(username, password);
+    this.send_renew_password(username, password, original_pwd);
   }
 };
 
-TransactionImporterClient.prototype.send_portfolio = function(username, password) {
+TransactionImporterClient.prototype.send_renew_password = function(username, password, original_pwd) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('portfolio', Thrift.MessageType.CALL, this.seqid());
-  var args = new TransactionImporter_portfolio_args();
+  output.writeMessageBegin('renew_password', Thrift.MessageType.CALL, this.seqid());
+  var args = new TransactionImporter_renew_password_args();
   args.username = username;
   args.password = password;
+  args.original_pwd = original_pwd;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-TransactionImporterClient.prototype.recv_portfolio = function(input,mtype,rseqid) {
+TransactionImporterClient.prototype.recv_renew_password = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -600,20 +428,14 @@ TransactionImporterClient.prototype.recv_portfolio = function(input,mtype,rseqid
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new TransactionImporter_portfolio_result();
+  var result = new TransactionImporter_renew_password_result();
   result.read(input);
   input.readMessageEnd();
 
-  if (null !== result.auth_error) {
-    return callback(result.auth_error);
-  }
-  if (null !== result.system_unavailable) {
-    return callback(result.system_unavailable);
-  }
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('portfolio failed: unknown result');
+  return callback('renew_password failed: unknown result');
 };
 var TransactionImporterProcessor = exports.Processor = function(handler) {
   this._handler = handler;
@@ -634,42 +456,6 @@ TransactionImporterProcessor.prototype.process = function(input, output) {
   }
 }
 ;
-TransactionImporterProcessor.prototype.process_name = function(seqid, input, output) {
-  var args = new TransactionImporter_name_args();
-  args.read(input);
-  input.readMessageEnd();
-  if (this._handler.name.length === 0) {
-    Q.fcall(this._handler.name)
-      .then(function(result) {
-        var result_obj = new TransactionImporter_name_result({success: result});
-        output.writeMessageBegin("name", Thrift.MessageType.REPLY, seqid);
-        result_obj.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      }, function (err) {
-        var result;
-        result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-        output.writeMessageBegin("name", Thrift.MessageType.EXCEPTION, seqid);
-        result.write(output);
-        output.writeMessageEnd();
-        output.flush();
-      });
-  } else {
-    this._handler.name(function (err, result) {
-      var result_obj;
-      if ((err === null || typeof err === 'undefined')) {
-        result_obj = new TransactionImporter_name_result((err !== null || typeof err === 'undefined') ? err : {success: result});
-        output.writeMessageBegin("name", Thrift.MessageType.REPLY, seqid);
-      } else {
-        result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-        output.writeMessageBegin("name", Thrift.MessageType.EXCEPTION, seqid);
-      }
-      result_obj.write(output);
-      output.writeMessageEnd();
-      output.flush();
-    });
-  }
-};
 TransactionImporterProcessor.prototype.process_fetch = function(seqid, input, output) {
   var args = new TransactionImporter_fetch_args();
   args.read(input);
@@ -711,40 +497,35 @@ TransactionImporterProcessor.prototype.process_fetch = function(seqid, input, ou
     });
   }
 };
-TransactionImporterProcessor.prototype.process_portfolio = function(seqid, input, output) {
-  var args = new TransactionImporter_portfolio_args();
+TransactionImporterProcessor.prototype.process_renew_password = function(seqid, input, output) {
+  var args = new TransactionImporter_renew_password_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.portfolio.length === 2) {
-    Q.fcall(this._handler.portfolio, args.username, args.password)
+  if (this._handler.renew_password.length === 3) {
+    Q.fcall(this._handler.renew_password, args.username, args.password, args.original_pwd)
       .then(function(result) {
-        var result_obj = new TransactionImporter_portfolio_result({success: result});
-        output.writeMessageBegin("portfolio", Thrift.MessageType.REPLY, seqid);
+        var result_obj = new TransactionImporter_renew_password_result({success: result});
+        output.writeMessageBegin("renew_password", Thrift.MessageType.REPLY, seqid);
         result_obj.write(output);
         output.writeMessageEnd();
         output.flush();
       }, function (err) {
         var result;
-        if (err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
-          result = new TransactionImporter_portfolio_result(err);
-          output.writeMessageBegin("portfolio", Thrift.MessageType.REPLY, seqid);
-        } else {
-          result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-          output.writeMessageBegin("portfolio", Thrift.MessageType.EXCEPTION, seqid);
-        }
+        result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("renew_password", Thrift.MessageType.EXCEPTION, seqid);
         result.write(output);
         output.writeMessageEnd();
         output.flush();
       });
   } else {
-    this._handler.portfolio(args.username, args.password, function (err, result) {
+    this._handler.renew_password(args.username, args.password, args.original_pwd, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined') || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
-        result_obj = new TransactionImporter_portfolio_result((err !== null || typeof err === 'undefined') ? err : {success: result});
-        output.writeMessageBegin("portfolio", Thrift.MessageType.REPLY, seqid);
+      if ((err === null || typeof err === 'undefined')) {
+        result_obj = new TransactionImporter_renew_password_result((err !== null || typeof err === 'undefined') ? err : {success: result});
+        output.writeMessageBegin("renew_password", Thrift.MessageType.REPLY, seqid);
       } else {
         result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-        output.writeMessageBegin("portfolio", Thrift.MessageType.EXCEPTION, seqid);
+        output.writeMessageBegin("renew_password", Thrift.MessageType.EXCEPTION, seqid);
       }
       result_obj.write(output);
       output.writeMessageEnd();

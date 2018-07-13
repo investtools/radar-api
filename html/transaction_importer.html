@@ -12,11 +12,11 @@
 <td>transaction_importer</td><td><a href="#Svc_TransactionImporter">TransactionImporter</a><br/>
 <ul>
 <li><a href="#Fn_TransactionImporter_fetch">fetch</a></li>
-<li><a href="#Fn_TransactionImporter_name">name</a></li>
-<li><a href="#Fn_TransactionImporter_portfolio">portfolio</a></li>
+<li><a href="#Fn_TransactionImporter_renew_password">renew_password</a></li>
 </ul>
 </td>
 <td><a href="#Struct_AuthenticationError">AuthenticationError</a><br/>
+<a href="#Struct_RenewResult">RenewResult</a><br/>
 <a href="#Struct_SystemUnavailableError">SystemUnavailableError</a><br/>
 </td>
 <td></code></td>
@@ -28,18 +28,21 @@
 </table><br/></div><div class="definition"><h3 id="Struct_SystemUnavailableError">Exception: SystemUnavailableError</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>message</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_RenewResult">Struct: RenewResult</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>error</td><td><code>bool</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>original</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>current</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_TransactionImporter">Service: TransactionImporter</h3>
-<div class="definition"><h4 id="Fn_TransactionImporter_name">Function: TransactionImporter.name</h4>
-<pre><code>string</code> name()
-</pre></div><div class="definition"><h4 id="Fn_TransactionImporter_fetch">Function: TransactionImporter.fetch</h4>
+<div class="definition"><h4 id="Fn_TransactionImporter_fetch">Function: TransactionImporter.fetch</h4>
 <pre><code>void</code> fetch(<code>string</code> username,
            <code>string</code> password,
            <code>string</code> user,
            <code><a href="common.html#Typedef_Date">common.Date</a></code> last_transaction_date)
     throws <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>, <code><a href="#Struct_SystemUnavailableError">SystemUnavailableError</a></code>
-</pre></div><div class="definition"><h4 id="Fn_TransactionImporter_portfolio">Function: TransactionImporter.portfolio</h4>
-<pre><code>list&lt;<code><a href="portfolio.html#Struct_SimplePosition">portfolio.SimplePosition</a></code>&gt;</code> portfolio(<code>string</code> username,
-                                         <code>string</code> password)
-    throws <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>, <code><a href="#Struct_SystemUnavailableError">SystemUnavailableError</a></code>
+</pre></div><div class="definition"><h4 id="Fn_TransactionImporter_renew_password">Function: TransactionImporter.renew_password</h4>
+<pre><code><a href="#Struct_RenewResult">RenewResult</a></code> renew_password(<code>string</code> username,
+                           <code>string</code> password,
+                           <code>string</code> original_pwd)
 </pre></div></div></body></html>
