@@ -29,21 +29,6 @@ module Radar
           return
         end
 
-        def renew_password(username, password, original_pwd)
-          send_renew_password(username, password, original_pwd)
-          return recv_renew_password()
-        end
-
-        def send_renew_password(username, password, original_pwd)
-          send_message('renew_password', Renew_password_args, :username => username, :password => password, :original_pwd => original_pwd)
-        end
-
-        def recv_renew_password()
-          result = receive_message(Renew_password_result)
-          return result.success unless result.success.nil?
-          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'renew_password failed: unknown result')
-        end
-
       end
 
       class Processor
@@ -60,13 +45,6 @@ module Radar
             result.system_unavailable = system_unavailable
           end
           write_result(result, oprot, 'fetch', seqid)
-        end
-
-        def process_renew_password(seqid, iprot, oprot)
-          args = read_args(iprot, Renew_password_args)
-          result = Renew_password_result.new()
-          result.success = @handler.renew_password(args.username, args.password, args.original_pwd)
-          write_result(result, oprot, 'renew_password', seqid)
         end
 
       end
@@ -103,42 +81,6 @@ module Radar
         FIELDS = {
           AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
           SYSTEM_UNAVAILABLE => {:type => ::Thrift::Types::STRUCT, :name => 'system_unavailable', :class => ::Radar::Api::SystemUnavailableError}
-        }
-
-        def struct_fields; FIELDS; end
-
-        def validate
-        end
-
-        ::Thrift::Struct.generate_accessors self
-      end
-
-      class Renew_password_args
-        include ::Thrift::Struct, ::Thrift::Struct_Union
-        USERNAME = 1
-        PASSWORD = 2
-        ORIGINAL_PWD = 3
-
-        FIELDS = {
-          USERNAME => {:type => ::Thrift::Types::STRING, :name => 'username'},
-          PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'},
-          ORIGINAL_PWD => {:type => ::Thrift::Types::STRING, :name => 'original_pwd'}
-        }
-
-        def struct_fields; FIELDS; end
-
-        def validate
-        end
-
-        ::Thrift::Struct.generate_accessors self
-      end
-
-      class Renew_password_result
-        include ::Thrift::Struct, ::Thrift::Struct_Union
-        SUCCESS = 0
-
-        FIELDS = {
-          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::Api::RenewResult}
         }
 
         def struct_fields; FIELDS; end

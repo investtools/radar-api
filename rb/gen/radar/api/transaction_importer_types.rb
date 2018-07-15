@@ -6,7 +6,6 @@
 
 require 'thrift'
 require 'radar/api/common_types'
-require 'radar/api/transaction_types'
 
 
 module Radar
@@ -43,26 +42,6 @@ module Radar
 
       FIELDS = {
         MESSAGE => {:type => ::Thrift::Types::STRING, :name => 'message'}
-      }
-
-      def struct_fields; FIELDS; end
-
-      def validate
-      end
-
-      ::Thrift::Struct.generate_accessors self
-    end
-
-    class RenewResult
-      include ::Thrift::Struct, ::Thrift::Struct_Union
-      ERROR = 1
-      ORIGINAL = 2
-      CURRENT = 3
-
-      FIELDS = {
-        ERROR => {:type => ::Thrift::Types::BOOL, :name => 'error'},
-        ORIGINAL => {:type => ::Thrift::Types::STRING, :name => 'original'},
-        CURRENT => {:type => ::Thrift::Types::STRING, :name => 'current'}
       }
 
       def struct_fields; FIELDS; end
