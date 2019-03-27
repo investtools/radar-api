@@ -83,6 +83,10 @@ struct Text {
 
 union TableCellTypes {
   1: string text
+  /**
+   * Criado na versão 0.8.1.
+   */
+  6: string markdown
   2: double percent
   3: double currency
   4: double number

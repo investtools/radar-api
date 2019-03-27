@@ -25,18 +25,18 @@
 <hr/><h2 id="Typedefs">Type declarations</h2>
 <div class="definition"><h3 id="Typedef_Date">Typedef: Date</h3>
 <p><strong>Base type:</strong>&nbsp;<code>i64</code></p>
-Representação <i><a href="http://en.wikipedia.org/wiki/Unix_time">Unix time</a></i>
+<pre>Representação <i><a href="http://en.wikipedia.org/wiki/Unix_time">Unix time</a></i>
 no horário 00:00:00.00 UTC.
-<br/></div>
+</pre><br/></div>
 <div class="definition"><h3 id="Typedef_Color">Typedef: Color</h3>
 <p><strong>Base type:</strong>&nbsp;<code>i32</code></p>
-Representação <i><a href="http://en.wikipedia.org/wiki/RGB_color_model">RGB</a></i>
+<pre>Representação <i><a href="http://en.wikipedia.org/wiki/RGB_color_model">RGB</a></i>
 de 24 bits.
 
 Exemplo: Vermelho = <code>#FF0000</code> =
 <code>11111111 00000000 00000000</code> =
 (255 × 2¹⁶) + (0 × 2⁸) + (0 × 2⁰) = 167.11.680
-<br/></div>
+</pre><br/></div>
 <hr/><h2 id="Structs">Data structures</h2>
 <div class="definition"><h3 id="Struct_StockId">Struct: StockId</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
@@ -52,12 +52,12 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <tr><td>1</td><td>index</td><td><code><a href="#Struct_IndexId">IndexId</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>factor</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 <tr><td>5</td><td>rate</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>3</td><td>base_date</td><td><code><a href="#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
-<tr><td>4</td><td>maturity_date</td><td><code><a href="#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>3</td><td>base_date</td><td><code><a href="#Struct_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>4</td><td>maturity_date</td><td><code><a href="#Struct_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_GovernmentBondId">Struct: GovernmentBondId</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>name</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>maturity_date</td><td><code><a href="#Typedef_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>maturity_date</td><td><code><a href="#Struct_Date">Date</a></code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_CustomSecurityId">Struct: CustomSecurityId</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>user_id</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>

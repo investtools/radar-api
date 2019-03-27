@@ -56,12 +56,12 @@
 <hr/><h2 id="Structs">Data structures</h2>
 <div class="definition"><h3 id="Struct_Price">Struct: Price</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>date</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>1</td><td>date</td><td><code><a href="common.html#Struct_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>close</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_DailyFundData">Struct: DailyFundData</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>price</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
-<tr><td>2</td><td>date</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>date</td><td><code><a href="common.html#Struct_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>3</td><td>nav</td><td><code>double</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_SecurityPosition">Struct: SecurityPosition</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
@@ -69,13 +69,13 @@
 <tr><td>2</td><td>shares</td><td><code>i32</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_MonthlyPosition">Struct: MonthlyPosition</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>date</td><td><code><a href="common.html#Typedef_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>1</td><td>date</td><td><code><a href="common.html#Struct_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
 <tr><td>2</td><td>position</td><td><code>list&lt;<code><a href="#Struct_SecurityPosition">SecurityPosition</a></code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_PortfolioService">Service: PortfolioService</h3>
 <div class="definition"><h4 id="Fn_PortfolioService_run_portfolio">Function: PortfolioService.run_portfolio</h4>
 <pre><code>list&lt;<code><a href="#Struct_MonthlyPosition">MonthlyPosition</a></code>&gt;</code> run_portfolio(<code>list&lt;<code><a href="transaction.html#Struct_Transaction">transaction.Transaction</a></code>&gt;</code> trxs,
-                                    <code>list&lt;<code><a href="common.html#Typedef_Date">common.Date</a></code>&gt;</code> reports_dates,
+                                    <code>list&lt;<code><a href="common.html#Struct_Date">common.Date</a></code>&gt;</code> reports_dates,
                                     <code>string</code> user)
 </pre></div><div class="definition"><h4 id="Fn_PortfolioService_persist">Function: PortfolioService.persist</h4>
 <pre><code>void</code> persist(<code>list&lt;<code><a href="transaction.html#Struct_Transaction">transaction.Transaction</a></code>&gt;</code> trxs,
@@ -91,51 +91,51 @@
 <pre><code>string</code> short_name(<code><a href="common.html#Struct_FundId">common.FundId</a></code> id)
 </pre></div><div class="definition"><h4 id="Fn_FundService_daily_data">Function: FundService.daily_data</h4>
 <pre><code><a href="#Struct_DailyFundData">DailyFundData</a></code> daily_data(<code><a href="common.html#Struct_FundId">common.FundId</a></code> id,
-                         <code><a href="common.html#Typedef_Date">common.Date</a></code> date)
+                         <code><a href="common.html#Struct_Date">common.Date</a></code> date)
 </pre></div><h3 id="Svc_SecurityService">Service: SecurityService</h3>
 <div class="definition"><h4 id="Fn_SecurityService_short_name">Function: SecurityService.short_name</h4>
 <pre><code>string</code> short_name(<code><a href="common.html#Struct_SecurityId">common.SecurityId</a></code> id)
 </pre></div><div class="definition"><h4 id="Fn_SecurityService_prices">Function: SecurityService.prices</h4>
 <pre><code>list&lt;<code><a href="#Struct_Price">Price</a></code>&gt;</code> prices(<code><a href="common.html#Struct_SecurityId">common.SecurityId</a></code> id,
-                   <code><a href="common.html#Typedef_Date">common.Date</a></code> start_date,
-                   <code><a href="common.html#Typedef_Date">common.Date</a></code> end_date)
+                   <code><a href="common.html#Struct_Date">common.Date</a></code> start_date,
+                   <code><a href="common.html#Struct_Date">common.Date</a></code> end_date)
 </pre></div><div class="definition"><h4 id="Fn_SecurityService_price">Function: SecurityService.price</h4>
 <pre><code>double</code> price(<code><a href="common.html#Struct_SecurityId">common.SecurityId</a></code> id,
-             <code><a href="common.html#Typedef_Date">common.Date</a></code> date)
+             <code><a href="common.html#Struct_Date">common.Date</a></code> date)
 </pre></div><div class="definition"><h4 id="Fn_SecurityService_price_change">Function: SecurityService.price_change</h4>
 <pre><code>double</code> price_change(<code><a href="common.html#Struct_SecurityId">common.SecurityId</a></code> id,
-                    <code><a href="common.html#Typedef_Date">common.Date</a></code> start_date,
-                    <code><a href="common.html#Typedef_Date">common.Date</a></code> end_date)
+                    <code><a href="common.html#Struct_Date">common.Date</a></code> start_date,
+                    <code><a href="common.html#Struct_Date">common.Date</a></code> end_date)
 </pre></div><div class="definition"><h4 id="Fn_SecurityService_price_changes">Function: SecurityService.price_changes</h4>
 <pre><code>list&lt;<code>double</code>&gt;</code> price_changes(<code><a href="common.html#Struct_SecurityId">common.SecurityId</a></code> id,
-                           <code><a href="common.html#Typedef_Date">common.Date</a></code> start_date,
-                           <code><a href="common.html#Typedef_Date">common.Date</a></code> end_date)
+                           <code><a href="common.html#Struct_Date">common.Date</a></code> start_date,
+                           <code><a href="common.html#Struct_Date">common.Date</a></code> end_date)
 </pre></div><div class="definition"><h4 id="Fn_SecurityService_price_volatility">Function: SecurityService.price_volatility</h4>
 <pre><code>double</code> price_volatility(<code><a href="common.html#Struct_SecurityId">common.SecurityId</a></code> id,
-                        <code><a href="common.html#Typedef_Date">common.Date</a></code> start_date,
-                        <code><a href="common.html#Typedef_Date">common.Date</a></code> end_date)
+                        <code><a href="common.html#Struct_Date">common.Date</a></code> start_date,
+                        <code><a href="common.html#Struct_Date">common.Date</a></code> end_date)
 </pre></div><h3 id="Svc_IndexService">Service: IndexService</h3>
 <div class="definition"><h4 id="Fn_IndexService_prices">Function: IndexService.prices</h4>
 <pre><code>list&lt;<code><a href="#Struct_Price">Price</a></code>&gt;</code> prices(<code>string</code> symbol,
-                   <code><a href="common.html#Typedef_Date">common.Date</a></code> start_date,
-                   <code><a href="common.html#Typedef_Date">common.Date</a></code> end_date)
+                   <code><a href="common.html#Struct_Date">common.Date</a></code> start_date,
+                   <code><a href="common.html#Struct_Date">common.Date</a></code> end_date)
 </pre></div><div class="definition"><h4 id="Fn_IndexService_price">Function: IndexService.price</h4>
 <pre><code>double</code> price(<code>string</code> symbol,
-             <code><a href="common.html#Typedef_Date">common.Date</a></code> date)
+             <code><a href="common.html#Struct_Date">common.Date</a></code> date)
 </pre></div><div class="definition"><h4 id="Fn_IndexService_price_change">Function: IndexService.price_change</h4>
 <pre><code>double</code> price_change(<code>string</code> symbol,
-                    <code><a href="common.html#Typedef_Date">common.Date</a></code> start_date,
-                    <code><a href="common.html#Typedef_Date">common.Date</a></code> end_date)
+                    <code><a href="common.html#Struct_Date">common.Date</a></code> start_date,
+                    <code><a href="common.html#Struct_Date">common.Date</a></code> end_date)
 </pre></div><h3 id="Svc_CalendarService">Service: CalendarService</h3>
 <div class="definition"><h4 id="Fn_CalendarService_advance">Function: CalendarService.advance</h4>
-<pre><code><a href="common.html#Typedef_Date">common.Date</a></code> advance(<code>string</code> calendar,
-                    <code><a href="common.html#Typedef_Date">common.Date</a></code> date,
+<pre><code><a href="common.html#Struct_Date">common.Date</a></code> advance(<code>string</code> calendar,
+                    <code><a href="common.html#Struct_Date">common.Date</a></code> date,
                     <code>i16</code> n)
 </pre></div><div class="definition"><h4 id="Fn_CalendarService_back">Function: CalendarService.back</h4>
-<pre><code><a href="common.html#Typedef_Date">common.Date</a></code> back(<code>string</code> calendar,
-                 <code><a href="common.html#Typedef_Date">common.Date</a></code> date,
+<pre><code><a href="common.html#Struct_Date">common.Date</a></code> back(<code>string</code> calendar,
+                 <code><a href="common.html#Struct_Date">common.Date</a></code> date,
                  <code>i16</code> n)
 </pre></div><div class="definition"><h4 id="Fn_CalendarService_first_business_day">Function: CalendarService.first_business_day</h4>
-<pre><code><a href="common.html#Typedef_Date">common.Date</a></code> first_business_day(<code>string</code> calendar,
-                               <code><a href="common.html#Typedef_Date">common.Date</a></code> date)
+<pre><code><a href="common.html#Struct_Date">common.Date</a></code> first_business_day(<code>string</code> calendar,
+                               <code><a href="common.html#Struct_Date">common.Date</a></code> date)
 </pre></div></div></body></html>
