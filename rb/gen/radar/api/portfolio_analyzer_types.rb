@@ -435,12 +435,15 @@ module Radar
     class Table
       include ::Thrift::Struct, ::Thrift::Struct_Union
       TITLE = 1
+      MAX_HEIGHT = 5
       HEADER = 2
       BODY = 3
       FOOTER = 4
 
       FIELDS = {
         TITLE => {:type => ::Thrift::Types::STRING, :name => 'title'},
+        # Criado na versão 0.8.2.
+        MAX_HEIGHT => {:type => ::Thrift::Types::I16, :name => 'max_height'},
         HEADER => {:type => ::Thrift::Types::LIST, :name => 'header', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::TableRow}},
         BODY => {:type => ::Thrift::Types::LIST, :name => 'body', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::TableRow}},
         FOOTER => {:type => ::Thrift::Types::LIST, :name => 'footer', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::TableRow}}

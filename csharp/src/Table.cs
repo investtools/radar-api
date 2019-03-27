@@ -22,6 +22,7 @@ using Thrift.Transport;
 public partial class Table : TBase
 {
   private string _title;
+  private short _max_height;
   private List<TableRow> _header;
   private List<TableRow> _body;
   private List<TableRow> _footer;
@@ -36,6 +37,22 @@ public partial class Table : TBase
     {
       __isset.title = true;
       this._title = value;
+    }
+  }
+
+  /// <summary>
+  /// Criado na versão 0.8.2.
+  /// </summary>
+  public short Max_height
+  {
+    get
+    {
+      return _max_height;
+    }
+    set
+    {
+      __isset.max_height = true;
+      this._max_height = value;
     }
   }
 
@@ -85,6 +102,7 @@ public partial class Table : TBase
   #endif
   public struct Isset {
     public bool title;
+    public bool max_height;
     public bool header;
     public bool body;
     public bool footer;
@@ -111,6 +129,13 @@ public partial class Table : TBase
           case 1:
             if (field.Type == TType.String) {
               Title = iprot.ReadString();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 5:
+            if (field.Type == TType.I16) {
+              Max_height = iprot.ReadI16();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -243,6 +268,14 @@ public partial class Table : TBase
         }
         oprot.WriteFieldEnd();
       }
+      if (__isset.max_height) {
+        field.Name = "max_height";
+        field.Type = TType.I16;
+        field.ID = 5;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteI16(Max_height);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -260,6 +293,12 @@ public partial class Table : TBase
       __first = false;
       __sb.Append("Title: ");
       __sb.Append(Title);
+    }
+    if (__isset.max_height) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Max_height: ");
+      __sb.Append(Max_height);
     }
     if (Header != null && __isset.header) {
       if(!__first) { __sb.Append(", "); }

@@ -11,6 +11,7 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Table");
 
   private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)1);
+  private static final org.apache.thrift.protocol.TField MAX_HEIGHT_FIELD_DESC = new org.apache.thrift.protocol.TField("max_height", org.apache.thrift.protocol.TType.I16, (short)5);
   private static final org.apache.thrift.protocol.TField HEADER_FIELD_DESC = new org.apache.thrift.protocol.TField("header", org.apache.thrift.protocol.TType.LIST, (short)2);
   private static final org.apache.thrift.protocol.TField BODY_FIELD_DESC = new org.apache.thrift.protocol.TField("body", org.apache.thrift.protocol.TType.LIST, (short)3);
   private static final org.apache.thrift.protocol.TField FOOTER_FIELD_DESC = new org.apache.thrift.protocol.TField("footer", org.apache.thrift.protocol.TType.LIST, (short)4);
@@ -19,6 +20,10 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new TableTupleSchemeFactory();
 
   public @org.apache.thrift.annotation.Nullable java.lang.String title; // required
+  /**
+   * Criado na versão 0.8.2.
+   */
+  public short max_height; // required
   public @org.apache.thrift.annotation.Nullable java.util.List<TableRow> header; // required
   public @org.apache.thrift.annotation.Nullable java.util.List<TableRow> body; // required
   public @org.apache.thrift.annotation.Nullable java.util.List<TableRow> footer; // required
@@ -26,6 +31,10 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     TITLE((short)1, "title"),
+    /**
+     * Criado na versão 0.8.2.
+     */
+    MAX_HEIGHT((short)5, "max_height"),
     HEADER((short)2, "header"),
     BODY((short)3, "body"),
     FOOTER((short)4, "footer");
@@ -46,6 +55,8 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
       switch(fieldId) {
         case 1: // TITLE
           return TITLE;
+        case 5: // MAX_HEIGHT
+          return MAX_HEIGHT;
         case 2: // HEADER
           return HEADER;
         case 3: // BODY
@@ -93,11 +104,15 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
   }
 
   // isset id assignments
+  private static final int __MAX_HEIGHT_ISSET_ID = 0;
+  private byte __isset_bitfield = 0;
   public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.MAX_HEIGHT, new org.apache.thrift.meta_data.FieldMetaData("max_height", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16)));
     tmpMap.put(_Fields.HEADER, new org.apache.thrift.meta_data.FieldMetaData("header", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
             new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, TableRow.class))));
@@ -116,12 +131,15 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
 
   public Table(
     java.lang.String title,
+    short max_height,
     java.util.List<TableRow> header,
     java.util.List<TableRow> body,
     java.util.List<TableRow> footer)
   {
     this();
     this.title = title;
+    this.max_height = max_height;
+    setMax_heightIsSet(true);
     this.header = header;
     this.body = body;
     this.footer = footer;
@@ -131,9 +149,11 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
    * Performs a deep copy on <i>other</i>.
    */
   public Table(Table other) {
+    __isset_bitfield = other.__isset_bitfield;
     if (other.isSetTitle()) {
       this.title = other.title;
     }
+    this.max_height = other.max_height;
     if (other.isSetHeader()) {
       java.util.List<TableRow> __this__header = new java.util.ArrayList<TableRow>(other.header.size());
       for (TableRow other_element : other.header) {
@@ -164,6 +184,8 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
   @Override
   public void clear() {
     this.title = null;
+    setMax_heightIsSet(false);
+    this.max_height = 0;
     this.header = null;
     this.body = null;
     this.footer = null;
@@ -192,6 +214,35 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     if (!value) {
       this.title = null;
     }
+  }
+
+  /**
+   * Criado na versão 0.8.2.
+   */
+  public short getMax_height() {
+    return this.max_height;
+  }
+
+  /**
+   * Criado na versão 0.8.2.
+   */
+  public Table setMax_height(short max_height) {
+    this.max_height = max_height;
+    setMax_heightIsSet(true);
+    return this;
+  }
+
+  public void unsetMax_height() {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __MAX_HEIGHT_ISSET_ID);
+  }
+
+  /** Returns true if field max_height is set (has been assigned a value) and false otherwise */
+  public boolean isSetMax_height() {
+    return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __MAX_HEIGHT_ISSET_ID);
+  }
+
+  public void setMax_heightIsSet(boolean value) {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __MAX_HEIGHT_ISSET_ID, value);
   }
 
   public int getHeaderSize() {
@@ -327,6 +378,14 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
       }
       break;
 
+    case MAX_HEIGHT:
+      if (value == null) {
+        unsetMax_height();
+      } else {
+        setMax_height((java.lang.Short)value);
+      }
+      break;
+
     case HEADER:
       if (value == null) {
         unsetHeader();
@@ -360,6 +419,9 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     case TITLE:
       return getTitle();
 
+    case MAX_HEIGHT:
+      return getMax_height();
+
     case HEADER:
       return getHeader();
 
@@ -382,6 +444,8 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     switch (field) {
     case TITLE:
       return isSetTitle();
+    case MAX_HEIGHT:
+      return isSetMax_height();
     case HEADER:
       return isSetHeader();
     case BODY:
@@ -413,6 +477,15 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
       if (!(this_present_title && that_present_title))
         return false;
       if (!this.title.equals(that.title))
+        return false;
+    }
+
+    boolean this_present_max_height = true;
+    boolean that_present_max_height = true;
+    if (this_present_max_height || that_present_max_height) {
+      if (!(this_present_max_height && that_present_max_height))
+        return false;
+      if (this.max_height != that.max_height)
         return false;
     }
 
@@ -454,6 +527,8 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     if (isSetTitle())
       hashCode = hashCode * 8191 + title.hashCode();
 
+    hashCode = hashCode * 8191 + max_height;
+
     hashCode = hashCode * 8191 + ((isSetHeader()) ? 131071 : 524287);
     if (isSetHeader())
       hashCode = hashCode * 8191 + header.hashCode();
@@ -483,6 +558,16 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     }
     if (isSetTitle()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.title, other.title);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = java.lang.Boolean.valueOf(isSetMax_height()).compareTo(other.isSetMax_height());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetMax_height()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.max_height, other.max_height);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -546,6 +631,10 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     }
     first = false;
     if (!first) sb.append(", ");
+    sb.append("max_height:");
+    sb.append(this.max_height);
+    first = false;
+    if (!first) sb.append(", ");
     sb.append("header:");
     if (this.header == null) {
       sb.append("null");
@@ -588,6 +677,8 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
 
   private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
     try {
+      // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+      __isset_bitfield = 0;
       read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
     } catch (org.apache.thrift.TException te) {
       throw new java.io.IOException(te);
@@ -616,6 +707,14 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
             if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
               struct.title = iprot.readString();
               struct.setTitleIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 5: // MAX_HEIGHT
+            if (schemeField.type == org.apache.thrift.protocol.TType.I16) {
+              struct.max_height = iprot.readI16();
+              struct.setMax_heightIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -733,6 +832,9 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
         }
         oprot.writeFieldEnd();
       }
+      oprot.writeFieldBegin(MAX_HEIGHT_FIELD_DESC);
+      oprot.writeI16(struct.max_height);
+      oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -754,18 +856,24 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
       if (struct.isSetTitle()) {
         optionals.set(0);
       }
-      if (struct.isSetHeader()) {
+      if (struct.isSetMax_height()) {
         optionals.set(1);
       }
-      if (struct.isSetBody()) {
+      if (struct.isSetHeader()) {
         optionals.set(2);
       }
-      if (struct.isSetFooter()) {
+      if (struct.isSetBody()) {
         optionals.set(3);
       }
-      oprot.writeBitSet(optionals, 4);
+      if (struct.isSetFooter()) {
+        optionals.set(4);
+      }
+      oprot.writeBitSet(optionals, 5);
       if (struct.isSetTitle()) {
         oprot.writeString(struct.title);
+      }
+      if (struct.isSetMax_height()) {
+        oprot.writeI16(struct.max_height);
       }
       if (struct.isSetHeader()) {
         {
@@ -799,12 +907,16 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Table struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(4);
+      java.util.BitSet incoming = iprot.readBitSet(5);
       if (incoming.get(0)) {
         struct.title = iprot.readString();
         struct.setTitleIsSet(true);
       }
       if (incoming.get(1)) {
+        struct.max_height = iprot.readI16();
+        struct.setMax_heightIsSet(true);
+      }
+      if (incoming.get(2)) {
         {
           org.apache.thrift.protocol.TList _list71 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
           struct.header = new java.util.ArrayList<TableRow>(_list71.size);
@@ -818,7 +930,7 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
         }
         struct.setHeaderIsSet(true);
       }
-      if (incoming.get(2)) {
+      if (incoming.get(3)) {
         {
           org.apache.thrift.protocol.TList _list74 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
           struct.body = new java.util.ArrayList<TableRow>(_list74.size);
@@ -832,7 +944,7 @@ public class Table implements org.apache.thrift.TBase<Table, Table._Fields>, jav
         }
         struct.setBodyIsSet(true);
       }
-      if (incoming.get(3)) {
+      if (incoming.get(4)) {
         {
           org.apache.thrift.protocol.TList _list77 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
           struct.footer = new java.util.ArrayList<TableRow>(_list77.size);

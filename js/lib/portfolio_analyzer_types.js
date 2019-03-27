@@ -1312,12 +1312,16 @@ TableRow.prototype.write = function(output) {
 
 var Table = module.exports.Table = function(args) {
   this.title = null;
+  this.max_height = null;
   this.header = null;
   this.body = null;
   this.footer = null;
   if (args) {
     if (args.title !== undefined && args.title !== null) {
       this.title = args.title;
+    }
+    if (args.max_height !== undefined && args.max_height !== null) {
+      this.max_height = args.max_height;
     }
     if (args.header !== undefined && args.header !== null) {
       this.header = Thrift.copyList(args.header, [ttypes.TableRow]);
@@ -1344,6 +1348,13 @@ Table.prototype.read = function(input) {
       case 1:
       if (ftype == Thrift.Type.STRING) {
         this.title = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I16) {
+        this.max_height = input.readI16();
       } else {
         input.skip(ftype);
       }
@@ -1410,6 +1421,11 @@ Table.prototype.write = function(output) {
   if (this.title !== null && this.title !== undefined) {
     output.writeFieldBegin('title', Thrift.Type.STRING, 1);
     output.writeString(this.title);
+    output.writeFieldEnd();
+  }
+  if (this.max_height !== null && this.max_height !== undefined) {
+    output.writeFieldBegin('max_height', Thrift.Type.I16, 5);
+    output.writeI16(this.max_height);
     output.writeFieldEnd();
   }
   if (this.header !== null && this.header !== undefined) {

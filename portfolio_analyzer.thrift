@@ -117,6 +117,10 @@ struct TableRow {
 
 struct Table {
   1: string title
+  /**
+   * Criado na versão 0.8.2.
+   */
+  5: i16 max_height
   2: list<TableRow> header
   3: list<TableRow> body
   4: list<TableRow> footer
