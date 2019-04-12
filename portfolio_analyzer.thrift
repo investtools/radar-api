@@ -150,6 +150,10 @@ struct Position {
   5: double avg_price
   6: double shares
   7: double paid_value
+  /**
+   * Criado na versão 0.8.3
+   */
+  8: double current_price
 }
 
 /**

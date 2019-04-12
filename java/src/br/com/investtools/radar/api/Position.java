@@ -17,6 +17,7 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
   private static final org.apache.thrift.protocol.TField AVG_PRICE_FIELD_DESC = new org.apache.thrift.protocol.TField("avg_price", org.apache.thrift.protocol.TType.DOUBLE, (short)5);
   private static final org.apache.thrift.protocol.TField SHARES_FIELD_DESC = new org.apache.thrift.protocol.TField("shares", org.apache.thrift.protocol.TType.DOUBLE, (short)6);
   private static final org.apache.thrift.protocol.TField PAID_VALUE_FIELD_DESC = new org.apache.thrift.protocol.TField("paid_value", org.apache.thrift.protocol.TType.DOUBLE, (short)7);
+  private static final org.apache.thrift.protocol.TField CURRENT_PRICE_FIELD_DESC = new org.apache.thrift.protocol.TField("current_price", org.apache.thrift.protocol.TType.DOUBLE, (short)8);
 
   private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new PositionStandardSchemeFactory();
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new PositionTupleSchemeFactory();
@@ -28,6 +29,10 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
   public double avg_price; // required
   public double shares; // required
   public double paid_value; // required
+  /**
+   * Criado na versão 0.8.3
+   */
+  public double current_price; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -37,7 +42,11 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
     RENTABILITY((short)4, "rentability"),
     AVG_PRICE((short)5, "avg_price"),
     SHARES((short)6, "shares"),
-    PAID_VALUE((short)7, "paid_value");
+    PAID_VALUE((short)7, "paid_value"),
+    /**
+     * Criado na versão 0.8.3
+     */
+    CURRENT_PRICE((short)8, "current_price");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -67,6 +76,8 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
           return SHARES;
         case 7: // PAID_VALUE
           return PAID_VALUE;
+        case 8: // CURRENT_PRICE
+          return CURRENT_PRICE;
         default:
           return null;
       }
@@ -113,6 +124,7 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
   private static final int __AVG_PRICE_ISSET_ID = 2;
   private static final int __SHARES_ISSET_ID = 3;
   private static final int __PAID_VALUE_ISSET_ID = 4;
+  private static final int __CURRENT_PRICE_ISSET_ID = 5;
   private byte __isset_bitfield = 0;
   public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
@@ -131,6 +143,8 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     tmpMap.put(_Fields.PAID_VALUE, new org.apache.thrift.meta_data.FieldMetaData("paid_value", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
+    tmpMap.put(_Fields.CURRENT_PRICE, new org.apache.thrift.meta_data.FieldMetaData("current_price", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Position.class, metaDataMap);
   }
@@ -145,7 +159,8 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
     double rentability,
     double avg_price,
     double shares,
-    double paid_value)
+    double paid_value,
+    double current_price)
   {
     this();
     this.id = id;
@@ -160,6 +175,8 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
     setSharesIsSet(true);
     this.paid_value = paid_value;
     setPaid_valueIsSet(true);
+    this.current_price = current_price;
+    setCurrent_priceIsSet(true);
   }
 
   /**
@@ -178,6 +195,7 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
     this.avg_price = other.avg_price;
     this.shares = other.shares;
     this.paid_value = other.paid_value;
+    this.current_price = other.current_price;
   }
 
   public Position deepCopy() {
@@ -198,6 +216,8 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
     this.shares = 0.0;
     setPaid_valueIsSet(false);
     this.paid_value = 0.0;
+    setCurrent_priceIsSet(false);
+    this.current_price = 0.0;
   }
 
   @org.apache.thrift.annotation.Nullable
@@ -365,6 +385,35 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
     __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __PAID_VALUE_ISSET_ID, value);
   }
 
+  /**
+   * Criado na versão 0.8.3
+   */
+  public double getCurrent_price() {
+    return this.current_price;
+  }
+
+  /**
+   * Criado na versão 0.8.3
+   */
+  public Position setCurrent_price(double current_price) {
+    this.current_price = current_price;
+    setCurrent_priceIsSet(true);
+    return this;
+  }
+
+  public void unsetCurrent_price() {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __CURRENT_PRICE_ISSET_ID);
+  }
+
+  /** Returns true if field current_price is set (has been assigned a value) and false otherwise */
+  public boolean isSetCurrent_price() {
+    return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __CURRENT_PRICE_ISSET_ID);
+  }
+
+  public void setCurrent_priceIsSet(boolean value) {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __CURRENT_PRICE_ISSET_ID, value);
+  }
+
   public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
     switch (field) {
     case ID:
@@ -423,6 +472,14 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
       }
       break;
 
+    case CURRENT_PRICE:
+      if (value == null) {
+        unsetCurrent_price();
+      } else {
+        setCurrent_price((java.lang.Double)value);
+      }
+      break;
+
     }
   }
 
@@ -450,6 +507,9 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
     case PAID_VALUE:
       return getPaid_value();
 
+    case CURRENT_PRICE:
+      return getCurrent_price();
+
     }
     throw new java.lang.IllegalStateException();
   }
@@ -475,6 +535,8 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
       return isSetShares();
     case PAID_VALUE:
       return isSetPaid_value();
+    case CURRENT_PRICE:
+      return isSetCurrent_price();
     }
     throw new java.lang.IllegalStateException();
   }
@@ -557,6 +619,15 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
         return false;
     }
 
+    boolean this_present_current_price = true;
+    boolean that_present_current_price = true;
+    if (this_present_current_price || that_present_current_price) {
+      if (!(this_present_current_price && that_present_current_price))
+        return false;
+      if (this.current_price != that.current_price)
+        return false;
+    }
+
     return true;
   }
 
@@ -581,6 +652,8 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
     hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(shares);
 
     hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(paid_value);
+
+    hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(current_price);
 
     return hashCode;
   }
@@ -663,6 +736,16 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
         return lastComparison;
       }
     }
+    lastComparison = java.lang.Boolean.valueOf(isSetCurrent_price()).compareTo(other.isSetCurrent_price());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetCurrent_price()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.current_price, other.current_price);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -718,6 +801,10 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
     if (!first) sb.append(", ");
     sb.append("paid_value:");
     sb.append(this.paid_value);
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("current_price:");
+    sb.append(this.current_price);
     first = false;
     sb.append(")");
     return sb.toString();
@@ -821,6 +908,14 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 8: // CURRENT_PRICE
+            if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
+              struct.current_price = iprot.readDouble();
+              struct.setCurrent_priceIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -861,6 +956,9 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
       oprot.writeFieldBegin(PAID_VALUE_FIELD_DESC);
       oprot.writeDouble(struct.paid_value);
       oprot.writeFieldEnd();
+      oprot.writeFieldBegin(CURRENT_PRICE_FIELD_DESC);
+      oprot.writeDouble(struct.current_price);
+      oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -900,7 +998,10 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
       if (struct.isSetPaid_value()) {
         optionals.set(6);
       }
-      oprot.writeBitSet(optionals, 7);
+      if (struct.isSetCurrent_price()) {
+        optionals.set(7);
+      }
+      oprot.writeBitSet(optionals, 8);
       if (struct.isSetId()) {
         struct.id.write(oprot);
       }
@@ -922,12 +1023,15 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
       if (struct.isSetPaid_value()) {
         oprot.writeDouble(struct.paid_value);
       }
+      if (struct.isSetCurrent_price()) {
+        oprot.writeDouble(struct.current_price);
+      }
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Position struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(7);
+      java.util.BitSet incoming = iprot.readBitSet(8);
       if (incoming.get(0)) {
         struct.id = new br.com.investtools.radar.api.SecurityId();
         struct.id.read(iprot);
@@ -956,6 +1060,10 @@ public class Position implements org.apache.thrift.TBase<Position, Position._Fie
       if (incoming.get(6)) {
         struct.paid_value = iprot.readDouble();
         struct.setPaid_valueIsSet(true);
+      }
+      if (incoming.get(7)) {
+        struct.current_price = iprot.readDouble();
+        struct.setCurrent_priceIsSet(true);
       }
     }
   }

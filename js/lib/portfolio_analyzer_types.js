@@ -1576,6 +1576,7 @@ var Position = module.exports.Position = function(args) {
   this.avg_price = null;
   this.shares = null;
   this.paid_value = null;
+  this.current_price = null;
   if (args) {
     if (args.id !== undefined && args.id !== null) {
       this.id = new common_ttypes.SecurityId(args.id);
@@ -1597,6 +1598,9 @@ var Position = module.exports.Position = function(args) {
     }
     if (args.paid_value !== undefined && args.paid_value !== null) {
       this.paid_value = args.paid_value;
+    }
+    if (args.current_price !== undefined && args.current_price !== null) {
+      this.current_price = args.current_price;
     }
   }
 };
@@ -1661,6 +1665,13 @@ Position.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 8:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.current_price = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1705,6 +1716,11 @@ Position.prototype.write = function(output) {
   if (this.paid_value !== null && this.paid_value !== undefined) {
     output.writeFieldBegin('paid_value', Thrift.Type.DOUBLE, 7);
     output.writeDouble(this.paid_value);
+    output.writeFieldEnd();
+  }
+  if (this.current_price !== null && this.current_price !== undefined) {
+    output.writeFieldBegin('current_price', Thrift.Type.DOUBLE, 8);
+    output.writeDouble(this.current_price);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

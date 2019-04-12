@@ -507,6 +507,7 @@ module Radar
       AVG_PRICE = 5
       SHARES = 6
       PAID_VALUE = 7
+      CURRENT_PRICE = 8
 
       FIELDS = {
         ID => {:type => ::Thrift::Types::STRUCT, :name => 'id', :class => ::Radar::Api::SecurityId},
@@ -515,7 +516,9 @@ module Radar
         RENTABILITY => {:type => ::Thrift::Types::DOUBLE, :name => 'rentability'},
         AVG_PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'avg_price'},
         SHARES => {:type => ::Thrift::Types::DOUBLE, :name => 'shares'},
-        PAID_VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'paid_value'}
+        PAID_VALUE => {:type => ::Thrift::Types::DOUBLE, :name => 'paid_value'},
+        # Criado na versão 0.8.3
+        CURRENT_PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'current_price'}
       }
 
       def struct_fields; FIELDS; end

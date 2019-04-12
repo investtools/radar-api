@@ -28,6 +28,7 @@ public partial class Position : TBase
   private double _avg_price;
   private double _shares;
   private double _paid_value;
+  private double _current_price;
 
   public SecurityId Id
   {
@@ -120,6 +121,22 @@ public partial class Position : TBase
     }
   }
 
+  /// <summary>
+  /// Criado na versão 0.8.3
+  /// </summary>
+  public double Current_price
+  {
+    get
+    {
+      return _current_price;
+    }
+    set
+    {
+      __isset.current_price = true;
+      this._current_price = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -133,6 +150,7 @@ public partial class Position : TBase
     public bool avg_price;
     public bool shares;
     public bool paid_value;
+    public bool current_price;
   }
 
   public Position() {
@@ -199,6 +217,13 @@ public partial class Position : TBase
           case 7:
             if (field.Type == TType.Double) {
               Paid_value = iprot.ReadDouble();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 8:
+            if (field.Type == TType.Double) {
+              Current_price = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -280,6 +305,14 @@ public partial class Position : TBase
         oprot.WriteDouble(Paid_value);
         oprot.WriteFieldEnd();
       }
+      if (__isset.current_price) {
+        field.Name = "current_price";
+        field.Type = TType.Double;
+        field.ID = 8;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteDouble(Current_price);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -333,6 +366,12 @@ public partial class Position : TBase
       __first = false;
       __sb.Append("Paid_value: ");
       __sb.Append(Paid_value);
+    }
+    if (__isset.current_price) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Current_price: ");
+      __sb.Append(Current_price);
     }
     __sb.Append(")");
     return __sb.ToString();
