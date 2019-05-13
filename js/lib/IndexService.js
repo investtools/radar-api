@@ -117,13 +117,13 @@ IndexService_prices_result.prototype.read = function(input) {
       case 0:
       if (ftype == Thrift.Type.LIST) {
         this.success = [];
-        var _rtmp336 = input.readListBegin();
-        var _size35 = _rtmp336.size || 0;
-        for (var _i37 = 0; _i37 < _size35; ++_i37) {
-          var elem38 = null;
-          elem38 = new ttypes.Price();
-          elem38.read(input);
-          this.success.push(elem38);
+        var _rtmp341 = input.readListBegin();
+        var _size40 = _rtmp341.size || 0;
+        for (var _i42 = 0; _i42 < _size40; ++_i42) {
+          var elem43 = null;
+          elem43 = new ttypes.Price();
+          elem43.read(input);
+          this.success.push(elem43);
         }
         input.readListEnd();
       } else {
@@ -147,10 +147,10 @@ IndexService_prices_result.prototype.write = function(output) {
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.LIST, 0);
     output.writeListBegin(Thrift.Type.STRUCT, this.success.length);
-    for (var iter39 in this.success) {
-      if (this.success.hasOwnProperty(iter39)) {
-        iter39 = this.success[iter39];
-        iter39.write(output);
+    for (var iter44 in this.success) {
+      if (this.success.hasOwnProperty(iter44)) {
+        iter44 = this.success[iter44];
+        iter44.write(output);
       }
     }
     output.writeListEnd();

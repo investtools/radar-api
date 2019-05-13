@@ -42,6 +42,20 @@ module Radar
           return
         end
 
+        def persist_brokers(brokers, user)
+          send_persist_brokers(brokers, user)
+          recv_persist_brokers()
+        end
+
+        def send_persist_brokers(brokers, user)
+          send_message('persist_brokers', Persist_brokers_args, :brokers => brokers, :user => user)
+        end
+
+        def recv_persist_brokers()
+          result = receive_message(Persist_brokers_result)
+          return
+        end
+
       end
 
       class Processor
@@ -59,6 +73,13 @@ module Radar
           result = Persist_result.new()
           @handler.persist(args.trxs, args.user)
           write_result(result, oprot, 'persist', seqid)
+        end
+
+        def process_persist_brokers(seqid, iprot, oprot)
+          args = read_args(iprot, Persist_brokers_args)
+          result = Persist_brokers_result.new()
+          @handler.persist_brokers(args.brokers, args.user)
+          write_result(result, oprot, 'persist_brokers', seqid)
         end
 
       end
@@ -120,6 +141,39 @@ module Radar
       end
 
       class Persist_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+
+        FIELDS = {
+
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Persist_brokers_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        BROKERS = 1
+        USER = 2
+
+        FIELDS = {
+          BROKERS => {:type => ::Thrift::Types::LIST, :name => 'brokers', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Broker}},
+          USER => {:type => ::Thrift::Types::STRING, :name => 'user'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Persist_brokers_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
 
         FIELDS = {

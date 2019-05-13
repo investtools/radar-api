@@ -12,6 +12,7 @@
 <td>data_server</td><td><a href="#Svc_PortfolioService">PortfolioService</a><br/>
 <ul>
 <li><a href="#Fn_PortfolioService_persist">persist</a></li>
+<li><a href="#Fn_PortfolioService_persist_brokers">persist_brokers</a></li>
 <li><a href="#Fn_PortfolioService_run_portfolio">run_portfolio</a></li>
 </ul>
 <a href="#Svc_IntegrationStatusService">IntegrationStatusService</a><br/>
@@ -80,6 +81,9 @@
 </pre></div><div class="definition"><h4 id="Fn_PortfolioService_persist">Function: PortfolioService.persist</h4>
 <pre><code>void</code> persist(<code>list&lt;<code><a href="transaction.html#Struct_Transaction">transaction.Transaction</a></code>&gt;</code> trxs,
              <code>string</code> user)
+</pre></div><div class="definition"><h4 id="Fn_PortfolioService_persist_brokers">Function: PortfolioService.persist_brokers</h4>
+<pre><code>void</code> persist_brokers(<code>list&lt;<code><a href="common.html#Struct_Broker">common.Broker</a></code>&gt;</code> brokers,
+                     <code>string</code> user)
 </pre></div><h3 id="Svc_IntegrationStatusService">Service: IntegrationStatusService</h3>
 <div class="definition"><h4 id="Fn_IntegrationStatusService_report_status">Function: IntegrationStatusService.report_status</h4>
 <pre><code>void</code> report_status(<code>string</code> message,

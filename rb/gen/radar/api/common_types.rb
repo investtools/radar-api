@@ -22,6 +22,8 @@ module Radar
 
     class SecurityId < ::Thrift::Union; end
 
+    class Broker; end
+
     class StockId
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SYMBOL = 1
@@ -175,6 +177,26 @@ module Radar
       end
 
       ::Thrift::Union.generate_accessors self
+    end
+
+    class Broker
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      CODE = 1
+      NAME = 2
+      SEGMENT = 3
+
+      FIELDS = {
+        CODE => {:type => ::Thrift::Types::STRING, :name => 'code'},
+        NAME => {:type => ::Thrift::Types::STRING, :name => 'name'},
+        SEGMENT => {:type => ::Thrift::Types::STRING, :name => 'segment'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
     end
 
   end

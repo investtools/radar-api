@@ -515,3 +515,82 @@ SecurityId.prototype.write = function(output) {
   return;
 };
 
+var Broker = module.exports.Broker = function(args) {
+  this.code = null;
+  this.name = null;
+  this.segment = null;
+  if (args) {
+    if (args.code !== undefined && args.code !== null) {
+      this.code = args.code;
+    }
+    if (args.name !== undefined && args.name !== null) {
+      this.name = args.name;
+    }
+    if (args.segment !== undefined && args.segment !== null) {
+      this.segment = args.segment;
+    }
+  }
+};
+Broker.prototype = {};
+Broker.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.code = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.name = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.segment = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+Broker.prototype.write = function(output) {
+  output.writeStructBegin('Broker');
+  if (this.code !== null && this.code !== undefined) {
+    output.writeFieldBegin('code', Thrift.Type.STRING, 1);
+    output.writeString(this.code);
+    output.writeFieldEnd();
+  }
+  if (this.name !== null && this.name !== undefined) {
+    output.writeFieldBegin('name', Thrift.Type.STRING, 2);
+    output.writeString(this.name);
+    output.writeFieldEnd();
+  }
+  if (this.segment !== null && this.segment !== undefined) {
+    output.writeFieldBegin('segment', Thrift.Type.STRING, 3);
+    output.writeString(this.segment);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+

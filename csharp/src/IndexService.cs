@@ -668,13 +668,13 @@ public partial class IndexService {
               if (field.Type == TType.List) {
                 {
                   Success = new List<Price>();
-                  TList _list28 = iprot.ReadListBegin();
-                  for( int _i29 = 0; _i29 < _list28.Count; ++_i29)
+                  TList _list32 = iprot.ReadListBegin();
+                  for( int _i33 = 0; _i33 < _list32.Count; ++_i33)
                   {
-                    Price _elem30;
-                    _elem30 = new Price();
-                    _elem30.Read(iprot);
-                    Success.Add(_elem30);
+                    Price _elem34;
+                    _elem34 = new Price();
+                    _elem34.Read(iprot);
+                    Success.Add(_elem34);
                   }
                   iprot.ReadListEnd();
                 }
@@ -712,9 +712,9 @@ public partial class IndexService {
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
-              foreach (Price _iter31 in Success)
+              foreach (Price _iter35 in Success)
               {
-                _iter31.Write(oprot);
+                _iter35.Write(oprot);
               }
               oprot.WriteListEnd();
             }

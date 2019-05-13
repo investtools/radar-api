@@ -55,3 +55,9 @@ union SecurityId {
   5: CustomSecurityId custom_security
 }
 
+struct Broker {
+  1: string code
+  2: string name
+  3: string segment
+}
+

@@ -296,6 +296,110 @@ PortfolioService_persist_result.prototype.write = function(output) {
   return;
 };
 
+var PortfolioService_persist_brokers_args = function(args) {
+  this.brokers = null;
+  this.user = null;
+  if (args) {
+    if (args.brokers !== undefined && args.brokers !== null) {
+      this.brokers = Thrift.copyList(args.brokers, [common_ttypes.Broker]);
+    }
+    if (args.user !== undefined && args.user !== null) {
+      this.user = args.user;
+    }
+  }
+};
+PortfolioService_persist_brokers_args.prototype = {};
+PortfolioService_persist_brokers_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.LIST) {
+        this.brokers = [];
+        var _rtmp326 = input.readListBegin();
+        var _size25 = _rtmp326.size || 0;
+        for (var _i27 = 0; _i27 < _size25; ++_i27) {
+          var elem28 = null;
+          elem28 = new common_ttypes.Broker();
+          elem28.read(input);
+          this.brokers.push(elem28);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+PortfolioService_persist_brokers_args.prototype.write = function(output) {
+  output.writeStructBegin('PortfolioService_persist_brokers_args');
+  if (this.brokers !== null && this.brokers !== undefined) {
+    output.writeFieldBegin('brokers', Thrift.Type.LIST, 1);
+    output.writeListBegin(Thrift.Type.STRUCT, this.brokers.length);
+    for (var iter29 in this.brokers) {
+      if (this.brokers.hasOwnProperty(iter29)) {
+        iter29 = this.brokers[iter29];
+        iter29.write(output);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 2);
+    output.writeString(this.user);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var PortfolioService_persist_brokers_result = function(args) {
+};
+PortfolioService_persist_brokers_result.prototype = {};
+PortfolioService_persist_brokers_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    input.skip(ftype);
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+PortfolioService_persist_brokers_result.prototype.write = function(output) {
+  output.writeStructBegin('PortfolioService_persist_brokers_result');
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 var PortfolioServiceClient = exports.Client = function(output, pClass) {
   this.output = output;
   this.pClass = pClass;
@@ -423,6 +527,63 @@ PortfolioServiceClient.prototype.recv_persist = function(input,mtype,rseqid) {
 
   callback(null);
 };
+
+PortfolioServiceClient.prototype.persist_brokers = function(brokers, user, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_persist_brokers(brokers, user);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_persist_brokers(brokers, user);
+  }
+};
+
+PortfolioServiceClient.prototype.send_persist_brokers = function(brokers, user) {
+  var output = new this.pClass(this.output);
+  var params = {
+    brokers: brokers,
+    user: user
+  };
+  var args = new PortfolioService_persist_brokers_args(params);
+  try {
+    output.writeMessageBegin('persist_brokers', Thrift.MessageType.CALL, this.seqid());
+    args.write(output);
+    output.writeMessageEnd();
+    return this.output.flush();
+  }
+  catch (e) {
+    delete this._reqs[this.seqid()];
+    if (typeof output.reset === 'function') {
+      output.reset();
+    }
+    throw e;
+  }
+};
+
+PortfolioServiceClient.prototype.recv_persist_brokers = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new PortfolioService_persist_brokers_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  callback(null);
+};
 var PortfolioServiceProcessor = exports.Processor = function(handler) {
   this._handler = handler;
 };
@@ -510,6 +671,44 @@ PortfolioServiceProcessor.prototype.process_persist = function(seqid, input, out
       } else {
         result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
         output.writeMessageBegin("persist", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result_obj.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  }
+};
+PortfolioServiceProcessor.prototype.process_persist_brokers = function(seqid, input, output) {
+  var args = new PortfolioService_persist_brokers_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.persist_brokers.length === 2) {
+    Q.fcall(this._handler.persist_brokers.bind(this._handler),
+      args.brokers,
+      args.user
+    ).then(function(result) {
+      var result_obj = new PortfolioService_persist_brokers_result({success: result});
+      output.writeMessageBegin("persist_brokers", Thrift.MessageType.REPLY, seqid);
+      result_obj.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    }).catch(function (err) {
+      var result;
+      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+      output.writeMessageBegin("persist_brokers", Thrift.MessageType.EXCEPTION, seqid);
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  } else {
+    this._handler.persist_brokers(args.brokers, args.user, function (err, result) {
+      var result_obj;
+      if ((err === null || typeof err === 'undefined')) {
+        result_obj = new PortfolioService_persist_brokers_result((err !== null || typeof err === 'undefined') ? err : {success: result});
+        output.writeMessageBegin("persist_brokers", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("persist_brokers", Thrift.MessageType.EXCEPTION, seqid);
       }
       result_obj.write(output);
       output.writeMessageEnd();
