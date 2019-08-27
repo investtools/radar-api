@@ -13,6 +13,23 @@ module Radar
       class Client
         include ::Thrift::Client
 
+        def authenticate(username, password, user)
+          send_authenticate(username, password, user)
+          return recv_authenticate()
+        end
+
+        def send_authenticate(username, password, user)
+          send_message('authenticate', Authenticate_args, :username => username, :password => password, :user => user)
+        end
+
+        def recv_authenticate()
+          result = receive_message(Authenticate_result)
+          return result.success unless result.success.nil?
+          raise result.auth_error unless result.auth_error.nil?
+          raise result.system_unavailable unless result.system_unavailable.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'authenticate failed: unknown result')
+        end
+
         def fetch(username, password, user, last_transaction_date)
           send_fetch(username, password, user, last_transaction_date)
           recv_fetch()
@@ -34,6 +51,19 @@ module Radar
       class Processor
         include ::Thrift::Processor
 
+        def process_authenticate(seqid, iprot, oprot)
+          args = read_args(iprot, Authenticate_args)
+          result = Authenticate_result.new()
+          begin
+            result.success = @handler.authenticate(args.username, args.password, args.user)
+          rescue ::Radar::Api::AuthenticationError => auth_error
+            result.auth_error = auth_error
+          rescue ::Radar::Api::SystemUnavailableError => system_unavailable
+            result.system_unavailable = system_unavailable
+          end
+          write_result(result, oprot, 'authenticate', seqid)
+        end
+
         def process_fetch(seqid, iprot, oprot)
           args = read_args(iprot, Fetch_args)
           result = Fetch_result.new()
@@ -50,6 +80,46 @@ module Radar
       end
 
       # HELPER FUNCTIONS AND STRUCTURES
+
+      class Authenticate_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        USERNAME = 1
+        PASSWORD = 2
+        USER = 3
+
+        FIELDS = {
+          USERNAME => {:type => ::Thrift::Types::STRING, :name => 'username'},
+          PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'},
+          USER => {:type => ::Thrift::Types::STRING, :name => 'user'}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Authenticate_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+        AUTH_ERROR = 1
+        SYSTEM_UNAVAILABLE = 2
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::BOOL, :name => 'success'},
+          AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
+          SYSTEM_UNAVAILABLE => {:type => ::Thrift::Types::STRUCT, :name => 'system_unavailable', :class => ::Radar::Api::SystemUnavailableError}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
 
       class Fetch_args
         include ::Thrift::Struct, ::Thrift::Struct_Union

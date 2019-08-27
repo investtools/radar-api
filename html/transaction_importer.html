@@ -11,6 +11,7 @@
 <tr>
 <td>transaction_importer</td><td><a href="#Svc_TransactionImporter">TransactionImporter</a><br/>
 <ul>
+<li><a href="#Fn_TransactionImporter_authenticate">authenticate</a></li>
 <li><a href="#Fn_TransactionImporter_fetch">fetch</a></li>
 </ul>
 </td>
@@ -28,7 +29,12 @@
 <tr><td>1</td><td>message</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_TransactionImporter">Service: TransactionImporter</h3>
-<div class="definition"><h4 id="Fn_TransactionImporter_fetch">Function: TransactionImporter.fetch</h4>
+<div class="definition"><h4 id="Fn_TransactionImporter_authenticate">Function: TransactionImporter.authenticate</h4>
+<pre><code>bool</code> authenticate(<code>string</code> username,
+                  <code>string</code> password,
+                  <code>string</code> user)
+    throws <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>, <code><a href="#Struct_SystemUnavailableError">SystemUnavailableError</a></code>
+</pre></div><div class="definition"><h4 id="Fn_TransactionImporter_fetch">Function: TransactionImporter.fetch</h4>
 <pre><code>void</code> fetch(<code>string</code> username,
            <code>string</code> password,
            <code>string</code> user,
