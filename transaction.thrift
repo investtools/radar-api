@@ -81,6 +81,13 @@ struct Transfer {
   4: TransferType type
 }
 
+struct PositionSnapshot {
+  1: common.Date date
+  2: common.StockId stock
+  3: i32 shares
+  4: double price
+}
+
 union Transaction {
   1: StockBuy stock_buy
   2: StockSell stock_sell
@@ -90,4 +97,5 @@ union Transaction {
   6: StockOption stock_option
   7: Subscription subscription
   8: Transfer transfer
+  9: PositionSnapshot position_snapshot
 }
