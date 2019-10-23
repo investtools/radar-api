@@ -19,6 +19,10 @@ enum TransferType {
   IN = 1, OUT = 2
 }
 
+enum PositionSnapshotType {
+  STOCK = 1, OPTION = 2
+}
+
 struct StockSell {
   1: common.Date date
   2: common.StockId stock
@@ -86,6 +90,8 @@ struct PositionSnapshot {
   2: common.StockId stock
   3: i32 shares
   4: double price
+  5: common.Date maturity
+  6: PositionSnapshotType type
 }
 
 union Transaction {

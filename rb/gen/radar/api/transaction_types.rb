@@ -38,6 +38,13 @@ module Radar
       VALID_VALUES = Set.new([IN, OUT]).freeze
     end
 
+    module PositionSnapshotType
+      STOCK = 1
+      OPTION = 2
+      VALUE_MAP = {1 => "STOCK", 2 => "OPTION"}
+      VALID_VALUES = Set.new([STOCK, OPTION]).freeze
+    end
+
     class StockSell; end
 
     class StockBuy; end
@@ -270,17 +277,24 @@ module Radar
       STOCK = 2
       SHARES = 3
       PRICE = 4
+      MATURITY = 5
+      TYPE = 6
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
         STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
-        PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'}
+        PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'},
+        MATURITY => {:type => ::Thrift::Types::I64, :name => 'maturity'},
+        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::Api::PositionSnapshotType}
       }
 
       def struct_fields; FIELDS; end
 
       def validate
+        unless @type.nil? || ::Radar::Api::PositionSnapshotType::VALID_VALUES.include?(@type)
+          raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Invalid value of field type!')
+        end
       end
 
       ::Thrift::Struct.generate_accessors self
