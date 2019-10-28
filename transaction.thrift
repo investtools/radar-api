@@ -19,8 +19,8 @@ enum TransferType {
   IN = 1, OUT = 2
 }
 
-enum PositionSnapshotType {
-  STOCK = 1, OPTION = 2
+enum OptionExerciseType {
+  BUY = 1, SELL = 2
 }
 
 struct StockSell {
@@ -85,13 +85,28 @@ struct Transfer {
   4: TransferType type
 }
 
-struct PositionSnapshot {
+struct StockPositionSnapshot {
+  1: common.Date date
+  2: common.StockId stock
+  3: i32 shares
+  4: double price
+}
+
+struct OptionPositionSnapshot {
   1: common.Date date
   2: common.StockId stock
   3: i32 shares
   4: double price
   5: common.Date maturity
-  6: PositionSnapshotType type
+}
+
+struct OptionExercisePositionSnapshot {
+  1: common.Date date
+  2: common.StockId stock
+  3: i32 shares
+  4: double price
+  5: common.Date maturity
+  7: OptionExerciseType type
 }
 
 union Transaction {
@@ -103,5 +118,7 @@ union Transaction {
   6: StockOption stock_option
   7: Subscription subscription
   8: Transfer transfer
-  9: PositionSnapshot position_snapshot
+  9: StockPositionSnapshot stock_position_snapshot
+  10: OptionPositionSnapshot option_position_snapshot
+  11: OptionExercisePositionSnapshot option_exercise_position_snapshot
 }

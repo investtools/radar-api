@@ -38,11 +38,11 @@ module Radar
       VALID_VALUES = Set.new([IN, OUT]).freeze
     end
 
-    module PositionSnapshotType
-      STOCK = 1
-      OPTION = 2
-      VALUE_MAP = {1 => "STOCK", 2 => "OPTION"}
-      VALID_VALUES = Set.new([STOCK, OPTION]).freeze
+    module OptionExerciseType
+      BUY = 1
+      SELL = 2
+      VALUE_MAP = {1 => "BUY", 2 => "SELL"}
+      VALID_VALUES = Set.new([BUY, SELL]).freeze
     end
 
     class StockSell; end
@@ -61,7 +61,11 @@ module Radar
 
     class Transfer; end
 
-    class PositionSnapshot; end
+    class StockPositionSnapshot; end
+
+    class OptionPositionSnapshot; end
+
+    class OptionExercisePositionSnapshot; end
 
     class Transaction < ::Thrift::Union; end
 
@@ -271,14 +275,60 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
-    class PositionSnapshot
+    class StockPositionSnapshot
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DATE = 1
+      STOCK = 2
+      SHARES = 3
+      PRICE = 4
+
+      FIELDS = {
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
+        STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
+        SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
+        PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class OptionPositionSnapshot
       include ::Thrift::Struct, ::Thrift::Struct_Union
       DATE = 1
       STOCK = 2
       SHARES = 3
       PRICE = 4
       MATURITY = 5
-      TYPE = 6
+
+      FIELDS = {
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
+        STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId},
+        SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
+        PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'},
+        MATURITY => {:type => ::Thrift::Types::I64, :name => 'maturity'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class OptionExercisePositionSnapshot
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DATE = 1
+      STOCK = 2
+      SHARES = 3
+      PRICE = 4
+      MATURITY = 5
+      TYPE = 7
 
       FIELDS = {
         DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
@@ -286,13 +336,13 @@ module Radar
         SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
         PRICE => {:type => ::Thrift::Types::DOUBLE, :name => 'price'},
         MATURITY => {:type => ::Thrift::Types::I64, :name => 'maturity'},
-        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::Api::PositionSnapshotType}
+        TYPE => {:type => ::Thrift::Types::I32, :name => 'type', :enum_class => ::Radar::Api::OptionExerciseType}
       }
 
       def struct_fields; FIELDS; end
 
       def validate
-        unless @type.nil? || ::Radar::Api::PositionSnapshotType::VALID_VALUES.include?(@type)
+        unless @type.nil? || ::Radar::Api::OptionExerciseType::VALID_VALUES.include?(@type)
           raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Invalid value of field type!')
         end
       end
@@ -335,8 +385,16 @@ module Radar
           Transaction.new(:transfer, val)
         end
 
-        def position_snapshot(val)
-          Transaction.new(:position_snapshot, val)
+        def stock_position_snapshot(val)
+          Transaction.new(:stock_position_snapshot, val)
+        end
+
+        def option_position_snapshot(val)
+          Transaction.new(:option_position_snapshot, val)
+        end
+
+        def option_exercise_position_snapshot(val)
+          Transaction.new(:option_exercise_position_snapshot, val)
         end
       end
 
@@ -348,7 +406,9 @@ module Radar
       STOCK_OPTION = 6
       SUBSCRIPTION = 7
       TRANSFER = 8
-      POSITION_SNAPSHOT = 9
+      STOCK_POSITION_SNAPSHOT = 9
+      OPTION_POSITION_SNAPSHOT = 10
+      OPTION_EXERCISE_POSITION_SNAPSHOT = 11
 
       FIELDS = {
         STOCK_BUY => {:type => ::Thrift::Types::STRUCT, :name => 'stock_buy', :class => ::Radar::Api::StockBuy, :optional => true},
@@ -359,7 +419,9 @@ module Radar
         STOCK_OPTION => {:type => ::Thrift::Types::STRUCT, :name => 'stock_option', :class => ::Radar::Api::StockOption, :optional => true},
         SUBSCRIPTION => {:type => ::Thrift::Types::STRUCT, :name => 'subscription', :class => ::Radar::Api::Subscription, :optional => true},
         TRANSFER => {:type => ::Thrift::Types::STRUCT, :name => 'transfer', :class => ::Radar::Api::Transfer, :optional => true},
-        POSITION_SNAPSHOT => {:type => ::Thrift::Types::STRUCT, :name => 'position_snapshot', :class => ::Radar::Api::PositionSnapshot, :optional => true}
+        STOCK_POSITION_SNAPSHOT => {:type => ::Thrift::Types::STRUCT, :name => 'stock_position_snapshot', :class => ::Radar::Api::StockPositionSnapshot, :optional => true},
+        OPTION_POSITION_SNAPSHOT => {:type => ::Thrift::Types::STRUCT, :name => 'option_position_snapshot', :class => ::Radar::Api::OptionPositionSnapshot, :optional => true},
+        OPTION_EXERCISE_POSITION_SNAPSHOT => {:type => ::Thrift::Types::STRUCT, :name => 'option_exercise_position_snapshot', :class => ::Radar::Api::OptionExercisePositionSnapshot, :optional => true}
       }
 
       def struct_fields; FIELDS; end
