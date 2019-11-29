@@ -29,6 +29,10 @@ public partial class Transaction : TBase
   private StockOption _stock_option;
   private Subscription _subscription;
   private Transfer _transfer;
+  private StockPositionSnapshot _stock_position_snapshot;
+  private OptionPositionSnapshot _option_position_snapshot;
+  private OptionExercisePositionSnapshot _option_exercise_position_snapshot;
+  private OptionExercise _option_exercise;
 
   public StockBuy Stock_buy
   {
@@ -134,6 +138,58 @@ public partial class Transaction : TBase
     }
   }
 
+  public StockPositionSnapshot Stock_position_snapshot
+  {
+    get
+    {
+      return _stock_position_snapshot;
+    }
+    set
+    {
+      __isset.stock_position_snapshot = true;
+      this._stock_position_snapshot = value;
+    }
+  }
+
+  public OptionPositionSnapshot Option_position_snapshot
+  {
+    get
+    {
+      return _option_position_snapshot;
+    }
+    set
+    {
+      __isset.option_position_snapshot = true;
+      this._option_position_snapshot = value;
+    }
+  }
+
+  public OptionExercisePositionSnapshot Option_exercise_position_snapshot
+  {
+    get
+    {
+      return _option_exercise_position_snapshot;
+    }
+    set
+    {
+      __isset.option_exercise_position_snapshot = true;
+      this._option_exercise_position_snapshot = value;
+    }
+  }
+
+  public OptionExercise Option_exercise
+  {
+    get
+    {
+      return _option_exercise;
+    }
+    set
+    {
+      __isset.option_exercise = true;
+      this._option_exercise = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -148,6 +204,10 @@ public partial class Transaction : TBase
     public bool stock_option;
     public bool subscription;
     public bool transfer;
+    public bool stock_position_snapshot;
+    public bool option_position_snapshot;
+    public bool option_exercise_position_snapshot;
+    public bool option_exercise;
   }
 
   public Transaction() {
@@ -228,6 +288,38 @@ public partial class Transaction : TBase
             if (field.Type == TType.Struct) {
               Transfer = new Transfer();
               Transfer.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 9:
+            if (field.Type == TType.Struct) {
+              Stock_position_snapshot = new StockPositionSnapshot();
+              Stock_position_snapshot.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 10:
+            if (field.Type == TType.Struct) {
+              Option_position_snapshot = new OptionPositionSnapshot();
+              Option_position_snapshot.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 11:
+            if (field.Type == TType.Struct) {
+              Option_exercise_position_snapshot = new OptionExercisePositionSnapshot();
+              Option_exercise_position_snapshot.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 12:
+            if (field.Type == TType.Struct) {
+              Option_exercise = new OptionExercise();
+              Option_exercise.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -317,6 +409,38 @@ public partial class Transaction : TBase
         Transfer.Write(oprot);
         oprot.WriteFieldEnd();
       }
+      if (Stock_position_snapshot != null && __isset.stock_position_snapshot) {
+        field.Name = "stock_position_snapshot";
+        field.Type = TType.Struct;
+        field.ID = 9;
+        oprot.WriteFieldBegin(field);
+        Stock_position_snapshot.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
+      if (Option_position_snapshot != null && __isset.option_position_snapshot) {
+        field.Name = "option_position_snapshot";
+        field.Type = TType.Struct;
+        field.ID = 10;
+        oprot.WriteFieldBegin(field);
+        Option_position_snapshot.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
+      if (Option_exercise_position_snapshot != null && __isset.option_exercise_position_snapshot) {
+        field.Name = "option_exercise_position_snapshot";
+        field.Type = TType.Struct;
+        field.ID = 11;
+        oprot.WriteFieldBegin(field);
+        Option_exercise_position_snapshot.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
+      if (Option_exercise != null && __isset.option_exercise) {
+        field.Name = "option_exercise";
+        field.Type = TType.Struct;
+        field.ID = 12;
+        oprot.WriteFieldBegin(field);
+        Option_exercise.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -376,6 +500,30 @@ public partial class Transaction : TBase
       __first = false;
       __sb.Append("Transfer: ");
       __sb.Append(Transfer== null ? "<null>" : Transfer.ToString());
+    }
+    if (Stock_position_snapshot != null && __isset.stock_position_snapshot) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Stock_position_snapshot: ");
+      __sb.Append(Stock_position_snapshot== null ? "<null>" : Stock_position_snapshot.ToString());
+    }
+    if (Option_position_snapshot != null && __isset.option_position_snapshot) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Option_position_snapshot: ");
+      __sb.Append(Option_position_snapshot== null ? "<null>" : Option_position_snapshot.ToString());
+    }
+    if (Option_exercise_position_snapshot != null && __isset.option_exercise_position_snapshot) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Option_exercise_position_snapshot: ");
+      __sb.Append(Option_exercise_position_snapshot== null ? "<null>" : Option_exercise_position_snapshot.ToString());
+    }
+    if (Option_exercise != null && __isset.option_exercise) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Option_exercise: ");
+      __sb.Append(Option_exercise== null ? "<null>" : Option_exercise.ToString());
     }
     __sb.Append(")");
     return __sb.ToString();

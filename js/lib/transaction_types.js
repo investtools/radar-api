@@ -29,6 +29,10 @@ ttypes.TransferType = {
   'IN' : 1,
   'OUT' : 2
 };
+ttypes.OptionExerciseType = {
+  'BUY' : 1,
+  'SELL' : 2
+};
 var StockSell = module.exports.StockSell = function(args) {
   this.date = null;
   this.stock = null;
@@ -892,6 +896,438 @@ Transfer.prototype.write = function(output) {
   return;
 };
 
+var StockPositionSnapshot = module.exports.StockPositionSnapshot = function(args) {
+  this.date = null;
+  this.stock = null;
+  this.shares = null;
+  this.price = null;
+  if (args) {
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.stock !== undefined && args.stock !== null) {
+      this.stock = new common_ttypes.StockId(args.stock);
+    }
+    if (args.shares !== undefined && args.shares !== null) {
+      this.shares = args.shares;
+    }
+    if (args.price !== undefined && args.price !== null) {
+      this.price = args.price;
+    }
+  }
+};
+StockPositionSnapshot.prototype = {};
+StockPositionSnapshot.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock = new common_ttypes.StockId();
+        this.stock.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.shares = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.price = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+StockPositionSnapshot.prototype.write = function(output) {
+  output.writeStructBegin('StockPositionSnapshot');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.stock !== null && this.stock !== undefined) {
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
+    this.stock.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.shares !== null && this.shares !== undefined) {
+    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
+    output.writeI32(this.shares);
+    output.writeFieldEnd();
+  }
+  if (this.price !== null && this.price !== undefined) {
+    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 4);
+    output.writeDouble(this.price);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var OptionPositionSnapshot = module.exports.OptionPositionSnapshot = function(args) {
+  this.date = null;
+  this.stock = null;
+  this.shares = null;
+  this.price = null;
+  this.maturity = null;
+  if (args) {
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.stock !== undefined && args.stock !== null) {
+      this.stock = new common_ttypes.StockId(args.stock);
+    }
+    if (args.shares !== undefined && args.shares !== null) {
+      this.shares = args.shares;
+    }
+    if (args.price !== undefined && args.price !== null) {
+      this.price = args.price;
+    }
+    if (args.maturity !== undefined && args.maturity !== null) {
+      this.maturity = args.maturity;
+    }
+  }
+};
+OptionPositionSnapshot.prototype = {};
+OptionPositionSnapshot.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock = new common_ttypes.StockId();
+        this.stock.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.shares = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.price = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I64) {
+        this.maturity = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OptionPositionSnapshot.prototype.write = function(output) {
+  output.writeStructBegin('OptionPositionSnapshot');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.stock !== null && this.stock !== undefined) {
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
+    this.stock.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.shares !== null && this.shares !== undefined) {
+    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
+    output.writeI32(this.shares);
+    output.writeFieldEnd();
+  }
+  if (this.price !== null && this.price !== undefined) {
+    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 4);
+    output.writeDouble(this.price);
+    output.writeFieldEnd();
+  }
+  if (this.maturity !== null && this.maturity !== undefined) {
+    output.writeFieldBegin('maturity', Thrift.Type.I64, 5);
+    output.writeI64(this.maturity);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var OptionExercisePositionSnapshot = module.exports.OptionExercisePositionSnapshot = function(args) {
+  this.date = null;
+  this.stock = null;
+  this.shares = null;
+  this.price = null;
+  this.maturity = null;
+  this.type = null;
+  if (args) {
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.stock !== undefined && args.stock !== null) {
+      this.stock = new common_ttypes.StockId(args.stock);
+    }
+    if (args.shares !== undefined && args.shares !== null) {
+      this.shares = args.shares;
+    }
+    if (args.price !== undefined && args.price !== null) {
+      this.price = args.price;
+    }
+    if (args.maturity !== undefined && args.maturity !== null) {
+      this.maturity = args.maturity;
+    }
+    if (args.type !== undefined && args.type !== null) {
+      this.type = args.type;
+    }
+  }
+};
+OptionExercisePositionSnapshot.prototype = {};
+OptionExercisePositionSnapshot.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock = new common_ttypes.StockId();
+        this.stock.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.shares = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.price = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 5:
+      if (ftype == Thrift.Type.I64) {
+        this.maturity = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 7:
+      if (ftype == Thrift.Type.I32) {
+        this.type = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OptionExercisePositionSnapshot.prototype.write = function(output) {
+  output.writeStructBegin('OptionExercisePositionSnapshot');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.stock !== null && this.stock !== undefined) {
+    output.writeFieldBegin('stock', Thrift.Type.STRUCT, 2);
+    this.stock.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.shares !== null && this.shares !== undefined) {
+    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
+    output.writeI32(this.shares);
+    output.writeFieldEnd();
+  }
+  if (this.price !== null && this.price !== undefined) {
+    output.writeFieldBegin('price', Thrift.Type.DOUBLE, 4);
+    output.writeDouble(this.price);
+    output.writeFieldEnd();
+  }
+  if (this.maturity !== null && this.maturity !== undefined) {
+    output.writeFieldBegin('maturity', Thrift.Type.I64, 5);
+    output.writeI64(this.maturity);
+    output.writeFieldEnd();
+  }
+  if (this.type !== null && this.type !== undefined) {
+    output.writeFieldBegin('type', Thrift.Type.I32, 7);
+    output.writeI32(this.type);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var OptionExercise = module.exports.OptionExercise = function(args) {
+  this.date = null;
+  this.option = null;
+  this.shares = null;
+  this.strike = null;
+  if (args) {
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.option !== undefined && args.option !== null) {
+      this.option = new common_ttypes.StockId(args.option);
+    }
+    if (args.shares !== undefined && args.shares !== null) {
+      this.shares = args.shares;
+    }
+    if (args.strike !== undefined && args.strike !== null) {
+      this.strike = args.strike;
+    }
+  }
+};
+OptionExercise.prototype = {};
+OptionExercise.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.option = new common_ttypes.StockId();
+        this.option.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.I32) {
+        this.shares = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.DOUBLE) {
+        this.strike = input.readDouble();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+OptionExercise.prototype.write = function(output) {
+  output.writeStructBegin('OptionExercise');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.option !== null && this.option !== undefined) {
+    output.writeFieldBegin('option', Thrift.Type.STRUCT, 2);
+    this.option.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.shares !== null && this.shares !== undefined) {
+    output.writeFieldBegin('shares', Thrift.Type.I32, 3);
+    output.writeI32(this.shares);
+    output.writeFieldEnd();
+  }
+  if (this.strike !== null && this.strike !== undefined) {
+    output.writeFieldBegin('strike', Thrift.Type.DOUBLE, 4);
+    output.writeDouble(this.strike);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 var Transaction = module.exports.Transaction = function(args) {
   this.stock_buy = null;
   this.stock_sell = null;
@@ -901,6 +1337,10 @@ var Transaction = module.exports.Transaction = function(args) {
   this.stock_option = null;
   this.subscription = null;
   this.transfer = null;
+  this.stock_position_snapshot = null;
+  this.option_position_snapshot = null;
+  this.option_exercise_position_snapshot = null;
+  this.option_exercise = null;
   if (args) {
     if (args.stock_buy !== undefined && args.stock_buy !== null) {
       this.stock_buy = new ttypes.StockBuy(args.stock_buy);
@@ -925,6 +1365,18 @@ var Transaction = module.exports.Transaction = function(args) {
     }
     if (args.transfer !== undefined && args.transfer !== null) {
       this.transfer = new ttypes.Transfer(args.transfer);
+    }
+    if (args.stock_position_snapshot !== undefined && args.stock_position_snapshot !== null) {
+      this.stock_position_snapshot = new ttypes.StockPositionSnapshot(args.stock_position_snapshot);
+    }
+    if (args.option_position_snapshot !== undefined && args.option_position_snapshot !== null) {
+      this.option_position_snapshot = new ttypes.OptionPositionSnapshot(args.option_position_snapshot);
+    }
+    if (args.option_exercise_position_snapshot !== undefined && args.option_exercise_position_snapshot !== null) {
+      this.option_exercise_position_snapshot = new ttypes.OptionExercisePositionSnapshot(args.option_exercise_position_snapshot);
+    }
+    if (args.option_exercise !== undefined && args.option_exercise !== null) {
+      this.option_exercise = new ttypes.OptionExercise(args.option_exercise);
     }
   }
 };
@@ -1003,6 +1455,38 @@ Transaction.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 9:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.stock_position_snapshot = new ttypes.StockPositionSnapshot();
+        this.stock_position_snapshot.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 10:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.option_position_snapshot = new ttypes.OptionPositionSnapshot();
+        this.option_position_snapshot.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 11:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.option_exercise_position_snapshot = new ttypes.OptionExercisePositionSnapshot();
+        this.option_exercise_position_snapshot.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 12:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.option_exercise = new ttypes.OptionExercise();
+        this.option_exercise.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -1052,6 +1536,26 @@ Transaction.prototype.write = function(output) {
   if (this.transfer !== null && this.transfer !== undefined) {
     output.writeFieldBegin('transfer', Thrift.Type.STRUCT, 8);
     this.transfer.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.stock_position_snapshot !== null && this.stock_position_snapshot !== undefined) {
+    output.writeFieldBegin('stock_position_snapshot', Thrift.Type.STRUCT, 9);
+    this.stock_position_snapshot.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.option_position_snapshot !== null && this.option_position_snapshot !== undefined) {
+    output.writeFieldBegin('option_position_snapshot', Thrift.Type.STRUCT, 10);
+    this.option_position_snapshot.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.option_exercise_position_snapshot !== null && this.option_exercise_position_snapshot !== undefined) {
+    output.writeFieldBegin('option_exercise_position_snapshot', Thrift.Type.STRUCT, 11);
+    this.option_exercise_position_snapshot.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.option_exercise !== null && this.option_exercise !== undefined) {
+    output.writeFieldBegin('option_exercise', Thrift.Type.STRUCT, 12);
+    this.option_exercise.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

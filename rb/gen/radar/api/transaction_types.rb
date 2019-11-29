@@ -67,6 +67,8 @@ module Radar
 
     class OptionExercisePositionSnapshot; end
 
+    class OptionExercise; end
+
     class Transaction < ::Thrift::Union; end
 
     class StockSell
@@ -350,6 +352,28 @@ module Radar
       ::Thrift::Struct.generate_accessors self
     end
 
+    class OptionExercise
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DATE = 1
+      OPTION = 2
+      SHARES = 3
+      STRIKE = 4
+
+      FIELDS = {
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
+        OPTION => {:type => ::Thrift::Types::STRUCT, :name => 'option', :class => ::Radar::Api::StockId},
+        SHARES => {:type => ::Thrift::Types::I32, :name => 'shares'},
+        STRIKE => {:type => ::Thrift::Types::DOUBLE, :name => 'strike'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class Transaction < ::Thrift::Union
       include ::Thrift::Struct_Union
       class << self
@@ -396,6 +420,10 @@ module Radar
         def option_exercise_position_snapshot(val)
           Transaction.new(:option_exercise_position_snapshot, val)
         end
+
+        def option_exercise(val)
+          Transaction.new(:option_exercise, val)
+        end
       end
 
       STOCK_BUY = 1
@@ -409,6 +437,7 @@ module Radar
       STOCK_POSITION_SNAPSHOT = 9
       OPTION_POSITION_SNAPSHOT = 10
       OPTION_EXERCISE_POSITION_SNAPSHOT = 11
+      OPTION_EXERCISE = 12
 
       FIELDS = {
         STOCK_BUY => {:type => ::Thrift::Types::STRUCT, :name => 'stock_buy', :class => ::Radar::Api::StockBuy, :optional => true},
@@ -421,7 +450,8 @@ module Radar
         TRANSFER => {:type => ::Thrift::Types::STRUCT, :name => 'transfer', :class => ::Radar::Api::Transfer, :optional => true},
         STOCK_POSITION_SNAPSHOT => {:type => ::Thrift::Types::STRUCT, :name => 'stock_position_snapshot', :class => ::Radar::Api::StockPositionSnapshot, :optional => true},
         OPTION_POSITION_SNAPSHOT => {:type => ::Thrift::Types::STRUCT, :name => 'option_position_snapshot', :class => ::Radar::Api::OptionPositionSnapshot, :optional => true},
-        OPTION_EXERCISE_POSITION_SNAPSHOT => {:type => ::Thrift::Types::STRUCT, :name => 'option_exercise_position_snapshot', :class => ::Radar::Api::OptionExercisePositionSnapshot, :optional => true}
+        OPTION_EXERCISE_POSITION_SNAPSHOT => {:type => ::Thrift::Types::STRUCT, :name => 'option_exercise_position_snapshot', :class => ::Radar::Api::OptionExercisePositionSnapshot, :optional => true},
+        OPTION_EXERCISE => {:type => ::Thrift::Types::STRUCT, :name => 'option_exercise', :class => ::Radar::Api::OptionExercise, :optional => true}
       }
 
       def struct_fields; FIELDS; end

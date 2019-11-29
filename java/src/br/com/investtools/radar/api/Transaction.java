@@ -17,6 +17,10 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
   private static final org.apache.thrift.protocol.TField STOCK_OPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_option", org.apache.thrift.protocol.TType.STRUCT, (short)6);
   private static final org.apache.thrift.protocol.TField SUBSCRIPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("subscription", org.apache.thrift.protocol.TType.STRUCT, (short)7);
   private static final org.apache.thrift.protocol.TField TRANSFER_FIELD_DESC = new org.apache.thrift.protocol.TField("transfer", org.apache.thrift.protocol.TType.STRUCT, (short)8);
+  private static final org.apache.thrift.protocol.TField STOCK_POSITION_SNAPSHOT_FIELD_DESC = new org.apache.thrift.protocol.TField("stock_position_snapshot", org.apache.thrift.protocol.TType.STRUCT, (short)9);
+  private static final org.apache.thrift.protocol.TField OPTION_POSITION_SNAPSHOT_FIELD_DESC = new org.apache.thrift.protocol.TField("option_position_snapshot", org.apache.thrift.protocol.TType.STRUCT, (short)10);
+  private static final org.apache.thrift.protocol.TField OPTION_EXERCISE_POSITION_SNAPSHOT_FIELD_DESC = new org.apache.thrift.protocol.TField("option_exercise_position_snapshot", org.apache.thrift.protocol.TType.STRUCT, (short)11);
+  private static final org.apache.thrift.protocol.TField OPTION_EXERCISE_FIELD_DESC = new org.apache.thrift.protocol.TField("option_exercise", org.apache.thrift.protocol.TType.STRUCT, (short)12);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -27,7 +31,11 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
     STOCK_COMMISSION_EXPENSE((short)5, "stock_commission_expense"),
     STOCK_OPTION((short)6, "stock_option"),
     SUBSCRIPTION((short)7, "subscription"),
-    TRANSFER((short)8, "transfer");
+    TRANSFER((short)8, "transfer"),
+    STOCK_POSITION_SNAPSHOT((short)9, "stock_position_snapshot"),
+    OPTION_POSITION_SNAPSHOT((short)10, "option_position_snapshot"),
+    OPTION_EXERCISE_POSITION_SNAPSHOT((short)11, "option_exercise_position_snapshot"),
+    OPTION_EXERCISE((short)12, "option_exercise");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -59,6 +67,14 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           return SUBSCRIPTION;
         case 8: // TRANSFER
           return TRANSFER;
+        case 9: // STOCK_POSITION_SNAPSHOT
+          return STOCK_POSITION_SNAPSHOT;
+        case 10: // OPTION_POSITION_SNAPSHOT
+          return OPTION_POSITION_SNAPSHOT;
+        case 11: // OPTION_EXERCISE_POSITION_SNAPSHOT
+          return OPTION_EXERCISE_POSITION_SNAPSHOT;
+        case 12: // OPTION_EXERCISE
+          return OPTION_EXERCISE;
         default:
           return null;
       }
@@ -118,6 +134,14 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Subscription.class)));
     tmpMap.put(_Fields.TRANSFER, new org.apache.thrift.meta_data.FieldMetaData("transfer", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Transfer.class)));
+    tmpMap.put(_Fields.STOCK_POSITION_SNAPSHOT, new org.apache.thrift.meta_data.FieldMetaData("stock_position_snapshot", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StockPositionSnapshot.class)));
+    tmpMap.put(_Fields.OPTION_POSITION_SNAPSHOT, new org.apache.thrift.meta_data.FieldMetaData("option_position_snapshot", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, OptionPositionSnapshot.class)));
+    tmpMap.put(_Fields.OPTION_EXERCISE_POSITION_SNAPSHOT, new org.apache.thrift.meta_data.FieldMetaData("option_exercise_position_snapshot", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, OptionExercisePositionSnapshot.class)));
+    tmpMap.put(_Fields.OPTION_EXERCISE, new org.apache.thrift.meta_data.FieldMetaData("option_exercise", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, OptionExercise.class)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Transaction.class, metaDataMap);
   }
@@ -185,6 +209,30 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
     return x;
   }
 
+  public static Transaction stock_position_snapshot(StockPositionSnapshot value) {
+    Transaction x = new Transaction();
+    x.setStock_position_snapshot(value);
+    return x;
+  }
+
+  public static Transaction option_position_snapshot(OptionPositionSnapshot value) {
+    Transaction x = new Transaction();
+    x.setOption_position_snapshot(value);
+    return x;
+  }
+
+  public static Transaction option_exercise_position_snapshot(OptionExercisePositionSnapshot value) {
+    Transaction x = new Transaction();
+    x.setOption_exercise_position_snapshot(value);
+    return x;
+  }
+
+  public static Transaction option_exercise(OptionExercise value) {
+    Transaction x = new Transaction();
+    x.setOption_exercise(value);
+    return x;
+  }
+
 
   @Override
   protected void checkType(_Fields setField, java.lang.Object value) throws java.lang.ClassCastException {
@@ -229,6 +277,26 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           break;
         }
         throw new java.lang.ClassCastException("Was expecting value of type Transfer for field 'transfer', but got " + value.getClass().getSimpleName());
+      case STOCK_POSITION_SNAPSHOT:
+        if (value instanceof StockPositionSnapshot) {
+          break;
+        }
+        throw new java.lang.ClassCastException("Was expecting value of type StockPositionSnapshot for field 'stock_position_snapshot', but got " + value.getClass().getSimpleName());
+      case OPTION_POSITION_SNAPSHOT:
+        if (value instanceof OptionPositionSnapshot) {
+          break;
+        }
+        throw new java.lang.ClassCastException("Was expecting value of type OptionPositionSnapshot for field 'option_position_snapshot', but got " + value.getClass().getSimpleName());
+      case OPTION_EXERCISE_POSITION_SNAPSHOT:
+        if (value instanceof OptionExercisePositionSnapshot) {
+          break;
+        }
+        throw new java.lang.ClassCastException("Was expecting value of type OptionExercisePositionSnapshot for field 'option_exercise_position_snapshot', but got " + value.getClass().getSimpleName());
+      case OPTION_EXERCISE:
+        if (value instanceof OptionExercise) {
+          break;
+        }
+        throw new java.lang.ClassCastException("Was expecting value of type OptionExercise for field 'option_exercise', but got " + value.getClass().getSimpleName());
       default:
         throw new java.lang.IllegalArgumentException("Unknown field id " + setField);
     }
@@ -319,6 +387,46 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
+        case STOCK_POSITION_SNAPSHOT:
+          if (field.type == STOCK_POSITION_SNAPSHOT_FIELD_DESC.type) {
+            StockPositionSnapshot stock_position_snapshot;
+            stock_position_snapshot = new StockPositionSnapshot();
+            stock_position_snapshot.read(iprot);
+            return stock_position_snapshot;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case OPTION_POSITION_SNAPSHOT:
+          if (field.type == OPTION_POSITION_SNAPSHOT_FIELD_DESC.type) {
+            OptionPositionSnapshot option_position_snapshot;
+            option_position_snapshot = new OptionPositionSnapshot();
+            option_position_snapshot.read(iprot);
+            return option_position_snapshot;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case OPTION_EXERCISE_POSITION_SNAPSHOT:
+          if (field.type == OPTION_EXERCISE_POSITION_SNAPSHOT_FIELD_DESC.type) {
+            OptionExercisePositionSnapshot option_exercise_position_snapshot;
+            option_exercise_position_snapshot = new OptionExercisePositionSnapshot();
+            option_exercise_position_snapshot.read(iprot);
+            return option_exercise_position_snapshot;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
+        case OPTION_EXERCISE:
+          if (field.type == OPTION_EXERCISE_FIELD_DESC.type) {
+            OptionExercise option_exercise;
+            option_exercise = new OptionExercise();
+            option_exercise.read(iprot);
+            return option_exercise;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
         default:
           throw new java.lang.IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -362,6 +470,22 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
       case TRANSFER:
         Transfer transfer = (Transfer)value_;
         transfer.write(oprot);
+        return;
+      case STOCK_POSITION_SNAPSHOT:
+        StockPositionSnapshot stock_position_snapshot = (StockPositionSnapshot)value_;
+        stock_position_snapshot.write(oprot);
+        return;
+      case OPTION_POSITION_SNAPSHOT:
+        OptionPositionSnapshot option_position_snapshot = (OptionPositionSnapshot)value_;
+        option_position_snapshot.write(oprot);
+        return;
+      case OPTION_EXERCISE_POSITION_SNAPSHOT:
+        OptionExercisePositionSnapshot option_exercise_position_snapshot = (OptionExercisePositionSnapshot)value_;
+        option_exercise_position_snapshot.write(oprot);
+        return;
+      case OPTION_EXERCISE:
+        OptionExercise option_exercise = (OptionExercise)value_;
+        option_exercise.write(oprot);
         return;
       default:
         throw new java.lang.IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -413,6 +537,26 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
           transfer = new Transfer();
           transfer.read(iprot);
           return transfer;
+        case STOCK_POSITION_SNAPSHOT:
+          StockPositionSnapshot stock_position_snapshot;
+          stock_position_snapshot = new StockPositionSnapshot();
+          stock_position_snapshot.read(iprot);
+          return stock_position_snapshot;
+        case OPTION_POSITION_SNAPSHOT:
+          OptionPositionSnapshot option_position_snapshot;
+          option_position_snapshot = new OptionPositionSnapshot();
+          option_position_snapshot.read(iprot);
+          return option_position_snapshot;
+        case OPTION_EXERCISE_POSITION_SNAPSHOT:
+          OptionExercisePositionSnapshot option_exercise_position_snapshot;
+          option_exercise_position_snapshot = new OptionExercisePositionSnapshot();
+          option_exercise_position_snapshot.read(iprot);
+          return option_exercise_position_snapshot;
+        case OPTION_EXERCISE:
+          OptionExercise option_exercise;
+          option_exercise = new OptionExercise();
+          option_exercise.read(iprot);
+          return option_exercise;
         default:
           throw new java.lang.IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -456,6 +600,22 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         Transfer transfer = (Transfer)value_;
         transfer.write(oprot);
         return;
+      case STOCK_POSITION_SNAPSHOT:
+        StockPositionSnapshot stock_position_snapshot = (StockPositionSnapshot)value_;
+        stock_position_snapshot.write(oprot);
+        return;
+      case OPTION_POSITION_SNAPSHOT:
+        OptionPositionSnapshot option_position_snapshot = (OptionPositionSnapshot)value_;
+        option_position_snapshot.write(oprot);
+        return;
+      case OPTION_EXERCISE_POSITION_SNAPSHOT:
+        OptionExercisePositionSnapshot option_exercise_position_snapshot = (OptionExercisePositionSnapshot)value_;
+        option_exercise_position_snapshot.write(oprot);
+        return;
+      case OPTION_EXERCISE:
+        OptionExercise option_exercise = (OptionExercise)value_;
+        option_exercise.write(oprot);
+        return;
       default:
         throw new java.lang.IllegalStateException("Cannot write union with unknown field " + setField_);
     }
@@ -480,6 +640,14 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
         return SUBSCRIPTION_FIELD_DESC;
       case TRANSFER:
         return TRANSFER_FIELD_DESC;
+      case STOCK_POSITION_SNAPSHOT:
+        return STOCK_POSITION_SNAPSHOT_FIELD_DESC;
+      case OPTION_POSITION_SNAPSHOT:
+        return OPTION_POSITION_SNAPSHOT_FIELD_DESC;
+      case OPTION_EXERCISE_POSITION_SNAPSHOT:
+        return OPTION_EXERCISE_POSITION_SNAPSHOT_FIELD_DESC;
+      case OPTION_EXERCISE:
+        return OPTION_EXERCISE_FIELD_DESC;
       default:
         throw new java.lang.IllegalArgumentException("Unknown field id " + setField);
     }
@@ -613,6 +781,62 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
     value_ = value;
   }
 
+  public StockPositionSnapshot getStock_position_snapshot() {
+    if (getSetField() == _Fields.STOCK_POSITION_SNAPSHOT) {
+      return (StockPositionSnapshot)getFieldValue();
+    } else {
+      throw new java.lang.RuntimeException("Cannot get field 'stock_position_snapshot' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setStock_position_snapshot(StockPositionSnapshot value) {
+    if (value == null) throw new java.lang.NullPointerException();
+    setField_ = _Fields.STOCK_POSITION_SNAPSHOT;
+    value_ = value;
+  }
+
+  public OptionPositionSnapshot getOption_position_snapshot() {
+    if (getSetField() == _Fields.OPTION_POSITION_SNAPSHOT) {
+      return (OptionPositionSnapshot)getFieldValue();
+    } else {
+      throw new java.lang.RuntimeException("Cannot get field 'option_position_snapshot' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setOption_position_snapshot(OptionPositionSnapshot value) {
+    if (value == null) throw new java.lang.NullPointerException();
+    setField_ = _Fields.OPTION_POSITION_SNAPSHOT;
+    value_ = value;
+  }
+
+  public OptionExercisePositionSnapshot getOption_exercise_position_snapshot() {
+    if (getSetField() == _Fields.OPTION_EXERCISE_POSITION_SNAPSHOT) {
+      return (OptionExercisePositionSnapshot)getFieldValue();
+    } else {
+      throw new java.lang.RuntimeException("Cannot get field 'option_exercise_position_snapshot' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setOption_exercise_position_snapshot(OptionExercisePositionSnapshot value) {
+    if (value == null) throw new java.lang.NullPointerException();
+    setField_ = _Fields.OPTION_EXERCISE_POSITION_SNAPSHOT;
+    value_ = value;
+  }
+
+  public OptionExercise getOption_exercise() {
+    if (getSetField() == _Fields.OPTION_EXERCISE) {
+      return (OptionExercise)getFieldValue();
+    } else {
+      throw new java.lang.RuntimeException("Cannot get field 'option_exercise' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void setOption_exercise(OptionExercise value) {
+    if (value == null) throw new java.lang.NullPointerException();
+    setField_ = _Fields.OPTION_EXERCISE;
+    value_ = value;
+  }
+
   public boolean isSetStock_buy() {
     return setField_ == _Fields.STOCK_BUY;
   }
@@ -650,6 +874,26 @@ public class Transaction extends org.apache.thrift.TUnion<Transaction, Transacti
 
   public boolean isSetTransfer() {
     return setField_ == _Fields.TRANSFER;
+  }
+
+
+  public boolean isSetStock_position_snapshot() {
+    return setField_ == _Fields.STOCK_POSITION_SNAPSHOT;
+  }
+
+
+  public boolean isSetOption_position_snapshot() {
+    return setField_ == _Fields.OPTION_POSITION_SNAPSHOT;
+  }
+
+
+  public boolean isSetOption_exercise_position_snapshot() {
+    return setField_ == _Fields.OPTION_EXERCISE_POSITION_SNAPSHOT;
+  }
+
+
+  public boolean isSetOption_exercise() {
+    return setField_ == _Fields.OPTION_EXERCISE;
   }
 
 

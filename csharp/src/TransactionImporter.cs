@@ -17,10 +17,15 @@ using Thrift.Transport;
 
 public partial class TransactionImporter {
   public interface ISync {
+    bool authenticate(string username, string password, string user);
     void fetch(string username, string password, string user, long last_transaction_date);
   }
 
   public interface Iface : ISync {
+    #if SILVERLIGHT
+    IAsyncResult Begin_authenticate(AsyncCallback callback, object state, string username, string password, string user);
+    bool End_authenticate(IAsyncResult asyncResult);
+    #endif
     #if SILVERLIGHT
     IAsyncResult Begin_fetch(AsyncCallback callback, object state, string username, string password, string user, long last_transaction_date);
     void End_fetch(IAsyncResult asyncResult);
@@ -82,6 +87,85 @@ public partial class TransactionImporter {
     }
     #endregion
 
+
+    
+    #if SILVERLIGHT
+    
+    public IAsyncResult Begin_authenticate(AsyncCallback callback, object state, string username, string password, string user)
+    {
+      return send_authenticate(callback, state, username, password, user);
+    }
+
+    public bool End_authenticate(IAsyncResult asyncResult)
+    {
+      oprot_.Transport.EndFlush(asyncResult);
+      return recv_authenticate();
+    }
+
+    #endif
+
+    public bool authenticate(string username, string password, string user)
+    {
+      #if SILVERLIGHT
+      var asyncResult = Begin_authenticate(null, null, username, password, user);
+      return End_authenticate(asyncResult);
+
+      #else
+      send_authenticate(username, password, user);
+      return recv_authenticate();
+
+      #endif
+    }
+    #if SILVERLIGHT
+    public IAsyncResult send_authenticate(AsyncCallback callback, object state, string username, string password, string user)
+    {
+      oprot_.WriteMessageBegin(new TMessage("authenticate", TMessageType.Call, seqid_));
+      authenticate_args args = new authenticate_args();
+      args.Username = username;
+      args.Password = password;
+      args.User = user;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      return oprot_.Transport.BeginFlush(callback, state);
+    }
+
+    #else
+
+    public void send_authenticate(string username, string password, string user)
+    {
+      oprot_.WriteMessageBegin(new TMessage("authenticate", TMessageType.Call, seqid_));
+      authenticate_args args = new authenticate_args();
+      args.Username = username;
+      args.Password = password;
+      args.User = user;
+      args.Write(oprot_);
+      oprot_.WriteMessageEnd();
+      oprot_.Transport.Flush();
+    }
+    #endif
+
+    public bool recv_authenticate()
+    {
+      TMessage msg = iprot_.ReadMessageBegin();
+      if (msg.Type == TMessageType.Exception) {
+        TApplicationException x = TApplicationException.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        throw x;
+      }
+      authenticate_result result = new authenticate_result();
+      result.Read(iprot_);
+      iprot_.ReadMessageEnd();
+      if (result.__isset.success) {
+        return result.Success;
+      }
+      if (result.__isset.auth_error) {
+        throw result.Auth_error;
+      }
+      if (result.__isset.system_unavailable) {
+        throw result.System_unavailable;
+      }
+      throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "authenticate failed: unknown result");
+    }
 
     
     #if SILVERLIGHT
@@ -166,6 +250,7 @@ public partial class TransactionImporter {
     public Processor(ISync iface)
     {
       iface_ = iface;
+      processMap_["authenticate"] = authenticate_Process;
       processMap_["fetch"] = fetch_Process;
     }
 
@@ -197,6 +282,45 @@ public partial class TransactionImporter {
         return false;
       }
       return true;
+    }
+
+    public void authenticate_Process(int seqid, TProtocol iprot, TProtocol oprot)
+    {
+      authenticate_args args = new authenticate_args();
+      args.Read(iprot);
+      iprot.ReadMessageEnd();
+      authenticate_result result = new authenticate_result();
+      try
+      {
+        try
+        {
+          result.Success = iface_.authenticate(args.Username, args.Password, args.User);
+        }
+        catch (AuthenticationError auth_error)
+        {
+          result.Auth_error = auth_error;
+        }
+        catch (SystemUnavailableError system_unavailable)
+        {
+          result.System_unavailable = system_unavailable;
+        }
+        oprot.WriteMessageBegin(new TMessage("authenticate", TMessageType.Reply, seqid)); 
+        result.Write(oprot);
+      }
+      catch (TTransportException)
+      {
+        throw;
+      }
+      catch (Exception ex)
+      {
+        Console.Error.WriteLine("Error occurred in processor:");
+        Console.Error.WriteLine(ex.ToString());
+        TApplicationException x = new TApplicationException      (TApplicationException.ExceptionType.InternalError," Internal error.");
+        oprot.WriteMessageBegin(new TMessage("authenticate", TMessageType.Exception, seqid));
+        x.Write(oprot);
+      }
+      oprot.WriteMessageEnd();
+      oprot.Transport.Flush();
     }
 
     public void fetch_Process(int seqid, TProtocol iprot, TProtocol oprot)
@@ -236,6 +360,371 @@ public partial class TransactionImporter {
       }
       oprot.WriteMessageEnd();
       oprot.Transport.Flush();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class authenticate_args : TBase
+  {
+    private string _username;
+    private string _password;
+    private string _user;
+
+    public string Username
+    {
+      get
+      {
+        return _username;
+      }
+      set
+      {
+        __isset.username = true;
+        this._username = value;
+      }
+    }
+
+    public string Password
+    {
+      get
+      {
+        return _password;
+      }
+      set
+      {
+        __isset.password = true;
+        this._password = value;
+      }
+    }
+
+    public string User
+    {
+      get
+      {
+        return _user;
+      }
+      set
+      {
+        __isset.user = true;
+        this._user = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool username;
+      public bool password;
+      public bool user;
+    }
+
+    public authenticate_args() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                Username = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.String) {
+                Password = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.String) {
+                User = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("authenticate_args");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Username != null && __isset.username) {
+          field.Name = "username";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Username);
+          oprot.WriteFieldEnd();
+        }
+        if (Password != null && __isset.password) {
+          field.Name = "password";
+          field.Type = TType.String;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Password);
+          oprot.WriteFieldEnd();
+        }
+        if (User != null && __isset.user) {
+          field.Name = "user";
+          field.Type = TType.String;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(User);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("authenticate_args(");
+      bool __first = true;
+      if (Username != null && __isset.username) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Username: ");
+        __sb.Append(Username);
+      }
+      if (Password != null && __isset.password) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Password: ");
+        __sb.Append(Password);
+      }
+      if (User != null && __isset.user) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("User: ");
+        __sb.Append(User);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
+    }
+
+  }
+
+
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class authenticate_result : TBase
+  {
+    private bool _success;
+    private AuthenticationError _auth_error;
+    private SystemUnavailableError _system_unavailable;
+
+    public bool Success
+    {
+      get
+      {
+        return _success;
+      }
+      set
+      {
+        __isset.success = true;
+        this._success = value;
+      }
+    }
+
+    public AuthenticationError Auth_error
+    {
+      get
+      {
+        return _auth_error;
+      }
+      set
+      {
+        __isset.auth_error = true;
+        this._auth_error = value;
+      }
+    }
+
+    public SystemUnavailableError System_unavailable
+    {
+      get
+      {
+        return _system_unavailable;
+      }
+      set
+      {
+        __isset.system_unavailable = true;
+        this._system_unavailable = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool success;
+      public bool auth_error;
+      public bool system_unavailable;
+    }
+
+    public authenticate_result() {
+    }
+
+    public void Read (TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        iprot.ReadStructBegin();
+        while (true)
+        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
+          switch (field.ID)
+          {
+            case 0:
+              if (field.Type == TType.Bool) {
+                Success = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 1:
+              if (field.Type == TType.Struct) {
+                Auth_error = new AuthenticationError();
+                Auth_error.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.Struct) {
+                System_unavailable = new SystemUnavailableError();
+                System_unavailable.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              break;
+          }
+          iprot.ReadFieldEnd();
+        }
+        iprot.ReadStructEnd();
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("authenticate_result");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+
+        if (this.__isset.success) {
+          field.Name = "Success";
+          field.Type = TType.Bool;
+          field.ID = 0;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Success);
+          oprot.WriteFieldEnd();
+        } else if (this.__isset.auth_error) {
+          if (Auth_error != null) {
+            field.Name = "Auth_error";
+            field.Type = TType.Struct;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            Auth_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        } else if (this.__isset.system_unavailable) {
+          if (System_unavailable != null) {
+            field.Name = "System_unavailable";
+            field.Type = TType.Struct;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            System_unavailable.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+    }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("authenticate_result(");
+      bool __first = true;
+      if (__isset.success) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Success: ");
+        __sb.Append(Success);
+      }
+      if (Auth_error != null && __isset.auth_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Auth_error: ");
+        __sb.Append(Auth_error== null ? "<null>" : Auth_error.ToString());
+      }
+      if (System_unavailable != null && __isset.system_unavailable) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("System_unavailable: ");
+        __sb.Append(System_unavailable== null ? "<null>" : System_unavailable.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
     }
 
   }

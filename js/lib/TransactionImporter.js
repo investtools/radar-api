@@ -15,6 +15,174 @@ var common_ttypes = require('./common_types');
 var ttypes = require('./transaction_importer_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
+var TransactionImporter_authenticate_args = function(args) {
+  this.username = null;
+  this.password = null;
+  this.user = null;
+  if (args) {
+    if (args.username !== undefined && args.username !== null) {
+      this.username = args.username;
+    }
+    if (args.password !== undefined && args.password !== null) {
+      this.password = args.password;
+    }
+    if (args.user !== undefined && args.user !== null) {
+      this.user = args.user;
+    }
+  }
+};
+TransactionImporter_authenticate_args.prototype = {};
+TransactionImporter_authenticate_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.username = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRING) {
+        this.password = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 3:
+      if (ftype == Thrift.Type.STRING) {
+        this.user = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TransactionImporter_authenticate_args.prototype.write = function(output) {
+  output.writeStructBegin('TransactionImporter_authenticate_args');
+  if (this.username !== null && this.username !== undefined) {
+    output.writeFieldBegin('username', Thrift.Type.STRING, 1);
+    output.writeString(this.username);
+    output.writeFieldEnd();
+  }
+  if (this.password !== null && this.password !== undefined) {
+    output.writeFieldBegin('password', Thrift.Type.STRING, 2);
+    output.writeString(this.password);
+    output.writeFieldEnd();
+  }
+  if (this.user !== null && this.user !== undefined) {
+    output.writeFieldBegin('user', Thrift.Type.STRING, 3);
+    output.writeString(this.user);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+var TransactionImporter_authenticate_result = function(args) {
+  this.success = null;
+  this.auth_error = null;
+  this.system_unavailable = null;
+  if (args instanceof ttypes.AuthenticationError) {
+    this.auth_error = args;
+    return;
+  }
+  if (args instanceof ttypes.SystemUnavailableError) {
+    this.system_unavailable = args;
+    return;
+  }
+  if (args) {
+    if (args.success !== undefined && args.success !== null) {
+      this.success = args.success;
+    }
+    if (args.auth_error !== undefined && args.auth_error !== null) {
+      this.auth_error = args.auth_error;
+    }
+    if (args.system_unavailable !== undefined && args.system_unavailable !== null) {
+      this.system_unavailable = args.system_unavailable;
+    }
+  }
+};
+TransactionImporter_authenticate_result.prototype = {};
+TransactionImporter_authenticate_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 0:
+      if (ftype == Thrift.Type.BOOL) {
+        this.success = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.auth_error = new ttypes.AuthenticationError();
+        this.auth_error.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.system_unavailable = new ttypes.SystemUnavailableError();
+        this.system_unavailable.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+TransactionImporter_authenticate_result.prototype.write = function(output) {
+  output.writeStructBegin('TransactionImporter_authenticate_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.BOOL, 0);
+    output.writeBool(this.success);
+    output.writeFieldEnd();
+  }
+  if (this.auth_error !== null && this.auth_error !== undefined) {
+    output.writeFieldBegin('auth_error', Thrift.Type.STRUCT, 1);
+    this.auth_error.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.system_unavailable !== null && this.system_unavailable !== undefined) {
+    output.writeFieldBegin('system_unavailable', Thrift.Type.STRUCT, 2);
+    this.system_unavailable.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 var TransactionImporter_fetch_args = function(args) {
   this.username = null;
   this.password = null;
@@ -193,6 +361,73 @@ TransactionImporterClient.prototype = {};
 TransactionImporterClient.prototype.seqid = function() { return this._seqid; };
 TransactionImporterClient.prototype.new_seqid = function() { return this._seqid += 1; };
 
+TransactionImporterClient.prototype.authenticate = function(username, password, user, callback) {
+  this._seqid = this.new_seqid();
+  if (callback === undefined) {
+    var _defer = Q.defer();
+    this._reqs[this.seqid()] = function(error, result) {
+      if (error) {
+        _defer.reject(error);
+      } else {
+        _defer.resolve(result);
+      }
+    };
+    this.send_authenticate(username, password, user);
+    return _defer.promise;
+  } else {
+    this._reqs[this.seqid()] = callback;
+    this.send_authenticate(username, password, user);
+  }
+};
+
+TransactionImporterClient.prototype.send_authenticate = function(username, password, user) {
+  var output = new this.pClass(this.output);
+  var params = {
+    username: username,
+    password: password,
+    user: user
+  };
+  var args = new TransactionImporter_authenticate_args(params);
+  try {
+    output.writeMessageBegin('authenticate', Thrift.MessageType.CALL, this.seqid());
+    args.write(output);
+    output.writeMessageEnd();
+    return this.output.flush();
+  }
+  catch (e) {
+    delete this._reqs[this.seqid()];
+    if (typeof output.reset === 'function') {
+      output.reset();
+    }
+    throw e;
+  }
+};
+
+TransactionImporterClient.prototype.recv_authenticate = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new TransactionImporter_authenticate_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.auth_error) {
+    return callback(result.auth_error);
+  }
+  if (null !== result.system_unavailable) {
+    return callback(result.system_unavailable);
+  }
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('authenticate failed: unknown result');
+};
+
 TransactionImporterClient.prototype.fetch = function(username, password, user, last_transaction_date, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
@@ -272,6 +507,50 @@ TransactionImporterProcessor.prototype.process = function(input, output) {
     x.write(output);
     output.writeMessageEnd();
     output.flush();
+  }
+};
+TransactionImporterProcessor.prototype.process_authenticate = function(seqid, input, output) {
+  var args = new TransactionImporter_authenticate_args();
+  args.read(input);
+  input.readMessageEnd();
+  if (this._handler.authenticate.length === 3) {
+    Q.fcall(this._handler.authenticate.bind(this._handler),
+      args.username,
+      args.password,
+      args.user
+    ).then(function(result) {
+      var result_obj = new TransactionImporter_authenticate_result({success: result});
+      output.writeMessageBegin("authenticate", Thrift.MessageType.REPLY, seqid);
+      result_obj.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    }).catch(function (err) {
+      var result;
+      if (err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
+        result = new TransactionImporter_authenticate_result(err);
+        output.writeMessageBegin("authenticate", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("authenticate", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
+  } else {
+    this._handler.authenticate(args.username, args.password, args.user, function (err, result) {
+      var result_obj;
+      if ((err === null || typeof err === 'undefined') || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
+        result_obj = new TransactionImporter_authenticate_result((err !== null || typeof err === 'undefined') ? err : {success: result});
+        output.writeMessageBegin("authenticate", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result_obj = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("authenticate", Thrift.MessageType.EXCEPTION, seqid);
+      }
+      result_obj.write(output);
+      output.writeMessageEnd();
+      output.flush();
+    });
   }
 };
 TransactionImporterProcessor.prototype.process_fetch = function(seqid, input, output) {

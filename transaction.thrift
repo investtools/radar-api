@@ -109,6 +109,13 @@ struct OptionExercisePositionSnapshot {
   7: OptionExerciseType type
 }
 
+struct OptionExercise {
+  1: common.Date date
+  2: common.StockId option
+  3: i32 shares
+  4: double strike
+}
+
 union Transaction {
   1: StockBuy stock_buy
   2: StockSell stock_sell
@@ -121,4 +128,5 @@ union Transaction {
   9: StockPositionSnapshot stock_position_snapshot
   10: OptionPositionSnapshot option_position_snapshot
   11: OptionExercisePositionSnapshot option_exercise_position_snapshot
+  12: OptionExercise option_exercise
 }
