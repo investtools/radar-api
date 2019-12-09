@@ -13,6 +13,7 @@
 <ul>
 <li><a href="#Fn_TransactionImporter_authenticate">authenticate</a></li>
 <li><a href="#Fn_TransactionImporter_fetch">fetch</a></li>
+<li><a href="#Fn_TransactionImporter_fetch_portfolio">fetch_portfolio</a></li>
 </ul>
 </td>
 <td><a href="#Struct_AuthenticationError">AuthenticationError</a><br/>
@@ -39,5 +40,9 @@
            <code>string</code> password,
            <code>string</code> user,
            <code><a href="common.html#Struct_Date">common.Date</a></code> last_transaction_date)
+    throws <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>, <code><a href="#Struct_SystemUnavailableError">SystemUnavailableError</a></code>
+</pre></div><div class="definition"><h4 id="Fn_TransactionImporter_fetch_portfolio">Function: TransactionImporter.fetch_portfolio</h4>
+<pre><code>map&lt;<code><a href="common.html#Struct_SecurityId">common.SecurityId</a></code>, <code>i32</code>&gt;</code> fetch_portfolio(<code>string</code> username,
+                                          <code>string</code> password)
     throws <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>, <code><a href="#Struct_SystemUnavailableError">SystemUnavailableError</a></code>
 </pre></div></div></body></html>

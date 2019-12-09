@@ -15,6 +15,8 @@ public class TransactionImporter {
 
     public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
 
+    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> fetch_portfolio(java.lang.String username, java.lang.String password) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
+
   }
 
   public interface AsyncIface {
@@ -22,6 +24,8 @@ public class TransactionImporter {
     public void authenticate(java.lang.String username, java.lang.String password, java.lang.String user, org.apache.thrift.async.AsyncMethodCallback<java.lang.Boolean> resultHandler) throws org.apache.thrift.TException;
 
     public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
+
+    public void fetch_portfolio(java.lang.String username, java.lang.String password, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -103,6 +107,36 @@ public class TransactionImporter {
         throw result.system_unavailable;
       }
       return;
+    }
+
+    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> fetch_portfolio(java.lang.String username, java.lang.String password) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    {
+      send_fetch_portfolio(username, password);
+      return recv_fetch_portfolio();
+    }
+
+    public void send_fetch_portfolio(java.lang.String username, java.lang.String password) throws org.apache.thrift.TException
+    {
+      fetch_portfolio_args args = new fetch_portfolio_args();
+      args.setUsername(username);
+      args.setPassword(password);
+      sendBase("fetch_portfolio", args);
+    }
+
+    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> recv_fetch_portfolio() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    {
+      fetch_portfolio_result result = new fetch_portfolio_result();
+      receiveBase(result, "fetch_portfolio");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.auth_error != null) {
+        throw result.auth_error;
+      }
+      if (result.system_unavailable != null) {
+        throw result.system_unavailable;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "fetch_portfolio failed: unknown result");
     }
 
   }
@@ -202,6 +236,41 @@ public class TransactionImporter {
       }
     }
 
+    public void fetch_portfolio(java.lang.String username, java.lang.String password, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      fetch_portfolio_call method_call = new fetch_portfolio_call(username, password, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class fetch_portfolio_call extends org.apache.thrift.async.TAsyncMethodCall<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> {
+      private java.lang.String username;
+      private java.lang.String password;
+      public fetch_portfolio_call(java.lang.String username, java.lang.String password, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.username = username;
+        this.password = password;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("fetch_portfolio", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        fetch_portfolio_args args = new fetch_portfolio_args();
+        args.setUsername(username);
+        args.setPassword(password);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> getResult() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new java.lang.IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_fetch_portfolio();
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends org.apache.thrift.TBaseProcessor<I> implements org.apache.thrift.TProcessor {
@@ -217,6 +286,7 @@ public class TransactionImporter {
     private static <I extends Iface> java.util.Map<java.lang.String,  org.apache.thrift.ProcessFunction<I, ? extends org.apache.thrift.TBase>> getProcessMap(java.util.Map<java.lang.String, org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
       processMap.put("authenticate", new authenticate());
       processMap.put("fetch", new fetch());
+      processMap.put("fetch_portfolio", new fetch_portfolio());
       return processMap;
     }
 
@@ -283,6 +353,37 @@ public class TransactionImporter {
       }
     }
 
+    public static class fetch_portfolio<I extends Iface> extends org.apache.thrift.ProcessFunction<I, fetch_portfolio_args> {
+      public fetch_portfolio() {
+        super("fetch_portfolio");
+      }
+
+      public fetch_portfolio_args getEmptyArgsInstance() {
+        return new fetch_portfolio_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      @Override
+      protected boolean rethrowUnhandledExceptions() {
+        return false;
+      }
+
+      public fetch_portfolio_result getResult(I iface, fetch_portfolio_args args) throws org.apache.thrift.TException {
+        fetch_portfolio_result result = new fetch_portfolio_result();
+        try {
+          result.success = iface.fetch_portfolio(args.username, args.password);
+        } catch (AuthenticationError auth_error) {
+          result.auth_error = auth_error;
+        } catch (SystemUnavailableError system_unavailable) {
+          result.system_unavailable = system_unavailable;
+        }
+        return result;
+      }
+    }
+
   }
 
   public static class AsyncProcessor<I extends AsyncIface> extends org.apache.thrift.TBaseAsyncProcessor<I> {
@@ -298,6 +399,7 @@ public class TransactionImporter {
     private static <I extends AsyncIface> java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
       processMap.put("authenticate", new authenticate());
       processMap.put("fetch", new fetch());
+      processMap.put("fetch_portfolio", new fetch_portfolio());
       return processMap;
     }
 
@@ -436,6 +538,75 @@ public class TransactionImporter {
 
       public void start(I iface, fetch_args args, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException {
         iface.fetch(args.username, args.password, args.user, args.last_transaction_date,resultHandler);
+      }
+    }
+
+    public static class fetch_portfolio<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, fetch_portfolio_args, java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> {
+      public fetch_portfolio() {
+        super("fetch_portfolio");
+      }
+
+      public fetch_portfolio_args getEmptyArgsInstance() {
+        return new fetch_portfolio_args();
+      }
+
+      public org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>>() { 
+          public void onComplete(java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> o) {
+            fetch_portfolio_result result = new fetch_portfolio_result();
+            result.success = o;
+            try {
+              fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+            } catch (org.apache.thrift.transport.TTransportException e) {
+              _LOGGER.error("TTransportException writing to internal frame buffer", e);
+              fb.close();
+            } catch (java.lang.Exception e) {
+              _LOGGER.error("Exception writing to internal frame buffer", e);
+              onError(e);
+            }
+          }
+          public void onError(java.lang.Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TSerializable msg;
+            fetch_portfolio_result result = new fetch_portfolio_result();
+            if (e instanceof AuthenticationError) {
+              result.auth_error = (AuthenticationError) e;
+              result.setAuth_errorIsSet(true);
+              msg = result;
+            } else if (e instanceof SystemUnavailableError) {
+              result.system_unavailable = (SystemUnavailableError) e;
+              result.setSystem_unavailableIsSet(true);
+              msg = result;
+            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
+              _LOGGER.error("TTransportException inside handler", e);
+              fb.close();
+              return;
+            } else if (e instanceof org.apache.thrift.TApplicationException) {
+              _LOGGER.error("TApplicationException inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TApplicationException)e;
+            } else {
+              _LOGGER.error("Exception inside handler", e);
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+            } catch (java.lang.Exception ex) {
+              _LOGGER.error("Exception writing to internal frame buffer", ex);
+              fb.close();
+            }
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, fetch_portfolio_args args, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> resultHandler) throws org.apache.thrift.TException {
+        iface.fetch_portfolio(args.username, args.password,resultHandler);
       }
     }
 
@@ -2737,6 +2908,1124 @@ public class TransactionImporter {
           struct.setAuth_errorIsSet(true);
         }
         if (incoming.get(1)) {
+          struct.system_unavailable = new SystemUnavailableError();
+          struct.system_unavailable.read(iprot);
+          struct.setSystem_unavailableIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class fetch_portfolio_args implements org.apache.thrift.TBase<fetch_portfolio_args, fetch_portfolio_args._Fields>, java.io.Serializable, Cloneable, Comparable<fetch_portfolio_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("fetch_portfolio_args");
+
+    private static final org.apache.thrift.protocol.TField USERNAME_FIELD_DESC = new org.apache.thrift.protocol.TField("username", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField PASSWORD_FIELD_DESC = new org.apache.thrift.protocol.TField("password", org.apache.thrift.protocol.TType.STRING, (short)2);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new fetch_portfolio_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new fetch_portfolio_argsTupleSchemeFactory();
+
+    public @org.apache.thrift.annotation.Nullable java.lang.String username; // required
+    public @org.apache.thrift.annotation.Nullable java.lang.String password; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      USERNAME((short)1, "username"),
+      PASSWORD((short)2, "password");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // USERNAME
+            return USERNAME;
+          case 2: // PASSWORD
+            return PASSWORD;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.USERNAME, new org.apache.thrift.meta_data.FieldMetaData("username", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.PASSWORD, new org.apache.thrift.meta_data.FieldMetaData("password", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(fetch_portfolio_args.class, metaDataMap);
+    }
+
+    public fetch_portfolio_args() {
+    }
+
+    public fetch_portfolio_args(
+      java.lang.String username,
+      java.lang.String password)
+    {
+      this();
+      this.username = username;
+      this.password = password;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public fetch_portfolio_args(fetch_portfolio_args other) {
+      if (other.isSetUsername()) {
+        this.username = other.username;
+      }
+      if (other.isSetPassword()) {
+        this.password = other.password;
+      }
+    }
+
+    public fetch_portfolio_args deepCopy() {
+      return new fetch_portfolio_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.username = null;
+      this.password = null;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.String getUsername() {
+      return this.username;
+    }
+
+    public fetch_portfolio_args setUsername(@org.apache.thrift.annotation.Nullable java.lang.String username) {
+      this.username = username;
+      return this;
+    }
+
+    public void unsetUsername() {
+      this.username = null;
+    }
+
+    /** Returns true if field username is set (has been assigned a value) and false otherwise */
+    public boolean isSetUsername() {
+      return this.username != null;
+    }
+
+    public void setUsernameIsSet(boolean value) {
+      if (!value) {
+        this.username = null;
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.String getPassword() {
+      return this.password;
+    }
+
+    public fetch_portfolio_args setPassword(@org.apache.thrift.annotation.Nullable java.lang.String password) {
+      this.password = password;
+      return this;
+    }
+
+    public void unsetPassword() {
+      this.password = null;
+    }
+
+    /** Returns true if field password is set (has been assigned a value) and false otherwise */
+    public boolean isSetPassword() {
+      return this.password != null;
+    }
+
+    public void setPasswordIsSet(boolean value) {
+      if (!value) {
+        this.password = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case USERNAME:
+        if (value == null) {
+          unsetUsername();
+        } else {
+          setUsername((java.lang.String)value);
+        }
+        break;
+
+      case PASSWORD:
+        if (value == null) {
+          unsetPassword();
+        } else {
+          setPassword((java.lang.String)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case USERNAME:
+        return getUsername();
+
+      case PASSWORD:
+        return getPassword();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case USERNAME:
+        return isSetUsername();
+      case PASSWORD:
+        return isSetPassword();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof fetch_portfolio_args)
+        return this.equals((fetch_portfolio_args)that);
+      return false;
+    }
+
+    public boolean equals(fetch_portfolio_args that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_username = true && this.isSetUsername();
+      boolean that_present_username = true && that.isSetUsername();
+      if (this_present_username || that_present_username) {
+        if (!(this_present_username && that_present_username))
+          return false;
+        if (!this.username.equals(that.username))
+          return false;
+      }
+
+      boolean this_present_password = true && this.isSetPassword();
+      boolean that_present_password = true && that.isSetPassword();
+      if (this_present_password || that_present_password) {
+        if (!(this_present_password && that_present_password))
+          return false;
+        if (!this.password.equals(that.password))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetUsername()) ? 131071 : 524287);
+      if (isSetUsername())
+        hashCode = hashCode * 8191 + username.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetPassword()) ? 131071 : 524287);
+      if (isSetPassword())
+        hashCode = hashCode * 8191 + password.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(fetch_portfolio_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.valueOf(isSetUsername()).compareTo(other.isSetUsername());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetUsername()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.username, other.username);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetPassword()).compareTo(other.isSetPassword());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetPassword()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.password, other.password);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+    }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("fetch_portfolio_args(");
+      boolean first = true;
+
+      sb.append("username:");
+      if (this.username == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.username);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("password:");
+      if (this.password == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.password);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class fetch_portfolio_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public fetch_portfolio_argsStandardScheme getScheme() {
+        return new fetch_portfolio_argsStandardScheme();
+      }
+    }
+
+    private static class fetch_portfolio_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<fetch_portfolio_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, fetch_portfolio_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // USERNAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.username = iprot.readString();
+                struct.setUsernameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // PASSWORD
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.password = iprot.readString();
+                struct.setPasswordIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, fetch_portfolio_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.username != null) {
+          oprot.writeFieldBegin(USERNAME_FIELD_DESC);
+          oprot.writeString(struct.username);
+          oprot.writeFieldEnd();
+        }
+        if (struct.password != null) {
+          oprot.writeFieldBegin(PASSWORD_FIELD_DESC);
+          oprot.writeString(struct.password);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class fetch_portfolio_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public fetch_portfolio_argsTupleScheme getScheme() {
+        return new fetch_portfolio_argsTupleScheme();
+      }
+    }
+
+    private static class fetch_portfolio_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<fetch_portfolio_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, fetch_portfolio_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetUsername()) {
+          optionals.set(0);
+        }
+        if (struct.isSetPassword()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetUsername()) {
+          oprot.writeString(struct.username);
+        }
+        if (struct.isSetPassword()) {
+          oprot.writeString(struct.password);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, fetch_portfolio_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.username = iprot.readString();
+          struct.setUsernameIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.password = iprot.readString();
+          struct.setPasswordIsSet(true);
+        }
+      }
+    }
+
+    private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
+      return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
+    }
+  }
+
+  public static class fetch_portfolio_result implements org.apache.thrift.TBase<fetch_portfolio_result, fetch_portfolio_result._Fields>, java.io.Serializable, Cloneable, Comparable<fetch_portfolio_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("fetch_portfolio_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.MAP, (short)0);
+    private static final org.apache.thrift.protocol.TField AUTH_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("auth_error", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField SYSTEM_UNAVAILABLE_FIELD_DESC = new org.apache.thrift.protocol.TField("system_unavailable", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new fetch_portfolio_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new fetch_portfolio_resultTupleSchemeFactory();
+
+    public @org.apache.thrift.annotation.Nullable java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> success; // required
+    public @org.apache.thrift.annotation.Nullable AuthenticationError auth_error; // required
+    public @org.apache.thrift.annotation.Nullable SystemUnavailableError system_unavailable; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      AUTH_ERROR((short)1, "auth_error"),
+      SYSTEM_UNAVAILABLE((short)2, "system_unavailable");
+
+      private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
+
+      static {
+        for (_Fields field : java.util.EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // AUTH_ERROR
+            return AUTH_ERROR;
+          case 2: // SYSTEM_UNAVAILABLE
+            return SYSTEM_UNAVAILABLE;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new java.lang.IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      @org.apache.thrift.annotation.Nullable
+      public static _Fields findByName(java.lang.String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final java.lang.String _fieldName;
+
+      _Fields(short thriftId, java.lang.String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public java.lang.String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.MapMetaData(org.apache.thrift.protocol.TType.MAP, 
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.SecurityId.class), 
+              new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32))));
+      tmpMap.put(_Fields.AUTH_ERROR, new org.apache.thrift.meta_data.FieldMetaData("auth_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AuthenticationError.class)));
+      tmpMap.put(_Fields.SYSTEM_UNAVAILABLE, new org.apache.thrift.meta_data.FieldMetaData("system_unavailable", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, SystemUnavailableError.class)));
+      metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(fetch_portfolio_result.class, metaDataMap);
+    }
+
+    public fetch_portfolio_result() {
+    }
+
+    public fetch_portfolio_result(
+      java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> success,
+      AuthenticationError auth_error,
+      SystemUnavailableError system_unavailable)
+    {
+      this();
+      this.success = success;
+      this.auth_error = auth_error;
+      this.system_unavailable = system_unavailable;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public fetch_portfolio_result(fetch_portfolio_result other) {
+      if (other.isSetSuccess()) {
+        java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> __this__success = new java.util.HashMap<br.com.investtools.radar.api.SecurityId,java.lang.Integer>(other.success.size());
+        for (java.util.Map.Entry<br.com.investtools.radar.api.SecurityId, java.lang.Integer> other_element : other.success.entrySet()) {
+
+          br.com.investtools.radar.api.SecurityId other_element_key = other_element.getKey();
+          java.lang.Integer other_element_value = other_element.getValue();
+
+          br.com.investtools.radar.api.SecurityId __this__success_copy_key = new br.com.investtools.radar.api.SecurityId(other_element_key);
+
+          java.lang.Integer __this__success_copy_value = other_element_value;
+
+          __this__success.put(__this__success_copy_key, __this__success_copy_value);
+        }
+        this.success = __this__success;
+      }
+      if (other.isSetAuth_error()) {
+        this.auth_error = new AuthenticationError(other.auth_error);
+      }
+      if (other.isSetSystem_unavailable()) {
+        this.system_unavailable = new SystemUnavailableError(other.system_unavailable);
+      }
+    }
+
+    public fetch_portfolio_result deepCopy() {
+      return new fetch_portfolio_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.auth_error = null;
+      this.system_unavailable = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public void putToSuccess(br.com.investtools.radar.api.SecurityId key, int val) {
+      if (this.success == null) {
+        this.success = new java.util.HashMap<br.com.investtools.radar.api.SecurityId,java.lang.Integer>();
+      }
+      this.success.put(key, val);
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> getSuccess() {
+      return this.success;
+    }
+
+    public fetch_portfolio_result setSuccess(@org.apache.thrift.annotation.Nullable java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public AuthenticationError getAuth_error() {
+      return this.auth_error;
+    }
+
+    public fetch_portfolio_result setAuth_error(@org.apache.thrift.annotation.Nullable AuthenticationError auth_error) {
+      this.auth_error = auth_error;
+      return this;
+    }
+
+    public void unsetAuth_error() {
+      this.auth_error = null;
+    }
+
+    /** Returns true if field auth_error is set (has been assigned a value) and false otherwise */
+    public boolean isSetAuth_error() {
+      return this.auth_error != null;
+    }
+
+    public void setAuth_errorIsSet(boolean value) {
+      if (!value) {
+        this.auth_error = null;
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public SystemUnavailableError getSystem_unavailable() {
+      return this.system_unavailable;
+    }
+
+    public fetch_portfolio_result setSystem_unavailable(@org.apache.thrift.annotation.Nullable SystemUnavailableError system_unavailable) {
+      this.system_unavailable = system_unavailable;
+      return this;
+    }
+
+    public void unsetSystem_unavailable() {
+      this.system_unavailable = null;
+    }
+
+    /** Returns true if field system_unavailable is set (has been assigned a value) and false otherwise */
+    public boolean isSetSystem_unavailable() {
+      return this.system_unavailable != null;
+    }
+
+    public void setSystem_unavailableIsSet(boolean value) {
+      if (!value) {
+        this.system_unavailable = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>)value);
+        }
+        break;
+
+      case AUTH_ERROR:
+        if (value == null) {
+          unsetAuth_error();
+        } else {
+          setAuth_error((AuthenticationError)value);
+        }
+        break;
+
+      case SYSTEM_UNAVAILABLE:
+        if (value == null) {
+          unsetSystem_unavailable();
+        } else {
+          setSystem_unavailable((SystemUnavailableError)value);
+        }
+        break;
+
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case AUTH_ERROR:
+        return getAuth_error();
+
+      case SYSTEM_UNAVAILABLE:
+        return getSystem_unavailable();
+
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new java.lang.IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case AUTH_ERROR:
+        return isSetAuth_error();
+      case SYSTEM_UNAVAILABLE:
+        return isSetSystem_unavailable();
+      }
+      throw new java.lang.IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(java.lang.Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof fetch_portfolio_result)
+        return this.equals((fetch_portfolio_result)that);
+      return false;
+    }
+
+    public boolean equals(fetch_portfolio_result that) {
+      if (that == null)
+        return false;
+      if (this == that)
+        return true;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_auth_error = true && this.isSetAuth_error();
+      boolean that_present_auth_error = true && that.isSetAuth_error();
+      if (this_present_auth_error || that_present_auth_error) {
+        if (!(this_present_auth_error && that_present_auth_error))
+          return false;
+        if (!this.auth_error.equals(that.auth_error))
+          return false;
+      }
+
+      boolean this_present_system_unavailable = true && this.isSetSystem_unavailable();
+      boolean that_present_system_unavailable = true && that.isSetSystem_unavailable();
+      if (this_present_system_unavailable || that_present_system_unavailable) {
+        if (!(this_present_system_unavailable && that_present_system_unavailable))
+          return false;
+        if (!this.system_unavailable.equals(that.system_unavailable))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetSuccess()) ? 131071 : 524287);
+      if (isSetSuccess())
+        hashCode = hashCode * 8191 + success.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetAuth_error()) ? 131071 : 524287);
+      if (isSetAuth_error())
+        hashCode = hashCode * 8191 + auth_error.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetSystem_unavailable()) ? 131071 : 524287);
+      if (isSetSystem_unavailable())
+        hashCode = hashCode * 8191 + system_unavailable.hashCode();
+
+      return hashCode;
+    }
+
+    @Override
+    public int compareTo(fetch_portfolio_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = java.lang.Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetAuth_error()).compareTo(other.isSetAuth_error());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAuth_error()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.auth_error, other.auth_error);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetSystem_unavailable()).compareTo(other.isSetSystem_unavailable());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSystem_unavailable()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.system_unavailable, other.system_unavailable);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      scheme(iprot).read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      scheme(oprot).write(oprot, this);
+      }
+
+    @Override
+    public java.lang.String toString() {
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("fetch_portfolio_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("auth_error:");
+      if (this.auth_error == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.auth_error);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("system_unavailable:");
+      if (this.system_unavailable == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.system_unavailable);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class fetch_portfolio_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public fetch_portfolio_resultStandardScheme getScheme() {
+        return new fetch_portfolio_resultStandardScheme();
+      }
+    }
+
+    private static class fetch_portfolio_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<fetch_portfolio_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, fetch_portfolio_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
+                {
+                  org.apache.thrift.protocol.TMap _map0 = iprot.readMapBegin();
+                  struct.success = new java.util.HashMap<br.com.investtools.radar.api.SecurityId,java.lang.Integer>(2*_map0.size);
+                  @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.SecurityId _key1;
+                  int _val2;
+                  for (int _i3 = 0; _i3 < _map0.size; ++_i3)
+                  {
+                    _key1 = new br.com.investtools.radar.api.SecurityId();
+                    _key1.read(iprot);
+                    _val2 = iprot.readI32();
+                    struct.success.put(_key1, _val2);
+                  }
+                  iprot.readMapEnd();
+                }
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // AUTH_ERROR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.auth_error = new AuthenticationError();
+                struct.auth_error.read(iprot);
+                struct.setAuth_errorIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // SYSTEM_UNAVAILABLE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.system_unavailable = new SystemUnavailableError();
+                struct.system_unavailable.read(iprot);
+                struct.setSystem_unavailableIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, fetch_portfolio_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          {
+            oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRUCT, org.apache.thrift.protocol.TType.I32, struct.success.size()));
+            for (java.util.Map.Entry<br.com.investtools.radar.api.SecurityId, java.lang.Integer> _iter4 : struct.success.entrySet())
+            {
+              _iter4.getKey().write(oprot);
+              oprot.writeI32(_iter4.getValue());
+            }
+            oprot.writeMapEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+        if (struct.auth_error != null) {
+          oprot.writeFieldBegin(AUTH_ERROR_FIELD_DESC);
+          struct.auth_error.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.system_unavailable != null) {
+          oprot.writeFieldBegin(SYSTEM_UNAVAILABLE_FIELD_DESC);
+          struct.system_unavailable.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class fetch_portfolio_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public fetch_portfolio_resultTupleScheme getScheme() {
+        return new fetch_portfolio_resultTupleScheme();
+      }
+    }
+
+    private static class fetch_portfolio_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<fetch_portfolio_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, fetch_portfolio_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetAuth_error()) {
+          optionals.set(1);
+        }
+        if (struct.isSetSystem_unavailable()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetSuccess()) {
+          {
+            oprot.writeI32(struct.success.size());
+            for (java.util.Map.Entry<br.com.investtools.radar.api.SecurityId, java.lang.Integer> _iter5 : struct.success.entrySet())
+            {
+              _iter5.getKey().write(oprot);
+              oprot.writeI32(_iter5.getValue());
+            }
+          }
+        }
+        if (struct.isSetAuth_error()) {
+          struct.auth_error.write(oprot);
+        }
+        if (struct.isSetSystem_unavailable()) {
+          struct.system_unavailable.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, fetch_portfolio_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(3);
+        if (incoming.get(0)) {
+          {
+            org.apache.thrift.protocol.TMap _map6 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRUCT, org.apache.thrift.protocol.TType.I32, iprot.readI32());
+            struct.success = new java.util.HashMap<br.com.investtools.radar.api.SecurityId,java.lang.Integer>(2*_map6.size);
+            @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.SecurityId _key7;
+            int _val8;
+            for (int _i9 = 0; _i9 < _map6.size; ++_i9)
+            {
+              _key7 = new br.com.investtools.radar.api.SecurityId();
+              _key7.read(iprot);
+              _val8 = iprot.readI32();
+              struct.success.put(_key7, _val8);
+            }
+          }
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.auth_error = new AuthenticationError();
+          struct.auth_error.read(iprot);
+          struct.setAuth_errorIsSet(true);
+        }
+        if (incoming.get(2)) {
           struct.system_unavailable = new SystemUnavailableError();
           struct.system_unavailable.read(iprot);
           struct.setSystem_unavailableIsSet(true);
