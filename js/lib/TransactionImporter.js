@@ -354,12 +354,16 @@ TransactionImporter_fetch_result.prototype.write = function(output) {
 var TransactionImporter_fetch_portfolio_args = function(args) {
   this.username = null;
   this.password = null;
+  this.date = null;
   if (args) {
     if (args.username !== undefined && args.username !== null) {
       this.username = args.username;
     }
     if (args.password !== undefined && args.password !== null) {
       this.password = args.password;
+    }
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
     }
   }
 };
@@ -388,6 +392,13 @@ TransactionImporter_fetch_portfolio_args.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 3:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -407,6 +418,11 @@ TransactionImporter_fetch_portfolio_args.prototype.write = function(output) {
   if (this.password !== null && this.password !== undefined) {
     output.writeFieldBegin('password', Thrift.Type.STRING, 2);
     output.writeString(this.password);
+    output.writeFieldEnd();
+  }
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 3);
+    output.writeI64(this.date);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -664,7 +680,7 @@ TransactionImporterClient.prototype.recv_fetch = function(input,mtype,rseqid) {
   callback(null);
 };
 
-TransactionImporterClient.prototype.fetch_portfolio = function(username, password, callback) {
+TransactionImporterClient.prototype.fetch_portfolio = function(username, password, date, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -675,19 +691,20 @@ TransactionImporterClient.prototype.fetch_portfolio = function(username, passwor
         _defer.resolve(result);
       }
     };
-    this.send_fetch_portfolio(username, password);
+    this.send_fetch_portfolio(username, password, date);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_fetch_portfolio(username, password);
+    this.send_fetch_portfolio(username, password, date);
   }
 };
 
-TransactionImporterClient.prototype.send_fetch_portfolio = function(username, password) {
+TransactionImporterClient.prototype.send_fetch_portfolio = function(username, password, date) {
   var output = new this.pClass(this.output);
   var params = {
     username: username,
-    password: password
+    password: password,
+    date: date
   };
   var args = new TransactionImporter_fetch_portfolio_args(params);
   try {
@@ -839,10 +856,11 @@ TransactionImporterProcessor.prototype.process_fetch_portfolio = function(seqid,
   var args = new TransactionImporter_fetch_portfolio_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.fetch_portfolio.length === 2) {
+  if (this._handler.fetch_portfolio.length === 3) {
     Q.fcall(this._handler.fetch_portfolio.bind(this._handler),
       args.username,
-      args.password
+      args.password,
+      args.date
     ).then(function(result) {
       var result_obj = new TransactionImporter_fetch_portfolio_result({success: result});
       output.writeMessageBegin("fetch_portfolio", Thrift.MessageType.REPLY, seqid);
@@ -863,7 +881,7 @@ TransactionImporterProcessor.prototype.process_fetch_portfolio = function(seqid,
       output.flush();
     });
   } else {
-    this._handler.fetch_portfolio(args.username, args.password, function (err, result) {
+    this._handler.fetch_portfolio(args.username, args.password, args.date, function (err, result) {
       var result_obj;
       if ((err === null || typeof err === 'undefined') || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
         result_obj = new TransactionImporter_fetch_portfolio_result((err !== null || typeof err === 'undefined') ? err : {success: result});

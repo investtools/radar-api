@@ -15,7 +15,7 @@ public class TransactionImporter {
 
     public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
 
-    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> fetch_portfolio(java.lang.String username, java.lang.String password) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
+    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> fetch_portfolio(java.lang.String username, java.lang.String password, long date) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
 
   }
 
@@ -25,7 +25,7 @@ public class TransactionImporter {
 
     public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date, org.apache.thrift.async.AsyncMethodCallback<Void> resultHandler) throws org.apache.thrift.TException;
 
-    public void fetch_portfolio(java.lang.String username, java.lang.String password, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> resultHandler) throws org.apache.thrift.TException;
+    public void fetch_portfolio(java.lang.String username, java.lang.String password, long date, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -109,17 +109,18 @@ public class TransactionImporter {
       return;
     }
 
-    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> fetch_portfolio(java.lang.String username, java.lang.String password) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> fetch_portfolio(java.lang.String username, java.lang.String password, long date) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
-      send_fetch_portfolio(username, password);
+      send_fetch_portfolio(username, password, date);
       return recv_fetch_portfolio();
     }
 
-    public void send_fetch_portfolio(java.lang.String username, java.lang.String password) throws org.apache.thrift.TException
+    public void send_fetch_portfolio(java.lang.String username, java.lang.String password, long date) throws org.apache.thrift.TException
     {
       fetch_portfolio_args args = new fetch_portfolio_args();
       args.setUsername(username);
       args.setPassword(password);
+      args.setDate(date);
       sendBase("fetch_portfolio", args);
     }
 
@@ -236,9 +237,9 @@ public class TransactionImporter {
       }
     }
 
-    public void fetch_portfolio(java.lang.String username, java.lang.String password, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> resultHandler) throws org.apache.thrift.TException {
+    public void fetch_portfolio(java.lang.String username, java.lang.String password, long date, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      fetch_portfolio_call method_call = new fetch_portfolio_call(username, password, resultHandler, this, ___protocolFactory, ___transport);
+      fetch_portfolio_call method_call = new fetch_portfolio_call(username, password, date, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
@@ -246,10 +247,12 @@ public class TransactionImporter {
     public static class fetch_portfolio_call extends org.apache.thrift.async.TAsyncMethodCall<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> {
       private java.lang.String username;
       private java.lang.String password;
-      public fetch_portfolio_call(java.lang.String username, java.lang.String password, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private long date;
+      public fetch_portfolio_call(java.lang.String username, java.lang.String password, long date, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.username = username;
         this.password = password;
+        this.date = date;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
@@ -257,6 +260,7 @@ public class TransactionImporter {
         fetch_portfolio_args args = new fetch_portfolio_args();
         args.setUsername(username);
         args.setPassword(password);
+        args.setDate(date);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -374,7 +378,7 @@ public class TransactionImporter {
       public fetch_portfolio_result getResult(I iface, fetch_portfolio_args args) throws org.apache.thrift.TException {
         fetch_portfolio_result result = new fetch_portfolio_result();
         try {
-          result.success = iface.fetch_portfolio(args.username, args.password);
+          result.success = iface.fetch_portfolio(args.username, args.password, args.date);
         } catch (AuthenticationError auth_error) {
           result.auth_error = auth_error;
         } catch (SystemUnavailableError system_unavailable) {
@@ -606,7 +610,7 @@ public class TransactionImporter {
       }
 
       public void start(I iface, fetch_portfolio_args args, org.apache.thrift.async.AsyncMethodCallback<java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer>> resultHandler) throws org.apache.thrift.TException {
-        iface.fetch_portfolio(args.username, args.password,resultHandler);
+        iface.fetch_portfolio(args.username, args.password, args.date,resultHandler);
       }
     }
 
@@ -2925,17 +2929,20 @@ public class TransactionImporter {
 
     private static final org.apache.thrift.protocol.TField USERNAME_FIELD_DESC = new org.apache.thrift.protocol.TField("username", org.apache.thrift.protocol.TType.STRING, (short)1);
     private static final org.apache.thrift.protocol.TField PASSWORD_FIELD_DESC = new org.apache.thrift.protocol.TField("password", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)3);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new fetch_portfolio_argsStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new fetch_portfolio_argsTupleSchemeFactory();
 
     public @org.apache.thrift.annotation.Nullable java.lang.String username; // required
     public @org.apache.thrift.annotation.Nullable java.lang.String password; // required
+    public long date; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       USERNAME((short)1, "username"),
-      PASSWORD((short)2, "password");
+      PASSWORD((short)2, "password"),
+      DATE((short)3, "date");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -2955,6 +2962,8 @@ public class TransactionImporter {
             return USERNAME;
           case 2: // PASSWORD
             return PASSWORD;
+          case 3: // DATE
+            return DATE;
           default:
             return null;
         }
@@ -2996,6 +3005,8 @@ public class TransactionImporter {
     }
 
     // isset id assignments
+    private static final int __DATE_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
     public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
@@ -3003,6 +3014,8 @@ public class TransactionImporter {
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.PASSWORD, new org.apache.thrift.meta_data.FieldMetaData("password", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64          , "Date")));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(fetch_portfolio_args.class, metaDataMap);
     }
@@ -3012,23 +3025,28 @@ public class TransactionImporter {
 
     public fetch_portfolio_args(
       java.lang.String username,
-      java.lang.String password)
+      java.lang.String password,
+      long date)
     {
       this();
       this.username = username;
       this.password = password;
+      this.date = date;
+      setDateIsSet(true);
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public fetch_portfolio_args(fetch_portfolio_args other) {
+      __isset_bitfield = other.__isset_bitfield;
       if (other.isSetUsername()) {
         this.username = other.username;
       }
       if (other.isSetPassword()) {
         this.password = other.password;
       }
+      this.date = other.date;
     }
 
     public fetch_portfolio_args deepCopy() {
@@ -3039,6 +3057,8 @@ public class TransactionImporter {
     public void clear() {
       this.username = null;
       this.password = null;
+      setDateIsSet(false);
+      this.date = 0;
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -3091,6 +3111,29 @@ public class TransactionImporter {
       }
     }
 
+    public long getDate() {
+      return this.date;
+    }
+
+    public fetch_portfolio_args setDate(long date) {
+      this.date = date;
+      setDateIsSet(true);
+      return this;
+    }
+
+    public void unsetDate() {
+      __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __DATE_ISSET_ID);
+    }
+
+    /** Returns true if field date is set (has been assigned a value) and false otherwise */
+    public boolean isSetDate() {
+      return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __DATE_ISSET_ID);
+    }
+
+    public void setDateIsSet(boolean value) {
+      __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __DATE_ISSET_ID, value);
+    }
+
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
       case USERNAME:
@@ -3109,6 +3152,14 @@ public class TransactionImporter {
         }
         break;
 
+      case DATE:
+        if (value == null) {
+          unsetDate();
+        } else {
+          setDate((java.lang.Long)value);
+        }
+        break;
+
       }
     }
 
@@ -3120,6 +3171,9 @@ public class TransactionImporter {
 
       case PASSWORD:
         return getPassword();
+
+      case DATE:
+        return getDate();
 
       }
       throw new java.lang.IllegalStateException();
@@ -3136,6 +3190,8 @@ public class TransactionImporter {
         return isSetUsername();
       case PASSWORD:
         return isSetPassword();
+      case DATE:
+        return isSetDate();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -3173,6 +3229,15 @@ public class TransactionImporter {
           return false;
       }
 
+      boolean this_present_date = true;
+      boolean that_present_date = true;
+      if (this_present_date || that_present_date) {
+        if (!(this_present_date && that_present_date))
+          return false;
+        if (this.date != that.date)
+          return false;
+      }
+
       return true;
     }
 
@@ -3187,6 +3252,8 @@ public class TransactionImporter {
       hashCode = hashCode * 8191 + ((isSetPassword()) ? 131071 : 524287);
       if (isSetPassword())
         hashCode = hashCode * 8191 + password.hashCode();
+
+      hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(date);
 
       return hashCode;
     }
@@ -3215,6 +3282,16 @@ public class TransactionImporter {
       }
       if (isSetPassword()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.password, other.password);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetDate()).compareTo(other.isSetDate());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDate()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.date, other.date);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -3255,6 +3332,10 @@ public class TransactionImporter {
         sb.append(this.password);
       }
       first = false;
+      if (!first) sb.append(", ");
+      sb.append("date:");
+      sb.append(this.date);
+      first = false;
       sb.append(")");
       return sb.toString();
     }
@@ -3274,6 +3355,8 @@ public class TransactionImporter {
 
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
       try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
         read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
       } catch (org.apache.thrift.TException te) {
         throw new java.io.IOException(te);
@@ -3314,6 +3397,14 @@ public class TransactionImporter {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 3: // DATE
+              if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
+                struct.date = iprot.readI64();
+                struct.setDateIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -3339,6 +3430,9 @@ public class TransactionImporter {
           oprot.writeString(struct.password);
           oprot.writeFieldEnd();
         }
+        oprot.writeFieldBegin(DATE_FIELD_DESC);
+        oprot.writeI64(struct.date);
+        oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -3363,19 +3457,25 @@ public class TransactionImporter {
         if (struct.isSetPassword()) {
           optionals.set(1);
         }
-        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetDate()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
         if (struct.isSetUsername()) {
           oprot.writeString(struct.username);
         }
         if (struct.isSetPassword()) {
           oprot.writeString(struct.password);
         }
+        if (struct.isSetDate()) {
+          oprot.writeI64(struct.date);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, fetch_portfolio_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
+        java.util.BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           struct.username = iprot.readString();
           struct.setUsernameIsSet(true);
@@ -3383,6 +3483,10 @@ public class TransactionImporter {
         if (incoming.get(1)) {
           struct.password = iprot.readString();
           struct.setPasswordIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.date = iprot.readI64();
+          struct.setDateIsSet(true);
         }
       }
     }

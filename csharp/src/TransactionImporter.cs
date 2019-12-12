@@ -19,7 +19,7 @@ public partial class TransactionImporter {
   public interface ISync {
     bool authenticate(string username, string password, string user);
     void fetch(string username, string password, string user, long last_transaction_date);
-    Dictionary<SecurityId, int> fetch_portfolio(string username, string password);
+    Dictionary<SecurityId, int> fetch_portfolio(string username, string password, long date);
   }
 
   public interface Iface : ISync {
@@ -32,7 +32,7 @@ public partial class TransactionImporter {
     void End_fetch(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password);
+    IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long date);
     Dictionary<SecurityId, int> End_fetch_portfolio(IAsyncResult asyncResult);
     #endif
   }
@@ -253,9 +253,9 @@ public partial class TransactionImporter {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password)
+    public IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long date)
     {
-      return send_fetch_portfolio(callback, state, username, password);
+      return send_fetch_portfolio(callback, state, username, password, date);
     }
 
     public Dictionary<SecurityId, int> End_fetch_portfolio(IAsyncResult asyncResult)
@@ -266,25 +266,26 @@ public partial class TransactionImporter {
 
     #endif
 
-    public Dictionary<SecurityId, int> fetch_portfolio(string username, string password)
+    public Dictionary<SecurityId, int> fetch_portfolio(string username, string password, long date)
     {
       #if SILVERLIGHT
-      var asyncResult = Begin_fetch_portfolio(null, null, username, password);
+      var asyncResult = Begin_fetch_portfolio(null, null, username, password, date);
       return End_fetch_portfolio(asyncResult);
 
       #else
-      send_fetch_portfolio(username, password);
+      send_fetch_portfolio(username, password, date);
       return recv_fetch_portfolio();
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_fetch_portfolio(AsyncCallback callback, object state, string username, string password)
+    public IAsyncResult send_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long date)
     {
       oprot_.WriteMessageBegin(new TMessage("fetch_portfolio", TMessageType.Call, seqid_));
       fetch_portfolio_args args = new fetch_portfolio_args();
       args.Username = username;
       args.Password = password;
+      args.Date = date;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       return oprot_.Transport.BeginFlush(callback, state);
@@ -292,12 +293,13 @@ public partial class TransactionImporter {
 
     #else
 
-    public void send_fetch_portfolio(string username, string password)
+    public void send_fetch_portfolio(string username, string password, long date)
     {
       oprot_.WriteMessageBegin(new TMessage("fetch_portfolio", TMessageType.Call, seqid_));
       fetch_portfolio_args args = new fetch_portfolio_args();
       args.Username = username;
       args.Password = password;
+      args.Date = date;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       oprot_.Transport.Flush();
@@ -455,7 +457,7 @@ public partial class TransactionImporter {
       {
         try
         {
-          result.Success = iface_.fetch_portfolio(args.Username, args.Password);
+          result.Success = iface_.fetch_portfolio(args.Username, args.Password, args.Date);
         }
         catch (AuthenticationError auth_error)
         {
@@ -1225,6 +1227,7 @@ public partial class TransactionImporter {
   {
     private string _username;
     private string _password;
+    private long _date;
 
     public string Username
     {
@@ -1252,6 +1255,19 @@ public partial class TransactionImporter {
       }
     }
 
+    public long Date
+    {
+      get
+      {
+        return _date;
+      }
+      set
+      {
+        __isset.date = true;
+        this._date = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -1260,6 +1276,7 @@ public partial class TransactionImporter {
     public struct Isset {
       public bool username;
       public bool password;
+      public bool date;
     }
 
     public fetch_portfolio_args() {
@@ -1290,6 +1307,13 @@ public partial class TransactionImporter {
             case 2:
               if (field.Type == TType.String) {
                 Password = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.I64) {
+                Date = iprot.ReadI64();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1331,6 +1355,14 @@ public partial class TransactionImporter {
           oprot.WriteString(Password);
           oprot.WriteFieldEnd();
         }
+        if (__isset.date) {
+          field.Name = "date";
+          field.Type = TType.I64;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI64(Date);
+          oprot.WriteFieldEnd();
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -1354,6 +1386,12 @@ public partial class TransactionImporter {
         __first = false;
         __sb.Append("Password: ");
         __sb.Append(Password);
+      }
+      if (__isset.date) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Date: ");
+        __sb.Append(Date);
       }
       __sb.Append(")");
       return __sb.ToString();

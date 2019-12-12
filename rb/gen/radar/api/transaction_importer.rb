@@ -46,13 +46,13 @@ module Radar
           return
         end
 
-        def fetch_portfolio(username, password)
-          send_fetch_portfolio(username, password)
+        def fetch_portfolio(username, password, date)
+          send_fetch_portfolio(username, password, date)
           return recv_fetch_portfolio()
         end
 
-        def send_fetch_portfolio(username, password)
-          send_message('fetch_portfolio', Fetch_portfolio_args, :username => username, :password => password)
+        def send_fetch_portfolio(username, password, date)
+          send_message('fetch_portfolio', Fetch_portfolio_args, :username => username, :password => password, :date => date)
         end
 
         def recv_fetch_portfolio()
@@ -98,7 +98,7 @@ module Radar
           args = read_args(iprot, Fetch_portfolio_args)
           result = Fetch_portfolio_result.new()
           begin
-            result.success = @handler.fetch_portfolio(args.username, args.password)
+            result.success = @handler.fetch_portfolio(args.username, args.password, args.date)
           rescue ::Radar::Api::AuthenticationError => auth_error
             result.auth_error = auth_error
           rescue ::Radar::Api::SystemUnavailableError => system_unavailable
@@ -195,10 +195,12 @@ module Radar
         include ::Thrift::Struct, ::Thrift::Struct_Union
         USERNAME = 1
         PASSWORD = 2
+        DATE = 3
 
         FIELDS = {
           USERNAME => {:type => ::Thrift::Types::STRING, :name => 'username'},
-          PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'}
+          PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'},
+          DATE => {:type => ::Thrift::Types::I64, :name => 'date'}
         }
 
         def struct_fields; FIELDS; end
