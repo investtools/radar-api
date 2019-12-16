@@ -61,3 +61,7 @@ struct Broker {
   3: string segment
 }
 
+exception ApplicationError {
+  1: string message
+  2: list<string> stacktrace
+}

@@ -25,6 +25,7 @@ module Radar
         def recv_authenticate()
           result = receive_message(Authenticate_result)
           return result.success unless result.success.nil?
+          raise result.app_error unless result.app_error.nil?
           raise result.auth_error unless result.auth_error.nil?
           raise result.system_unavailable unless result.system_unavailable.nil?
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'authenticate failed: unknown result')
@@ -41,6 +42,7 @@ module Radar
 
         def recv_fetch()
           result = receive_message(Fetch_result)
+          raise result.app_error unless result.app_error.nil?
           raise result.auth_error unless result.auth_error.nil?
           raise result.system_unavailable unless result.system_unavailable.nil?
           return
@@ -58,6 +60,7 @@ module Radar
         def recv_fetch_portfolio()
           result = receive_message(Fetch_portfolio_result)
           return result.success unless result.success.nil?
+          raise result.app_error unless result.app_error.nil?
           raise result.auth_error unless result.auth_error.nil?
           raise result.system_unavailable unless result.system_unavailable.nil?
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'fetch_portfolio failed: unknown result')
@@ -73,6 +76,8 @@ module Radar
           result = Authenticate_result.new()
           begin
             result.success = @handler.authenticate(args.username, args.password, args.user)
+          rescue ::Radar::Api::ApplicationError => app_error
+            result.app_error = app_error
           rescue ::Radar::Api::AuthenticationError => auth_error
             result.auth_error = auth_error
           rescue ::Radar::Api::SystemUnavailableError => system_unavailable
@@ -86,6 +91,8 @@ module Radar
           result = Fetch_result.new()
           begin
             @handler.fetch(args.username, args.password, args.user, args.last_transaction_date)
+          rescue ::Radar::Api::ApplicationError => app_error
+            result.app_error = app_error
           rescue ::Radar::Api::AuthenticationError => auth_error
             result.auth_error = auth_error
           rescue ::Radar::Api::SystemUnavailableError => system_unavailable
@@ -99,6 +106,8 @@ module Radar
           result = Fetch_portfolio_result.new()
           begin
             result.success = @handler.fetch_portfolio(args.username, args.password, args.date)
+          rescue ::Radar::Api::ApplicationError => app_error
+            result.app_error = app_error
           rescue ::Radar::Api::AuthenticationError => auth_error
             result.auth_error = auth_error
           rescue ::Radar::Api::SystemUnavailableError => system_unavailable
@@ -134,11 +143,13 @@ module Radar
       class Authenticate_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
+        APP_ERROR = 100
         AUTH_ERROR = 1
         SYSTEM_UNAVAILABLE = 2
 
         FIELDS = {
           SUCCESS => {:type => ::Thrift::Types::BOOL, :name => 'success'},
+          APP_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'app_error', :class => ::Radar::Api::ApplicationError},
           AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
           SYSTEM_UNAVAILABLE => {:type => ::Thrift::Types::STRUCT, :name => 'system_unavailable', :class => ::Radar::Api::SystemUnavailableError}
         }
@@ -175,10 +186,12 @@ module Radar
 
       class Fetch_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
+        APP_ERROR = 100
         AUTH_ERROR = 1
         SYSTEM_UNAVAILABLE = 2
 
         FIELDS = {
+          APP_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'app_error', :class => ::Radar::Api::ApplicationError},
           AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
           SYSTEM_UNAVAILABLE => {:type => ::Thrift::Types::STRUCT, :name => 'system_unavailable', :class => ::Radar::Api::SystemUnavailableError}
         }
@@ -214,11 +227,13 @@ module Radar
       class Fetch_portfolio_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
+        APP_ERROR = 100
         AUTH_ERROR = 1
         SYSTEM_UNAVAILABLE = 2
 
         FIELDS = {
           SUCCESS => {:type => ::Thrift::Types::MAP, :name => 'success', :key => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::SecurityId}, :value => {:type => ::Thrift::Types::I32}},
+          APP_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'app_error', :class => ::Radar::Api::ApplicationError},
           AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
           SYSTEM_UNAVAILABLE => {:type => ::Thrift::Types::STRUCT, :name => 'system_unavailable', :class => ::Radar::Api::SystemUnavailableError}
         }

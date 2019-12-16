@@ -42,9 +42,17 @@ AnalyzerController_analyzers_args.prototype.write = function(output) {
 
 var AnalyzerController_analyzers_result = function(args) {
   this.success = null;
+  this.app_error = null;
+  if (args instanceof common_ttypes.ApplicationError) {
+    this.app_error = args;
+    return;
+  }
   if (args) {
     if (args.success !== undefined && args.success !== null) {
       this.success = Thrift.copyList(args.success, [ttypes.AnalyzerConfig]);
+    }
+    if (args.app_error !== undefined && args.app_error !== null) {
+      this.app_error = args.app_error;
     }
   }
 };
@@ -75,9 +83,14 @@ AnalyzerController_analyzers_result.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 0:
+      case 100:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.app_error = new common_ttypes.ApplicationError();
+        this.app_error.read(input);
+      } else {
         input.skip(ftype);
-        break;
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -99,6 +112,11 @@ AnalyzerController_analyzers_result.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.app_error !== null && this.app_error !== undefined) {
+    output.writeFieldBegin('app_error', Thrift.Type.STRUCT, 100);
+    this.app_error.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -527,9 +545,17 @@ AnalyzerController_create_session_args.prototype.write = function(output) {
 
 var AnalyzerController_create_session_result = function(args) {
   this.success = null;
+  this.app_error = null;
+  if (args instanceof common_ttypes.ApplicationError) {
+    this.app_error = args;
+    return;
+  }
   if (args) {
     if (args.success !== undefined && args.success !== null) {
       this.success = new ttypes.AnalyzerConfig(args.success);
+    }
+    if (args.app_error !== undefined && args.app_error !== null) {
+      this.app_error = args.app_error;
     }
   }
 };
@@ -552,9 +578,14 @@ AnalyzerController_create_session_result.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 0:
+      case 100:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.app_error = new common_ttypes.ApplicationError();
+        this.app_error.read(input);
+      } else {
         input.skip(ftype);
-        break;
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -569,6 +600,11 @@ AnalyzerController_create_session_result.prototype.write = function(output) {
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.app_error !== null && this.app_error !== undefined) {
+    output.writeFieldBegin('app_error', Thrift.Type.STRUCT, 100);
+    this.app_error.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -628,9 +664,17 @@ AnalyzerController_dump_args.prototype.write = function(output) {
 
 var AnalyzerController_dump_result = function(args) {
   this.success = null;
+  this.app_error = null;
+  if (args instanceof common_ttypes.ApplicationError) {
+    this.app_error = args;
+    return;
+  }
   if (args) {
     if (args.success !== undefined && args.success !== null) {
       this.success = args.success;
+    }
+    if (args.app_error !== undefined && args.app_error !== null) {
+      this.app_error = args.app_error;
     }
   }
 };
@@ -652,9 +696,14 @@ AnalyzerController_dump_result.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 0:
+      case 100:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.app_error = new common_ttypes.ApplicationError();
+        this.app_error.read(input);
+      } else {
         input.skip(ftype);
-        break;
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -669,6 +718,11 @@ AnalyzerController_dump_result.prototype.write = function(output) {
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRING, 0);
     output.writeBinary(this.success);
+    output.writeFieldEnd();
+  }
+  if (this.app_error !== null && this.app_error !== undefined) {
+    output.writeFieldBegin('app_error', Thrift.Type.STRUCT, 100);
+    this.app_error.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -816,9 +870,17 @@ AnalyzerController_result_args.prototype.write = function(output) {
 
 var AnalyzerController_result_result = function(args) {
   this.success = null;
+  this.app_error = null;
+  if (args instanceof common_ttypes.ApplicationError) {
+    this.app_error = args;
+    return;
+  }
   if (args) {
     if (args.success !== undefined && args.success !== null) {
       this.success = new ttypes.Result(args.success);
+    }
+    if (args.app_error !== undefined && args.app_error !== null) {
+      this.app_error = args.app_error;
     }
   }
 };
@@ -841,9 +903,14 @@ AnalyzerController_result_result.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
-      case 0:
+      case 100:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.app_error = new common_ttypes.ApplicationError();
+        this.app_error.read(input);
+      } else {
         input.skip(ftype);
-        break;
+      }
+      break;
       default:
         input.skip(ftype);
     }
@@ -858,6 +925,11 @@ AnalyzerController_result_result.prototype.write = function(output) {
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
+    output.writeFieldEnd();
+  }
+  if (this.app_error !== null && this.app_error !== undefined) {
+    output.writeFieldBegin('app_error', Thrift.Type.STRUCT, 100);
+    this.app_error.write(output);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -916,6 +988,16 @@ AnalyzerController_example_result_args.prototype.write = function(output) {
 };
 
 var AnalyzerController_example_result_result = function(args) {
+  this.app_error = null;
+  if (args instanceof common_ttypes.ApplicationError) {
+    this.app_error = args;
+    return;
+  }
+  if (args) {
+    if (args.app_error !== undefined && args.app_error !== null) {
+      this.app_error = args.app_error;
+    }
+  }
 };
 AnalyzerController_example_result_result.prototype = {};
 AnalyzerController_example_result_result.prototype.read = function(input) {
@@ -923,10 +1005,25 @@ AnalyzerController_example_result_result.prototype.read = function(input) {
   while (true) {
     var ret = input.readFieldBegin();
     var ftype = ret.ftype;
+    var fid = ret.fid;
     if (ftype == Thrift.Type.STOP) {
       break;
     }
-    input.skip(ftype);
+    switch (fid) {
+      case 100:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.app_error = new common_ttypes.ApplicationError();
+        this.app_error.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
     input.readFieldEnd();
   }
   input.readStructEnd();
@@ -935,6 +1032,11 @@ AnalyzerController_example_result_result.prototype.read = function(input) {
 
 AnalyzerController_example_result_result.prototype.write = function(output) {
   output.writeStructBegin('AnalyzerController_example_result_result');
+  if (this.app_error !== null && this.app_error !== undefined) {
+    output.writeFieldBegin('app_error', Thrift.Type.STRUCT, 100);
+    this.app_error.write(output);
+    output.writeFieldEnd();
+  }
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -1075,6 +1177,9 @@ AnalyzerControllerClient.prototype.recv_analyzers = function(input,mtype,rseqid)
   result.read(input);
   input.readMessageEnd();
 
+  if (null !== result.app_error) {
+    return callback(result.app_error);
+  }
   if (null !== result.success) {
     return callback(null, result.success);
   }
@@ -1311,6 +1416,9 @@ AnalyzerControllerClient.prototype.recv_create_session = function(input,mtype,rs
   result.read(input);
   input.readMessageEnd();
 
+  if (null !== result.app_error) {
+    return callback(result.app_error);
+  }
   if (null !== result.success) {
     return callback(null, result.success);
   }
@@ -1370,6 +1478,9 @@ AnalyzerControllerClient.prototype.recv_dump = function(input,mtype,rseqid) {
   result.read(input);
   input.readMessageEnd();
 
+  if (null !== result.app_error) {
+    return callback(result.app_error);
+  }
   if (null !== result.success) {
     return callback(null, result.success);
   }
@@ -1473,6 +1584,9 @@ AnalyzerControllerClient.prototype.recv_result = function(input,mtype,rseqid) {
   result.read(input);
   input.readMessageEnd();
 
+  if (null !== result.app_error) {
+    return callback(result.app_error);
+  }
   if (null !== result.success) {
     return callback(null, result.success);
   }
@@ -1532,6 +1646,9 @@ AnalyzerControllerClient.prototype.recv_example_result = function(input,mtype,rs
   result.read(input);
   input.readMessageEnd();
 
+  if (null !== result.app_error) {
+    return callback(result.app_error);
+  }
   callback(null);
 };
 
@@ -1608,8 +1725,13 @@ AnalyzerControllerProcessor.prototype.process_analyzers = function(seqid, input,
       output.flush();
     }).catch(function (err) {
       var result;
-      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-      output.writeMessageBegin("analyzers", Thrift.MessageType.EXCEPTION, seqid);
+      if (err instanceof common_ttypes.ApplicationError) {
+        result = new AnalyzerController_analyzers_result(err);
+        output.writeMessageBegin("analyzers", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("analyzers", Thrift.MessageType.EXCEPTION, seqid);
+      }
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -1617,7 +1739,7 @@ AnalyzerControllerProcessor.prototype.process_analyzers = function(seqid, input,
   } else {
     this._handler.analyzers(function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined')) {
+      if ((err === null || typeof err === 'undefined') || err instanceof common_ttypes.ApplicationError) {
         result_obj = new AnalyzerController_analyzers_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("analyzers", Thrift.MessageType.REPLY, seqid);
       } else {
@@ -1670,8 +1792,13 @@ AnalyzerControllerProcessor.prototype.process_create_session = function(seqid, i
       output.flush();
     }).catch(function (err) {
       var result;
-      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-      output.writeMessageBegin("create_session", Thrift.MessageType.EXCEPTION, seqid);
+      if (err instanceof common_ttypes.ApplicationError) {
+        result = new AnalyzerController_create_session_result(err);
+        output.writeMessageBegin("create_session", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("create_session", Thrift.MessageType.EXCEPTION, seqid);
+      }
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -1679,7 +1806,7 @@ AnalyzerControllerProcessor.prototype.process_create_session = function(seqid, i
   } else {
     this._handler.create_session(args.session_id, args.analyzer_id, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined')) {
+      if ((err === null || typeof err === 'undefined') || err instanceof common_ttypes.ApplicationError) {
         result_obj = new AnalyzerController_create_session_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("create_session", Thrift.MessageType.REPLY, seqid);
       } else {
@@ -1707,8 +1834,13 @@ AnalyzerControllerProcessor.prototype.process_dump = function(seqid, input, outp
       output.flush();
     }).catch(function (err) {
       var result;
-      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-      output.writeMessageBegin("dump", Thrift.MessageType.EXCEPTION, seqid);
+      if (err instanceof common_ttypes.ApplicationError) {
+        result = new AnalyzerController_dump_result(err);
+        output.writeMessageBegin("dump", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("dump", Thrift.MessageType.EXCEPTION, seqid);
+      }
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -1716,7 +1848,7 @@ AnalyzerControllerProcessor.prototype.process_dump = function(seqid, input, outp
   } else {
     this._handler.dump(args.session_id, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined')) {
+      if ((err === null || typeof err === 'undefined') || err instanceof common_ttypes.ApplicationError) {
         result_obj = new AnalyzerController_dump_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("dump", Thrift.MessageType.REPLY, seqid);
       } else {
@@ -1750,8 +1882,13 @@ AnalyzerControllerProcessor.prototype.process_result = function(seqid, input, ou
       output.flush();
     }).catch(function (err) {
       var result;
-      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-      output.writeMessageBegin("result", Thrift.MessageType.EXCEPTION, seqid);
+      if (err instanceof common_ttypes.ApplicationError) {
+        result = new AnalyzerController_result_result(err);
+        output.writeMessageBegin("result", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("result", Thrift.MessageType.EXCEPTION, seqid);
+      }
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -1759,7 +1896,7 @@ AnalyzerControllerProcessor.prototype.process_result = function(seqid, input, ou
   } else {
     this._handler.result(args.session_id, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined')) {
+      if ((err === null || typeof err === 'undefined') || err instanceof common_ttypes.ApplicationError) {
         result_obj = new AnalyzerController_result_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("result", Thrift.MessageType.REPLY, seqid);
       } else {
@@ -1787,8 +1924,13 @@ AnalyzerControllerProcessor.prototype.process_example_result = function(seqid, i
       output.flush();
     }).catch(function (err) {
       var result;
-      result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
-      output.writeMessageBegin("example_result", Thrift.MessageType.EXCEPTION, seqid);
+      if (err instanceof common_ttypes.ApplicationError) {
+        result = new AnalyzerController_example_result_result(err);
+        output.writeMessageBegin("example_result", Thrift.MessageType.REPLY, seqid);
+      } else {
+        result = new Thrift.TApplicationException(Thrift.TApplicationExceptionType.UNKNOWN, err.message);
+        output.writeMessageBegin("example_result", Thrift.MessageType.EXCEPTION, seqid);
+      }
       result.write(output);
       output.writeMessageEnd();
       output.flush();
@@ -1796,7 +1938,7 @@ AnalyzerControllerProcessor.prototype.process_example_result = function(seqid, i
   } else {
     this._handler.example_result(args.session_id, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined')) {
+      if ((err === null || typeof err === 'undefined') || err instanceof common_ttypes.ApplicationError) {
         result_obj = new AnalyzerController_example_result_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("example_result", Thrift.MessageType.REPLY, seqid);
       } else {

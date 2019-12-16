@@ -13,7 +13,7 @@ exception SystemUnavailableError {
 
 
 service TransactionImporter {
-  bool authenticate(1: string username, 2: string password, 3: string user) throws (1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
-  void fetch(1: string username, 2: string password, 3: string user, 4: common.Date last_transaction_date) throws (1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
-  map<common.SecurityId,i32> fetch_portfolio(1: string username, 2: string password, 3: common.Date date) throws (1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
+  bool authenticate(1: string username, 2: string password, 3: string user) throws (100: common.ApplicationError app_error, 1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
+  void fetch(1: string username, 2: string password, 3: string user, 4: common.Date last_transaction_date) throws (100: common.ApplicationError app_error, 1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
+  map<common.SecurityId,i32> fetch_portfolio(1: string username, 2: string password, 3: common.Date date) throws (100: common.ApplicationError app_error, 1: AuthenticationError auth_error, 2: SystemUnavailableError system_unavailable)
 }

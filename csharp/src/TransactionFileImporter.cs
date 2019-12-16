@@ -149,6 +149,9 @@ public partial class TransactionFileImporter {
       if (result.__isset.success) {
         return result.Success;
       }
+      if (result.__isset.app_error) {
+        throw result.App_error;
+      }
       if (result.__isset.col_quantity_error) {
         throw result.Col_quantity_error;
       }
@@ -204,6 +207,10 @@ public partial class TransactionFileImporter {
         try
         {
           result.Success = iface_.extract(args.Data);
+        }
+        catch (ApplicationError app_error)
+        {
+          result.App_error = app_error;
         }
         catch (WrongFileStructure col_quantity_error)
         {
@@ -345,6 +352,7 @@ public partial class TransactionFileImporter {
   public partial class extract_result : TBase
   {
     private List<Transaction> _success;
+    private ApplicationError _app_error;
     private WrongFileStructure _col_quantity_error;
 
     public List<Transaction> Success
@@ -357,6 +365,19 @@ public partial class TransactionFileImporter {
       {
         __isset.success = true;
         this._success = value;
+      }
+    }
+
+    public ApplicationError App_error
+    {
+      get
+      {
+        return _app_error;
+      }
+      set
+      {
+        __isset.app_error = true;
+        this._app_error = value;
       }
     }
 
@@ -380,6 +401,7 @@ public partial class TransactionFileImporter {
     #endif
     public struct Isset {
       public bool success;
+      public bool app_error;
       public bool col_quantity_error;
     }
 
@@ -415,6 +437,14 @@ public partial class TransactionFileImporter {
                   }
                   iprot.ReadListEnd();
                 }
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 100:
+              if (field.Type == TType.Struct) {
+                App_error = new ApplicationError();
+                App_error.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -474,6 +504,15 @@ public partial class TransactionFileImporter {
             Col_quantity_error.Write(oprot);
             oprot.WriteFieldEnd();
           }
+        } else if (this.__isset.app_error) {
+          if (App_error != null) {
+            field.Name = "App_error";
+            field.Type = TType.Struct;
+            field.ID = 100;
+            oprot.WriteFieldBegin(field);
+            App_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
         }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
@@ -492,6 +531,12 @@ public partial class TransactionFileImporter {
         __first = false;
         __sb.Append("Success: ");
         __sb.Append(Success);
+      }
+      if (App_error != null && __isset.app_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("App_error: ");
+        __sb.Append(App_error== null ? "<null>" : App_error.ToString());
       }
       if (Col_quantity_error != null && __isset.col_quantity_error) {
         if(!__first) { __sb.Append(", "); }

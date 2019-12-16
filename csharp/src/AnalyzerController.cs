@@ -378,6 +378,9 @@ public partial class AnalyzerController {
       if (result.__isset.success) {
         return result.Success;
       }
+      if (result.__isset.app_error) {
+        throw result.App_error;
+      }
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "analyzers failed: unknown result");
     }
 
@@ -680,6 +683,9 @@ public partial class AnalyzerController {
       if (result.__isset.success) {
         return result.Success;
       }
+      if (result.__isset.app_error) {
+        throw result.App_error;
+      }
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "create_session failed: unknown result");
     }
 
@@ -757,6 +763,9 @@ public partial class AnalyzerController {
       iprot_.ReadMessageEnd();
       if (result.__isset.success) {
         return result.Success;
+      }
+      if (result.__isset.app_error) {
+        throw result.App_error;
       }
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "dump failed: unknown result");
     }
@@ -888,6 +897,9 @@ public partial class AnalyzerController {
       if (result.__isset.success) {
         return result.Success;
       }
+      if (result.__isset.app_error) {
+        throw result.App_error;
+      }
       throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "result failed: unknown result");
     }
 
@@ -958,6 +970,9 @@ public partial class AnalyzerController {
       example_result_result result = new example_result_result();
       result.Read(iprot_);
       iprot_.ReadMessageEnd();
+      if (result.__isset.app_error) {
+        throw result.App_error;
+      }
       return;
     }
 
@@ -1066,7 +1081,14 @@ public partial class AnalyzerController {
       analyzers_result result = new analyzers_result();
       try
       {
-        result.Success = iface_.analyzers();
+        try
+        {
+          result.Success = iface_.analyzers();
+        }
+        catch (ApplicationError app_error)
+        {
+          result.App_error = app_error;
+        }
         oprot.WriteMessageBegin(new TMessage("analyzers", TMessageType.Reply, seqid)); 
         result.Write(oprot);
       }
@@ -1174,7 +1196,14 @@ public partial class AnalyzerController {
       create_session_result result = new create_session_result();
       try
       {
-        result.Success = iface_.create_session(args.Session_id, args.Analyzer_id);
+        try
+        {
+          result.Success = iface_.create_session(args.Session_id, args.Analyzer_id);
+        }
+        catch (ApplicationError app_error)
+        {
+          result.App_error = app_error;
+        }
         oprot.WriteMessageBegin(new TMessage("create_session", TMessageType.Reply, seqid)); 
         result.Write(oprot);
       }
@@ -1202,7 +1231,14 @@ public partial class AnalyzerController {
       dump_result result = new dump_result();
       try
       {
-        result.Success = iface_.dump(args.Session_id);
+        try
+        {
+          result.Success = iface_.dump(args.Session_id);
+        }
+        catch (ApplicationError app_error)
+        {
+          result.App_error = app_error;
+        }
         oprot.WriteMessageBegin(new TMessage("dump", TMessageType.Reply, seqid)); 
         result.Write(oprot);
       }
@@ -1250,7 +1286,14 @@ public partial class AnalyzerController {
       result_result result = new result_result();
       try
       {
-        result.Success = iface_.result(args.Session_id);
+        try
+        {
+          result.Success = iface_.result(args.Session_id);
+        }
+        catch (ApplicationError app_error)
+        {
+          result.App_error = app_error;
+        }
         oprot.WriteMessageBegin(new TMessage("result", TMessageType.Reply, seqid)); 
         result.Write(oprot);
       }
@@ -1278,7 +1321,14 @@ public partial class AnalyzerController {
       example_result_result result = new example_result_result();
       try
       {
-        iface_.example_result(args.Session_id);
+        try
+        {
+          iface_.example_result(args.Session_id);
+        }
+        catch (ApplicationError app_error)
+        {
+          result.App_error = app_error;
+        }
         oprot.WriteMessageBegin(new TMessage("example_result", TMessageType.Reply, seqid)); 
         result.Write(oprot);
       }
@@ -1389,6 +1439,7 @@ public partial class AnalyzerController {
   public partial class analyzers_result : TBase
   {
     private List<AnalyzerConfig> _success;
+    private ApplicationError _app_error;
 
     public List<AnalyzerConfig> Success
     {
@@ -1403,6 +1454,19 @@ public partial class AnalyzerController {
       }
     }
 
+    public ApplicationError App_error
+    {
+      get
+      {
+        return _app_error;
+      }
+      set
+      {
+        __isset.app_error = true;
+        this._app_error = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -1410,6 +1474,7 @@ public partial class AnalyzerController {
     #endif
     public struct Isset {
       public bool success;
+      public bool app_error;
     }
 
     public analyzers_result() {
@@ -1444,6 +1509,14 @@ public partial class AnalyzerController {
                   }
                   iprot.ReadListEnd();
                 }
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 100:
+              if (field.Type == TType.Struct) {
+                App_error = new ApplicationError();
+                App_error.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1486,6 +1559,15 @@ public partial class AnalyzerController {
             }
             oprot.WriteFieldEnd();
           }
+        } else if (this.__isset.app_error) {
+          if (App_error != null) {
+            field.Name = "App_error";
+            field.Type = TType.Struct;
+            field.ID = 100;
+            oprot.WriteFieldBegin(field);
+            App_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
         }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
@@ -1504,6 +1586,12 @@ public partial class AnalyzerController {
         __first = false;
         __sb.Append("Success: ");
         __sb.Append(Success);
+      }
+      if (App_error != null && __isset.app_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("App_error: ");
+        __sb.Append(App_error== null ? "<null>" : App_error.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -2242,6 +2330,7 @@ public partial class AnalyzerController {
   public partial class create_session_result : TBase
   {
     private AnalyzerConfig _success;
+    private ApplicationError _app_error;
 
     public AnalyzerConfig Success
     {
@@ -2256,6 +2345,19 @@ public partial class AnalyzerController {
       }
     }
 
+    public ApplicationError App_error
+    {
+      get
+      {
+        return _app_error;
+      }
+      set
+      {
+        __isset.app_error = true;
+        this._app_error = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -2263,6 +2365,7 @@ public partial class AnalyzerController {
     #endif
     public struct Isset {
       public bool success;
+      public bool app_error;
     }
 
     public create_session_result() {
@@ -2287,6 +2390,14 @@ public partial class AnalyzerController {
               if (field.Type == TType.Struct) {
                 Success = new AnalyzerConfig();
                 Success.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 100:
+              if (field.Type == TType.Struct) {
+                App_error = new ApplicationError();
+                App_error.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -2322,6 +2433,15 @@ public partial class AnalyzerController {
             Success.Write(oprot);
             oprot.WriteFieldEnd();
           }
+        } else if (this.__isset.app_error) {
+          if (App_error != null) {
+            field.Name = "App_error";
+            field.Type = TType.Struct;
+            field.ID = 100;
+            oprot.WriteFieldBegin(field);
+            App_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
         }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
@@ -2340,6 +2460,12 @@ public partial class AnalyzerController {
         __first = false;
         __sb.Append("Success: ");
         __sb.Append(Success== null ? "<null>" : Success.ToString());
+      }
+      if (App_error != null && __isset.app_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("App_error: ");
+        __sb.Append(App_error== null ? "<null>" : App_error.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -2462,6 +2588,7 @@ public partial class AnalyzerController {
   public partial class dump_result : TBase
   {
     private byte[] _success;
+    private ApplicationError _app_error;
 
     public byte[] Success
     {
@@ -2476,6 +2603,19 @@ public partial class AnalyzerController {
       }
     }
 
+    public ApplicationError App_error
+    {
+      get
+      {
+        return _app_error;
+      }
+      set
+      {
+        __isset.app_error = true;
+        this._app_error = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -2483,6 +2623,7 @@ public partial class AnalyzerController {
     #endif
     public struct Isset {
       public bool success;
+      public bool app_error;
     }
 
     public dump_result() {
@@ -2506,6 +2647,14 @@ public partial class AnalyzerController {
             case 0:
               if (field.Type == TType.String) {
                 Success = iprot.ReadBinary();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 100:
+              if (field.Type == TType.Struct) {
+                App_error = new ApplicationError();
+                App_error.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -2541,6 +2690,15 @@ public partial class AnalyzerController {
             oprot.WriteBinary(Success);
             oprot.WriteFieldEnd();
           }
+        } else if (this.__isset.app_error) {
+          if (App_error != null) {
+            field.Name = "App_error";
+            field.Type = TType.Struct;
+            field.ID = 100;
+            oprot.WriteFieldBegin(field);
+            App_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
         }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
@@ -2559,6 +2717,12 @@ public partial class AnalyzerController {
         __first = false;
         __sb.Append("Success: ");
         __sb.Append(Success);
+      }
+      if (App_error != null && __isset.app_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("App_error: ");
+        __sb.Append(App_error== null ? "<null>" : App_error.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -2825,6 +2989,7 @@ public partial class AnalyzerController {
   public partial class result_result : TBase
   {
     private Result _success;
+    private ApplicationError _app_error;
 
     public Result Success
     {
@@ -2839,6 +3004,19 @@ public partial class AnalyzerController {
       }
     }
 
+    public ApplicationError App_error
+    {
+      get
+      {
+        return _app_error;
+      }
+      set
+      {
+        __isset.app_error = true;
+        this._app_error = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -2846,6 +3024,7 @@ public partial class AnalyzerController {
     #endif
     public struct Isset {
       public bool success;
+      public bool app_error;
     }
 
     public result_result() {
@@ -2870,6 +3049,14 @@ public partial class AnalyzerController {
               if (field.Type == TType.Struct) {
                 Success = new Result();
                 Success.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 100:
+              if (field.Type == TType.Struct) {
+                App_error = new ApplicationError();
+                App_error.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -2905,6 +3092,15 @@ public partial class AnalyzerController {
             Success.Write(oprot);
             oprot.WriteFieldEnd();
           }
+        } else if (this.__isset.app_error) {
+          if (App_error != null) {
+            field.Name = "App_error";
+            field.Type = TType.Struct;
+            field.ID = 100;
+            oprot.WriteFieldBegin(field);
+            App_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
         }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
@@ -2923,6 +3119,12 @@ public partial class AnalyzerController {
         __first = false;
         __sb.Append("Success: ");
         __sb.Append(Success== null ? "<null>" : Success.ToString());
+      }
+      if (App_error != null && __isset.app_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("App_error: ");
+        __sb.Append(App_error== null ? "<null>" : App_error.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -3044,6 +3246,29 @@ public partial class AnalyzerController {
   #endif
   public partial class example_result_result : TBase
   {
+    private ApplicationError _app_error;
+
+    public ApplicationError App_error
+    {
+      get
+      {
+        return _app_error;
+      }
+      set
+      {
+        __isset.app_error = true;
+        this._app_error = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool app_error;
+    }
 
     public example_result_result() {
     }
@@ -3063,6 +3288,14 @@ public partial class AnalyzerController {
           }
           switch (field.ID)
           {
+            case 100:
+              if (field.Type == TType.Struct) {
+                App_error = new ApplicationError();
+                App_error.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
             default: 
               TProtocolUtil.Skip(iprot, field.Type);
               break;
@@ -3083,7 +3316,18 @@ public partial class AnalyzerController {
       {
         TStruct struc = new TStruct("example_result_result");
         oprot.WriteStructBegin(struc);
+        TField field = new TField();
 
+        if (this.__isset.app_error) {
+          if (App_error != null) {
+            field.Name = "App_error";
+            field.Type = TType.Struct;
+            field.ID = 100;
+            oprot.WriteFieldBegin(field);
+            App_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -3095,6 +3339,13 @@ public partial class AnalyzerController {
 
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("example_result_result(");
+      bool __first = true;
+      if (App_error != null && __isset.app_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("App_error: ");
+        __sb.Append(App_error== null ? "<null>" : App_error.ToString());
+      }
       __sb.Append(")");
       return __sb.ToString();
     }

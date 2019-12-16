@@ -96,8 +96,13 @@ TransactionImporter_authenticate_args.prototype.write = function(output) {
 
 var TransactionImporter_authenticate_result = function(args) {
   this.success = null;
+  this.app_error = null;
   this.auth_error = null;
   this.system_unavailable = null;
+  if (args instanceof common_ttypes.ApplicationError) {
+    this.app_error = args;
+    return;
+  }
   if (args instanceof ttypes.AuthenticationError) {
     this.auth_error = args;
     return;
@@ -109,6 +114,9 @@ var TransactionImporter_authenticate_result = function(args) {
   if (args) {
     if (args.success !== undefined && args.success !== null) {
       this.success = args.success;
+    }
+    if (args.app_error !== undefined && args.app_error !== null) {
+      this.app_error = args.app_error;
     }
     if (args.auth_error !== undefined && args.auth_error !== null) {
       this.auth_error = args.auth_error;
@@ -132,6 +140,14 @@ TransactionImporter_authenticate_result.prototype.read = function(input) {
       case 0:
       if (ftype == Thrift.Type.BOOL) {
         this.success = input.readBool();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 100:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.app_error = new common_ttypes.ApplicationError();
+        this.app_error.read(input);
       } else {
         input.skip(ftype);
       }
@@ -166,6 +182,11 @@ TransactionImporter_authenticate_result.prototype.write = function(output) {
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.BOOL, 0);
     output.writeBool(this.success);
+    output.writeFieldEnd();
+  }
+  if (this.app_error !== null && this.app_error !== undefined) {
+    output.writeFieldBegin('app_error', Thrift.Type.STRUCT, 100);
+    this.app_error.write(output);
     output.writeFieldEnd();
   }
   if (this.auth_error !== null && this.auth_error !== undefined) {
@@ -279,8 +300,13 @@ TransactionImporter_fetch_args.prototype.write = function(output) {
 };
 
 var TransactionImporter_fetch_result = function(args) {
+  this.app_error = null;
   this.auth_error = null;
   this.system_unavailable = null;
+  if (args instanceof common_ttypes.ApplicationError) {
+    this.app_error = args;
+    return;
+  }
   if (args instanceof ttypes.AuthenticationError) {
     this.auth_error = args;
     return;
@@ -290,6 +316,9 @@ var TransactionImporter_fetch_result = function(args) {
     return;
   }
   if (args) {
+    if (args.app_error !== undefined && args.app_error !== null) {
+      this.app_error = args.app_error;
+    }
     if (args.auth_error !== undefined && args.auth_error !== null) {
       this.auth_error = args.auth_error;
     }
@@ -309,6 +338,14 @@ TransactionImporter_fetch_result.prototype.read = function(input) {
       break;
     }
     switch (fid) {
+      case 100:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.app_error = new common_ttypes.ApplicationError();
+        this.app_error.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
         this.auth_error = new ttypes.AuthenticationError();
@@ -336,6 +373,11 @@ TransactionImporter_fetch_result.prototype.read = function(input) {
 
 TransactionImporter_fetch_result.prototype.write = function(output) {
   output.writeStructBegin('TransactionImporter_fetch_result');
+  if (this.app_error !== null && this.app_error !== undefined) {
+    output.writeFieldBegin('app_error', Thrift.Type.STRUCT, 100);
+    this.app_error.write(output);
+    output.writeFieldEnd();
+  }
   if (this.auth_error !== null && this.auth_error !== undefined) {
     output.writeFieldBegin('auth_error', Thrift.Type.STRUCT, 1);
     this.auth_error.write(output);
@@ -432,8 +474,13 @@ TransactionImporter_fetch_portfolio_args.prototype.write = function(output) {
 
 var TransactionImporter_fetch_portfolio_result = function(args) {
   this.success = null;
+  this.app_error = null;
   this.auth_error = null;
   this.system_unavailable = null;
+  if (args instanceof common_ttypes.ApplicationError) {
+    this.app_error = args;
+    return;
+  }
   if (args instanceof ttypes.AuthenticationError) {
     this.auth_error = args;
     return;
@@ -445,6 +492,9 @@ var TransactionImporter_fetch_portfolio_result = function(args) {
   if (args) {
     if (args.success !== undefined && args.success !== null) {
       this.success = Thrift.copyMap(args.success, [null]);
+    }
+    if (args.app_error !== undefined && args.app_error !== null) {
+      this.app_error = args.app_error;
     }
     if (args.auth_error !== undefined && args.auth_error !== null) {
       this.auth_error = args.auth_error;
@@ -479,6 +529,14 @@ TransactionImporter_fetch_portfolio_result.prototype.read = function(input) {
           this.success[key3] = val4;
         }
         input.readMapEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 100:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.app_error = new common_ttypes.ApplicationError();
+        this.app_error.read(input);
       } else {
         input.skip(ftype);
       }
@@ -521,6 +579,11 @@ TransactionImporter_fetch_portfolio_result.prototype.write = function(output) {
       }
     }
     output.writeMapEnd();
+    output.writeFieldEnd();
+  }
+  if (this.app_error !== null && this.app_error !== undefined) {
+    output.writeFieldBegin('app_error', Thrift.Type.STRUCT, 100);
+    this.app_error.write(output);
     output.writeFieldEnd();
   }
   if (this.auth_error !== null && this.auth_error !== undefined) {
@@ -603,6 +666,9 @@ TransactionImporterClient.prototype.recv_authenticate = function(input,mtype,rse
   result.read(input);
   input.readMessageEnd();
 
+  if (null !== result.app_error) {
+    return callback(result.app_error);
+  }
   if (null !== result.auth_error) {
     return callback(result.auth_error);
   }
@@ -671,6 +737,9 @@ TransactionImporterClient.prototype.recv_fetch = function(input,mtype,rseqid) {
   result.read(input);
   input.readMessageEnd();
 
+  if (null !== result.app_error) {
+    return callback(result.app_error);
+  }
   if (null !== result.auth_error) {
     return callback(result.auth_error);
   }
@@ -735,6 +804,9 @@ TransactionImporterClient.prototype.recv_fetch_portfolio = function(input,mtype,
   result.read(input);
   input.readMessageEnd();
 
+  if (null !== result.app_error) {
+    return callback(result.app_error);
+  }
   if (null !== result.auth_error) {
     return callback(result.auth_error);
   }
@@ -780,7 +852,7 @@ TransactionImporterProcessor.prototype.process_authenticate = function(seqid, in
       output.flush();
     }).catch(function (err) {
       var result;
-      if (err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
+      if (err instanceof common_ttypes.ApplicationError || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
         result = new TransactionImporter_authenticate_result(err);
         output.writeMessageBegin("authenticate", Thrift.MessageType.REPLY, seqid);
       } else {
@@ -794,7 +866,7 @@ TransactionImporterProcessor.prototype.process_authenticate = function(seqid, in
   } else {
     this._handler.authenticate(args.username, args.password, args.user, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined') || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
+      if ((err === null || typeof err === 'undefined') || err instanceof common_ttypes.ApplicationError || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
         result_obj = new TransactionImporter_authenticate_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("authenticate", Thrift.MessageType.REPLY, seqid);
       } else {
@@ -825,7 +897,7 @@ TransactionImporterProcessor.prototype.process_fetch = function(seqid, input, ou
       output.flush();
     }).catch(function (err) {
       var result;
-      if (err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
+      if (err instanceof common_ttypes.ApplicationError || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
         result = new TransactionImporter_fetch_result(err);
         output.writeMessageBegin("fetch", Thrift.MessageType.REPLY, seqid);
       } else {
@@ -839,7 +911,7 @@ TransactionImporterProcessor.prototype.process_fetch = function(seqid, input, ou
   } else {
     this._handler.fetch(args.username, args.password, args.user, args.last_transaction_date, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined') || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
+      if ((err === null || typeof err === 'undefined') || err instanceof common_ttypes.ApplicationError || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
         result_obj = new TransactionImporter_fetch_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("fetch", Thrift.MessageType.REPLY, seqid);
       } else {
@@ -869,7 +941,7 @@ TransactionImporterProcessor.prototype.process_fetch_portfolio = function(seqid,
       output.flush();
     }).catch(function (err) {
       var result;
-      if (err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
+      if (err instanceof common_ttypes.ApplicationError || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
         result = new TransactionImporter_fetch_portfolio_result(err);
         output.writeMessageBegin("fetch_portfolio", Thrift.MessageType.REPLY, seqid);
       } else {
@@ -883,7 +955,7 @@ TransactionImporterProcessor.prototype.process_fetch_portfolio = function(seqid,
   } else {
     this._handler.fetch_portfolio(args.username, args.password, args.date, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined') || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
+      if ((err === null || typeof err === 'undefined') || err instanceof common_ttypes.ApplicationError || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
         result_obj = new TransactionImporter_fetch_portfolio_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("fetch_portfolio", Thrift.MessageType.REPLY, seqid);
       } else {

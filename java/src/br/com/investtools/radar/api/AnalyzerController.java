@@ -38,7 +38,7 @@ public class AnalyzerController {
      * É chamado quando
      * 
      */
-    public java.util.List<AnalyzerConfig> analyzers() throws org.apache.thrift.TException;
+    public java.util.List<AnalyzerConfig> analyzers() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException;
 
     /**
      * É chamado <i>n</i> vezes durante o processamento da carteira, sendo
@@ -79,7 +79,7 @@ public class AnalyzerController {
      * @param session_id
      * @param analyzer_id
      */
-    public AnalyzerConfig create_session(short session_id, java.lang.String analyzer_id) throws org.apache.thrift.TException;
+    public AnalyzerConfig create_session(short session_id, java.lang.String analyzer_id) throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException;
 
     /**
      * É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
@@ -91,7 +91,7 @@ public class AnalyzerController {
      * 
      * @param session_id
      */
-    public java.nio.ByteBuffer dump(short session_id) throws org.apache.thrift.TException;
+    public java.nio.ByteBuffer dump(short session_id) throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException;
 
     /**
      * É chamado sempre que o Radar quiser começar a processar uma carteira à partir de
@@ -107,14 +107,14 @@ public class AnalyzerController {
      * 
      * @param session_id
      */
-    public Result result(short session_id) throws org.apache.thrift.TException;
+    public Result result(short session_id) throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException;
 
     /**
      * É chamado no preview para exibir um exemplo de resultado do Analyzer.
      * 
      * @param session_id
      */
-    public void example_result(short session_id) throws org.apache.thrift.TException;
+    public void example_result(short session_id) throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException;
 
     public void destroy_session(short session_id) throws org.apache.thrift.TException;
 
@@ -166,7 +166,7 @@ public class AnalyzerController {
       super(iprot, oprot);
     }
 
-    public java.util.List<AnalyzerConfig> analyzers() throws org.apache.thrift.TException
+    public java.util.List<AnalyzerConfig> analyzers() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException
     {
       send_analyzers();
       return recv_analyzers();
@@ -178,12 +178,15 @@ public class AnalyzerController {
       sendBase("analyzers", args);
     }
 
-    public java.util.List<AnalyzerConfig> recv_analyzers() throws org.apache.thrift.TException
+    public java.util.List<AnalyzerConfig> recv_analyzers() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException
     {
       analyzers_result result = new analyzers_result();
       receiveBase(result, "analyzers");
       if (result.isSetSuccess()) {
         return result.success;
+      }
+      if (result.app_error != null) {
+        throw result.app_error;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "analyzers failed: unknown result");
     }
@@ -240,7 +243,7 @@ public class AnalyzerController {
       sendBaseOneway("on_cash_flow", args);
     }
 
-    public AnalyzerConfig create_session(short session_id, java.lang.String analyzer_id) throws org.apache.thrift.TException
+    public AnalyzerConfig create_session(short session_id, java.lang.String analyzer_id) throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException
     {
       send_create_session(session_id, analyzer_id);
       return recv_create_session();
@@ -254,17 +257,20 @@ public class AnalyzerController {
       sendBase("create_session", args);
     }
 
-    public AnalyzerConfig recv_create_session() throws org.apache.thrift.TException
+    public AnalyzerConfig recv_create_session() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException
     {
       create_session_result result = new create_session_result();
       receiveBase(result, "create_session");
       if (result.isSetSuccess()) {
         return result.success;
       }
+      if (result.app_error != null) {
+        throw result.app_error;
+      }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "create_session failed: unknown result");
     }
 
-    public java.nio.ByteBuffer dump(short session_id) throws org.apache.thrift.TException
+    public java.nio.ByteBuffer dump(short session_id) throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException
     {
       send_dump(session_id);
       return recv_dump();
@@ -277,12 +283,15 @@ public class AnalyzerController {
       sendBase("dump", args);
     }
 
-    public java.nio.ByteBuffer recv_dump() throws org.apache.thrift.TException
+    public java.nio.ByteBuffer recv_dump() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException
     {
       dump_result result = new dump_result();
       receiveBase(result, "dump");
       if (result.isSetSuccess()) {
         return result.success;
+      }
+      if (result.app_error != null) {
+        throw result.app_error;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "dump failed: unknown result");
     }
@@ -300,7 +309,7 @@ public class AnalyzerController {
       sendBaseOneway("resume", args);
     }
 
-    public Result result(short session_id) throws org.apache.thrift.TException
+    public Result result(short session_id) throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException
     {
       send_result(session_id);
       return recv_result();
@@ -313,17 +322,20 @@ public class AnalyzerController {
       sendBase("result", args);
     }
 
-    public Result recv_result() throws org.apache.thrift.TException
+    public Result recv_result() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException
     {
       result_result result = new result_result();
       receiveBase(result, "result");
       if (result.isSetSuccess()) {
         return result.success;
       }
+      if (result.app_error != null) {
+        throw result.app_error;
+      }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "result failed: unknown result");
     }
 
-    public void example_result(short session_id) throws org.apache.thrift.TException
+    public void example_result(short session_id) throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException
     {
       send_example_result(session_id);
       recv_example_result();
@@ -336,10 +348,13 @@ public class AnalyzerController {
       sendBase("example_result", args);
     }
 
-    public void recv_example_result() throws org.apache.thrift.TException
+    public void recv_example_result() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException
     {
       example_result_result result = new example_result_result();
       receiveBase(result, "example_result");
+      if (result.app_error != null) {
+        throw result.app_error;
+      }
       return;
     }
 
@@ -392,7 +407,7 @@ public class AnalyzerController {
         prot.writeMessageEnd();
       }
 
-      public java.util.List<AnalyzerConfig> getResult() throws org.apache.thrift.TException {
+      public java.util.List<AnalyzerConfig> getResult() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -567,7 +582,7 @@ public class AnalyzerController {
         prot.writeMessageEnd();
       }
 
-      public AnalyzerConfig getResult() throws org.apache.thrift.TException {
+      public AnalyzerConfig getResult() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -599,7 +614,7 @@ public class AnalyzerController {
         prot.writeMessageEnd();
       }
 
-      public java.nio.ByteBuffer getResult() throws org.apache.thrift.TException {
+      public java.nio.ByteBuffer getResult() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -666,7 +681,7 @@ public class AnalyzerController {
         prot.writeMessageEnd();
       }
 
-      public Result getResult() throws org.apache.thrift.TException {
+      public Result getResult() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -698,7 +713,7 @@ public class AnalyzerController {
         prot.writeMessageEnd();
       }
 
-      public Void getResult() throws org.apache.thrift.TException {
+      public Void getResult() throws br.com.investtools.radar.api.ApplicationError, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -787,7 +802,11 @@ public class AnalyzerController {
 
       public analyzers_result getResult(I iface, analyzers_args args) throws org.apache.thrift.TException {
         analyzers_result result = new analyzers_result();
-        result.success = iface.analyzers();
+        try {
+          result.success = iface.analyzers();
+        } catch (br.com.investtools.radar.api.ApplicationError app_error) {
+          result.app_error = app_error;
+        }
         return result;
       }
     }
@@ -908,7 +927,11 @@ public class AnalyzerController {
 
       public create_session_result getResult(I iface, create_session_args args) throws org.apache.thrift.TException {
         create_session_result result = new create_session_result();
-        result.success = iface.create_session(args.session_id, args.analyzer_id);
+        try {
+          result.success = iface.create_session(args.session_id, args.analyzer_id);
+        } catch (br.com.investtools.radar.api.ApplicationError app_error) {
+          result.app_error = app_error;
+        }
         return result;
       }
     }
@@ -933,7 +956,11 @@ public class AnalyzerController {
 
       public dump_result getResult(I iface, dump_args args) throws org.apache.thrift.TException {
         dump_result result = new dump_result();
-        result.success = iface.dump(args.session_id);
+        try {
+          result.success = iface.dump(args.session_id);
+        } catch (br.com.investtools.radar.api.ApplicationError app_error) {
+          result.app_error = app_error;
+        }
         return result;
       }
     }
@@ -982,7 +1009,11 @@ public class AnalyzerController {
 
       public result_result getResult(I iface, result_args args) throws org.apache.thrift.TException {
         result_result result = new result_result();
-        result.success = iface.result(args.session_id);
+        try {
+          result.success = iface.result(args.session_id);
+        } catch (br.com.investtools.radar.api.ApplicationError app_error) {
+          result.app_error = app_error;
+        }
         return result;
       }
     }
@@ -1007,7 +1038,11 @@ public class AnalyzerController {
 
       public example_result_result getResult(I iface, example_result_args args) throws org.apache.thrift.TException {
         example_result_result result = new example_result_result();
-        iface.example_result(args.session_id);
+        try {
+          iface.example_result(args.session_id);
+        } catch (br.com.investtools.radar.api.ApplicationError app_error) {
+          result.app_error = app_error;
+        }
         return result;
       }
     }
@@ -1092,7 +1127,11 @@ public class AnalyzerController {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             analyzers_result result = new analyzers_result();
-            if (e instanceof org.apache.thrift.transport.TTransportException) {
+            if (e instanceof br.com.investtools.radar.api.ApplicationError) {
+              result.app_error = (br.com.investtools.radar.api.ApplicationError) e;
+              result.setApp_errorIsSet(true);
+              msg = result;
+            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
               fb.close();
               return;
@@ -1289,7 +1328,11 @@ public class AnalyzerController {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             create_session_result result = new create_session_result();
-            if (e instanceof org.apache.thrift.transport.TTransportException) {
+            if (e instanceof br.com.investtools.radar.api.ApplicationError) {
+              result.app_error = (br.com.investtools.radar.api.ApplicationError) e;
+              result.setApp_errorIsSet(true);
+              msg = result;
+            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
               fb.close();
               return;
@@ -1350,7 +1393,11 @@ public class AnalyzerController {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             dump_result result = new dump_result();
-            if (e instanceof org.apache.thrift.transport.TTransportException) {
+            if (e instanceof br.com.investtools.radar.api.ApplicationError) {
+              result.app_error = (br.com.investtools.radar.api.ApplicationError) e;
+              result.setApp_errorIsSet(true);
+              msg = result;
+            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
               fb.close();
               return;
@@ -1445,7 +1492,11 @@ public class AnalyzerController {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             result_result result = new result_result();
-            if (e instanceof org.apache.thrift.transport.TTransportException) {
+            if (e instanceof br.com.investtools.radar.api.ApplicationError) {
+              result.app_error = (br.com.investtools.radar.api.ApplicationError) e;
+              result.setApp_errorIsSet(true);
+              msg = result;
+            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
               fb.close();
               return;
@@ -1505,7 +1556,11 @@ public class AnalyzerController {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             example_result_result result = new example_result_result();
-            if (e instanceof org.apache.thrift.transport.TTransportException) {
+            if (e instanceof br.com.investtools.radar.api.ApplicationError) {
+              result.app_error = (br.com.investtools.radar.api.ApplicationError) e;
+              result.setApp_errorIsSet(true);
+              msg = result;
+            } else if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
               fb.close();
               return;
@@ -1831,15 +1886,18 @@ public class AnalyzerController {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("analyzers_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
+    private static final org.apache.thrift.protocol.TField APP_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("app_error", org.apache.thrift.protocol.TType.STRUCT, (short)100);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new analyzers_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new analyzers_resultTupleSchemeFactory();
 
     public @org.apache.thrift.annotation.Nullable java.util.List<AnalyzerConfig> success; // required
+    public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success");
+      SUCCESS((short)0, "success"),
+      APP_ERROR((short)100, "app_error");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -1857,6 +1915,8 @@ public class AnalyzerController {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
+          case 100: // APP_ERROR
+            return APP_ERROR;
           default:
             return null;
         }
@@ -1904,6 +1964,8 @@ public class AnalyzerController {
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
               new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AnalyzerConfig.class))));
+      tmpMap.put(_Fields.APP_ERROR, new org.apache.thrift.meta_data.FieldMetaData("app_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.ApplicationError.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(analyzers_result.class, metaDataMap);
     }
@@ -1912,10 +1974,12 @@ public class AnalyzerController {
     }
 
     public analyzers_result(
-      java.util.List<AnalyzerConfig> success)
+      java.util.List<AnalyzerConfig> success,
+      br.com.investtools.radar.api.ApplicationError app_error)
     {
       this();
       this.success = success;
+      this.app_error = app_error;
     }
 
     /**
@@ -1929,6 +1993,9 @@ public class AnalyzerController {
         }
         this.success = __this__success;
       }
+      if (other.isSetApp_error()) {
+        this.app_error = new br.com.investtools.radar.api.ApplicationError(other.app_error);
+      }
     }
 
     public analyzers_result deepCopy() {
@@ -1938,6 +2005,7 @@ public class AnalyzerController {
     @Override
     public void clear() {
       this.success = null;
+      this.app_error = null;
     }
 
     public int getSuccessSize() {
@@ -1981,6 +2049,31 @@ public class AnalyzerController {
       }
     }
 
+    @org.apache.thrift.annotation.Nullable
+    public br.com.investtools.radar.api.ApplicationError getApp_error() {
+      return this.app_error;
+    }
+
+    public analyzers_result setApp_error(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error) {
+      this.app_error = app_error;
+      return this;
+    }
+
+    public void unsetApp_error() {
+      this.app_error = null;
+    }
+
+    /** Returns true if field app_error is set (has been assigned a value) and false otherwise */
+    public boolean isSetApp_error() {
+      return this.app_error != null;
+    }
+
+    public void setApp_errorIsSet(boolean value) {
+      if (!value) {
+        this.app_error = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
       case SUCCESS:
@@ -1988,6 +2081,14 @@ public class AnalyzerController {
           unsetSuccess();
         } else {
           setSuccess((java.util.List<AnalyzerConfig>)value);
+        }
+        break;
+
+      case APP_ERROR:
+        if (value == null) {
+          unsetApp_error();
+        } else {
+          setApp_error((br.com.investtools.radar.api.ApplicationError)value);
         }
         break;
 
@@ -1999,6 +2100,9 @@ public class AnalyzerController {
       switch (field) {
       case SUCCESS:
         return getSuccess();
+
+      case APP_ERROR:
+        return getApp_error();
 
       }
       throw new java.lang.IllegalStateException();
@@ -2013,6 +2117,8 @@ public class AnalyzerController {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
+      case APP_ERROR:
+        return isSetApp_error();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -2041,6 +2147,15 @@ public class AnalyzerController {
           return false;
       }
 
+      boolean this_present_app_error = true && this.isSetApp_error();
+      boolean that_present_app_error = true && that.isSetApp_error();
+      if (this_present_app_error || that_present_app_error) {
+        if (!(this_present_app_error && that_present_app_error))
+          return false;
+        if (!this.app_error.equals(that.app_error))
+          return false;
+      }
+
       return true;
     }
 
@@ -2051,6 +2166,10 @@ public class AnalyzerController {
       hashCode = hashCode * 8191 + ((isSetSuccess()) ? 131071 : 524287);
       if (isSetSuccess())
         hashCode = hashCode * 8191 + success.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetApp_error()) ? 131071 : 524287);
+      if (isSetApp_error())
+        hashCode = hashCode * 8191 + app_error.hashCode();
 
       return hashCode;
     }
@@ -2069,6 +2188,16 @@ public class AnalyzerController {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetApp_error()).compareTo(other.isSetApp_error());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetApp_error()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.app_error, other.app_error);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -2099,6 +2228,14 @@ public class AnalyzerController {
         sb.append("null");
       } else {
         sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("app_error:");
+      if (this.app_error == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.app_error);
       }
       first = false;
       sb.append(")");
@@ -2163,6 +2300,15 @@ public class AnalyzerController {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 100: // APP_ERROR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+                struct.app_error.read(iprot);
+                struct.setApp_errorIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -2190,6 +2336,11 @@ public class AnalyzerController {
           }
           oprot.writeFieldEnd();
         }
+        if (struct.app_error != null) {
+          oprot.writeFieldBegin(APP_ERROR_FIELD_DESC);
+          struct.app_error.write(oprot);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -2211,7 +2362,10 @@ public class AnalyzerController {
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetApp_error()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
@@ -2221,12 +2375,15 @@ public class AnalyzerController {
             }
           }
         }
+        if (struct.isSetApp_error()) {
+          struct.app_error.write(oprot);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, analyzers_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(1);
+        java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           {
             org.apache.thrift.protocol.TList _list109 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
@@ -2240,6 +2397,11 @@ public class AnalyzerController {
             }
           }
           struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+          struct.app_error.read(iprot);
+          struct.setApp_errorIsSet(true);
         }
       }
     }
@@ -4608,15 +4770,18 @@ public class AnalyzerController {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("create_session_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+    private static final org.apache.thrift.protocol.TField APP_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("app_error", org.apache.thrift.protocol.TType.STRUCT, (short)100);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new create_session_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new create_session_resultTupleSchemeFactory();
 
     public @org.apache.thrift.annotation.Nullable AnalyzerConfig success; // required
+    public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success");
+      SUCCESS((short)0, "success"),
+      APP_ERROR((short)100, "app_error");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -4634,6 +4799,8 @@ public class AnalyzerController {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
+          case 100: // APP_ERROR
+            return APP_ERROR;
           default:
             return null;
         }
@@ -4680,6 +4847,8 @@ public class AnalyzerController {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AnalyzerConfig.class)));
+      tmpMap.put(_Fields.APP_ERROR, new org.apache.thrift.meta_data.FieldMetaData("app_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.ApplicationError.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(create_session_result.class, metaDataMap);
     }
@@ -4688,10 +4857,12 @@ public class AnalyzerController {
     }
 
     public create_session_result(
-      AnalyzerConfig success)
+      AnalyzerConfig success,
+      br.com.investtools.radar.api.ApplicationError app_error)
     {
       this();
       this.success = success;
+      this.app_error = app_error;
     }
 
     /**
@@ -4700,6 +4871,9 @@ public class AnalyzerController {
     public create_session_result(create_session_result other) {
       if (other.isSetSuccess()) {
         this.success = new AnalyzerConfig(other.success);
+      }
+      if (other.isSetApp_error()) {
+        this.app_error = new br.com.investtools.radar.api.ApplicationError(other.app_error);
       }
     }
 
@@ -4710,6 +4884,7 @@ public class AnalyzerController {
     @Override
     public void clear() {
       this.success = null;
+      this.app_error = null;
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -4737,6 +4912,31 @@ public class AnalyzerController {
       }
     }
 
+    @org.apache.thrift.annotation.Nullable
+    public br.com.investtools.radar.api.ApplicationError getApp_error() {
+      return this.app_error;
+    }
+
+    public create_session_result setApp_error(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error) {
+      this.app_error = app_error;
+      return this;
+    }
+
+    public void unsetApp_error() {
+      this.app_error = null;
+    }
+
+    /** Returns true if field app_error is set (has been assigned a value) and false otherwise */
+    public boolean isSetApp_error() {
+      return this.app_error != null;
+    }
+
+    public void setApp_errorIsSet(boolean value) {
+      if (!value) {
+        this.app_error = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
       case SUCCESS:
@@ -4744,6 +4944,14 @@ public class AnalyzerController {
           unsetSuccess();
         } else {
           setSuccess((AnalyzerConfig)value);
+        }
+        break;
+
+      case APP_ERROR:
+        if (value == null) {
+          unsetApp_error();
+        } else {
+          setApp_error((br.com.investtools.radar.api.ApplicationError)value);
         }
         break;
 
@@ -4755,6 +4963,9 @@ public class AnalyzerController {
       switch (field) {
       case SUCCESS:
         return getSuccess();
+
+      case APP_ERROR:
+        return getApp_error();
 
       }
       throw new java.lang.IllegalStateException();
@@ -4769,6 +4980,8 @@ public class AnalyzerController {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
+      case APP_ERROR:
+        return isSetApp_error();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -4797,6 +5010,15 @@ public class AnalyzerController {
           return false;
       }
 
+      boolean this_present_app_error = true && this.isSetApp_error();
+      boolean that_present_app_error = true && that.isSetApp_error();
+      if (this_present_app_error || that_present_app_error) {
+        if (!(this_present_app_error && that_present_app_error))
+          return false;
+        if (!this.app_error.equals(that.app_error))
+          return false;
+      }
+
       return true;
     }
 
@@ -4807,6 +5029,10 @@ public class AnalyzerController {
       hashCode = hashCode * 8191 + ((isSetSuccess()) ? 131071 : 524287);
       if (isSetSuccess())
         hashCode = hashCode * 8191 + success.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetApp_error()) ? 131071 : 524287);
+      if (isSetApp_error())
+        hashCode = hashCode * 8191 + app_error.hashCode();
 
       return hashCode;
     }
@@ -4825,6 +5051,16 @@ public class AnalyzerController {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetApp_error()).compareTo(other.isSetApp_error());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetApp_error()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.app_error, other.app_error);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -4855,6 +5091,14 @@ public class AnalyzerController {
         sb.append("null");
       } else {
         sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("app_error:");
+      if (this.app_error == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.app_error);
       }
       first = false;
       sb.append(")");
@@ -4912,6 +5156,15 @@ public class AnalyzerController {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 100: // APP_ERROR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+                struct.app_error.read(iprot);
+                struct.setApp_errorIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -4930,6 +5183,11 @@ public class AnalyzerController {
         if (struct.success != null) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.app_error != null) {
+          oprot.writeFieldBegin(APP_ERROR_FIELD_DESC);
+          struct.app_error.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -4953,20 +5211,31 @@ public class AnalyzerController {
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetApp_error()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetSuccess()) {
           struct.success.write(oprot);
+        }
+        if (struct.isSetApp_error()) {
+          struct.app_error.write(oprot);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, create_session_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(1);
+        java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           struct.success = new AnalyzerConfig();
           struct.success.read(iprot);
           struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+          struct.app_error.read(iprot);
+          struct.setApp_errorIsSet(true);
         }
       }
     }
@@ -5342,15 +5611,18 @@ public class AnalyzerController {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("dump_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRING, (short)0);
+    private static final org.apache.thrift.protocol.TField APP_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("app_error", org.apache.thrift.protocol.TType.STRUCT, (short)100);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new dump_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new dump_resultTupleSchemeFactory();
 
     public @org.apache.thrift.annotation.Nullable java.nio.ByteBuffer success; // required
+    public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success");
+      SUCCESS((short)0, "success"),
+      APP_ERROR((short)100, "app_error");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -5368,6 +5640,8 @@ public class AnalyzerController {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
+          case 100: // APP_ERROR
+            return APP_ERROR;
           default:
             return null;
         }
@@ -5414,6 +5688,8 @@ public class AnalyzerController {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING          , true)));
+      tmpMap.put(_Fields.APP_ERROR, new org.apache.thrift.meta_data.FieldMetaData("app_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.ApplicationError.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(dump_result.class, metaDataMap);
     }
@@ -5422,10 +5698,12 @@ public class AnalyzerController {
     }
 
     public dump_result(
-      java.nio.ByteBuffer success)
+      java.nio.ByteBuffer success,
+      br.com.investtools.radar.api.ApplicationError app_error)
     {
       this();
       this.success = org.apache.thrift.TBaseHelper.copyBinary(success);
+      this.app_error = app_error;
     }
 
     /**
@@ -5434,6 +5712,9 @@ public class AnalyzerController {
     public dump_result(dump_result other) {
       if (other.isSetSuccess()) {
         this.success = org.apache.thrift.TBaseHelper.copyBinary(other.success);
+      }
+      if (other.isSetApp_error()) {
+        this.app_error = new br.com.investtools.radar.api.ApplicationError(other.app_error);
       }
     }
 
@@ -5444,6 +5725,7 @@ public class AnalyzerController {
     @Override
     public void clear() {
       this.success = null;
+      this.app_error = null;
     }
 
     public byte[] getSuccess() {
@@ -5480,6 +5762,31 @@ public class AnalyzerController {
       }
     }
 
+    @org.apache.thrift.annotation.Nullable
+    public br.com.investtools.radar.api.ApplicationError getApp_error() {
+      return this.app_error;
+    }
+
+    public dump_result setApp_error(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error) {
+      this.app_error = app_error;
+      return this;
+    }
+
+    public void unsetApp_error() {
+      this.app_error = null;
+    }
+
+    /** Returns true if field app_error is set (has been assigned a value) and false otherwise */
+    public boolean isSetApp_error() {
+      return this.app_error != null;
+    }
+
+    public void setApp_errorIsSet(boolean value) {
+      if (!value) {
+        this.app_error = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
       case SUCCESS:
@@ -5494,6 +5801,14 @@ public class AnalyzerController {
         }
         break;
 
+      case APP_ERROR:
+        if (value == null) {
+          unsetApp_error();
+        } else {
+          setApp_error((br.com.investtools.radar.api.ApplicationError)value);
+        }
+        break;
+
       }
     }
 
@@ -5502,6 +5817,9 @@ public class AnalyzerController {
       switch (field) {
       case SUCCESS:
         return getSuccess();
+
+      case APP_ERROR:
+        return getApp_error();
 
       }
       throw new java.lang.IllegalStateException();
@@ -5516,6 +5834,8 @@ public class AnalyzerController {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
+      case APP_ERROR:
+        return isSetApp_error();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -5544,6 +5864,15 @@ public class AnalyzerController {
           return false;
       }
 
+      boolean this_present_app_error = true && this.isSetApp_error();
+      boolean that_present_app_error = true && that.isSetApp_error();
+      if (this_present_app_error || that_present_app_error) {
+        if (!(this_present_app_error && that_present_app_error))
+          return false;
+        if (!this.app_error.equals(that.app_error))
+          return false;
+      }
+
       return true;
     }
 
@@ -5554,6 +5883,10 @@ public class AnalyzerController {
       hashCode = hashCode * 8191 + ((isSetSuccess()) ? 131071 : 524287);
       if (isSetSuccess())
         hashCode = hashCode * 8191 + success.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetApp_error()) ? 131071 : 524287);
+      if (isSetApp_error())
+        hashCode = hashCode * 8191 + app_error.hashCode();
 
       return hashCode;
     }
@@ -5572,6 +5905,16 @@ public class AnalyzerController {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetApp_error()).compareTo(other.isSetApp_error());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetApp_error()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.app_error, other.app_error);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -5602,6 +5945,14 @@ public class AnalyzerController {
         sb.append("null");
       } else {
         org.apache.thrift.TBaseHelper.toString(this.success, sb);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("app_error:");
+      if (this.app_error == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.app_error);
       }
       first = false;
       sb.append(")");
@@ -5655,6 +6006,15 @@ public class AnalyzerController {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 100: // APP_ERROR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+                struct.app_error.read(iprot);
+                struct.setApp_errorIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -5673,6 +6033,11 @@ public class AnalyzerController {
         if (struct.success != null) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           oprot.writeBinary(struct.success);
+          oprot.writeFieldEnd();
+        }
+        if (struct.app_error != null) {
+          oprot.writeFieldBegin(APP_ERROR_FIELD_DESC);
+          struct.app_error.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -5696,19 +6061,30 @@ public class AnalyzerController {
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetApp_error()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetSuccess()) {
           oprot.writeBinary(struct.success);
+        }
+        if (struct.isSetApp_error()) {
+          struct.app_error.write(oprot);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, dump_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(1);
+        java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           struct.success = iprot.readBinary();
           struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+          struct.app_error.read(iprot);
+          struct.setApp_errorIsSet(true);
         }
       }
     }
@@ -6564,15 +6940,18 @@ public class AnalyzerController {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("result_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+    private static final org.apache.thrift.protocol.TField APP_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("app_error", org.apache.thrift.protocol.TType.STRUCT, (short)100);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new result_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new result_resultTupleSchemeFactory();
 
     public @org.apache.thrift.annotation.Nullable Result success; // required
+    public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success");
+      SUCCESS((short)0, "success"),
+      APP_ERROR((short)100, "app_error");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -6590,6 +6969,8 @@ public class AnalyzerController {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
+          case 100: // APP_ERROR
+            return APP_ERROR;
           default:
             return null;
         }
@@ -6636,6 +7017,8 @@ public class AnalyzerController {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Result.class)));
+      tmpMap.put(_Fields.APP_ERROR, new org.apache.thrift.meta_data.FieldMetaData("app_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.ApplicationError.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(result_result.class, metaDataMap);
     }
@@ -6644,10 +7027,12 @@ public class AnalyzerController {
     }
 
     public result_result(
-      Result success)
+      Result success,
+      br.com.investtools.radar.api.ApplicationError app_error)
     {
       this();
       this.success = success;
+      this.app_error = app_error;
     }
 
     /**
@@ -6656,6 +7041,9 @@ public class AnalyzerController {
     public result_result(result_result other) {
       if (other.isSetSuccess()) {
         this.success = new Result(other.success);
+      }
+      if (other.isSetApp_error()) {
+        this.app_error = new br.com.investtools.radar.api.ApplicationError(other.app_error);
       }
     }
 
@@ -6666,6 +7054,7 @@ public class AnalyzerController {
     @Override
     public void clear() {
       this.success = null;
+      this.app_error = null;
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -6693,6 +7082,31 @@ public class AnalyzerController {
       }
     }
 
+    @org.apache.thrift.annotation.Nullable
+    public br.com.investtools.radar.api.ApplicationError getApp_error() {
+      return this.app_error;
+    }
+
+    public result_result setApp_error(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error) {
+      this.app_error = app_error;
+      return this;
+    }
+
+    public void unsetApp_error() {
+      this.app_error = null;
+    }
+
+    /** Returns true if field app_error is set (has been assigned a value) and false otherwise */
+    public boolean isSetApp_error() {
+      return this.app_error != null;
+    }
+
+    public void setApp_errorIsSet(boolean value) {
+      if (!value) {
+        this.app_error = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
       case SUCCESS:
@@ -6700,6 +7114,14 @@ public class AnalyzerController {
           unsetSuccess();
         } else {
           setSuccess((Result)value);
+        }
+        break;
+
+      case APP_ERROR:
+        if (value == null) {
+          unsetApp_error();
+        } else {
+          setApp_error((br.com.investtools.radar.api.ApplicationError)value);
         }
         break;
 
@@ -6711,6 +7133,9 @@ public class AnalyzerController {
       switch (field) {
       case SUCCESS:
         return getSuccess();
+
+      case APP_ERROR:
+        return getApp_error();
 
       }
       throw new java.lang.IllegalStateException();
@@ -6725,6 +7150,8 @@ public class AnalyzerController {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
+      case APP_ERROR:
+        return isSetApp_error();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -6753,6 +7180,15 @@ public class AnalyzerController {
           return false;
       }
 
+      boolean this_present_app_error = true && this.isSetApp_error();
+      boolean that_present_app_error = true && that.isSetApp_error();
+      if (this_present_app_error || that_present_app_error) {
+        if (!(this_present_app_error && that_present_app_error))
+          return false;
+        if (!this.app_error.equals(that.app_error))
+          return false;
+      }
+
       return true;
     }
 
@@ -6763,6 +7199,10 @@ public class AnalyzerController {
       hashCode = hashCode * 8191 + ((isSetSuccess()) ? 131071 : 524287);
       if (isSetSuccess())
         hashCode = hashCode * 8191 + success.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetApp_error()) ? 131071 : 524287);
+      if (isSetApp_error())
+        hashCode = hashCode * 8191 + app_error.hashCode();
 
       return hashCode;
     }
@@ -6781,6 +7221,16 @@ public class AnalyzerController {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetApp_error()).compareTo(other.isSetApp_error());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetApp_error()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.app_error, other.app_error);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -6811,6 +7261,14 @@ public class AnalyzerController {
         sb.append("null");
       } else {
         sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("app_error:");
+      if (this.app_error == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.app_error);
       }
       first = false;
       sb.append(")");
@@ -6865,6 +7323,15 @@ public class AnalyzerController {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 100: // APP_ERROR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+                struct.app_error.read(iprot);
+                struct.setApp_errorIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -6883,6 +7350,11 @@ public class AnalyzerController {
         if (struct.success != null) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
           struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.app_error != null) {
+          oprot.writeFieldBegin(APP_ERROR_FIELD_DESC);
+          struct.app_error.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -6906,20 +7378,31 @@ public class AnalyzerController {
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetApp_error()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetSuccess()) {
           struct.success.write(oprot);
+        }
+        if (struct.isSetApp_error()) {
+          struct.app_error.write(oprot);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, result_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(1);
+        java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           struct.success = new Result();
           struct.success.read(iprot);
           struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+          struct.app_error.read(iprot);
+          struct.setApp_errorIsSet(true);
         }
       }
     }
@@ -7294,14 +7777,16 @@ public class AnalyzerController {
   public static class example_result_result implements org.apache.thrift.TBase<example_result_result, example_result_result._Fields>, java.io.Serializable, Cloneable, Comparable<example_result_result>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("example_result_result");
 
+    private static final org.apache.thrift.protocol.TField APP_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("app_error", org.apache.thrift.protocol.TType.STRUCT, (short)100);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new example_result_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new example_result_resultTupleSchemeFactory();
 
+    public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-;
+      APP_ERROR((short)100, "app_error");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -7317,6 +7802,8 @@ public class AnalyzerController {
       @org.apache.thrift.annotation.Nullable
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
+          case 100: // APP_ERROR
+            return APP_ERROR;
           default:
             return null;
         }
@@ -7356,9 +7843,13 @@ public class AnalyzerController {
         return _fieldName;
       }
     }
+
+    // isset id assignments
     public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.APP_ERROR, new org.apache.thrift.meta_data.FieldMetaData("app_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.ApplicationError.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(example_result_result.class, metaDataMap);
     }
@@ -7366,10 +7857,20 @@ public class AnalyzerController {
     public example_result_result() {
     }
 
+    public example_result_result(
+      br.com.investtools.radar.api.ApplicationError app_error)
+    {
+      this();
+      this.app_error = app_error;
+    }
+
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public example_result_result(example_result_result other) {
+      if (other.isSetApp_error()) {
+        this.app_error = new br.com.investtools.radar.api.ApplicationError(other.app_error);
+      }
     }
 
     public example_result_result deepCopy() {
@@ -7378,16 +7879,53 @@ public class AnalyzerController {
 
     @Override
     public void clear() {
+      this.app_error = null;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public br.com.investtools.radar.api.ApplicationError getApp_error() {
+      return this.app_error;
+    }
+
+    public example_result_result setApp_error(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error) {
+      this.app_error = app_error;
+      return this;
+    }
+
+    public void unsetApp_error() {
+      this.app_error = null;
+    }
+
+    /** Returns true if field app_error is set (has been assigned a value) and false otherwise */
+    public boolean isSetApp_error() {
+      return this.app_error != null;
+    }
+
+    public void setApp_errorIsSet(boolean value) {
+      if (!value) {
+        this.app_error = null;
+      }
     }
 
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
+      case APP_ERROR:
+        if (value == null) {
+          unsetApp_error();
+        } else {
+          setApp_error((br.com.investtools.radar.api.ApplicationError)value);
+        }
+        break;
+
       }
     }
 
     @org.apache.thrift.annotation.Nullable
     public java.lang.Object getFieldValue(_Fields field) {
       switch (field) {
+      case APP_ERROR:
+        return getApp_error();
+
       }
       throw new java.lang.IllegalStateException();
     }
@@ -7399,6 +7937,8 @@ public class AnalyzerController {
       }
 
       switch (field) {
+      case APP_ERROR:
+        return isSetApp_error();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -7418,12 +7958,25 @@ public class AnalyzerController {
       if (this == that)
         return true;
 
+      boolean this_present_app_error = true && this.isSetApp_error();
+      boolean that_present_app_error = true && that.isSetApp_error();
+      if (this_present_app_error || that_present_app_error) {
+        if (!(this_present_app_error && that_present_app_error))
+          return false;
+        if (!this.app_error.equals(that.app_error))
+          return false;
+      }
+
       return true;
     }
 
     @Override
     public int hashCode() {
       int hashCode = 1;
+
+      hashCode = hashCode * 8191 + ((isSetApp_error()) ? 131071 : 524287);
+      if (isSetApp_error())
+        hashCode = hashCode * 8191 + app_error.hashCode();
 
       return hashCode;
     }
@@ -7436,6 +7989,16 @@ public class AnalyzerController {
 
       int lastComparison = 0;
 
+      lastComparison = java.lang.Boolean.valueOf(isSetApp_error()).compareTo(other.isSetApp_error());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetApp_error()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.app_error, other.app_error);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
       return 0;
     }
 
@@ -7457,6 +8020,13 @@ public class AnalyzerController {
       java.lang.StringBuilder sb = new java.lang.StringBuilder("example_result_result(");
       boolean first = true;
 
+      sb.append("app_error:");
+      if (this.app_error == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.app_error);
+      }
+      first = false;
       sb.append(")");
       return sb.toString();
     }
@@ -7500,6 +8070,15 @@ public class AnalyzerController {
             break;
           }
           switch (schemeField.id) {
+            case 100: // APP_ERROR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+                struct.app_error.read(iprot);
+                struct.setApp_errorIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -7515,6 +8094,11 @@ public class AnalyzerController {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.app_error != null) {
+          oprot.writeFieldBegin(APP_ERROR_FIELD_DESC);
+          struct.app_error.write(oprot);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -7532,11 +8116,25 @@ public class AnalyzerController {
       @Override
       public void write(org.apache.thrift.protocol.TProtocol prot, example_result_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet optionals = new java.util.BitSet();
+        if (struct.isSetApp_error()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetApp_error()) {
+          struct.app_error.write(oprot);
+        }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, example_result_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
+        java.util.BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+          struct.app_error.read(iprot);
+          struct.setApp_errorIsSet(true);
+        }
       }
     }
 

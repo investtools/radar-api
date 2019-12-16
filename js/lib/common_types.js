@@ -594,3 +594,84 @@ Broker.prototype.write = function(output) {
   return;
 };
 
+var ApplicationError = module.exports.ApplicationError = function(args) {
+  Thrift.TException.call(this, "ApplicationError");
+  this.name = "ApplicationError";
+  this.message = null;
+  this.stacktrace = null;
+  if (args) {
+    if (args.message !== undefined && args.message !== null) {
+      this.message = args.message;
+    }
+    if (args.stacktrace !== undefined && args.stacktrace !== null) {
+      this.stacktrace = Thrift.copyList(args.stacktrace, [null]);
+    }
+  }
+};
+Thrift.inherits(ApplicationError, Thrift.TException);
+ApplicationError.prototype.name = 'ApplicationError';
+ApplicationError.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.message = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        this.stacktrace = [];
+        var _rtmp31 = input.readListBegin();
+        var _size0 = _rtmp31.size || 0;
+        for (var _i2 = 0; _i2 < _size0; ++_i2) {
+          var elem3 = null;
+          elem3 = input.readString();
+          this.stacktrace.push(elem3);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+ApplicationError.prototype.write = function(output) {
+  output.writeStructBegin('ApplicationError');
+  if (this.message !== null && this.message !== undefined) {
+    output.writeFieldBegin('message', Thrift.Type.STRING, 1);
+    output.writeString(this.message);
+    output.writeFieldEnd();
+  }
+  if (this.stacktrace !== null && this.stacktrace !== undefined) {
+    output.writeFieldBegin('stacktrace', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRING, this.stacktrace.length);
+    for (var iter4 in this.stacktrace) {
+      if (this.stacktrace.hasOwnProperty(iter4)) {
+        iter4 = this.stacktrace[iter4];
+        output.writeString(iter4);
+      }
+    }
+    output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+

@@ -233,7 +233,7 @@ service AnalyzerController {
    * É chamado quando
    *
    */
-  list<AnalyzerConfig> analyzers()
+  list<AnalyzerConfig> analyzers() throws (100: common.ApplicationError app_error)
 
   /**
    * É chamado <i>n</i> vezes durante o processamento da carteira, sendo
@@ -262,7 +262,7 @@ service AnalyzerController {
   /**
    * É chamado antes do processamento para o Radar receber as configurações do analyzer.
    */
-  AnalyzerConfig create_session(1: SessionId session_id, 2: string analyzer_id)
+  AnalyzerConfig create_session(1: SessionId session_id, 2: string analyzer_id) throws (100: common.ApplicationError app_error)
 
   /**
    * É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
@@ -272,7 +272,7 @@ service AnalyzerController {
    * <code>resume()</code>, já que posteriormente o conteúdo do retorno será
    * passado como argumento para o método.
    */
-  binary dump(1: SessionId session_id)
+  binary dump(1: SessionId session_id) throws (100: common.ApplicationError app_error)
 
   /**
    * É chamado sempre que o Radar quiser começar a processar uma carteira à partir de
@@ -283,12 +283,12 @@ service AnalyzerController {
   /**
    * É chamado no fim do processamento para pegar o resultado do Analyzer.
    */
-  Result result(1: SessionId session_id)
+  Result result(1: SessionId session_id) throws (100: common.ApplicationError app_error)
 
   /**
    * É chamado no preview para exibir um exemplo de resultado do Analyzer.
    */
-  void example_result(1: SessionId session_id)
+  void example_result(1: SessionId session_id) throws (100: common.ApplicationError app_error)
 
   oneway void destroy_session(1: SessionId session_id)
 }

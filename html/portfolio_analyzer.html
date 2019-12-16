@@ -270,6 +270,7 @@ Métodos que devem repassar o controle para os analyzers:
 
 </pre><br/><div class="definition"><h4 id="Fn_AnalyzerController_analyzers">Function: AnalyzerController.analyzers</h4>
 <pre><code>list&lt;<code><a href="#Struct_AnalyzerConfig">AnalyzerConfig</a></code>&gt;</code> analyzers()
+    throws <code><a href="common.html#Struct_ApplicationError">common.ApplicationError</a></code>
 </pre><pre>É chamado quando
 
 </pre><br/></div><div class="definition"><h4 id="Fn_AnalyzerController_on_each_day">Function: AnalyzerController.on_each_day</h4>
@@ -297,9 +298,11 @@ Métodos que devem repassar o controle para os analyzers:
 </pre></div><div class="definition"><h4 id="Fn_AnalyzerController_create_session">Function: AnalyzerController.create_session</h4>
 <pre><code><a href="#Struct_AnalyzerConfig">AnalyzerConfig</a></code> create_session(<code><a href="#Struct_SessionId">SessionId</a></code> session_id,
                               <code>string</code> analyzer_id)
+    throws <code><a href="common.html#Struct_ApplicationError">common.ApplicationError</a></code>
 </pre><pre>É chamado antes do processamento para o Radar receber as configurações do analyzer.
 </pre><br/></div><div class="definition"><h4 id="Fn_AnalyzerController_dump">Function: AnalyzerController.dump</h4>
 <pre><code>binary</code> dump(<code><a href="#Struct_SessionId">SessionId</a></code> session_id)
+    throws <code><a href="common.html#Struct_ApplicationError">common.ApplicationError</a></code>
 </pre><pre>É chamado sempre que o Radar quiser gerar uma imagem do estado atual do serviço
 para poder restaurar nos próximos processamentos.
 
@@ -313,9 +316,11 @@ passado como argumento para o método.
 uma imagem gerada pelo método <code>dump()</code>.
 </pre><br/></div><div class="definition"><h4 id="Fn_AnalyzerController_result">Function: AnalyzerController.result</h4>
 <pre><code><a href="#Struct_Result">Result</a></code> result(<code><a href="#Struct_SessionId">SessionId</a></code> session_id)
+    throws <code><a href="common.html#Struct_ApplicationError">common.ApplicationError</a></code>
 </pre><pre>É chamado no fim do processamento para pegar o resultado do Analyzer.
 </pre><br/></div><div class="definition"><h4 id="Fn_AnalyzerController_example_result">Function: AnalyzerController.example_result</h4>
 <pre><code>void</code> example_result(<code><a href="#Struct_SessionId">SessionId</a></code> session_id)
+    throws <code><a href="common.html#Struct_ApplicationError">common.ApplicationError</a></code>
 </pre><pre>É chamado no preview para exibir um exemplo de resultado do Analyzer.
 </pre><br/></div><div class="definition"><h4 id="Fn_AnalyzerController_destroy_session">Function: AnalyzerController.destroy_session</h4>
 <pre><code>void</code> destroy_session(<code><a href="#Struct_SessionId">SessionId</a></code> session_id)

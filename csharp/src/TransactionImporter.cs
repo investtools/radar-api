@@ -163,6 +163,9 @@ public partial class TransactionImporter {
       if (result.__isset.success) {
         return result.Success;
       }
+      if (result.__isset.app_error) {
+        throw result.App_error;
+      }
       if (result.__isset.auth_error) {
         throw result.Auth_error;
       }
@@ -241,6 +244,9 @@ public partial class TransactionImporter {
       fetch_result result = new fetch_result();
       result.Read(iprot_);
       iprot_.ReadMessageEnd();
+      if (result.__isset.app_error) {
+        throw result.App_error;
+      }
       if (result.__isset.auth_error) {
         throw result.Auth_error;
       }
@@ -320,6 +326,9 @@ public partial class TransactionImporter {
       if (result.__isset.success) {
         return result.Success;
       }
+      if (result.__isset.app_error) {
+        throw result.App_error;
+      }
       if (result.__isset.auth_error) {
         throw result.Auth_error;
       }
@@ -381,6 +390,10 @@ public partial class TransactionImporter {
         {
           result.Success = iface_.authenticate(args.Username, args.Password, args.User);
         }
+        catch (ApplicationError app_error)
+        {
+          result.App_error = app_error;
+        }
         catch (AuthenticationError auth_error)
         {
           result.Auth_error = auth_error;
@@ -420,6 +433,10 @@ public partial class TransactionImporter {
         {
           iface_.fetch(args.Username, args.Password, args.User, args.Last_transaction_date);
         }
+        catch (ApplicationError app_error)
+        {
+          result.App_error = app_error;
+        }
         catch (AuthenticationError auth_error)
         {
           result.Auth_error = auth_error;
@@ -458,6 +475,10 @@ public partial class TransactionImporter {
         try
         {
           result.Success = iface_.fetch_portfolio(args.Username, args.Password, args.Date);
+        }
+        catch (ApplicationError app_error)
+        {
+          result.App_error = app_error;
         }
         catch (AuthenticationError auth_error)
         {
@@ -675,6 +696,7 @@ public partial class TransactionImporter {
   public partial class authenticate_result : TBase
   {
     private bool _success;
+    private ApplicationError _app_error;
     private AuthenticationError _auth_error;
     private SystemUnavailableError _system_unavailable;
 
@@ -688,6 +710,19 @@ public partial class TransactionImporter {
       {
         __isset.success = true;
         this._success = value;
+      }
+    }
+
+    public ApplicationError App_error
+    {
+      get
+      {
+        return _app_error;
+      }
+      set
+      {
+        __isset.app_error = true;
+        this._app_error = value;
       }
     }
 
@@ -724,6 +759,7 @@ public partial class TransactionImporter {
     #endif
     public struct Isset {
       public bool success;
+      public bool app_error;
       public bool auth_error;
       public bool system_unavailable;
     }
@@ -749,6 +785,14 @@ public partial class TransactionImporter {
             case 0:
               if (field.Type == TType.Bool) {
                 Success = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 100:
+              if (field.Type == TType.Struct) {
+                App_error = new ApplicationError();
+                App_error.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -816,6 +860,15 @@ public partial class TransactionImporter {
             System_unavailable.Write(oprot);
             oprot.WriteFieldEnd();
           }
+        } else if (this.__isset.app_error) {
+          if (App_error != null) {
+            field.Name = "App_error";
+            field.Type = TType.Struct;
+            field.ID = 100;
+            oprot.WriteFieldBegin(field);
+            App_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
         }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
@@ -834,6 +887,12 @@ public partial class TransactionImporter {
         __first = false;
         __sb.Append("Success: ");
         __sb.Append(Success);
+      }
+      if (App_error != null && __isset.app_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("App_error: ");
+        __sb.Append(App_error== null ? "<null>" : App_error.ToString());
       }
       if (Auth_error != null && __isset.auth_error) {
         if(!__first) { __sb.Append(", "); }
@@ -1075,8 +1134,22 @@ public partial class TransactionImporter {
   #endif
   public partial class fetch_result : TBase
   {
+    private ApplicationError _app_error;
     private AuthenticationError _auth_error;
     private SystemUnavailableError _system_unavailable;
+
+    public ApplicationError App_error
+    {
+      get
+      {
+        return _app_error;
+      }
+      set
+      {
+        __isset.app_error = true;
+        this._app_error = value;
+      }
+    }
 
     public AuthenticationError Auth_error
     {
@@ -1110,6 +1183,7 @@ public partial class TransactionImporter {
     [Serializable]
     #endif
     public struct Isset {
+      public bool app_error;
       public bool auth_error;
       public bool system_unavailable;
     }
@@ -1132,6 +1206,14 @@ public partial class TransactionImporter {
           }
           switch (field.ID)
           {
+            case 100:
+              if (field.Type == TType.Struct) {
+                App_error = new ApplicationError();
+                App_error.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
             case 1:
               if (field.Type == TType.Struct) {
                 Auth_error = new AuthenticationError();
@@ -1188,6 +1270,15 @@ public partial class TransactionImporter {
             System_unavailable.Write(oprot);
             oprot.WriteFieldEnd();
           }
+        } else if (this.__isset.app_error) {
+          if (App_error != null) {
+            field.Name = "App_error";
+            field.Type = TType.Struct;
+            field.ID = 100;
+            oprot.WriteFieldBegin(field);
+            App_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
         }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
@@ -1201,6 +1292,12 @@ public partial class TransactionImporter {
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("fetch_result(");
       bool __first = true;
+      if (App_error != null && __isset.app_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("App_error: ");
+        __sb.Append(App_error== null ? "<null>" : App_error.ToString());
+      }
       if (Auth_error != null && __isset.auth_error) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
@@ -1406,6 +1503,7 @@ public partial class TransactionImporter {
   public partial class fetch_portfolio_result : TBase
   {
     private Dictionary<SecurityId, int> _success;
+    private ApplicationError _app_error;
     private AuthenticationError _auth_error;
     private SystemUnavailableError _system_unavailable;
 
@@ -1419,6 +1517,19 @@ public partial class TransactionImporter {
       {
         __isset.success = true;
         this._success = value;
+      }
+    }
+
+    public ApplicationError App_error
+    {
+      get
+      {
+        return _app_error;
+      }
+      set
+      {
+        __isset.app_error = true;
+        this._app_error = value;
       }
     }
 
@@ -1455,6 +1566,7 @@ public partial class TransactionImporter {
     #endif
     public struct Isset {
       public bool success;
+      public bool app_error;
       public bool auth_error;
       public bool system_unavailable;
     }
@@ -1493,6 +1605,14 @@ public partial class TransactionImporter {
                   }
                   iprot.ReadMapEnd();
                 }
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 100:
+              if (field.Type == TType.Struct) {
+                App_error = new ApplicationError();
+                App_error.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1570,6 +1690,15 @@ public partial class TransactionImporter {
             System_unavailable.Write(oprot);
             oprot.WriteFieldEnd();
           }
+        } else if (this.__isset.app_error) {
+          if (App_error != null) {
+            field.Name = "App_error";
+            field.Type = TType.Struct;
+            field.ID = 100;
+            oprot.WriteFieldBegin(field);
+            App_error.Write(oprot);
+            oprot.WriteFieldEnd();
+          }
         }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
@@ -1588,6 +1717,12 @@ public partial class TransactionImporter {
         __first = false;
         __sb.Append("Success: ");
         __sb.Append(Success);
+      }
+      if (App_error != null && __isset.app_error) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("App_error: ");
+        __sb.Append(App_error== null ? "<null>" : App_error.ToString());
       }
       if (Auth_error != null && __isset.auth_error) {
         if(!__first) { __sb.Append(", "); }

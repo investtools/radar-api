@@ -11,11 +11,11 @@ public class TransactionImporter {
 
   public interface Iface {
 
-    public boolean authenticate(java.lang.String username, java.lang.String password, java.lang.String user) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
+    public boolean authenticate(java.lang.String username, java.lang.String password, java.lang.String user) throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
 
-    public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
+    public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date) throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
 
-    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> fetch_portfolio(java.lang.String username, java.lang.String password, long date) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
+    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> fetch_portfolio(java.lang.String username, java.lang.String password, long date) throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException;
 
   }
 
@@ -49,7 +49,7 @@ public class TransactionImporter {
       super(iprot, oprot);
     }
 
-    public boolean authenticate(java.lang.String username, java.lang.String password, java.lang.String user) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    public boolean authenticate(java.lang.String username, java.lang.String password, java.lang.String user) throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       send_authenticate(username, password, user);
       return recv_authenticate();
@@ -64,12 +64,15 @@ public class TransactionImporter {
       sendBase("authenticate", args);
     }
 
-    public boolean recv_authenticate() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    public boolean recv_authenticate() throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       authenticate_result result = new authenticate_result();
       receiveBase(result, "authenticate");
       if (result.isSetSuccess()) {
         return result.success;
+      }
+      if (result.app_error != null) {
+        throw result.app_error;
       }
       if (result.auth_error != null) {
         throw result.auth_error;
@@ -80,7 +83,7 @@ public class TransactionImporter {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "authenticate failed: unknown result");
     }
 
-    public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    public void fetch(java.lang.String username, java.lang.String password, java.lang.String user, long last_transaction_date) throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       send_fetch(username, password, user, last_transaction_date);
       recv_fetch();
@@ -96,10 +99,13 @@ public class TransactionImporter {
       sendBase("fetch", args);
     }
 
-    public void recv_fetch() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    public void recv_fetch() throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       fetch_result result = new fetch_result();
       receiveBase(result, "fetch");
+      if (result.app_error != null) {
+        throw result.app_error;
+      }
       if (result.auth_error != null) {
         throw result.auth_error;
       }
@@ -109,7 +115,7 @@ public class TransactionImporter {
       return;
     }
 
-    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> fetch_portfolio(java.lang.String username, java.lang.String password, long date) throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> fetch_portfolio(java.lang.String username, java.lang.String password, long date) throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       send_fetch_portfolio(username, password, date);
       return recv_fetch_portfolio();
@@ -124,12 +130,15 @@ public class TransactionImporter {
       sendBase("fetch_portfolio", args);
     }
 
-    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> recv_fetch_portfolio() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
+    public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> recv_fetch_portfolio() throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException
     {
       fetch_portfolio_result result = new fetch_portfolio_result();
       receiveBase(result, "fetch_portfolio");
       if (result.isSetSuccess()) {
         return result.success;
+      }
+      if (result.app_error != null) {
+        throw result.app_error;
       }
       if (result.auth_error != null) {
         throw result.auth_error;
@@ -186,7 +195,7 @@ public class TransactionImporter {
         prot.writeMessageEnd();
       }
 
-      public java.lang.Boolean getResult() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
+      public java.lang.Boolean getResult() throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -227,7 +236,7 @@ public class TransactionImporter {
         prot.writeMessageEnd();
       }
 
-      public Void getResult() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
+      public Void getResult() throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -265,7 +274,7 @@ public class TransactionImporter {
         prot.writeMessageEnd();
       }
 
-      public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> getResult() throws AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
+      public java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> getResult() throws br.com.investtools.radar.api.ApplicationError, AuthenticationError, SystemUnavailableError, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -317,6 +326,8 @@ public class TransactionImporter {
         try {
           result.success = iface.authenticate(args.username, args.password, args.user);
           result.setSuccessIsSet(true);
+        } catch (br.com.investtools.radar.api.ApplicationError app_error) {
+          result.app_error = app_error;
         } catch (AuthenticationError auth_error) {
           result.auth_error = auth_error;
         } catch (SystemUnavailableError system_unavailable) {
@@ -348,6 +359,8 @@ public class TransactionImporter {
         fetch_result result = new fetch_result();
         try {
           iface.fetch(args.username, args.password, args.user, args.last_transaction_date);
+        } catch (br.com.investtools.radar.api.ApplicationError app_error) {
+          result.app_error = app_error;
         } catch (AuthenticationError auth_error) {
           result.auth_error = auth_error;
         } catch (SystemUnavailableError system_unavailable) {
@@ -379,6 +392,8 @@ public class TransactionImporter {
         fetch_portfolio_result result = new fetch_portfolio_result();
         try {
           result.success = iface.fetch_portfolio(args.username, args.password, args.date);
+        } catch (br.com.investtools.radar.api.ApplicationError app_error) {
+          result.app_error = app_error;
         } catch (AuthenticationError auth_error) {
           result.auth_error = auth_error;
         } catch (SystemUnavailableError system_unavailable) {
@@ -437,7 +452,11 @@ public class TransactionImporter {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             authenticate_result result = new authenticate_result();
-            if (e instanceof AuthenticationError) {
+            if (e instanceof br.com.investtools.radar.api.ApplicationError) {
+              result.app_error = (br.com.investtools.radar.api.ApplicationError) e;
+              result.setApp_errorIsSet(true);
+              msg = result;
+            } else if (e instanceof AuthenticationError) {
               result.auth_error = (AuthenticationError) e;
               result.setAuth_errorIsSet(true);
               msg = result;
@@ -505,7 +524,11 @@ public class TransactionImporter {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             fetch_result result = new fetch_result();
-            if (e instanceof AuthenticationError) {
+            if (e instanceof br.com.investtools.radar.api.ApplicationError) {
+              result.app_error = (br.com.investtools.radar.api.ApplicationError) e;
+              result.setApp_errorIsSet(true);
+              msg = result;
+            } else if (e instanceof AuthenticationError) {
               result.auth_error = (AuthenticationError) e;
               result.setAuth_errorIsSet(true);
               msg = result;
@@ -574,7 +597,11 @@ public class TransactionImporter {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             fetch_portfolio_result result = new fetch_portfolio_result();
-            if (e instanceof AuthenticationError) {
+            if (e instanceof br.com.investtools.radar.api.ApplicationError) {
+              result.app_error = (br.com.investtools.radar.api.ApplicationError) e;
+              result.setApp_errorIsSet(true);
+              msg = result;
+            } else if (e instanceof AuthenticationError) {
               result.auth_error = (AuthenticationError) e;
               result.setAuth_errorIsSet(true);
               msg = result;
@@ -1197,6 +1224,7 @@ public class TransactionImporter {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("authenticate_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.BOOL, (short)0);
+    private static final org.apache.thrift.protocol.TField APP_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("app_error", org.apache.thrift.protocol.TType.STRUCT, (short)100);
     private static final org.apache.thrift.protocol.TField AUTH_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("auth_error", org.apache.thrift.protocol.TType.STRUCT, (short)1);
     private static final org.apache.thrift.protocol.TField SYSTEM_UNAVAILABLE_FIELD_DESC = new org.apache.thrift.protocol.TField("system_unavailable", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
@@ -1204,12 +1232,14 @@ public class TransactionImporter {
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new authenticate_resultTupleSchemeFactory();
 
     public boolean success; // required
+    public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error; // required
     public @org.apache.thrift.annotation.Nullable AuthenticationError auth_error; // required
     public @org.apache.thrift.annotation.Nullable SystemUnavailableError system_unavailable; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       SUCCESS((short)0, "success"),
+      APP_ERROR((short)100, "app_error"),
       AUTH_ERROR((short)1, "auth_error"),
       SYSTEM_UNAVAILABLE((short)2, "system_unavailable");
 
@@ -1229,6 +1259,8 @@ public class TransactionImporter {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
+          case 100: // APP_ERROR
+            return APP_ERROR;
           case 1: // AUTH_ERROR
             return AUTH_ERROR;
           case 2: // SYSTEM_UNAVAILABLE
@@ -1281,6 +1313,8 @@ public class TransactionImporter {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
+      tmpMap.put(_Fields.APP_ERROR, new org.apache.thrift.meta_data.FieldMetaData("app_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.ApplicationError.class)));
       tmpMap.put(_Fields.AUTH_ERROR, new org.apache.thrift.meta_data.FieldMetaData("auth_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AuthenticationError.class)));
       tmpMap.put(_Fields.SYSTEM_UNAVAILABLE, new org.apache.thrift.meta_data.FieldMetaData("system_unavailable", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -1294,12 +1328,14 @@ public class TransactionImporter {
 
     public authenticate_result(
       boolean success,
+      br.com.investtools.radar.api.ApplicationError app_error,
       AuthenticationError auth_error,
       SystemUnavailableError system_unavailable)
     {
       this();
       this.success = success;
       setSuccessIsSet(true);
+      this.app_error = app_error;
       this.auth_error = auth_error;
       this.system_unavailable = system_unavailable;
     }
@@ -1310,6 +1346,9 @@ public class TransactionImporter {
     public authenticate_result(authenticate_result other) {
       __isset_bitfield = other.__isset_bitfield;
       this.success = other.success;
+      if (other.isSetApp_error()) {
+        this.app_error = new br.com.investtools.radar.api.ApplicationError(other.app_error);
+      }
       if (other.isSetAuth_error()) {
         this.auth_error = new AuthenticationError(other.auth_error);
       }
@@ -1326,6 +1365,7 @@ public class TransactionImporter {
     public void clear() {
       setSuccessIsSet(false);
       this.success = false;
+      this.app_error = null;
       this.auth_error = null;
       this.system_unavailable = null;
     }
@@ -1351,6 +1391,31 @@ public class TransactionImporter {
 
     public void setSuccessIsSet(boolean value) {
       __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __SUCCESS_ISSET_ID, value);
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public br.com.investtools.radar.api.ApplicationError getApp_error() {
+      return this.app_error;
+    }
+
+    public authenticate_result setApp_error(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error) {
+      this.app_error = app_error;
+      return this;
+    }
+
+    public void unsetApp_error() {
+      this.app_error = null;
+    }
+
+    /** Returns true if field app_error is set (has been assigned a value) and false otherwise */
+    public boolean isSetApp_error() {
+      return this.app_error != null;
+    }
+
+    public void setApp_errorIsSet(boolean value) {
+      if (!value) {
+        this.app_error = null;
+      }
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -1413,6 +1478,14 @@ public class TransactionImporter {
         }
         break;
 
+      case APP_ERROR:
+        if (value == null) {
+          unsetApp_error();
+        } else {
+          setApp_error((br.com.investtools.radar.api.ApplicationError)value);
+        }
+        break;
+
       case AUTH_ERROR:
         if (value == null) {
           unsetAuth_error();
@@ -1438,6 +1511,9 @@ public class TransactionImporter {
       case SUCCESS:
         return isSuccess();
 
+      case APP_ERROR:
+        return getApp_error();
+
       case AUTH_ERROR:
         return getAuth_error();
 
@@ -1457,6 +1533,8 @@ public class TransactionImporter {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
+      case APP_ERROR:
+        return isSetApp_error();
       case AUTH_ERROR:
         return isSetAuth_error();
       case SYSTEM_UNAVAILABLE:
@@ -1489,6 +1567,15 @@ public class TransactionImporter {
           return false;
       }
 
+      boolean this_present_app_error = true && this.isSetApp_error();
+      boolean that_present_app_error = true && that.isSetApp_error();
+      if (this_present_app_error || that_present_app_error) {
+        if (!(this_present_app_error && that_present_app_error))
+          return false;
+        if (!this.app_error.equals(that.app_error))
+          return false;
+      }
+
       boolean this_present_auth_error = true && this.isSetAuth_error();
       boolean that_present_auth_error = true && that.isSetAuth_error();
       if (this_present_auth_error || that_present_auth_error) {
@@ -1516,6 +1603,10 @@ public class TransactionImporter {
 
       hashCode = hashCode * 8191 + ((success) ? 131071 : 524287);
 
+      hashCode = hashCode * 8191 + ((isSetApp_error()) ? 131071 : 524287);
+      if (isSetApp_error())
+        hashCode = hashCode * 8191 + app_error.hashCode();
+
       hashCode = hashCode * 8191 + ((isSetAuth_error()) ? 131071 : 524287);
       if (isSetAuth_error())
         hashCode = hashCode * 8191 + auth_error.hashCode();
@@ -1541,6 +1632,16 @@ public class TransactionImporter {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetApp_error()).compareTo(other.isSetApp_error());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetApp_error()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.app_error, other.app_error);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -1588,6 +1689,14 @@ public class TransactionImporter {
 
       sb.append("success:");
       sb.append(this.success);
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("app_error:");
+      if (this.app_error == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.app_error);
+      }
       first = false;
       if (!first) sb.append(", ");
       sb.append("auth_error:");
@@ -1658,6 +1767,15 @@ public class TransactionImporter {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 100: // APP_ERROR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+                struct.app_error.read(iprot);
+                struct.setApp_errorIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             case 1: // AUTH_ERROR
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
                 struct.auth_error = new AuthenticationError();
@@ -1706,6 +1824,11 @@ public class TransactionImporter {
           struct.system_unavailable.write(oprot);
           oprot.writeFieldEnd();
         }
+        if (struct.app_error != null) {
+          oprot.writeFieldBegin(APP_ERROR_FIELD_DESC);
+          struct.app_error.write(oprot);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -1727,15 +1850,21 @@ public class TransactionImporter {
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        if (struct.isSetAuth_error()) {
+        if (struct.isSetApp_error()) {
           optionals.set(1);
         }
-        if (struct.isSetSystem_unavailable()) {
+        if (struct.isSetAuth_error()) {
           optionals.set(2);
         }
-        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetSystem_unavailable()) {
+          optionals.set(3);
+        }
+        oprot.writeBitSet(optionals, 4);
         if (struct.isSetSuccess()) {
           oprot.writeBool(struct.success);
+        }
+        if (struct.isSetApp_error()) {
+          struct.app_error.write(oprot);
         }
         if (struct.isSetAuth_error()) {
           struct.auth_error.write(oprot);
@@ -1748,17 +1877,22 @@ public class TransactionImporter {
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, authenticate_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(3);
+        java.util.BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           struct.success = iprot.readBool();
           struct.setSuccessIsSet(true);
         }
         if (incoming.get(1)) {
+          struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+          struct.app_error.read(iprot);
+          struct.setApp_errorIsSet(true);
+        }
+        if (incoming.get(2)) {
           struct.auth_error = new AuthenticationError();
           struct.auth_error.read(iprot);
           struct.setAuth_errorIsSet(true);
         }
-        if (incoming.get(2)) {
+        if (incoming.get(3)) {
           struct.system_unavailable = new SystemUnavailableError();
           struct.system_unavailable.read(iprot);
           struct.setSystem_unavailableIsSet(true);
@@ -2451,17 +2585,20 @@ public class TransactionImporter {
   public static class fetch_result implements org.apache.thrift.TBase<fetch_result, fetch_result._Fields>, java.io.Serializable, Cloneable, Comparable<fetch_result>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("fetch_result");
 
+    private static final org.apache.thrift.protocol.TField APP_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("app_error", org.apache.thrift.protocol.TType.STRUCT, (short)100);
     private static final org.apache.thrift.protocol.TField AUTH_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("auth_error", org.apache.thrift.protocol.TType.STRUCT, (short)1);
     private static final org.apache.thrift.protocol.TField SYSTEM_UNAVAILABLE_FIELD_DESC = new org.apache.thrift.protocol.TField("system_unavailable", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new fetch_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new fetch_resultTupleSchemeFactory();
 
+    public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error; // required
     public @org.apache.thrift.annotation.Nullable AuthenticationError auth_error; // required
     public @org.apache.thrift.annotation.Nullable SystemUnavailableError system_unavailable; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      APP_ERROR((short)100, "app_error"),
       AUTH_ERROR((short)1, "auth_error"),
       SYSTEM_UNAVAILABLE((short)2, "system_unavailable");
 
@@ -2479,6 +2616,8 @@ public class TransactionImporter {
       @org.apache.thrift.annotation.Nullable
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
+          case 100: // APP_ERROR
+            return APP_ERROR;
           case 1: // AUTH_ERROR
             return AUTH_ERROR;
           case 2: // SYSTEM_UNAVAILABLE
@@ -2527,6 +2666,8 @@ public class TransactionImporter {
     public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.APP_ERROR, new org.apache.thrift.meta_data.FieldMetaData("app_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.ApplicationError.class)));
       tmpMap.put(_Fields.AUTH_ERROR, new org.apache.thrift.meta_data.FieldMetaData("auth_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AuthenticationError.class)));
       tmpMap.put(_Fields.SYSTEM_UNAVAILABLE, new org.apache.thrift.meta_data.FieldMetaData("system_unavailable", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -2539,10 +2680,12 @@ public class TransactionImporter {
     }
 
     public fetch_result(
+      br.com.investtools.radar.api.ApplicationError app_error,
       AuthenticationError auth_error,
       SystemUnavailableError system_unavailable)
     {
       this();
+      this.app_error = app_error;
       this.auth_error = auth_error;
       this.system_unavailable = system_unavailable;
     }
@@ -2551,6 +2694,9 @@ public class TransactionImporter {
      * Performs a deep copy on <i>other</i>.
      */
     public fetch_result(fetch_result other) {
+      if (other.isSetApp_error()) {
+        this.app_error = new br.com.investtools.radar.api.ApplicationError(other.app_error);
+      }
       if (other.isSetAuth_error()) {
         this.auth_error = new AuthenticationError(other.auth_error);
       }
@@ -2565,8 +2711,34 @@ public class TransactionImporter {
 
     @Override
     public void clear() {
+      this.app_error = null;
       this.auth_error = null;
       this.system_unavailable = null;
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public br.com.investtools.radar.api.ApplicationError getApp_error() {
+      return this.app_error;
+    }
+
+    public fetch_result setApp_error(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error) {
+      this.app_error = app_error;
+      return this;
+    }
+
+    public void unsetApp_error() {
+      this.app_error = null;
+    }
+
+    /** Returns true if field app_error is set (has been assigned a value) and false otherwise */
+    public boolean isSetApp_error() {
+      return this.app_error != null;
+    }
+
+    public void setApp_errorIsSet(boolean value) {
+      if (!value) {
+        this.app_error = null;
+      }
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -2621,6 +2793,14 @@ public class TransactionImporter {
 
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
+      case APP_ERROR:
+        if (value == null) {
+          unsetApp_error();
+        } else {
+          setApp_error((br.com.investtools.radar.api.ApplicationError)value);
+        }
+        break;
+
       case AUTH_ERROR:
         if (value == null) {
           unsetAuth_error();
@@ -2643,6 +2823,9 @@ public class TransactionImporter {
     @org.apache.thrift.annotation.Nullable
     public java.lang.Object getFieldValue(_Fields field) {
       switch (field) {
+      case APP_ERROR:
+        return getApp_error();
+
       case AUTH_ERROR:
         return getAuth_error();
 
@@ -2660,6 +2843,8 @@ public class TransactionImporter {
       }
 
       switch (field) {
+      case APP_ERROR:
+        return isSetApp_error();
       case AUTH_ERROR:
         return isSetAuth_error();
       case SYSTEM_UNAVAILABLE:
@@ -2682,6 +2867,15 @@ public class TransactionImporter {
         return false;
       if (this == that)
         return true;
+
+      boolean this_present_app_error = true && this.isSetApp_error();
+      boolean that_present_app_error = true && that.isSetApp_error();
+      if (this_present_app_error || that_present_app_error) {
+        if (!(this_present_app_error && that_present_app_error))
+          return false;
+        if (!this.app_error.equals(that.app_error))
+          return false;
+      }
 
       boolean this_present_auth_error = true && this.isSetAuth_error();
       boolean that_present_auth_error = true && that.isSetAuth_error();
@@ -2708,6 +2902,10 @@ public class TransactionImporter {
     public int hashCode() {
       int hashCode = 1;
 
+      hashCode = hashCode * 8191 + ((isSetApp_error()) ? 131071 : 524287);
+      if (isSetApp_error())
+        hashCode = hashCode * 8191 + app_error.hashCode();
+
       hashCode = hashCode * 8191 + ((isSetAuth_error()) ? 131071 : 524287);
       if (isSetAuth_error())
         hashCode = hashCode * 8191 + auth_error.hashCode();
@@ -2727,6 +2925,16 @@ public class TransactionImporter {
 
       int lastComparison = 0;
 
+      lastComparison = java.lang.Boolean.valueOf(isSetApp_error()).compareTo(other.isSetApp_error());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetApp_error()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.app_error, other.app_error);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
       lastComparison = java.lang.Boolean.valueOf(isSetAuth_error()).compareTo(other.isSetAuth_error());
       if (lastComparison != 0) {
         return lastComparison;
@@ -2768,6 +2976,14 @@ public class TransactionImporter {
       java.lang.StringBuilder sb = new java.lang.StringBuilder("fetch_result(");
       boolean first = true;
 
+      sb.append("app_error:");
+      if (this.app_error == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.app_error);
+      }
+      first = false;
+      if (!first) sb.append(", ");
       sb.append("auth_error:");
       if (this.auth_error == null) {
         sb.append("null");
@@ -2826,6 +3042,15 @@ public class TransactionImporter {
             break;
           }
           switch (schemeField.id) {
+            case 100: // APP_ERROR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+                struct.app_error.read(iprot);
+                struct.setApp_errorIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             case 1: // AUTH_ERROR
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
                 struct.auth_error = new AuthenticationError();
@@ -2869,6 +3094,11 @@ public class TransactionImporter {
           struct.system_unavailable.write(oprot);
           oprot.writeFieldEnd();
         }
+        if (struct.app_error != null) {
+          oprot.writeFieldBegin(APP_ERROR_FIELD_DESC);
+          struct.app_error.write(oprot);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -2887,13 +3117,19 @@ public class TransactionImporter {
       public void write(org.apache.thrift.protocol.TProtocol prot, fetch_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet optionals = new java.util.BitSet();
-        if (struct.isSetAuth_error()) {
+        if (struct.isSetApp_error()) {
           optionals.set(0);
         }
-        if (struct.isSetSystem_unavailable()) {
+        if (struct.isSetAuth_error()) {
           optionals.set(1);
         }
-        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSystem_unavailable()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetApp_error()) {
+          struct.app_error.write(oprot);
+        }
         if (struct.isSetAuth_error()) {
           struct.auth_error.write(oprot);
         }
@@ -2905,13 +3141,18 @@ public class TransactionImporter {
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, fetch_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
+        java.util.BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
+          struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+          struct.app_error.read(iprot);
+          struct.setApp_errorIsSet(true);
+        }
+        if (incoming.get(1)) {
           struct.auth_error = new AuthenticationError();
           struct.auth_error.read(iprot);
           struct.setAuth_errorIsSet(true);
         }
-        if (incoming.get(1)) {
+        if (incoming.get(2)) {
           struct.system_unavailable = new SystemUnavailableError();
           struct.system_unavailable.read(iprot);
           struct.setSystem_unavailableIsSet(true);
@@ -3500,6 +3741,7 @@ public class TransactionImporter {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("fetch_portfolio_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.MAP, (short)0);
+    private static final org.apache.thrift.protocol.TField APP_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("app_error", org.apache.thrift.protocol.TType.STRUCT, (short)100);
     private static final org.apache.thrift.protocol.TField AUTH_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("auth_error", org.apache.thrift.protocol.TType.STRUCT, (short)1);
     private static final org.apache.thrift.protocol.TField SYSTEM_UNAVAILABLE_FIELD_DESC = new org.apache.thrift.protocol.TField("system_unavailable", org.apache.thrift.protocol.TType.STRUCT, (short)2);
 
@@ -3507,12 +3749,14 @@ public class TransactionImporter {
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new fetch_portfolio_resultTupleSchemeFactory();
 
     public @org.apache.thrift.annotation.Nullable java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> success; // required
+    public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error; // required
     public @org.apache.thrift.annotation.Nullable AuthenticationError auth_error; // required
     public @org.apache.thrift.annotation.Nullable SystemUnavailableError system_unavailable; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       SUCCESS((short)0, "success"),
+      APP_ERROR((short)100, "app_error"),
       AUTH_ERROR((short)1, "auth_error"),
       SYSTEM_UNAVAILABLE((short)2, "system_unavailable");
 
@@ -3532,6 +3776,8 @@ public class TransactionImporter {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
+          case 100: // APP_ERROR
+            return APP_ERROR;
           case 1: // AUTH_ERROR
             return AUTH_ERROR;
           case 2: // SYSTEM_UNAVAILABLE
@@ -3584,6 +3830,8 @@ public class TransactionImporter {
           new org.apache.thrift.meta_data.MapMetaData(org.apache.thrift.protocol.TType.MAP, 
               new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.SecurityId.class), 
               new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32))));
+      tmpMap.put(_Fields.APP_ERROR, new org.apache.thrift.meta_data.FieldMetaData("app_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.ApplicationError.class)));
       tmpMap.put(_Fields.AUTH_ERROR, new org.apache.thrift.meta_data.FieldMetaData("auth_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AuthenticationError.class)));
       tmpMap.put(_Fields.SYSTEM_UNAVAILABLE, new org.apache.thrift.meta_data.FieldMetaData("system_unavailable", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -3597,11 +3845,13 @@ public class TransactionImporter {
 
     public fetch_portfolio_result(
       java.util.Map<br.com.investtools.radar.api.SecurityId,java.lang.Integer> success,
+      br.com.investtools.radar.api.ApplicationError app_error,
       AuthenticationError auth_error,
       SystemUnavailableError system_unavailable)
     {
       this();
       this.success = success;
+      this.app_error = app_error;
       this.auth_error = auth_error;
       this.system_unavailable = system_unavailable;
     }
@@ -3625,6 +3875,9 @@ public class TransactionImporter {
         }
         this.success = __this__success;
       }
+      if (other.isSetApp_error()) {
+        this.app_error = new br.com.investtools.radar.api.ApplicationError(other.app_error);
+      }
       if (other.isSetAuth_error()) {
         this.auth_error = new AuthenticationError(other.auth_error);
       }
@@ -3640,6 +3893,7 @@ public class TransactionImporter {
     @Override
     public void clear() {
       this.success = null;
+      this.app_error = null;
       this.auth_error = null;
       this.system_unavailable = null;
     }
@@ -3677,6 +3931,31 @@ public class TransactionImporter {
     public void setSuccessIsSet(boolean value) {
       if (!value) {
         this.success = null;
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
+    public br.com.investtools.radar.api.ApplicationError getApp_error() {
+      return this.app_error;
+    }
+
+    public fetch_portfolio_result setApp_error(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error) {
+      this.app_error = app_error;
+      return this;
+    }
+
+    public void unsetApp_error() {
+      this.app_error = null;
+    }
+
+    /** Returns true if field app_error is set (has been assigned a value) and false otherwise */
+    public boolean isSetApp_error() {
+      return this.app_error != null;
+    }
+
+    public void setApp_errorIsSet(boolean value) {
+      if (!value) {
+        this.app_error = null;
       }
     }
 
@@ -3740,6 +4019,14 @@ public class TransactionImporter {
         }
         break;
 
+      case APP_ERROR:
+        if (value == null) {
+          unsetApp_error();
+        } else {
+          setApp_error((br.com.investtools.radar.api.ApplicationError)value);
+        }
+        break;
+
       case AUTH_ERROR:
         if (value == null) {
           unsetAuth_error();
@@ -3765,6 +4052,9 @@ public class TransactionImporter {
       case SUCCESS:
         return getSuccess();
 
+      case APP_ERROR:
+        return getApp_error();
+
       case AUTH_ERROR:
         return getAuth_error();
 
@@ -3784,6 +4074,8 @@ public class TransactionImporter {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
+      case APP_ERROR:
+        return isSetApp_error();
       case AUTH_ERROR:
         return isSetAuth_error();
       case SYSTEM_UNAVAILABLE:
@@ -3816,6 +4108,15 @@ public class TransactionImporter {
           return false;
       }
 
+      boolean this_present_app_error = true && this.isSetApp_error();
+      boolean that_present_app_error = true && that.isSetApp_error();
+      if (this_present_app_error || that_present_app_error) {
+        if (!(this_present_app_error && that_present_app_error))
+          return false;
+        if (!this.app_error.equals(that.app_error))
+          return false;
+      }
+
       boolean this_present_auth_error = true && this.isSetAuth_error();
       boolean that_present_auth_error = true && that.isSetAuth_error();
       if (this_present_auth_error || that_present_auth_error) {
@@ -3845,6 +4146,10 @@ public class TransactionImporter {
       if (isSetSuccess())
         hashCode = hashCode * 8191 + success.hashCode();
 
+      hashCode = hashCode * 8191 + ((isSetApp_error()) ? 131071 : 524287);
+      if (isSetApp_error())
+        hashCode = hashCode * 8191 + app_error.hashCode();
+
       hashCode = hashCode * 8191 + ((isSetAuth_error()) ? 131071 : 524287);
       if (isSetAuth_error())
         hashCode = hashCode * 8191 + auth_error.hashCode();
@@ -3870,6 +4175,16 @@ public class TransactionImporter {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetApp_error()).compareTo(other.isSetApp_error());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetApp_error()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.app_error, other.app_error);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -3920,6 +4235,14 @@ public class TransactionImporter {
         sb.append("null");
       } else {
         sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("app_error:");
+      if (this.app_error == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.app_error);
       }
       first = false;
       if (!first) sb.append(", ");
@@ -4002,6 +4325,15 @@ public class TransactionImporter {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 100: // APP_ERROR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+                struct.app_error.read(iprot);
+                struct.setApp_errorIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             case 1: // AUTH_ERROR
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
                 struct.auth_error = new AuthenticationError();
@@ -4058,6 +4390,11 @@ public class TransactionImporter {
           struct.system_unavailable.write(oprot);
           oprot.writeFieldEnd();
         }
+        if (struct.app_error != null) {
+          oprot.writeFieldBegin(APP_ERROR_FIELD_DESC);
+          struct.app_error.write(oprot);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -4079,13 +4416,16 @@ public class TransactionImporter {
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        if (struct.isSetAuth_error()) {
+        if (struct.isSetApp_error()) {
           optionals.set(1);
         }
-        if (struct.isSetSystem_unavailable()) {
+        if (struct.isSetAuth_error()) {
           optionals.set(2);
         }
-        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetSystem_unavailable()) {
+          optionals.set(3);
+        }
+        oprot.writeBitSet(optionals, 4);
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
@@ -4095,6 +4435,9 @@ public class TransactionImporter {
               oprot.writeI32(_iter5.getValue());
             }
           }
+        }
+        if (struct.isSetApp_error()) {
+          struct.app_error.write(oprot);
         }
         if (struct.isSetAuth_error()) {
           struct.auth_error.write(oprot);
@@ -4107,7 +4450,7 @@ public class TransactionImporter {
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, fetch_portfolio_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(3);
+        java.util.BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
           {
             org.apache.thrift.protocol.TMap _map6 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRUCT, org.apache.thrift.protocol.TType.I32, iprot.readI32());
@@ -4125,11 +4468,16 @@ public class TransactionImporter {
           struct.setSuccessIsSet(true);
         }
         if (incoming.get(1)) {
+          struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+          struct.app_error.read(iprot);
+          struct.setApp_errorIsSet(true);
+        }
+        if (incoming.get(2)) {
           struct.auth_error = new AuthenticationError();
           struct.auth_error.read(iprot);
           struct.setAuth_errorIsSet(true);
         }
-        if (incoming.get(2)) {
+        if (incoming.get(3)) {
           struct.system_unavailable = new SystemUnavailableError();
           struct.system_unavailable.read(iprot);
           struct.setSystem_unavailableIsSet(true);

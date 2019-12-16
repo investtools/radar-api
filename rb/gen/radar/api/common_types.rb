@@ -24,6 +24,8 @@ module Radar
 
     class Broker; end
 
+    class ApplicationError < ::Thrift::Exception; end
+
     class StockId
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SYMBOL = 1
@@ -189,6 +191,24 @@ module Radar
         CODE => {:type => ::Thrift::Types::STRING, :name => 'code'},
         NAME => {:type => ::Thrift::Types::STRING, :name => 'name'},
         SEGMENT => {:type => ::Thrift::Types::STRING, :name => 'segment'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class ApplicationError < ::Thrift::Exception
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      MESSAGE = 1
+      STACKTRACE = 2
+
+      FIELDS = {
+        MESSAGE => {:type => ::Thrift::Types::STRING, :name => 'message'},
+        STACKTRACE => {:type => ::Thrift::Types::LIST, :name => 'stacktrace', :element => {:type => ::Thrift::Types::STRING}}
       }
 
       def struct_fields; FIELDS; end

@@ -11,7 +11,7 @@ public class TransactionFileImporter {
 
   public interface Iface {
 
-    public java.util.List<br.com.investtools.radar.api.Transaction> extract(java.lang.String data) throws WrongFileStructure, org.apache.thrift.TException;
+    public java.util.List<br.com.investtools.radar.api.Transaction> extract(java.lang.String data) throws br.com.investtools.radar.api.ApplicationError, WrongFileStructure, org.apache.thrift.TException;
 
   }
 
@@ -41,7 +41,7 @@ public class TransactionFileImporter {
       super(iprot, oprot);
     }
 
-    public java.util.List<br.com.investtools.radar.api.Transaction> extract(java.lang.String data) throws WrongFileStructure, org.apache.thrift.TException
+    public java.util.List<br.com.investtools.radar.api.Transaction> extract(java.lang.String data) throws br.com.investtools.radar.api.ApplicationError, WrongFileStructure, org.apache.thrift.TException
     {
       send_extract(data);
       return recv_extract();
@@ -54,12 +54,15 @@ public class TransactionFileImporter {
       sendBase("extract", args);
     }
 
-    public java.util.List<br.com.investtools.radar.api.Transaction> recv_extract() throws WrongFileStructure, org.apache.thrift.TException
+    public java.util.List<br.com.investtools.radar.api.Transaction> recv_extract() throws br.com.investtools.radar.api.ApplicationError, WrongFileStructure, org.apache.thrift.TException
     {
       extract_result result = new extract_result();
       receiveBase(result, "extract");
       if (result.isSetSuccess()) {
         return result.success;
+      }
+      if (result.app_error != null) {
+        throw result.app_error;
       }
       if (result.col_quantity_error != null) {
         throw result.col_quantity_error;
@@ -107,7 +110,7 @@ public class TransactionFileImporter {
         prot.writeMessageEnd();
       }
 
-      public java.util.List<br.com.investtools.radar.api.Transaction> getResult() throws WrongFileStructure, org.apache.thrift.TException {
+      public java.util.List<br.com.investtools.radar.api.Transaction> getResult() throws br.com.investtools.radar.api.ApplicationError, WrongFileStructure, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
@@ -156,6 +159,8 @@ public class TransactionFileImporter {
         extract_result result = new extract_result();
         try {
           result.success = iface.extract(args.data);
+        } catch (br.com.investtools.radar.api.ApplicationError app_error) {
+          result.app_error = app_error;
         } catch (WrongFileStructure col_quantity_error) {
           result.col_quantity_error = col_quantity_error;
         }
@@ -209,7 +214,11 @@ public class TransactionFileImporter {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
             extract_result result = new extract_result();
-            if (e instanceof WrongFileStructure) {
+            if (e instanceof br.com.investtools.radar.api.ApplicationError) {
+              result.app_error = (br.com.investtools.radar.api.ApplicationError) e;
+              result.setApp_errorIsSet(true);
+              msg = result;
+            } else if (e instanceof WrongFileStructure) {
               result.col_quantity_error = (WrongFileStructure) e;
               result.setCol_quantity_errorIsSet(true);
               msg = result;
@@ -618,17 +627,20 @@ public class TransactionFileImporter {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("extract_result");
 
     private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
+    private static final org.apache.thrift.protocol.TField APP_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("app_error", org.apache.thrift.protocol.TType.STRUCT, (short)100);
     private static final org.apache.thrift.protocol.TField COL_QUANTITY_ERROR_FIELD_DESC = new org.apache.thrift.protocol.TField("col_quantity_error", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new extract_resultStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new extract_resultTupleSchemeFactory();
 
     public @org.apache.thrift.annotation.Nullable java.util.List<br.com.investtools.radar.api.Transaction> success; // required
+    public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error; // required
     public @org.apache.thrift.annotation.Nullable WrongFileStructure col_quantity_error; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       SUCCESS((short)0, "success"),
+      APP_ERROR((short)100, "app_error"),
       COL_QUANTITY_ERROR((short)1, "col_quantity_error");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
@@ -647,6 +659,8 @@ public class TransactionFileImporter {
         switch(fieldId) {
           case 0: // SUCCESS
             return SUCCESS;
+          case 100: // APP_ERROR
+            return APP_ERROR;
           case 1: // COL_QUANTITY_ERROR
             return COL_QUANTITY_ERROR;
           default:
@@ -696,6 +710,8 @@ public class TransactionFileImporter {
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
               new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.Transaction.class))));
+      tmpMap.put(_Fields.APP_ERROR, new org.apache.thrift.meta_data.FieldMetaData("app_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.ApplicationError.class)));
       tmpMap.put(_Fields.COL_QUANTITY_ERROR, new org.apache.thrift.meta_data.FieldMetaData("col_quantity_error", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, WrongFileStructure.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
@@ -707,10 +723,12 @@ public class TransactionFileImporter {
 
     public extract_result(
       java.util.List<br.com.investtools.radar.api.Transaction> success,
+      br.com.investtools.radar.api.ApplicationError app_error,
       WrongFileStructure col_quantity_error)
     {
       this();
       this.success = success;
+      this.app_error = app_error;
       this.col_quantity_error = col_quantity_error;
     }
 
@@ -725,6 +743,9 @@ public class TransactionFileImporter {
         }
         this.success = __this__success;
       }
+      if (other.isSetApp_error()) {
+        this.app_error = new br.com.investtools.radar.api.ApplicationError(other.app_error);
+      }
       if (other.isSetCol_quantity_error()) {
         this.col_quantity_error = new WrongFileStructure(other.col_quantity_error);
       }
@@ -737,6 +758,7 @@ public class TransactionFileImporter {
     @Override
     public void clear() {
       this.success = null;
+      this.app_error = null;
       this.col_quantity_error = null;
     }
 
@@ -782,6 +804,31 @@ public class TransactionFileImporter {
     }
 
     @org.apache.thrift.annotation.Nullable
+    public br.com.investtools.radar.api.ApplicationError getApp_error() {
+      return this.app_error;
+    }
+
+    public extract_result setApp_error(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.ApplicationError app_error) {
+      this.app_error = app_error;
+      return this;
+    }
+
+    public void unsetApp_error() {
+      this.app_error = null;
+    }
+
+    /** Returns true if field app_error is set (has been assigned a value) and false otherwise */
+    public boolean isSetApp_error() {
+      return this.app_error != null;
+    }
+
+    public void setApp_errorIsSet(boolean value) {
+      if (!value) {
+        this.app_error = null;
+      }
+    }
+
+    @org.apache.thrift.annotation.Nullable
     public WrongFileStructure getCol_quantity_error() {
       return this.col_quantity_error;
     }
@@ -816,6 +863,14 @@ public class TransactionFileImporter {
         }
         break;
 
+      case APP_ERROR:
+        if (value == null) {
+          unsetApp_error();
+        } else {
+          setApp_error((br.com.investtools.radar.api.ApplicationError)value);
+        }
+        break;
+
       case COL_QUANTITY_ERROR:
         if (value == null) {
           unsetCol_quantity_error();
@@ -833,6 +888,9 @@ public class TransactionFileImporter {
       case SUCCESS:
         return getSuccess();
 
+      case APP_ERROR:
+        return getApp_error();
+
       case COL_QUANTITY_ERROR:
         return getCol_quantity_error();
 
@@ -849,6 +907,8 @@ public class TransactionFileImporter {
       switch (field) {
       case SUCCESS:
         return isSetSuccess();
+      case APP_ERROR:
+        return isSetApp_error();
       case COL_QUANTITY_ERROR:
         return isSetCol_quantity_error();
       }
@@ -879,6 +939,15 @@ public class TransactionFileImporter {
           return false;
       }
 
+      boolean this_present_app_error = true && this.isSetApp_error();
+      boolean that_present_app_error = true && that.isSetApp_error();
+      if (this_present_app_error || that_present_app_error) {
+        if (!(this_present_app_error && that_present_app_error))
+          return false;
+        if (!this.app_error.equals(that.app_error))
+          return false;
+      }
+
       boolean this_present_col_quantity_error = true && this.isSetCol_quantity_error();
       boolean that_present_col_quantity_error = true && that.isSetCol_quantity_error();
       if (this_present_col_quantity_error || that_present_col_quantity_error) {
@@ -898,6 +967,10 @@ public class TransactionFileImporter {
       hashCode = hashCode * 8191 + ((isSetSuccess()) ? 131071 : 524287);
       if (isSetSuccess())
         hashCode = hashCode * 8191 + success.hashCode();
+
+      hashCode = hashCode * 8191 + ((isSetApp_error()) ? 131071 : 524287);
+      if (isSetApp_error())
+        hashCode = hashCode * 8191 + app_error.hashCode();
 
       hashCode = hashCode * 8191 + ((isSetCol_quantity_error()) ? 131071 : 524287);
       if (isSetCol_quantity_error())
@@ -920,6 +993,16 @@ public class TransactionFileImporter {
       }
       if (isSetSuccess()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetApp_error()).compareTo(other.isSetApp_error());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetApp_error()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.app_error, other.app_error);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -960,6 +1043,14 @@ public class TransactionFileImporter {
         sb.append("null");
       } else {
         sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("app_error:");
+      if (this.app_error == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.app_error);
       }
       first = false;
       if (!first) sb.append(", ");
@@ -1032,6 +1123,15 @@ public class TransactionFileImporter {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 100: // APP_ERROR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+                struct.app_error.read(iprot);
+                struct.setApp_errorIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             case 1: // COL_QUANTITY_ERROR
               if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
                 struct.col_quantity_error = new WrongFileStructure();
@@ -1073,6 +1173,11 @@ public class TransactionFileImporter {
           struct.col_quantity_error.write(oprot);
           oprot.writeFieldEnd();
         }
+        if (struct.app_error != null) {
+          oprot.writeFieldBegin(APP_ERROR_FIELD_DESC);
+          struct.app_error.write(oprot);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
@@ -1094,10 +1199,13 @@ public class TransactionFileImporter {
         if (struct.isSetSuccess()) {
           optionals.set(0);
         }
-        if (struct.isSetCol_quantity_error()) {
+        if (struct.isSetApp_error()) {
           optionals.set(1);
         }
-        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetCol_quantity_error()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
         if (struct.isSetSuccess()) {
           {
             oprot.writeI32(struct.success.size());
@@ -1107,6 +1215,9 @@ public class TransactionFileImporter {
             }
           }
         }
+        if (struct.isSetApp_error()) {
+          struct.app_error.write(oprot);
+        }
         if (struct.isSetCol_quantity_error()) {
           struct.col_quantity_error.write(oprot);
         }
@@ -1115,7 +1226,7 @@ public class TransactionFileImporter {
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, extract_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
+        java.util.BitSet incoming = iprot.readBitSet(3);
         if (incoming.get(0)) {
           {
             org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
@@ -1131,6 +1242,11 @@ public class TransactionFileImporter {
           struct.setSuccessIsSet(true);
         }
         if (incoming.get(1)) {
+          struct.app_error = new br.com.investtools.radar.api.ApplicationError();
+          struct.app_error.read(iprot);
+          struct.setApp_errorIsSet(true);
+        }
+        if (incoming.get(2)) {
           struct.col_quantity_error = new WrongFileStructure();
           struct.col_quantity_error.read(iprot);
           struct.setCol_quantity_errorIsSet(true);

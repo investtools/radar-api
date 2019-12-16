@@ -25,6 +25,7 @@ module Radar
         def recv_analyzers()
           result = receive_message(Analyzers_result)
           return result.success unless result.success.nil?
+          raise result.app_error unless result.app_error.nil?
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'analyzers failed: unknown result')
         end
 
@@ -68,6 +69,7 @@ module Radar
         def recv_create_session()
           result = receive_message(Create_session_result)
           return result.success unless result.success.nil?
+          raise result.app_error unless result.app_error.nil?
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'create_session failed: unknown result')
         end
 
@@ -83,6 +85,7 @@ module Radar
         def recv_dump()
           result = receive_message(Dump_result)
           return result.success unless result.success.nil?
+          raise result.app_error unless result.app_error.nil?
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'dump failed: unknown result')
         end
 
@@ -105,6 +108,7 @@ module Radar
         def recv_result()
           result = receive_message(Result_result)
           return result.success unless result.success.nil?
+          raise result.app_error unless result.app_error.nil?
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'result failed: unknown result')
         end
 
@@ -119,6 +123,7 @@ module Radar
 
         def recv_example_result()
           result = receive_message(Example_result_result)
+          raise result.app_error unless result.app_error.nil?
           return
         end
 
@@ -137,7 +142,11 @@ module Radar
         def process_analyzers(seqid, iprot, oprot)
           args = read_args(iprot, Analyzers_args)
           result = Analyzers_result.new()
-          result.success = @handler.analyzers()
+          begin
+            result.success = @handler.analyzers()
+          rescue ::Radar::Api::ApplicationError => app_error
+            result.app_error = app_error
+          end
           write_result(result, oprot, 'analyzers', seqid)
         end
 
@@ -168,14 +177,22 @@ module Radar
         def process_create_session(seqid, iprot, oprot)
           args = read_args(iprot, Create_session_args)
           result = Create_session_result.new()
-          result.success = @handler.create_session(args.session_id, args.analyzer_id)
+          begin
+            result.success = @handler.create_session(args.session_id, args.analyzer_id)
+          rescue ::Radar::Api::ApplicationError => app_error
+            result.app_error = app_error
+          end
           write_result(result, oprot, 'create_session', seqid)
         end
 
         def process_dump(seqid, iprot, oprot)
           args = read_args(iprot, Dump_args)
           result = Dump_result.new()
-          result.success = @handler.dump(args.session_id)
+          begin
+            result.success = @handler.dump(args.session_id)
+          rescue ::Radar::Api::ApplicationError => app_error
+            result.app_error = app_error
+          end
           write_result(result, oprot, 'dump', seqid)
         end
 
@@ -188,14 +205,22 @@ module Radar
         def process_result(seqid, iprot, oprot)
           args = read_args(iprot, Result_args)
           result = Result_result.new()
-          result.success = @handler.result(args.session_id)
+          begin
+            result.success = @handler.result(args.session_id)
+          rescue ::Radar::Api::ApplicationError => app_error
+            result.app_error = app_error
+          end
           write_result(result, oprot, 'result', seqid)
         end
 
         def process_example_result(seqid, iprot, oprot)
           args = read_args(iprot, Example_result_args)
           result = Example_result_result.new()
-          @handler.example_result(args.session_id)
+          begin
+            @handler.example_result(args.session_id)
+          rescue ::Radar::Api::ApplicationError => app_error
+            result.app_error = app_error
+          end
           write_result(result, oprot, 'example_result', seqid)
         end
 
@@ -227,9 +252,11 @@ module Radar
       class Analyzers_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
+        APP_ERROR = 100
 
         FIELDS = {
-          SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::AnalyzerConfig}}
+          SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::AnalyzerConfig}},
+          APP_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'app_error', :class => ::Radar::Api::ApplicationError}
         }
 
         def struct_fields; FIELDS; end
@@ -393,9 +420,11 @@ module Radar
       class Create_session_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
+        APP_ERROR = 100
 
         FIELDS = {
-          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::Api::AnalyzerConfig}
+          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::Api::AnalyzerConfig},
+          APP_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'app_error', :class => ::Radar::Api::ApplicationError}
         }
 
         def struct_fields; FIELDS; end
@@ -425,9 +454,11 @@ module Radar
       class Dump_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
+        APP_ERROR = 100
 
         FIELDS = {
-          SUCCESS => {:type => ::Thrift::Types::STRING, :name => 'success', :binary => true}
+          SUCCESS => {:type => ::Thrift::Types::STRING, :name => 'success', :binary => true},
+          APP_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'app_error', :class => ::Radar::Api::ApplicationError}
         }
 
         def struct_fields; FIELDS; end
@@ -490,9 +521,11 @@ module Radar
       class Result_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
+        APP_ERROR = 100
 
         FIELDS = {
-          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::Api::Result}
+          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::Api::Result},
+          APP_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'app_error', :class => ::Radar::Api::ApplicationError}
         }
 
         def struct_fields; FIELDS; end
@@ -521,9 +554,10 @@ module Radar
 
       class Example_result_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
+        APP_ERROR = 100
 
         FIELDS = {
-
+          APP_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'app_error', :class => ::Radar::Api::ApplicationError}
         }
 
         def struct_fields; FIELDS; end

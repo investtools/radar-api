@@ -9,6 +9,7 @@ var thrift = require('thrift');
 var Thrift = thrift.Thrift;
 var Q = thrift.Q;
 
+var common_ttypes = require('./common_types');
 var transaction_ttypes = require('./transaction_types');
 
 
@@ -67,7 +68,12 @@ TransactionFileImporter_extract_args.prototype.write = function(output) {
 
 var TransactionFileImporter_extract_result = function(args) {
   this.success = null;
+  this.app_error = null;
   this.col_quantity_error = null;
+  if (args instanceof common_ttypes.ApplicationError) {
+    this.app_error = args;
+    return;
+  }
   if (args instanceof ttypes.WrongFileStructure) {
     this.col_quantity_error = args;
     return;
@@ -75,6 +81,9 @@ var TransactionFileImporter_extract_result = function(args) {
   if (args) {
     if (args.success !== undefined && args.success !== null) {
       this.success = Thrift.copyList(args.success, [transaction_ttypes.Transaction]);
+    }
+    if (args.app_error !== undefined && args.app_error !== null) {
+      this.app_error = args.app_error;
     }
     if (args.col_quantity_error !== undefined && args.col_quantity_error !== null) {
       this.col_quantity_error = args.col_quantity_error;
@@ -108,6 +117,14 @@ TransactionFileImporter_extract_result.prototype.read = function(input) {
         input.skip(ftype);
       }
       break;
+      case 100:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.app_error = new common_ttypes.ApplicationError();
+        this.app_error.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
         this.col_quantity_error = new ttypes.WrongFileStructure();
@@ -137,6 +154,11 @@ TransactionFileImporter_extract_result.prototype.write = function(output) {
       }
     }
     output.writeListEnd();
+    output.writeFieldEnd();
+  }
+  if (this.app_error !== null && this.app_error !== undefined) {
+    output.writeFieldBegin('app_error', Thrift.Type.STRUCT, 100);
+    this.app_error.write(output);
     output.writeFieldEnd();
   }
   if (this.col_quantity_error !== null && this.col_quantity_error !== undefined) {
@@ -212,6 +234,9 @@ TransactionFileImporterClient.prototype.recv_extract = function(input,mtype,rseq
   result.read(input);
   input.readMessageEnd();
 
+  if (null !== result.app_error) {
+    return callback(result.app_error);
+  }
   if (null !== result.col_quantity_error) {
     return callback(result.col_quantity_error);
   }
@@ -252,7 +277,7 @@ TransactionFileImporterProcessor.prototype.process_extract = function(seqid, inp
       output.flush();
     }).catch(function (err) {
       var result;
-      if (err instanceof ttypes.WrongFileStructure) {
+      if (err instanceof common_ttypes.ApplicationError || err instanceof ttypes.WrongFileStructure) {
         result = new TransactionFileImporter_extract_result(err);
         output.writeMessageBegin("extract", Thrift.MessageType.REPLY, seqid);
       } else {
@@ -266,7 +291,7 @@ TransactionFileImporterProcessor.prototype.process_extract = function(seqid, inp
   } else {
     this._handler.extract(args.data, function (err, result) {
       var result_obj;
-      if ((err === null || typeof err === 'undefined') || err instanceof ttypes.WrongFileStructure) {
+      if ((err === null || typeof err === 'undefined') || err instanceof common_ttypes.ApplicationError || err instanceof ttypes.WrongFileStructure) {
         result_obj = new TransactionFileImporter_extract_result((err !== null || typeof err === 'undefined') ? err : {success: result});
         output.writeMessageBegin("extract", Thrift.MessageType.REPLY, seqid);
       } else {

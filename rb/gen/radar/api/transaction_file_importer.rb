@@ -25,6 +25,7 @@ module Radar
         def recv_extract()
           result = receive_message(Extract_result)
           return result.success unless result.success.nil?
+          raise result.app_error unless result.app_error.nil?
           raise result.col_quantity_error unless result.col_quantity_error.nil?
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'extract failed: unknown result')
         end
@@ -39,6 +40,8 @@ module Radar
           result = Extract_result.new()
           begin
             result.success = @handler.extract(args.data)
+          rescue ::Radar::Api::ApplicationError => app_error
+            result.app_error = app_error
           rescue ::Radar::Api::WrongFileStructure => col_quantity_error
             result.col_quantity_error = col_quantity_error
           end
@@ -68,10 +71,12 @@ module Radar
       class Extract_result
         include ::Thrift::Struct, ::Thrift::Struct_Union
         SUCCESS = 0
+        APP_ERROR = 100
         COL_QUANTITY_ERROR = 1
 
         FIELDS = {
           SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::Transaction}},
+          APP_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'app_error', :class => ::Radar::Api::ApplicationError},
           COL_QUANTITY_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'col_quantity_error', :class => ::Radar::Api::WrongFileStructure}
         }
 
