@@ -19,7 +19,7 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class StockId : TBase
+public partial class EquityId : TBase
 {
   private string _symbol;
 
@@ -45,7 +45,7 @@ public partial class StockId : TBase
     public bool symbol;
   }
 
-  public StockId() {
+  public EquityId() {
   }
 
   public void Read (TProtocol iprot)
@@ -88,7 +88,7 @@ public partial class StockId : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("StockId");
+      TStruct struc = new TStruct("EquityId");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
       if (Symbol != null && __isset.symbol) {
@@ -109,7 +109,7 @@ public partial class StockId : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("StockId(");
+    StringBuilder __sb = new StringBuilder("EquityId(");
     bool __first = true;
     if (Symbol != null && __isset.symbol) {
       if(!__first) { __sb.Append(", "); }

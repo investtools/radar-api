@@ -16,11 +16,11 @@
 <a href="#Struct_CorporateBondId">CorporateBondId</a><br/>
 <a href="#Struct_CustomSecurityId">CustomSecurityId</a><br/>
 <a href="#Typedef_Date">Date</a><br/>
+<a href="#Struct_EquityId">EquityId</a><br/>
 <a href="#Struct_FundId">FundId</a><br/>
 <a href="#Struct_GovernmentBondId">GovernmentBondId</a><br/>
 <a href="#Struct_IndexId">IndexId</a><br/>
 <a href="#Struct_SecurityId">SecurityId</a><br/>
-<a href="#Struct_StockId">StockId</a><br/>
 </td>
 <td></code></td>
 </tr></table>
@@ -40,7 +40,7 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 (255 × 2¹⁶) + (0 × 2⁸) + (0 × 2⁰) = 167.11.680
 </pre><br/></div>
 <hr/><h2 id="Structs">Data structures</h2>
-<div class="definition"><h3 id="Struct_StockId">Struct: StockId</h3>
+<div class="definition"><h3 id="Struct_EquityId">Struct: EquityId</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>symbol</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_IndexId">Struct: IndexId</h3>
@@ -66,7 +66,7 @@ Exemplo: Vermelho = <code>#FF0000</code> =
 <tr><td>2</td><td>id</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><div class="definition"><h3 id="Struct_SecurityId">Union: SecurityId</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
-<tr><td>1</td><td>stock</td><td><code><a href="#Struct_StockId">StockId</a></code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>1</td><td>stock</td><td><code><a href="#Struct_EquityId">EquityId</a></code></td><td></td><td>optional</td><td></td></tr>
 <tr><td>2</td><td>fund</td><td><code><a href="#Struct_FundId">FundId</a></code></td><td></td><td>optional</td><td></td></tr>
 <tr><td>3</td><td>corporate_bond</td><td><code><a href="#Struct_CorporateBondId">CorporateBondId</a></code></td><td></td><td>optional</td><td></td></tr>
 <tr><td>4</td><td>government_bond</td><td><code><a href="#Struct_GovernmentBondId">GovernmentBondId</a></code></td><td></td><td>optional</td><td></td></tr>

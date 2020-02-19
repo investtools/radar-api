@@ -11,7 +11,7 @@ var Q = thrift.Q;
 
 
 var ttypes = module.exports = {};
-var StockId = module.exports.StockId = function(args) {
+var EquityId = module.exports.EquityId = function(args) {
   this.symbol = null;
   if (args) {
     if (args.symbol !== undefined && args.symbol !== null) {
@@ -19,8 +19,8 @@ var StockId = module.exports.StockId = function(args) {
     }
   }
 };
-StockId.prototype = {};
-StockId.prototype.read = function(input) {
+EquityId.prototype = {};
+EquityId.prototype.read = function(input) {
   input.readStructBegin();
   while (true) {
     var ret = input.readFieldBegin();
@@ -49,8 +49,8 @@ StockId.prototype.read = function(input) {
   return;
 };
 
-StockId.prototype.write = function(output) {
-  output.writeStructBegin('StockId');
+EquityId.prototype.write = function(output) {
+  output.writeStructBegin('EquityId');
   if (this.symbol !== null && this.symbol !== undefined) {
     output.writeFieldBegin('symbol', Thrift.Type.STRING, 1);
     output.writeString(this.symbol);
@@ -407,7 +407,7 @@ var SecurityId = module.exports.SecurityId = function(args) {
   this.custom_security = null;
   if (args) {
     if (args.stock !== undefined && args.stock !== null) {
-      this.stock = new ttypes.StockId(args.stock);
+      this.stock = new ttypes.EquityId(args.stock);
     }
     if (args.fund !== undefined && args.fund !== null) {
       this.fund = new ttypes.FundId(args.fund);
@@ -436,7 +436,7 @@ SecurityId.prototype.read = function(input) {
     switch (fid) {
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.stock = new ttypes.StockId();
+        this.stock = new ttypes.EquityId();
         this.stock.read(input);
       } else {
         input.skip(ftype);

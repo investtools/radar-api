@@ -19,11 +19,12 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class Subscription : TBase
+public partial class EquityPositionSnapshot : TBase
 {
   private long _date;
-  private StockId _stock;
+  private EquityId _equity;
   private int _shares;
+  private double _price;
 
   public long Date
   {
@@ -38,16 +39,16 @@ public partial class Subscription : TBase
     }
   }
 
-  public StockId Stock
+  public EquityId Equity
   {
     get
     {
-      return _stock;
+      return _equity;
     }
     set
     {
-      __isset.stock = true;
-      this._stock = value;
+      __isset.equity = true;
+      this._equity = value;
     }
   }
 
@@ -64,6 +65,19 @@ public partial class Subscription : TBase
     }
   }
 
+  public double Price
+  {
+    get
+    {
+      return _price;
+    }
+    set
+    {
+      __isset.price = true;
+      this._price = value;
+    }
+  }
+
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -71,11 +85,12 @@ public partial class Subscription : TBase
   #endif
   public struct Isset {
     public bool date;
-    public bool stock;
+    public bool equity;
     public bool shares;
+    public bool price;
   }
 
-  public Subscription() {
+  public EquityPositionSnapshot() {
   }
 
   public void Read (TProtocol iprot)
@@ -102,8 +117,8 @@ public partial class Subscription : TBase
             break;
           case 2:
             if (field.Type == TType.Struct) {
-              Stock = new StockId();
-              Stock.Read(iprot);
+              Equity = new EquityId();
+              Equity.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -111,6 +126,13 @@ public partial class Subscription : TBase
           case 3:
             if (field.Type == TType.I32) {
               Shares = iprot.ReadI32();
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 4:
+            if (field.Type == TType.Double) {
+              Price = iprot.ReadDouble();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -133,7 +155,7 @@ public partial class Subscription : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("Subscription");
+      TStruct struc = new TStruct("EquityPositionSnapshot");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
       if (__isset.date) {
@@ -144,12 +166,12 @@ public partial class Subscription : TBase
         oprot.WriteI64(Date);
         oprot.WriteFieldEnd();
       }
-      if (Stock != null && __isset.stock) {
-        field.Name = "stock";
+      if (Equity != null && __isset.equity) {
+        field.Name = "equity";
         field.Type = TType.Struct;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        Stock.Write(oprot);
+        Equity.Write(oprot);
         oprot.WriteFieldEnd();
       }
       if (__isset.shares) {
@@ -158,6 +180,14 @@ public partial class Subscription : TBase
         field.ID = 3;
         oprot.WriteFieldBegin(field);
         oprot.WriteI32(Shares);
+        oprot.WriteFieldEnd();
+      }
+      if (__isset.price) {
+        field.Name = "price";
+        field.Type = TType.Double;
+        field.ID = 4;
+        oprot.WriteFieldBegin(field);
+        oprot.WriteDouble(Price);
         oprot.WriteFieldEnd();
       }
       oprot.WriteFieldStop();
@@ -170,7 +200,7 @@ public partial class Subscription : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("Subscription(");
+    StringBuilder __sb = new StringBuilder("EquityPositionSnapshot(");
     bool __first = true;
     if (__isset.date) {
       if(!__first) { __sb.Append(", "); }
@@ -178,17 +208,23 @@ public partial class Subscription : TBase
       __sb.Append("Date: ");
       __sb.Append(Date);
     }
-    if (Stock != null && __isset.stock) {
+    if (Equity != null && __isset.equity) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Stock: ");
-      __sb.Append(Stock== null ? "<null>" : Stock.ToString());
+      __sb.Append("Equity: ");
+      __sb.Append(Equity== null ? "<null>" : Equity.ToString());
     }
     if (__isset.shares) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
       __sb.Append("Shares: ");
       __sb.Append(Shares);
+    }
+    if (__isset.price) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Price: ");
+      __sb.Append(Price);
     }
     __sb.Append(")");
     return __sb.ToString();

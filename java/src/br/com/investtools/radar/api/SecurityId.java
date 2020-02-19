@@ -91,7 +91,7 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
   static {
     java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.STOCK, new org.apache.thrift.meta_data.FieldMetaData("stock", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, StockId.class)));
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, EquityId.class)));
     tmpMap.put(_Fields.FUND, new org.apache.thrift.meta_data.FieldMetaData("fund", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, FundId.class)));
     tmpMap.put(_Fields.CORPORATE_BOND, new org.apache.thrift.meta_data.FieldMetaData("corporate_bond", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
@@ -119,7 +119,7 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
     return new SecurityId(this);
   }
 
-  public static SecurityId stock(StockId value) {
+  public static SecurityId stock(EquityId value) {
     SecurityId x = new SecurityId();
     x.setStock(value);
     return x;
@@ -154,10 +154,10 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
   protected void checkType(_Fields setField, java.lang.Object value) throws java.lang.ClassCastException {
     switch (setField) {
       case STOCK:
-        if (value instanceof StockId) {
+        if (value instanceof EquityId) {
           break;
         }
-        throw new java.lang.ClassCastException("Was expecting value of type StockId for field 'stock', but got " + value.getClass().getSimpleName());
+        throw new java.lang.ClassCastException("Was expecting value of type EquityId for field 'stock', but got " + value.getClass().getSimpleName());
       case FUND:
         if (value instanceof FundId) {
           break;
@@ -190,8 +190,8 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
       switch (setField) {
         case STOCK:
           if (field.type == STOCK_FIELD_DESC.type) {
-            StockId stock;
-            stock = new StockId();
+            EquityId stock;
+            stock = new EquityId();
             stock.read(iprot);
             return stock;
           } else {
@@ -251,7 +251,7 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
   protected void standardSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
       case STOCK:
-        StockId stock = (StockId)value_;
+        EquityId stock = (EquityId)value_;
         stock.write(oprot);
         return;
       case FUND:
@@ -281,8 +281,8 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
     if (setField != null) {
       switch (setField) {
         case STOCK:
-          StockId stock;
-          stock = new StockId();
+          EquityId stock;
+          stock = new EquityId();
           stock.read(iprot);
           return stock;
         case FUND:
@@ -317,7 +317,7 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
   protected void tupleSchemeWriteValue(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
     switch (setField_) {
       case STOCK:
-        StockId stock = (StockId)value_;
+        EquityId stock = (EquityId)value_;
         stock.write(oprot);
         return;
       case FUND:
@@ -375,15 +375,15 @@ public class SecurityId extends org.apache.thrift.TUnion<SecurityId, SecurityId.
   }
 
 
-  public StockId getStock() {
+  public EquityId getStock() {
     if (getSetField() == _Fields.STOCK) {
-      return (StockId)getFieldValue();
+      return (EquityId)getFieldValue();
     } else {
       throw new java.lang.RuntimeException("Cannot get field 'stock' because union is currently set to " + getFieldDesc(getSetField()).name);
     }
   }
 
-  public void setStock(StockId value) {
+  public void setStock(EquityId value) {
     if (value == null) throw new java.lang.NullPointerException();
     setField_ = _Fields.STOCK;
     value_ = value;

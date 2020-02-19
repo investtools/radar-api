@@ -7,13 +7,13 @@
 package br.com.investtools.radar.api;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class StockId implements org.apache.thrift.TBase<StockId, StockId._Fields>, java.io.Serializable, Cloneable, Comparable<StockId> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("StockId");
+public class EquityId implements org.apache.thrift.TBase<EquityId, EquityId._Fields>, java.io.Serializable, Cloneable, Comparable<EquityId> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("EquityId");
 
   private static final org.apache.thrift.protocol.TField SYMBOL_FIELD_DESC = new org.apache.thrift.protocol.TField("symbol", org.apache.thrift.protocol.TType.STRING, (short)1);
 
-  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new StockIdStandardSchemeFactory();
-  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new StockIdTupleSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new EquityIdStandardSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new EquityIdTupleSchemeFactory();
 
   public @org.apache.thrift.annotation.Nullable java.lang.String symbol; // required
 
@@ -84,13 +84,13 @@ public class StockId implements org.apache.thrift.TBase<StockId, StockId._Fields
     tmpMap.put(_Fields.SYMBOL, new org.apache.thrift.meta_data.FieldMetaData("symbol", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(StockId.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(EquityId.class, metaDataMap);
   }
 
-  public StockId() {
+  public EquityId() {
   }
 
-  public StockId(
+  public EquityId(
     java.lang.String symbol)
   {
     this();
@@ -100,14 +100,14 @@ public class StockId implements org.apache.thrift.TBase<StockId, StockId._Fields
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public StockId(StockId other) {
+  public EquityId(EquityId other) {
     if (other.isSetSymbol()) {
       this.symbol = other.symbol;
     }
   }
 
-  public StockId deepCopy() {
-    return new StockId(this);
+  public EquityId deepCopy() {
+    return new EquityId(this);
   }
 
   @Override
@@ -120,7 +120,7 @@ public class StockId implements org.apache.thrift.TBase<StockId, StockId._Fields
     return this.symbol;
   }
 
-  public StockId setSymbol(@org.apache.thrift.annotation.Nullable java.lang.String symbol) {
+  public EquityId setSymbol(@org.apache.thrift.annotation.Nullable java.lang.String symbol) {
     this.symbol = symbol;
     return this;
   }
@@ -180,12 +180,12 @@ public class StockId implements org.apache.thrift.TBase<StockId, StockId._Fields
   public boolean equals(java.lang.Object that) {
     if (that == null)
       return false;
-    if (that instanceof StockId)
-      return this.equals((StockId)that);
+    if (that instanceof EquityId)
+      return this.equals((EquityId)that);
     return false;
   }
 
-  public boolean equals(StockId that) {
+  public boolean equals(EquityId that) {
     if (that == null)
       return false;
     if (this == that)
@@ -215,7 +215,7 @@ public class StockId implements org.apache.thrift.TBase<StockId, StockId._Fields
   }
 
   @Override
-  public int compareTo(StockId other) {
+  public int compareTo(EquityId other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -250,7 +250,7 @@ public class StockId implements org.apache.thrift.TBase<StockId, StockId._Fields
 
   @Override
   public java.lang.String toString() {
-    java.lang.StringBuilder sb = new java.lang.StringBuilder("StockId(");
+    java.lang.StringBuilder sb = new java.lang.StringBuilder("EquityId(");
     boolean first = true;
 
     sb.append("symbol:");
@@ -285,15 +285,15 @@ public class StockId implements org.apache.thrift.TBase<StockId, StockId._Fields
     }
   }
 
-  private static class StockIdStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public StockIdStandardScheme getScheme() {
-      return new StockIdStandardScheme();
+  private static class EquityIdStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public EquityIdStandardScheme getScheme() {
+      return new EquityIdStandardScheme();
     }
   }
 
-  private static class StockIdStandardScheme extends org.apache.thrift.scheme.StandardScheme<StockId> {
+  private static class EquityIdStandardScheme extends org.apache.thrift.scheme.StandardScheme<EquityId> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, StockId struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, EquityId struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -322,7 +322,7 @@ public class StockId implements org.apache.thrift.TBase<StockId, StockId._Fields
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, StockId struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, EquityId struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
@@ -337,16 +337,16 @@ public class StockId implements org.apache.thrift.TBase<StockId, StockId._Fields
 
   }
 
-  private static class StockIdTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public StockIdTupleScheme getScheme() {
-      return new StockIdTupleScheme();
+  private static class EquityIdTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public EquityIdTupleScheme getScheme() {
+      return new EquityIdTupleScheme();
     }
   }
 
-  private static class StockIdTupleScheme extends org.apache.thrift.scheme.TupleScheme<StockId> {
+  private static class EquityIdTupleScheme extends org.apache.thrift.scheme.TupleScheme<EquityId> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, StockId struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, EquityId struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet optionals = new java.util.BitSet();
       if (struct.isSetSymbol()) {
@@ -359,7 +359,7 @@ public class StockId implements org.apache.thrift.TBase<StockId, StockId._Fields
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, StockId struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, EquityId struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet incoming = iprot.readBitSet(1);
       if (incoming.get(0)) {

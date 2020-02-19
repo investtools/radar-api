@@ -19,7 +19,7 @@ public class Transfer implements org.apache.thrift.TBase<Transfer, Transfer._Fie
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new TransferTupleSchemeFactory();
 
   public long date; // required
-  public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.StockId stock; // required
+  public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.EquityId stock; // required
   public int shares; // required
   /**
    * 
@@ -110,7 +110,7 @@ public class Transfer implements org.apache.thrift.TBase<Transfer, Transfer._Fie
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.STOCK, new org.apache.thrift.meta_data.FieldMetaData("stock", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.StockId.class)));
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.EquityId.class)));
     tmpMap.put(_Fields.SHARES, new org.apache.thrift.meta_data.FieldMetaData("shares", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -124,7 +124,7 @@ public class Transfer implements org.apache.thrift.TBase<Transfer, Transfer._Fie
 
   public Transfer(
     long date,
-    br.com.investtools.radar.api.StockId stock,
+    br.com.investtools.radar.api.EquityId stock,
     int shares,
     TransferType type)
   {
@@ -144,7 +144,7 @@ public class Transfer implements org.apache.thrift.TBase<Transfer, Transfer._Fie
     __isset_bitfield = other.__isset_bitfield;
     this.date = other.date;
     if (other.isSetStock()) {
-      this.stock = new br.com.investtools.radar.api.StockId(other.stock);
+      this.stock = new br.com.investtools.radar.api.EquityId(other.stock);
     }
     this.shares = other.shares;
     if (other.isSetType()) {
@@ -190,11 +190,11 @@ public class Transfer implements org.apache.thrift.TBase<Transfer, Transfer._Fie
   }
 
   @org.apache.thrift.annotation.Nullable
-  public br.com.investtools.radar.api.StockId getStock() {
+  public br.com.investtools.radar.api.EquityId getStock() {
     return this.stock;
   }
 
-  public Transfer setStock(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.StockId stock) {
+  public Transfer setStock(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.EquityId stock) {
     this.stock = stock;
     return this;
   }
@@ -284,7 +284,7 @@ public class Transfer implements org.apache.thrift.TBase<Transfer, Transfer._Fie
       if (value == null) {
         unsetStock();
       } else {
-        setStock((br.com.investtools.radar.api.StockId)value);
+        setStock((br.com.investtools.radar.api.EquityId)value);
       }
       break;
 
@@ -568,7 +568,7 @@ public class Transfer implements org.apache.thrift.TBase<Transfer, Transfer._Fie
             break;
           case 2: // STOCK
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.stock = new br.com.investtools.radar.api.StockId();
+              struct.stock = new br.com.investtools.radar.api.EquityId();
               struct.stock.read(iprot);
               struct.setStockIsSet(true);
             } else { 
@@ -676,7 +676,7 @@ public class Transfer implements org.apache.thrift.TBase<Transfer, Transfer._Fie
         struct.setDateIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.stock = new br.com.investtools.radar.api.StockId();
+        struct.stock = new br.com.investtools.radar.api.EquityId();
         struct.stock.read(iprot);
         struct.setStockIsSet(true);
       }

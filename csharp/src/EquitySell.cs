@@ -19,13 +19,12 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class OptionPositionSnapshot : TBase
+public partial class EquitySell : TBase
 {
   private long _date;
-  private StockId _stock;
+  private EquityId _equity;
   private int _shares;
   private double _price;
-  private long _maturity;
 
   public long Date
   {
@@ -40,16 +39,16 @@ public partial class OptionPositionSnapshot : TBase
     }
   }
 
-  public StockId Stock
+  public EquityId Equity
   {
     get
     {
-      return _stock;
+      return _equity;
     }
     set
     {
-      __isset.stock = true;
-      this._stock = value;
+      __isset.equity = true;
+      this._equity = value;
     }
   }
 
@@ -79,19 +78,6 @@ public partial class OptionPositionSnapshot : TBase
     }
   }
 
-  public long Maturity
-  {
-    get
-    {
-      return _maturity;
-    }
-    set
-    {
-      __isset.maturity = true;
-      this._maturity = value;
-    }
-  }
-
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -99,13 +85,12 @@ public partial class OptionPositionSnapshot : TBase
   #endif
   public struct Isset {
     public bool date;
-    public bool stock;
+    public bool equity;
     public bool shares;
     public bool price;
-    public bool maturity;
   }
 
-  public OptionPositionSnapshot() {
+  public EquitySell() {
   }
 
   public void Read (TProtocol iprot)
@@ -132,8 +117,8 @@ public partial class OptionPositionSnapshot : TBase
             break;
           case 2:
             if (field.Type == TType.Struct) {
-              Stock = new StockId();
-              Stock.Read(iprot);
+              Equity = new EquityId();
+              Equity.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -148,13 +133,6 @@ public partial class OptionPositionSnapshot : TBase
           case 4:
             if (field.Type == TType.Double) {
               Price = iprot.ReadDouble();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 5:
-            if (field.Type == TType.I64) {
-              Maturity = iprot.ReadI64();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -177,7 +155,7 @@ public partial class OptionPositionSnapshot : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("OptionPositionSnapshot");
+      TStruct struc = new TStruct("EquitySell");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
       if (__isset.date) {
@@ -188,12 +166,12 @@ public partial class OptionPositionSnapshot : TBase
         oprot.WriteI64(Date);
         oprot.WriteFieldEnd();
       }
-      if (Stock != null && __isset.stock) {
-        field.Name = "stock";
+      if (Equity != null && __isset.equity) {
+        field.Name = "equity";
         field.Type = TType.Struct;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        Stock.Write(oprot);
+        Equity.Write(oprot);
         oprot.WriteFieldEnd();
       }
       if (__isset.shares) {
@@ -212,14 +190,6 @@ public partial class OptionPositionSnapshot : TBase
         oprot.WriteDouble(Price);
         oprot.WriteFieldEnd();
       }
-      if (__isset.maturity) {
-        field.Name = "maturity";
-        field.Type = TType.I64;
-        field.ID = 5;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI64(Maturity);
-        oprot.WriteFieldEnd();
-      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -230,7 +200,7 @@ public partial class OptionPositionSnapshot : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("OptionPositionSnapshot(");
+    StringBuilder __sb = new StringBuilder("EquitySell(");
     bool __first = true;
     if (__isset.date) {
       if(!__first) { __sb.Append(", "); }
@@ -238,11 +208,11 @@ public partial class OptionPositionSnapshot : TBase
       __sb.Append("Date: ");
       __sb.Append(Date);
     }
-    if (Stock != null && __isset.stock) {
+    if (Equity != null && __isset.equity) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Stock: ");
-      __sb.Append(Stock== null ? "<null>" : Stock.ToString());
+      __sb.Append("Equity: ");
+      __sb.Append(Equity== null ? "<null>" : Equity.ToString());
     }
     if (__isset.shares) {
       if(!__first) { __sb.Append(", "); }
@@ -255,12 +225,6 @@ public partial class OptionPositionSnapshot : TBase
       __first = false;
       __sb.Append("Price: ");
       __sb.Append(Price);
-    }
-    if (__isset.maturity) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Maturity: ");
-      __sb.Append(Maturity);
     }
     __sb.Append(")");
     return __sb.ToString();

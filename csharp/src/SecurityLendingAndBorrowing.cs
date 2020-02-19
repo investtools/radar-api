@@ -22,7 +22,7 @@ using Thrift.Transport;
 public partial class SecurityLendingAndBorrowing : TBase
 {
   private long _date;
-  private StockId _stock;
+  private EquityId _stock;
   private int _shares;
   private double _rate;
   private long _due;
@@ -42,7 +42,7 @@ public partial class SecurityLendingAndBorrowing : TBase
     }
   }
 
-  public StockId Stock
+  public EquityId Stock
   {
     get
     {
@@ -166,7 +166,7 @@ public partial class SecurityLendingAndBorrowing : TBase
             break;
           case 2:
             if (field.Type == TType.Struct) {
-              Stock = new StockId();
+              Stock = new EquityId();
               Stock.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);

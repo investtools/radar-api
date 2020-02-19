@@ -22,7 +22,7 @@ using Thrift.Transport;
 public partial class OptionExercise : TBase
 {
   private long _date;
-  private StockId _option;
+  private EquityId _option;
   private int _shares;
   private double _strike;
 
@@ -39,7 +39,7 @@ public partial class OptionExercise : TBase
     }
   }
 
-  public StockId Option
+  public EquityId Option
   {
     get
     {
@@ -117,7 +117,7 @@ public partial class OptionExercise : TBase
             break;
           case 2:
             if (field.Type == TType.Struct) {
-              Option = new StockId();
+              Option = new EquityId();
               Option.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);

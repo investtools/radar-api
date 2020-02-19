@@ -8,7 +8,7 @@ require 'thrift'
 
 module Radar
   module Api
-    class StockId; end
+    class EquityId; end
 
     class IndexId; end
 
@@ -26,7 +26,7 @@ module Radar
 
     class ApplicationError < ::Thrift::Exception; end
 
-    class StockId
+    class EquityId
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SYMBOL = 1
 
@@ -165,7 +165,7 @@ module Radar
       CUSTOM_SECURITY = 5
 
       FIELDS = {
-        STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::StockId, :optional => true},
+        STOCK => {:type => ::Thrift::Types::STRUCT, :name => 'stock', :class => ::Radar::Api::EquityId, :optional => true},
         FUND => {:type => ::Thrift::Types::STRUCT, :name => 'fund', :class => ::Radar::Api::FundId, :optional => true},
         CORPORATE_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'corporate_bond', :class => ::Radar::Api::CorporateBondId, :optional => true},
         GOVERNMENT_BOND => {:type => ::Thrift::Types::STRUCT, :name => 'government_bond', :class => ::Radar::Api::GovernmentBondId, :optional => true},

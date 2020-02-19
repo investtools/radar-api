@@ -19,7 +19,7 @@ public class OptionExercise implements org.apache.thrift.TBase<OptionExercise, O
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new OptionExerciseTupleSchemeFactory();
 
   public long date; // required
-  public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.StockId option; // required
+  public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.EquityId option; // required
   public int shares; // required
   public double strike; // required
 
@@ -103,7 +103,7 @@ public class OptionExercise implements org.apache.thrift.TBase<OptionExercise, O
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.OPTION, new org.apache.thrift.meta_data.FieldMetaData("option", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.StockId.class)));
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.EquityId.class)));
     tmpMap.put(_Fields.SHARES, new org.apache.thrift.meta_data.FieldMetaData("shares", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     tmpMap.put(_Fields.STRIKE, new org.apache.thrift.meta_data.FieldMetaData("strike", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -117,7 +117,7 @@ public class OptionExercise implements org.apache.thrift.TBase<OptionExercise, O
 
   public OptionExercise(
     long date,
-    br.com.investtools.radar.api.StockId option,
+    br.com.investtools.radar.api.EquityId option,
     int shares,
     double strike)
   {
@@ -138,7 +138,7 @@ public class OptionExercise implements org.apache.thrift.TBase<OptionExercise, O
     __isset_bitfield = other.__isset_bitfield;
     this.date = other.date;
     if (other.isSetOption()) {
-      this.option = new br.com.investtools.radar.api.StockId(other.option);
+      this.option = new br.com.investtools.radar.api.EquityId(other.option);
     }
     this.shares = other.shares;
     this.strike = other.strike;
@@ -183,11 +183,11 @@ public class OptionExercise implements org.apache.thrift.TBase<OptionExercise, O
   }
 
   @org.apache.thrift.annotation.Nullable
-  public br.com.investtools.radar.api.StockId getOption() {
+  public br.com.investtools.radar.api.EquityId getOption() {
     return this.option;
   }
 
-  public OptionExercise setOption(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.StockId option) {
+  public OptionExercise setOption(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.EquityId option) {
     this.option = option;
     return this;
   }
@@ -267,7 +267,7 @@ public class OptionExercise implements org.apache.thrift.TBase<OptionExercise, O
       if (value == null) {
         unsetOption();
       } else {
-        setOption((br.com.investtools.radar.api.StockId)value);
+        setOption((br.com.investtools.radar.api.EquityId)value);
       }
       break;
 
@@ -545,7 +545,7 @@ public class OptionExercise implements org.apache.thrift.TBase<OptionExercise, O
             break;
           case 2: // OPTION
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.option = new br.com.investtools.radar.api.StockId();
+              struct.option = new br.com.investtools.radar.api.EquityId();
               struct.option.read(iprot);
               struct.setOptionIsSet(true);
             } else { 
@@ -651,7 +651,7 @@ public class OptionExercise implements org.apache.thrift.TBase<OptionExercise, O
         struct.setDateIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.option = new br.com.investtools.radar.api.StockId();
+        struct.option = new br.com.investtools.radar.api.EquityId();
         struct.option.read(iprot);
         struct.setOptionIsSet(true);
       }

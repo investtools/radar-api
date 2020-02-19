@@ -21,42 +21,51 @@ using Thrift.Transport;
 #endif
 public partial class Transaction : TBase
 {
-  private StockBuy _stock_buy;
-  private StockSell _stock_sell;
+  private EquityBuy _equity_buy;
+  private EquitySell _equity_sell;
+  private EquityPositionSnapshot _equity_position_snapshot;
   private SecurityLendingAndBorrowing _slb;
   private SecurityLendingAndBorrowingReturning _slbr;
   private CommissionExpense _stock_commission_expense;
-  private StockOption _stock_option;
-  private Subscription _subscription;
   private Transfer _transfer;
-  private StockPositionSnapshot _stock_position_snapshot;
-  private OptionPositionSnapshot _option_position_snapshot;
-  private OptionExercisePositionSnapshot _option_exercise_position_snapshot;
   private OptionExercise _option_exercise;
 
-  public StockBuy Stock_buy
+  public EquityBuy Equity_buy
   {
     get
     {
-      return _stock_buy;
+      return _equity_buy;
     }
     set
     {
-      __isset.stock_buy = true;
-      this._stock_buy = value;
+      __isset.equity_buy = true;
+      this._equity_buy = value;
     }
   }
 
-  public StockSell Stock_sell
+  public EquitySell Equity_sell
   {
     get
     {
-      return _stock_sell;
+      return _equity_sell;
     }
     set
     {
-      __isset.stock_sell = true;
-      this._stock_sell = value;
+      __isset.equity_sell = true;
+      this._equity_sell = value;
+    }
+  }
+
+  public EquityPositionSnapshot Equity_position_snapshot
+  {
+    get
+    {
+      return _equity_position_snapshot;
+    }
+    set
+    {
+      __isset.equity_position_snapshot = true;
+      this._equity_position_snapshot = value;
     }
   }
 
@@ -99,32 +108,6 @@ public partial class Transaction : TBase
     }
   }
 
-  public StockOption Stock_option
-  {
-    get
-    {
-      return _stock_option;
-    }
-    set
-    {
-      __isset.stock_option = true;
-      this._stock_option = value;
-    }
-  }
-
-  public Subscription Subscription
-  {
-    get
-    {
-      return _subscription;
-    }
-    set
-    {
-      __isset.subscription = true;
-      this._subscription = value;
-    }
-  }
-
   public Transfer Transfer
   {
     get
@@ -135,45 +118,6 @@ public partial class Transaction : TBase
     {
       __isset.transfer = true;
       this._transfer = value;
-    }
-  }
-
-  public StockPositionSnapshot Stock_position_snapshot
-  {
-    get
-    {
-      return _stock_position_snapshot;
-    }
-    set
-    {
-      __isset.stock_position_snapshot = true;
-      this._stock_position_snapshot = value;
-    }
-  }
-
-  public OptionPositionSnapshot Option_position_snapshot
-  {
-    get
-    {
-      return _option_position_snapshot;
-    }
-    set
-    {
-      __isset.option_position_snapshot = true;
-      this._option_position_snapshot = value;
-    }
-  }
-
-  public OptionExercisePositionSnapshot Option_exercise_position_snapshot
-  {
-    get
-    {
-      return _option_exercise_position_snapshot;
-    }
-    set
-    {
-      __isset.option_exercise_position_snapshot = true;
-      this._option_exercise_position_snapshot = value;
     }
   }
 
@@ -196,17 +140,13 @@ public partial class Transaction : TBase
   [Serializable]
   #endif
   public struct Isset {
-    public bool stock_buy;
-    public bool stock_sell;
+    public bool equity_buy;
+    public bool equity_sell;
+    public bool equity_position_snapshot;
     public bool slb;
     public bool slbr;
     public bool stock_commission_expense;
-    public bool stock_option;
-    public bool subscription;
     public bool transfer;
-    public bool stock_position_snapshot;
-    public bool option_position_snapshot;
-    public bool option_exercise_position_snapshot;
     public bool option_exercise;
   }
 
@@ -230,21 +170,29 @@ public partial class Transaction : TBase
         {
           case 1:
             if (field.Type == TType.Struct) {
-              Stock_buy = new StockBuy();
-              Stock_buy.Read(iprot);
+              Equity_buy = new EquityBuy();
+              Equity_buy.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 2:
             if (field.Type == TType.Struct) {
-              Stock_sell = new StockSell();
-              Stock_sell.Read(iprot);
+              Equity_sell = new EquitySell();
+              Equity_sell.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
           case 3:
+            if (field.Type == TType.Struct) {
+              Equity_position_snapshot = new EquityPositionSnapshot();
+              Equity_position_snapshot.Read(iprot);
+            } else { 
+              TProtocolUtil.Skip(iprot, field.Type);
+            }
+            break;
+          case 4:
             if (field.Type == TType.Struct) {
               Slb = new SecurityLendingAndBorrowing();
               Slb.Read(iprot);
@@ -252,7 +200,7 @@ public partial class Transaction : TBase
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 4:
+          case 5:
             if (field.Type == TType.Struct) {
               Slbr = new SecurityLendingAndBorrowingReturning();
               Slbr.Read(iprot);
@@ -260,7 +208,7 @@ public partial class Transaction : TBase
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 5:
+          case 6:
             if (field.Type == TType.Struct) {
               Stock_commission_expense = new CommissionExpense();
               Stock_commission_expense.Read(iprot);
@@ -268,23 +216,7 @@ public partial class Transaction : TBase
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 6:
-            if (field.Type == TType.Struct) {
-              Stock_option = new StockOption();
-              Stock_option.Read(iprot);
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
           case 7:
-            if (field.Type == TType.Struct) {
-              Subscription = new Subscription();
-              Subscription.Read(iprot);
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 8:
             if (field.Type == TType.Struct) {
               Transfer = new Transfer();
               Transfer.Read(iprot);
@@ -292,31 +224,7 @@ public partial class Transaction : TBase
               TProtocolUtil.Skip(iprot, field.Type);
             }
             break;
-          case 9:
-            if (field.Type == TType.Struct) {
-              Stock_position_snapshot = new StockPositionSnapshot();
-              Stock_position_snapshot.Read(iprot);
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 10:
-            if (field.Type == TType.Struct) {
-              Option_position_snapshot = new OptionPositionSnapshot();
-              Option_position_snapshot.Read(iprot);
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 11:
-            if (field.Type == TType.Struct) {
-              Option_exercise_position_snapshot = new OptionExercisePositionSnapshot();
-              Option_exercise_position_snapshot.Read(iprot);
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 12:
+          case 8:
             if (field.Type == TType.Struct) {
               Option_exercise = new OptionExercise();
               Option_exercise.Read(iprot);
@@ -345,26 +253,34 @@ public partial class Transaction : TBase
       TStruct struc = new TStruct("Transaction");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
-      if (Stock_buy != null && __isset.stock_buy) {
-        field.Name = "stock_buy";
+      if (Equity_buy != null && __isset.equity_buy) {
+        field.Name = "equity_buy";
         field.Type = TType.Struct;
         field.ID = 1;
         oprot.WriteFieldBegin(field);
-        Stock_buy.Write(oprot);
+        Equity_buy.Write(oprot);
         oprot.WriteFieldEnd();
       }
-      if (Stock_sell != null && __isset.stock_sell) {
-        field.Name = "stock_sell";
+      if (Equity_sell != null && __isset.equity_sell) {
+        field.Name = "equity_sell";
         field.Type = TType.Struct;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        Stock_sell.Write(oprot);
+        Equity_sell.Write(oprot);
+        oprot.WriteFieldEnd();
+      }
+      if (Equity_position_snapshot != null && __isset.equity_position_snapshot) {
+        field.Name = "equity_position_snapshot";
+        field.Type = TType.Struct;
+        field.ID = 3;
+        oprot.WriteFieldBegin(field);
+        Equity_position_snapshot.Write(oprot);
         oprot.WriteFieldEnd();
       }
       if (Slb != null && __isset.slb) {
         field.Name = "slb";
         field.Type = TType.Struct;
-        field.ID = 3;
+        field.ID = 4;
         oprot.WriteFieldBegin(field);
         Slb.Write(oprot);
         oprot.WriteFieldEnd();
@@ -372,7 +288,7 @@ public partial class Transaction : TBase
       if (Slbr != null && __isset.slbr) {
         field.Name = "slbr";
         field.Type = TType.Struct;
-        field.ID = 4;
+        field.ID = 5;
         oprot.WriteFieldBegin(field);
         Slbr.Write(oprot);
         oprot.WriteFieldEnd();
@@ -380,63 +296,23 @@ public partial class Transaction : TBase
       if (Stock_commission_expense != null && __isset.stock_commission_expense) {
         field.Name = "stock_commission_expense";
         field.Type = TType.Struct;
-        field.ID = 5;
-        oprot.WriteFieldBegin(field);
-        Stock_commission_expense.Write(oprot);
-        oprot.WriteFieldEnd();
-      }
-      if (Stock_option != null && __isset.stock_option) {
-        field.Name = "stock_option";
-        field.Type = TType.Struct;
         field.ID = 6;
         oprot.WriteFieldBegin(field);
-        Stock_option.Write(oprot);
-        oprot.WriteFieldEnd();
-      }
-      if (Subscription != null && __isset.subscription) {
-        field.Name = "subscription";
-        field.Type = TType.Struct;
-        field.ID = 7;
-        oprot.WriteFieldBegin(field);
-        Subscription.Write(oprot);
+        Stock_commission_expense.Write(oprot);
         oprot.WriteFieldEnd();
       }
       if (Transfer != null && __isset.transfer) {
         field.Name = "transfer";
         field.Type = TType.Struct;
-        field.ID = 8;
+        field.ID = 7;
         oprot.WriteFieldBegin(field);
         Transfer.Write(oprot);
-        oprot.WriteFieldEnd();
-      }
-      if (Stock_position_snapshot != null && __isset.stock_position_snapshot) {
-        field.Name = "stock_position_snapshot";
-        field.Type = TType.Struct;
-        field.ID = 9;
-        oprot.WriteFieldBegin(field);
-        Stock_position_snapshot.Write(oprot);
-        oprot.WriteFieldEnd();
-      }
-      if (Option_position_snapshot != null && __isset.option_position_snapshot) {
-        field.Name = "option_position_snapshot";
-        field.Type = TType.Struct;
-        field.ID = 10;
-        oprot.WriteFieldBegin(field);
-        Option_position_snapshot.Write(oprot);
-        oprot.WriteFieldEnd();
-      }
-      if (Option_exercise_position_snapshot != null && __isset.option_exercise_position_snapshot) {
-        field.Name = "option_exercise_position_snapshot";
-        field.Type = TType.Struct;
-        field.ID = 11;
-        oprot.WriteFieldBegin(field);
-        Option_exercise_position_snapshot.Write(oprot);
         oprot.WriteFieldEnd();
       }
       if (Option_exercise != null && __isset.option_exercise) {
         field.Name = "option_exercise";
         field.Type = TType.Struct;
-        field.ID = 12;
+        field.ID = 8;
         oprot.WriteFieldBegin(field);
         Option_exercise.Write(oprot);
         oprot.WriteFieldEnd();
@@ -453,17 +329,23 @@ public partial class Transaction : TBase
   public override string ToString() {
     StringBuilder __sb = new StringBuilder("Transaction(");
     bool __first = true;
-    if (Stock_buy != null && __isset.stock_buy) {
+    if (Equity_buy != null && __isset.equity_buy) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Stock_buy: ");
-      __sb.Append(Stock_buy== null ? "<null>" : Stock_buy.ToString());
+      __sb.Append("Equity_buy: ");
+      __sb.Append(Equity_buy== null ? "<null>" : Equity_buy.ToString());
     }
-    if (Stock_sell != null && __isset.stock_sell) {
+    if (Equity_sell != null && __isset.equity_sell) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Stock_sell: ");
-      __sb.Append(Stock_sell== null ? "<null>" : Stock_sell.ToString());
+      __sb.Append("Equity_sell: ");
+      __sb.Append(Equity_sell== null ? "<null>" : Equity_sell.ToString());
+    }
+    if (Equity_position_snapshot != null && __isset.equity_position_snapshot) {
+      if(!__first) { __sb.Append(", "); }
+      __first = false;
+      __sb.Append("Equity_position_snapshot: ");
+      __sb.Append(Equity_position_snapshot== null ? "<null>" : Equity_position_snapshot.ToString());
     }
     if (Slb != null && __isset.slb) {
       if(!__first) { __sb.Append(", "); }
@@ -483,41 +365,11 @@ public partial class Transaction : TBase
       __sb.Append("Stock_commission_expense: ");
       __sb.Append(Stock_commission_expense== null ? "<null>" : Stock_commission_expense.ToString());
     }
-    if (Stock_option != null && __isset.stock_option) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Stock_option: ");
-      __sb.Append(Stock_option== null ? "<null>" : Stock_option.ToString());
-    }
-    if (Subscription != null && __isset.subscription) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Subscription: ");
-      __sb.Append(Subscription== null ? "<null>" : Subscription.ToString());
-    }
     if (Transfer != null && __isset.transfer) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
       __sb.Append("Transfer: ");
       __sb.Append(Transfer== null ? "<null>" : Transfer.ToString());
-    }
-    if (Stock_position_snapshot != null && __isset.stock_position_snapshot) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Stock_position_snapshot: ");
-      __sb.Append(Stock_position_snapshot== null ? "<null>" : Stock_position_snapshot.ToString());
-    }
-    if (Option_position_snapshot != null && __isset.option_position_snapshot) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Option_position_snapshot: ");
-      __sb.Append(Option_position_snapshot== null ? "<null>" : Option_position_snapshot.ToString());
-    }
-    if (Option_exercise_position_snapshot != null && __isset.option_exercise_position_snapshot) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Option_exercise_position_snapshot: ");
-      __sb.Append(Option_exercise_position_snapshot== null ? "<null>" : Option_exercise_position_snapshot.ToString());
     }
     if (Option_exercise != null && __isset.option_exercise) {
       if(!__first) { __sb.Append(", "); }

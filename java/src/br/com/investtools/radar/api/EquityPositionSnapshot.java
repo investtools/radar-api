@@ -7,25 +7,28 @@
 package br.com.investtools.radar.api;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class Subscription implements org.apache.thrift.TBase<Subscription, Subscription._Fields>, java.io.Serializable, Cloneable, Comparable<Subscription> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("Subscription");
+public class EquityPositionSnapshot implements org.apache.thrift.TBase<EquityPositionSnapshot, EquityPositionSnapshot._Fields>, java.io.Serializable, Cloneable, Comparable<EquityPositionSnapshot> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("EquityPositionSnapshot");
 
   private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)1);
-  private static final org.apache.thrift.protocol.TField STOCK_FIELD_DESC = new org.apache.thrift.protocol.TField("stock", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField EQUITY_FIELD_DESC = new org.apache.thrift.protocol.TField("equity", org.apache.thrift.protocol.TType.STRUCT, (short)2);
   private static final org.apache.thrift.protocol.TField SHARES_FIELD_DESC = new org.apache.thrift.protocol.TField("shares", org.apache.thrift.protocol.TType.I32, (short)3);
+  private static final org.apache.thrift.protocol.TField PRICE_FIELD_DESC = new org.apache.thrift.protocol.TField("price", org.apache.thrift.protocol.TType.DOUBLE, (short)4);
 
-  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new SubscriptionStandardSchemeFactory();
-  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new SubscriptionTupleSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new EquityPositionSnapshotStandardSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new EquityPositionSnapshotTupleSchemeFactory();
 
   public long date; // required
-  public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.StockId stock; // required
+  public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.EquityId equity; // required
   public int shares; // required
+  public double price; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     DATE((short)1, "date"),
-    STOCK((short)2, "stock"),
-    SHARES((short)3, "shares");
+    EQUITY((short)2, "equity"),
+    SHARES((short)3, "shares"),
+    PRICE((short)4, "price");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -43,10 +46,12 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
       switch(fieldId) {
         case 1: // DATE
           return DATE;
-        case 2: // STOCK
-          return STOCK;
+        case 2: // EQUITY
+          return EQUITY;
         case 3: // SHARES
           return SHARES;
+        case 4: // PRICE
+          return PRICE;
         default:
           return null;
       }
@@ -90,66 +95,75 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
   // isset id assignments
   private static final int __DATE_ISSET_ID = 0;
   private static final int __SHARES_ISSET_ID = 1;
+  private static final int __PRICE_ISSET_ID = 2;
   private byte __isset_bitfield = 0;
   public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
-    tmpMap.put(_Fields.STOCK, new org.apache.thrift.meta_data.FieldMetaData("stock", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.StockId.class)));
+    tmpMap.put(_Fields.EQUITY, new org.apache.thrift.meta_data.FieldMetaData("equity", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.EquityId.class)));
     tmpMap.put(_Fields.SHARES, new org.apache.thrift.meta_data.FieldMetaData("shares", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+    tmpMap.put(_Fields.PRICE, new org.apache.thrift.meta_data.FieldMetaData("price", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Subscription.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(EquityPositionSnapshot.class, metaDataMap);
   }
 
-  public Subscription() {
+  public EquityPositionSnapshot() {
   }
 
-  public Subscription(
+  public EquityPositionSnapshot(
     long date,
-    br.com.investtools.radar.api.StockId stock,
-    int shares)
+    br.com.investtools.radar.api.EquityId equity,
+    int shares,
+    double price)
   {
     this();
     this.date = date;
     setDateIsSet(true);
-    this.stock = stock;
+    this.equity = equity;
     this.shares = shares;
     setSharesIsSet(true);
+    this.price = price;
+    setPriceIsSet(true);
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public Subscription(Subscription other) {
+  public EquityPositionSnapshot(EquityPositionSnapshot other) {
     __isset_bitfield = other.__isset_bitfield;
     this.date = other.date;
-    if (other.isSetStock()) {
-      this.stock = new br.com.investtools.radar.api.StockId(other.stock);
+    if (other.isSetEquity()) {
+      this.equity = new br.com.investtools.radar.api.EquityId(other.equity);
     }
     this.shares = other.shares;
+    this.price = other.price;
   }
 
-  public Subscription deepCopy() {
-    return new Subscription(this);
+  public EquityPositionSnapshot deepCopy() {
+    return new EquityPositionSnapshot(this);
   }
 
   @Override
   public void clear() {
     setDateIsSet(false);
     this.date = 0;
-    this.stock = null;
+    this.equity = null;
     setSharesIsSet(false);
     this.shares = 0;
+    setPriceIsSet(false);
+    this.price = 0.0;
   }
 
   public long getDate() {
     return this.date;
   }
 
-  public Subscription setDate(long date) {
+  public EquityPositionSnapshot setDate(long date) {
     this.date = date;
     setDateIsSet(true);
     return this;
@@ -169,27 +183,27 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
   }
 
   @org.apache.thrift.annotation.Nullable
-  public br.com.investtools.radar.api.StockId getStock() {
-    return this.stock;
+  public br.com.investtools.radar.api.EquityId getEquity() {
+    return this.equity;
   }
 
-  public Subscription setStock(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.StockId stock) {
-    this.stock = stock;
+  public EquityPositionSnapshot setEquity(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.EquityId equity) {
+    this.equity = equity;
     return this;
   }
 
-  public void unsetStock() {
-    this.stock = null;
+  public void unsetEquity() {
+    this.equity = null;
   }
 
-  /** Returns true if field stock is set (has been assigned a value) and false otherwise */
-  public boolean isSetStock() {
-    return this.stock != null;
+  /** Returns true if field equity is set (has been assigned a value) and false otherwise */
+  public boolean isSetEquity() {
+    return this.equity != null;
   }
 
-  public void setStockIsSet(boolean value) {
+  public void setEquityIsSet(boolean value) {
     if (!value) {
-      this.stock = null;
+      this.equity = null;
     }
   }
 
@@ -197,7 +211,7 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
     return this.shares;
   }
 
-  public Subscription setShares(int shares) {
+  public EquityPositionSnapshot setShares(int shares) {
     this.shares = shares;
     setSharesIsSet(true);
     return this;
@@ -216,6 +230,29 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
     __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __SHARES_ISSET_ID, value);
   }
 
+  public double getPrice() {
+    return this.price;
+  }
+
+  public EquityPositionSnapshot setPrice(double price) {
+    this.price = price;
+    setPriceIsSet(true);
+    return this;
+  }
+
+  public void unsetPrice() {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __PRICE_ISSET_ID);
+  }
+
+  /** Returns true if field price is set (has been assigned a value) and false otherwise */
+  public boolean isSetPrice() {
+    return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __PRICE_ISSET_ID);
+  }
+
+  public void setPriceIsSet(boolean value) {
+    __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __PRICE_ISSET_ID, value);
+  }
+
   public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
     switch (field) {
     case DATE:
@@ -226,11 +263,11 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
       }
       break;
 
-    case STOCK:
+    case EQUITY:
       if (value == null) {
-        unsetStock();
+        unsetEquity();
       } else {
-        setStock((br.com.investtools.radar.api.StockId)value);
+        setEquity((br.com.investtools.radar.api.EquityId)value);
       }
       break;
 
@@ -239,6 +276,14 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
         unsetShares();
       } else {
         setShares((java.lang.Integer)value);
+      }
+      break;
+
+    case PRICE:
+      if (value == null) {
+        unsetPrice();
+      } else {
+        setPrice((java.lang.Double)value);
       }
       break;
 
@@ -251,11 +296,14 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
     case DATE:
       return getDate();
 
-    case STOCK:
-      return getStock();
+    case EQUITY:
+      return getEquity();
 
     case SHARES:
       return getShares();
+
+    case PRICE:
+      return getPrice();
 
     }
     throw new java.lang.IllegalStateException();
@@ -270,10 +318,12 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
     switch (field) {
     case DATE:
       return isSetDate();
-    case STOCK:
-      return isSetStock();
+    case EQUITY:
+      return isSetEquity();
     case SHARES:
       return isSetShares();
+    case PRICE:
+      return isSetPrice();
     }
     throw new java.lang.IllegalStateException();
   }
@@ -282,12 +332,12 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
   public boolean equals(java.lang.Object that) {
     if (that == null)
       return false;
-    if (that instanceof Subscription)
-      return this.equals((Subscription)that);
+    if (that instanceof EquityPositionSnapshot)
+      return this.equals((EquityPositionSnapshot)that);
     return false;
   }
 
-  public boolean equals(Subscription that) {
+  public boolean equals(EquityPositionSnapshot that) {
     if (that == null)
       return false;
     if (this == that)
@@ -302,12 +352,12 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
         return false;
     }
 
-    boolean this_present_stock = true && this.isSetStock();
-    boolean that_present_stock = true && that.isSetStock();
-    if (this_present_stock || that_present_stock) {
-      if (!(this_present_stock && that_present_stock))
+    boolean this_present_equity = true && this.isSetEquity();
+    boolean that_present_equity = true && that.isSetEquity();
+    if (this_present_equity || that_present_equity) {
+      if (!(this_present_equity && that_present_equity))
         return false;
-      if (!this.stock.equals(that.stock))
+      if (!this.equity.equals(that.equity))
         return false;
     }
 
@@ -320,6 +370,15 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
         return false;
     }
 
+    boolean this_present_price = true;
+    boolean that_present_price = true;
+    if (this_present_price || that_present_price) {
+      if (!(this_present_price && that_present_price))
+        return false;
+      if (this.price != that.price)
+        return false;
+    }
+
     return true;
   }
 
@@ -329,17 +388,19 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
 
     hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(date);
 
-    hashCode = hashCode * 8191 + ((isSetStock()) ? 131071 : 524287);
-    if (isSetStock())
-      hashCode = hashCode * 8191 + stock.hashCode();
+    hashCode = hashCode * 8191 + ((isSetEquity()) ? 131071 : 524287);
+    if (isSetEquity())
+      hashCode = hashCode * 8191 + equity.hashCode();
 
     hashCode = hashCode * 8191 + shares;
+
+    hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(price);
 
     return hashCode;
   }
 
   @Override
-  public int compareTo(Subscription other) {
+  public int compareTo(EquityPositionSnapshot other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -356,12 +417,12 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
         return lastComparison;
       }
     }
-    lastComparison = java.lang.Boolean.valueOf(isSetStock()).compareTo(other.isSetStock());
+    lastComparison = java.lang.Boolean.valueOf(isSetEquity()).compareTo(other.isSetEquity());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetStock()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.stock, other.stock);
+    if (isSetEquity()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.equity, other.equity);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -372,6 +433,16 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
     }
     if (isSetShares()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.shares, other.shares);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = java.lang.Boolean.valueOf(isSetPrice()).compareTo(other.isSetPrice());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetPrice()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.price, other.price);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -394,23 +465,27 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
 
   @Override
   public java.lang.String toString() {
-    java.lang.StringBuilder sb = new java.lang.StringBuilder("Subscription(");
+    java.lang.StringBuilder sb = new java.lang.StringBuilder("EquityPositionSnapshot(");
     boolean first = true;
 
     sb.append("date:");
     sb.append(this.date);
     first = false;
     if (!first) sb.append(", ");
-    sb.append("stock:");
-    if (this.stock == null) {
+    sb.append("equity:");
+    if (this.equity == null) {
       sb.append("null");
     } else {
-      sb.append(this.stock);
+      sb.append(this.equity);
     }
     first = false;
     if (!first) sb.append(", ");
     sb.append("shares:");
     sb.append(this.shares);
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("price:");
+    sb.append(this.price);
     first = false;
     sb.append(")");
     return sb.toString();
@@ -419,8 +494,8 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
     // check for sub-struct validity
-    if (stock != null) {
-      stock.validate();
+    if (equity != null) {
+      equity.validate();
     }
   }
 
@@ -442,15 +517,15 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
     }
   }
 
-  private static class SubscriptionStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public SubscriptionStandardScheme getScheme() {
-      return new SubscriptionStandardScheme();
+  private static class EquityPositionSnapshotStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public EquityPositionSnapshotStandardScheme getScheme() {
+      return new EquityPositionSnapshotStandardScheme();
     }
   }
 
-  private static class SubscriptionStandardScheme extends org.apache.thrift.scheme.StandardScheme<Subscription> {
+  private static class EquityPositionSnapshotStandardScheme extends org.apache.thrift.scheme.StandardScheme<EquityPositionSnapshot> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, Subscription struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, EquityPositionSnapshot struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -468,11 +543,11 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // STOCK
+          case 2: // EQUITY
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.stock = new br.com.investtools.radar.api.StockId();
-              struct.stock.read(iprot);
-              struct.setStockIsSet(true);
+              struct.equity = new br.com.investtools.radar.api.EquityId();
+              struct.equity.read(iprot);
+              struct.setEquityIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -481,6 +556,14 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
               struct.shares = iprot.readI32();
               struct.setSharesIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 4: // PRICE
+            if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
+              struct.price = iprot.readDouble();
+              struct.setPriceIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -496,20 +579,23 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, Subscription struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, EquityPositionSnapshot struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
       oprot.writeFieldBegin(DATE_FIELD_DESC);
       oprot.writeI64(struct.date);
       oprot.writeFieldEnd();
-      if (struct.stock != null) {
-        oprot.writeFieldBegin(STOCK_FIELD_DESC);
-        struct.stock.write(oprot);
+      if (struct.equity != null) {
+        oprot.writeFieldBegin(EQUITY_FIELD_DESC);
+        struct.equity.write(oprot);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldBegin(SHARES_FIELD_DESC);
       oprot.writeI32(struct.shares);
+      oprot.writeFieldEnd();
+      oprot.writeFieldBegin(PRICE_FIELD_DESC);
+      oprot.writeDouble(struct.price);
       oprot.writeFieldEnd();
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -517,55 +603,65 @@ public class Subscription implements org.apache.thrift.TBase<Subscription, Subsc
 
   }
 
-  private static class SubscriptionTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public SubscriptionTupleScheme getScheme() {
-      return new SubscriptionTupleScheme();
+  private static class EquityPositionSnapshotTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public EquityPositionSnapshotTupleScheme getScheme() {
+      return new EquityPositionSnapshotTupleScheme();
     }
   }
 
-  private static class SubscriptionTupleScheme extends org.apache.thrift.scheme.TupleScheme<Subscription> {
+  private static class EquityPositionSnapshotTupleScheme extends org.apache.thrift.scheme.TupleScheme<EquityPositionSnapshot> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, Subscription struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, EquityPositionSnapshot struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet optionals = new java.util.BitSet();
       if (struct.isSetDate()) {
         optionals.set(0);
       }
-      if (struct.isSetStock()) {
+      if (struct.isSetEquity()) {
         optionals.set(1);
       }
       if (struct.isSetShares()) {
         optionals.set(2);
       }
-      oprot.writeBitSet(optionals, 3);
+      if (struct.isSetPrice()) {
+        optionals.set(3);
+      }
+      oprot.writeBitSet(optionals, 4);
       if (struct.isSetDate()) {
         oprot.writeI64(struct.date);
       }
-      if (struct.isSetStock()) {
-        struct.stock.write(oprot);
+      if (struct.isSetEquity()) {
+        struct.equity.write(oprot);
       }
       if (struct.isSetShares()) {
         oprot.writeI32(struct.shares);
       }
+      if (struct.isSetPrice()) {
+        oprot.writeDouble(struct.price);
+      }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, Subscription struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, EquityPositionSnapshot struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(3);
+      java.util.BitSet incoming = iprot.readBitSet(4);
       if (incoming.get(0)) {
         struct.date = iprot.readI64();
         struct.setDateIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.stock = new br.com.investtools.radar.api.StockId();
-        struct.stock.read(iprot);
-        struct.setStockIsSet(true);
+        struct.equity = new br.com.investtools.radar.api.EquityId();
+        struct.equity.read(iprot);
+        struct.setEquityIsSet(true);
       }
       if (incoming.get(2)) {
         struct.shares = iprot.readI32();
         struct.setSharesIsSet(true);
+      }
+      if (incoming.get(3)) {
+        struct.price = iprot.readDouble();
+        struct.setPriceIsSet(true);
       }
     }
   }

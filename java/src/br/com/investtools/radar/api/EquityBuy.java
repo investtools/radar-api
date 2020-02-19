@@ -7,42 +7,28 @@
 package br.com.investtools.radar.api;
 
 @SuppressWarnings({"cast", "rawtypes", "serial", "unchecked", "unused"})
-public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<OptionExercisePositionSnapshot, OptionExercisePositionSnapshot._Fields>, java.io.Serializable, Cloneable, Comparable<OptionExercisePositionSnapshot> {
-  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("OptionExercisePositionSnapshot");
+public class EquityBuy implements org.apache.thrift.TBase<EquityBuy, EquityBuy._Fields>, java.io.Serializable, Cloneable, Comparable<EquityBuy> {
+  private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("EquityBuy");
 
   private static final org.apache.thrift.protocol.TField DATE_FIELD_DESC = new org.apache.thrift.protocol.TField("date", org.apache.thrift.protocol.TType.I64, (short)1);
-  private static final org.apache.thrift.protocol.TField STOCK_FIELD_DESC = new org.apache.thrift.protocol.TField("stock", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField EQUITY_FIELD_DESC = new org.apache.thrift.protocol.TField("equity", org.apache.thrift.protocol.TType.STRUCT, (short)2);
   private static final org.apache.thrift.protocol.TField SHARES_FIELD_DESC = new org.apache.thrift.protocol.TField("shares", org.apache.thrift.protocol.TType.I32, (short)3);
   private static final org.apache.thrift.protocol.TField PRICE_FIELD_DESC = new org.apache.thrift.protocol.TField("price", org.apache.thrift.protocol.TType.DOUBLE, (short)4);
-  private static final org.apache.thrift.protocol.TField MATURITY_FIELD_DESC = new org.apache.thrift.protocol.TField("maturity", org.apache.thrift.protocol.TType.I64, (short)5);
-  private static final org.apache.thrift.protocol.TField TYPE_FIELD_DESC = new org.apache.thrift.protocol.TField("type", org.apache.thrift.protocol.TType.I32, (short)7);
 
-  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new OptionExercisePositionSnapshotStandardSchemeFactory();
-  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new OptionExercisePositionSnapshotTupleSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new EquityBuyStandardSchemeFactory();
+  private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new EquityBuyTupleSchemeFactory();
 
   public long date; // required
-  public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.StockId stock; // required
+  public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.EquityId equity; // required
   public int shares; // required
   public double price; // required
-  public long maturity; // required
-  /**
-   * 
-   * @see OptionExerciseType
-   */
-  public @org.apache.thrift.annotation.Nullable OptionExerciseType type; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     DATE((short)1, "date"),
-    STOCK((short)2, "stock"),
+    EQUITY((short)2, "equity"),
     SHARES((short)3, "shares"),
-    PRICE((short)4, "price"),
-    MATURITY((short)5, "maturity"),
-    /**
-     * 
-     * @see OptionExerciseType
-     */
-    TYPE((short)7, "type");
+    PRICE((short)4, "price");
 
     private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -60,16 +46,12 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
       switch(fieldId) {
         case 1: // DATE
           return DATE;
-        case 2: // STOCK
-          return STOCK;
+        case 2: // EQUITY
+          return EQUITY;
         case 3: // SHARES
           return SHARES;
         case 4: // PRICE
           return PRICE;
-        case 5: // MATURITY
-          return MATURITY;
-        case 7: // TYPE
-          return TYPE;
         default:
           return null;
       }
@@ -114,91 +96,74 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
   private static final int __DATE_ISSET_ID = 0;
   private static final int __SHARES_ISSET_ID = 1;
   private static final int __PRICE_ISSET_ID = 2;
-  private static final int __MATURITY_ISSET_ID = 3;
   private byte __isset_bitfield = 0;
   public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
-    tmpMap.put(_Fields.STOCK, new org.apache.thrift.meta_data.FieldMetaData("stock", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.StockId.class)));
+    tmpMap.put(_Fields.EQUITY, new org.apache.thrift.meta_data.FieldMetaData("equity", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.EquityId.class)));
     tmpMap.put(_Fields.SHARES, new org.apache.thrift.meta_data.FieldMetaData("shares", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     tmpMap.put(_Fields.PRICE, new org.apache.thrift.meta_data.FieldMetaData("price", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
-    tmpMap.put(_Fields.MATURITY, new org.apache.thrift.meta_data.FieldMetaData("maturity", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
-    tmpMap.put(_Fields.TYPE, new org.apache.thrift.meta_data.FieldMetaData("type", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.EnumMetaData(org.apache.thrift.protocol.TType.ENUM, OptionExerciseType.class)));
     metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(OptionExercisePositionSnapshot.class, metaDataMap);
+    org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(EquityBuy.class, metaDataMap);
   }
 
-  public OptionExercisePositionSnapshot() {
+  public EquityBuy() {
   }
 
-  public OptionExercisePositionSnapshot(
+  public EquityBuy(
     long date,
-    br.com.investtools.radar.api.StockId stock,
+    br.com.investtools.radar.api.EquityId equity,
     int shares,
-    double price,
-    long maturity,
-    OptionExerciseType type)
+    double price)
   {
     this();
     this.date = date;
     setDateIsSet(true);
-    this.stock = stock;
+    this.equity = equity;
     this.shares = shares;
     setSharesIsSet(true);
     this.price = price;
     setPriceIsSet(true);
-    this.maturity = maturity;
-    setMaturityIsSet(true);
-    this.type = type;
   }
 
   /**
    * Performs a deep copy on <i>other</i>.
    */
-  public OptionExercisePositionSnapshot(OptionExercisePositionSnapshot other) {
+  public EquityBuy(EquityBuy other) {
     __isset_bitfield = other.__isset_bitfield;
     this.date = other.date;
-    if (other.isSetStock()) {
-      this.stock = new br.com.investtools.radar.api.StockId(other.stock);
+    if (other.isSetEquity()) {
+      this.equity = new br.com.investtools.radar.api.EquityId(other.equity);
     }
     this.shares = other.shares;
     this.price = other.price;
-    this.maturity = other.maturity;
-    if (other.isSetType()) {
-      this.type = other.type;
-    }
   }
 
-  public OptionExercisePositionSnapshot deepCopy() {
-    return new OptionExercisePositionSnapshot(this);
+  public EquityBuy deepCopy() {
+    return new EquityBuy(this);
   }
 
   @Override
   public void clear() {
     setDateIsSet(false);
     this.date = 0;
-    this.stock = null;
+    this.equity = null;
     setSharesIsSet(false);
     this.shares = 0;
     setPriceIsSet(false);
     this.price = 0.0;
-    setMaturityIsSet(false);
-    this.maturity = 0;
-    this.type = null;
   }
 
   public long getDate() {
     return this.date;
   }
 
-  public OptionExercisePositionSnapshot setDate(long date) {
+  public EquityBuy setDate(long date) {
     this.date = date;
     setDateIsSet(true);
     return this;
@@ -218,27 +183,27 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
   }
 
   @org.apache.thrift.annotation.Nullable
-  public br.com.investtools.radar.api.StockId getStock() {
-    return this.stock;
+  public br.com.investtools.radar.api.EquityId getEquity() {
+    return this.equity;
   }
 
-  public OptionExercisePositionSnapshot setStock(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.StockId stock) {
-    this.stock = stock;
+  public EquityBuy setEquity(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.EquityId equity) {
+    this.equity = equity;
     return this;
   }
 
-  public void unsetStock() {
-    this.stock = null;
+  public void unsetEquity() {
+    this.equity = null;
   }
 
-  /** Returns true if field stock is set (has been assigned a value) and false otherwise */
-  public boolean isSetStock() {
-    return this.stock != null;
+  /** Returns true if field equity is set (has been assigned a value) and false otherwise */
+  public boolean isSetEquity() {
+    return this.equity != null;
   }
 
-  public void setStockIsSet(boolean value) {
+  public void setEquityIsSet(boolean value) {
     if (!value) {
-      this.stock = null;
+      this.equity = null;
     }
   }
 
@@ -246,7 +211,7 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
     return this.shares;
   }
 
-  public OptionExercisePositionSnapshot setShares(int shares) {
+  public EquityBuy setShares(int shares) {
     this.shares = shares;
     setSharesIsSet(true);
     return this;
@@ -269,7 +234,7 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
     return this.price;
   }
 
-  public OptionExercisePositionSnapshot setPrice(double price) {
+  public EquityBuy setPrice(double price) {
     this.price = price;
     setPriceIsSet(true);
     return this;
@@ -288,62 +253,6 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
     __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __PRICE_ISSET_ID, value);
   }
 
-  public long getMaturity() {
-    return this.maturity;
-  }
-
-  public OptionExercisePositionSnapshot setMaturity(long maturity) {
-    this.maturity = maturity;
-    setMaturityIsSet(true);
-    return this;
-  }
-
-  public void unsetMaturity() {
-    __isset_bitfield = org.apache.thrift.EncodingUtils.clearBit(__isset_bitfield, __MATURITY_ISSET_ID);
-  }
-
-  /** Returns true if field maturity is set (has been assigned a value) and false otherwise */
-  public boolean isSetMaturity() {
-    return org.apache.thrift.EncodingUtils.testBit(__isset_bitfield, __MATURITY_ISSET_ID);
-  }
-
-  public void setMaturityIsSet(boolean value) {
-    __isset_bitfield = org.apache.thrift.EncodingUtils.setBit(__isset_bitfield, __MATURITY_ISSET_ID, value);
-  }
-
-  /**
-   * 
-   * @see OptionExerciseType
-   */
-  @org.apache.thrift.annotation.Nullable
-  public OptionExerciseType getType() {
-    return this.type;
-  }
-
-  /**
-   * 
-   * @see OptionExerciseType
-   */
-  public OptionExercisePositionSnapshot setType(@org.apache.thrift.annotation.Nullable OptionExerciseType type) {
-    this.type = type;
-    return this;
-  }
-
-  public void unsetType() {
-    this.type = null;
-  }
-
-  /** Returns true if field type is set (has been assigned a value) and false otherwise */
-  public boolean isSetType() {
-    return this.type != null;
-  }
-
-  public void setTypeIsSet(boolean value) {
-    if (!value) {
-      this.type = null;
-    }
-  }
-
   public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
     switch (field) {
     case DATE:
@@ -354,11 +263,11 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
       }
       break;
 
-    case STOCK:
+    case EQUITY:
       if (value == null) {
-        unsetStock();
+        unsetEquity();
       } else {
-        setStock((br.com.investtools.radar.api.StockId)value);
+        setEquity((br.com.investtools.radar.api.EquityId)value);
       }
       break;
 
@@ -378,22 +287,6 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
       }
       break;
 
-    case MATURITY:
-      if (value == null) {
-        unsetMaturity();
-      } else {
-        setMaturity((java.lang.Long)value);
-      }
-      break;
-
-    case TYPE:
-      if (value == null) {
-        unsetType();
-      } else {
-        setType((OptionExerciseType)value);
-      }
-      break;
-
     }
   }
 
@@ -403,20 +296,14 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
     case DATE:
       return getDate();
 
-    case STOCK:
-      return getStock();
+    case EQUITY:
+      return getEquity();
 
     case SHARES:
       return getShares();
 
     case PRICE:
       return getPrice();
-
-    case MATURITY:
-      return getMaturity();
-
-    case TYPE:
-      return getType();
 
     }
     throw new java.lang.IllegalStateException();
@@ -431,16 +318,12 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
     switch (field) {
     case DATE:
       return isSetDate();
-    case STOCK:
-      return isSetStock();
+    case EQUITY:
+      return isSetEquity();
     case SHARES:
       return isSetShares();
     case PRICE:
       return isSetPrice();
-    case MATURITY:
-      return isSetMaturity();
-    case TYPE:
-      return isSetType();
     }
     throw new java.lang.IllegalStateException();
   }
@@ -449,12 +332,12 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
   public boolean equals(java.lang.Object that) {
     if (that == null)
       return false;
-    if (that instanceof OptionExercisePositionSnapshot)
-      return this.equals((OptionExercisePositionSnapshot)that);
+    if (that instanceof EquityBuy)
+      return this.equals((EquityBuy)that);
     return false;
   }
 
-  public boolean equals(OptionExercisePositionSnapshot that) {
+  public boolean equals(EquityBuy that) {
     if (that == null)
       return false;
     if (this == that)
@@ -469,12 +352,12 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
         return false;
     }
 
-    boolean this_present_stock = true && this.isSetStock();
-    boolean that_present_stock = true && that.isSetStock();
-    if (this_present_stock || that_present_stock) {
-      if (!(this_present_stock && that_present_stock))
+    boolean this_present_equity = true && this.isSetEquity();
+    boolean that_present_equity = true && that.isSetEquity();
+    if (this_present_equity || that_present_equity) {
+      if (!(this_present_equity && that_present_equity))
         return false;
-      if (!this.stock.equals(that.stock))
+      if (!this.equity.equals(that.equity))
         return false;
     }
 
@@ -496,24 +379,6 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
         return false;
     }
 
-    boolean this_present_maturity = true;
-    boolean that_present_maturity = true;
-    if (this_present_maturity || that_present_maturity) {
-      if (!(this_present_maturity && that_present_maturity))
-        return false;
-      if (this.maturity != that.maturity)
-        return false;
-    }
-
-    boolean this_present_type = true && this.isSetType();
-    boolean that_present_type = true && that.isSetType();
-    if (this_present_type || that_present_type) {
-      if (!(this_present_type && that_present_type))
-        return false;
-      if (!this.type.equals(that.type))
-        return false;
-    }
-
     return true;
   }
 
@@ -523,25 +388,19 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
 
     hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(date);
 
-    hashCode = hashCode * 8191 + ((isSetStock()) ? 131071 : 524287);
-    if (isSetStock())
-      hashCode = hashCode * 8191 + stock.hashCode();
+    hashCode = hashCode * 8191 + ((isSetEquity()) ? 131071 : 524287);
+    if (isSetEquity())
+      hashCode = hashCode * 8191 + equity.hashCode();
 
     hashCode = hashCode * 8191 + shares;
 
     hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(price);
 
-    hashCode = hashCode * 8191 + org.apache.thrift.TBaseHelper.hashCode(maturity);
-
-    hashCode = hashCode * 8191 + ((isSetType()) ? 131071 : 524287);
-    if (isSetType())
-      hashCode = hashCode * 8191 + type.getValue();
-
     return hashCode;
   }
 
   @Override
-  public int compareTo(OptionExercisePositionSnapshot other) {
+  public int compareTo(EquityBuy other) {
     if (!getClass().equals(other.getClass())) {
       return getClass().getName().compareTo(other.getClass().getName());
     }
@@ -558,12 +417,12 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
         return lastComparison;
       }
     }
-    lastComparison = java.lang.Boolean.valueOf(isSetStock()).compareTo(other.isSetStock());
+    lastComparison = java.lang.Boolean.valueOf(isSetEquity()).compareTo(other.isSetEquity());
     if (lastComparison != 0) {
       return lastComparison;
     }
-    if (isSetStock()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.stock, other.stock);
+    if (isSetEquity()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.equity, other.equity);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -588,26 +447,6 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
         return lastComparison;
       }
     }
-    lastComparison = java.lang.Boolean.valueOf(isSetMaturity()).compareTo(other.isSetMaturity());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetMaturity()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.maturity, other.maturity);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
-    lastComparison = java.lang.Boolean.valueOf(isSetType()).compareTo(other.isSetType());
-    if (lastComparison != 0) {
-      return lastComparison;
-    }
-    if (isSetType()) {
-      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.type, other.type);
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-    }
     return 0;
   }
 
@@ -626,18 +465,18 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
 
   @Override
   public java.lang.String toString() {
-    java.lang.StringBuilder sb = new java.lang.StringBuilder("OptionExercisePositionSnapshot(");
+    java.lang.StringBuilder sb = new java.lang.StringBuilder("EquityBuy(");
     boolean first = true;
 
     sb.append("date:");
     sb.append(this.date);
     first = false;
     if (!first) sb.append(", ");
-    sb.append("stock:");
-    if (this.stock == null) {
+    sb.append("equity:");
+    if (this.equity == null) {
       sb.append("null");
     } else {
-      sb.append(this.stock);
+      sb.append(this.equity);
     }
     first = false;
     if (!first) sb.append(", ");
@@ -648,18 +487,6 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
     sb.append("price:");
     sb.append(this.price);
     first = false;
-    if (!first) sb.append(", ");
-    sb.append("maturity:");
-    sb.append(this.maturity);
-    first = false;
-    if (!first) sb.append(", ");
-    sb.append("type:");
-    if (this.type == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.type);
-    }
-    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -667,8 +494,8 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
   public void validate() throws org.apache.thrift.TException {
     // check for required fields
     // check for sub-struct validity
-    if (stock != null) {
-      stock.validate();
+    if (equity != null) {
+      equity.validate();
     }
   }
 
@@ -690,15 +517,15 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
     }
   }
 
-  private static class OptionExercisePositionSnapshotStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public OptionExercisePositionSnapshotStandardScheme getScheme() {
-      return new OptionExercisePositionSnapshotStandardScheme();
+  private static class EquityBuyStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public EquityBuyStandardScheme getScheme() {
+      return new EquityBuyStandardScheme();
     }
   }
 
-  private static class OptionExercisePositionSnapshotStandardScheme extends org.apache.thrift.scheme.StandardScheme<OptionExercisePositionSnapshot> {
+  private static class EquityBuyStandardScheme extends org.apache.thrift.scheme.StandardScheme<EquityBuy> {
 
-    public void read(org.apache.thrift.protocol.TProtocol iprot, OptionExercisePositionSnapshot struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol iprot, EquityBuy struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TField schemeField;
       iprot.readStructBegin();
       while (true)
@@ -716,11 +543,11 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // STOCK
+          case 2: // EQUITY
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.stock = new br.com.investtools.radar.api.StockId();
-              struct.stock.read(iprot);
-              struct.setStockIsSet(true);
+              struct.equity = new br.com.investtools.radar.api.EquityId();
+              struct.equity.read(iprot);
+              struct.setEquityIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -741,22 +568,6 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 5: // MATURITY
-            if (schemeField.type == org.apache.thrift.protocol.TType.I64) {
-              struct.maturity = iprot.readI64();
-              struct.setMaturityIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
-          case 7: // TYPE
-            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-              struct.type = br.com.investtools.radar.api.OptionExerciseType.findByValue(iprot.readI32());
-              struct.setTypeIsSet(true);
-            } else { 
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-            }
-            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -768,16 +579,16 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
       struct.validate();
     }
 
-    public void write(org.apache.thrift.protocol.TProtocol oprot, OptionExercisePositionSnapshot struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol oprot, EquityBuy struct) throws org.apache.thrift.TException {
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
       oprot.writeFieldBegin(DATE_FIELD_DESC);
       oprot.writeI64(struct.date);
       oprot.writeFieldEnd();
-      if (struct.stock != null) {
-        oprot.writeFieldBegin(STOCK_FIELD_DESC);
-        struct.stock.write(oprot);
+      if (struct.equity != null) {
+        oprot.writeFieldBegin(EQUITY_FIELD_DESC);
+        struct.equity.write(oprot);
         oprot.writeFieldEnd();
       }
       oprot.writeFieldBegin(SHARES_FIELD_DESC);
@@ -786,36 +597,28 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
       oprot.writeFieldBegin(PRICE_FIELD_DESC);
       oprot.writeDouble(struct.price);
       oprot.writeFieldEnd();
-      oprot.writeFieldBegin(MATURITY_FIELD_DESC);
-      oprot.writeI64(struct.maturity);
-      oprot.writeFieldEnd();
-      if (struct.type != null) {
-        oprot.writeFieldBegin(TYPE_FIELD_DESC);
-        oprot.writeI32(struct.type.getValue());
-        oprot.writeFieldEnd();
-      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
 
   }
 
-  private static class OptionExercisePositionSnapshotTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-    public OptionExercisePositionSnapshotTupleScheme getScheme() {
-      return new OptionExercisePositionSnapshotTupleScheme();
+  private static class EquityBuyTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+    public EquityBuyTupleScheme getScheme() {
+      return new EquityBuyTupleScheme();
     }
   }
 
-  private static class OptionExercisePositionSnapshotTupleScheme extends org.apache.thrift.scheme.TupleScheme<OptionExercisePositionSnapshot> {
+  private static class EquityBuyTupleScheme extends org.apache.thrift.scheme.TupleScheme<EquityBuy> {
 
     @Override
-    public void write(org.apache.thrift.protocol.TProtocol prot, OptionExercisePositionSnapshot struct) throws org.apache.thrift.TException {
+    public void write(org.apache.thrift.protocol.TProtocol prot, EquityBuy struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
       java.util.BitSet optionals = new java.util.BitSet();
       if (struct.isSetDate()) {
         optionals.set(0);
       }
-      if (struct.isSetStock()) {
+      if (struct.isSetEquity()) {
         optionals.set(1);
       }
       if (struct.isSetShares()) {
@@ -824,18 +627,12 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
       if (struct.isSetPrice()) {
         optionals.set(3);
       }
-      if (struct.isSetMaturity()) {
-        optionals.set(4);
-      }
-      if (struct.isSetType()) {
-        optionals.set(5);
-      }
-      oprot.writeBitSet(optionals, 6);
+      oprot.writeBitSet(optionals, 4);
       if (struct.isSetDate()) {
         oprot.writeI64(struct.date);
       }
-      if (struct.isSetStock()) {
-        struct.stock.write(oprot);
+      if (struct.isSetEquity()) {
+        struct.equity.write(oprot);
       }
       if (struct.isSetShares()) {
         oprot.writeI32(struct.shares);
@@ -843,26 +640,20 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
       if (struct.isSetPrice()) {
         oprot.writeDouble(struct.price);
       }
-      if (struct.isSetMaturity()) {
-        oprot.writeI64(struct.maturity);
-      }
-      if (struct.isSetType()) {
-        oprot.writeI32(struct.type.getValue());
-      }
     }
 
     @Override
-    public void read(org.apache.thrift.protocol.TProtocol prot, OptionExercisePositionSnapshot struct) throws org.apache.thrift.TException {
+    public void read(org.apache.thrift.protocol.TProtocol prot, EquityBuy struct) throws org.apache.thrift.TException {
       org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-      java.util.BitSet incoming = iprot.readBitSet(6);
+      java.util.BitSet incoming = iprot.readBitSet(4);
       if (incoming.get(0)) {
         struct.date = iprot.readI64();
         struct.setDateIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.stock = new br.com.investtools.radar.api.StockId();
-        struct.stock.read(iprot);
-        struct.setStockIsSet(true);
+        struct.equity = new br.com.investtools.radar.api.EquityId();
+        struct.equity.read(iprot);
+        struct.setEquityIsSet(true);
       }
       if (incoming.get(2)) {
         struct.shares = iprot.readI32();
@@ -871,14 +662,6 @@ public class OptionExercisePositionSnapshot implements org.apache.thrift.TBase<O
       if (incoming.get(3)) {
         struct.price = iprot.readDouble();
         struct.setPriceIsSet(true);
-      }
-      if (incoming.get(4)) {
-        struct.maturity = iprot.readI64();
-        struct.setMaturityIsSet(true);
-      }
-      if (incoming.get(5)) {
-        struct.type = br.com.investtools.radar.api.OptionExerciseType.findByValue(iprot.readI32());
-        struct.setTypeIsSet(true);
       }
     }
   }

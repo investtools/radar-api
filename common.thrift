@@ -17,7 +17,7 @@ typedef i64 Date
  */
 typedef i32 Color
 
-struct StockId {
+struct EquityId {
   1: string symbol
 }
 
@@ -48,7 +48,7 @@ struct CustomSecurityId {
 }
 
 union SecurityId {
-  1: StockId stock
+  1: EquityId stock
   2: FundId fund
   3: CorporateBondId corporate_bond
   4: GovernmentBondId government_bond

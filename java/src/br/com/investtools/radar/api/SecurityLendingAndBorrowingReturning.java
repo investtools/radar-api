@@ -20,7 +20,7 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
   private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new SecurityLendingAndBorrowingReturningTupleSchemeFactory();
 
   public long date; // required
-  public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.StockId stock; // required
+  public @org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.EquityId stock; // required
   public int shares; // required
   public double value; // required
   /**
@@ -116,7 +116,7 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
     tmpMap.put(_Fields.DATE, new org.apache.thrift.meta_data.FieldMetaData("date", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64        , "Date")));
     tmpMap.put(_Fields.STOCK, new org.apache.thrift.meta_data.FieldMetaData("stock", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.StockId.class)));
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, br.com.investtools.radar.api.EquityId.class)));
     tmpMap.put(_Fields.SHARES, new org.apache.thrift.meta_data.FieldMetaData("shares", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     tmpMap.put(_Fields.VALUE, new org.apache.thrift.meta_data.FieldMetaData("value", org.apache.thrift.TFieldRequirementType.DEFAULT, 
@@ -132,7 +132,7 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
 
   public SecurityLendingAndBorrowingReturning(
     long date,
-    br.com.investtools.radar.api.StockId stock,
+    br.com.investtools.radar.api.EquityId stock,
     int shares,
     double value,
     SecurityLendingAndBorrowingType type)
@@ -155,7 +155,7 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
     __isset_bitfield = other.__isset_bitfield;
     this.date = other.date;
     if (other.isSetStock()) {
-      this.stock = new br.com.investtools.radar.api.StockId(other.stock);
+      this.stock = new br.com.investtools.radar.api.EquityId(other.stock);
     }
     this.shares = other.shares;
     this.value = other.value;
@@ -204,11 +204,11 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
   }
 
   @org.apache.thrift.annotation.Nullable
-  public br.com.investtools.radar.api.StockId getStock() {
+  public br.com.investtools.radar.api.EquityId getStock() {
     return this.stock;
   }
 
-  public SecurityLendingAndBorrowingReturning setStock(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.StockId stock) {
+  public SecurityLendingAndBorrowingReturning setStock(@org.apache.thrift.annotation.Nullable br.com.investtools.radar.api.EquityId stock) {
     this.stock = stock;
     return this;
   }
@@ -321,7 +321,7 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
       if (value == null) {
         unsetStock();
       } else {
-        setStock((br.com.investtools.radar.api.StockId)value);
+        setStock((br.com.investtools.radar.api.EquityId)value);
       }
       break;
 
@@ -643,7 +643,7 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
             break;
           case 2: // STOCK
             if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-              struct.stock = new br.com.investtools.radar.api.StockId();
+              struct.stock = new br.com.investtools.radar.api.EquityId();
               struct.stock.read(iprot);
               struct.setStockIsSet(true);
             } else { 
@@ -768,7 +768,7 @@ public class SecurityLendingAndBorrowingReturning implements org.apache.thrift.T
         struct.setDateIsSet(true);
       }
       if (incoming.get(1)) {
-        struct.stock = new br.com.investtools.radar.api.StockId();
+        struct.stock = new br.com.investtools.radar.api.EquityId();
         struct.stock.read(iprot);
         struct.setStockIsSet(true);
       }

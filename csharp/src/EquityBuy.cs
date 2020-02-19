@@ -19,15 +19,12 @@ using Thrift.Transport;
 #if !SILVERLIGHT
 [Serializable]
 #endif
-public partial class StockOption : TBase
+public partial class EquityBuy : TBase
 {
   private long _date;
-  private StockId _stock;
+  private EquityId _equity;
   private int _shares;
   private double _price;
-  private long _maturity;
-  private StockOptionTransactionType _transaction_type;
-  private StockBuyTransactionType _type;
 
   public long Date
   {
@@ -42,16 +39,16 @@ public partial class StockOption : TBase
     }
   }
 
-  public StockId Stock
+  public EquityId Equity
   {
     get
     {
-      return _stock;
+      return _equity;
     }
     set
     {
-      __isset.stock = true;
-      this._stock = value;
+      __isset.equity = true;
+      this._equity = value;
     }
   }
 
@@ -81,53 +78,6 @@ public partial class StockOption : TBase
     }
   }
 
-  public long Maturity
-  {
-    get
-    {
-      return _maturity;
-    }
-    set
-    {
-      __isset.maturity = true;
-      this._maturity = value;
-    }
-  }
-
-  /// <summary>
-  /// 
-  /// <seealso cref="StockOptionTransactionType"/>
-  /// </summary>
-  public StockOptionTransactionType Transaction_type
-  {
-    get
-    {
-      return _transaction_type;
-    }
-    set
-    {
-      __isset.transaction_type = true;
-      this._transaction_type = value;
-    }
-  }
-
-  /// <summary>
-  /// 
-  /// <seealso cref="StockBuyTransactionType"/>
-  /// </summary>
-  public StockBuyTransactionType Type
-  {
-    get
-    {
-      return _type;
-    }
-    set
-    {
-      __isset.type = true;
-      this._type = value;
-    }
-  }
-
 
   public Isset __isset;
   #if !SILVERLIGHT
@@ -135,17 +85,12 @@ public partial class StockOption : TBase
   #endif
   public struct Isset {
     public bool date;
-    public bool stock;
+    public bool equity;
     public bool shares;
     public bool price;
-    public bool maturity;
-    public bool transaction_type;
-    public bool type;
   }
 
-  public StockOption() {
-    this._type = StockBuyTransactionType.REGULAR;
-    this.__isset.type = true;
+  public EquityBuy() {
   }
 
   public void Read (TProtocol iprot)
@@ -172,8 +117,8 @@ public partial class StockOption : TBase
             break;
           case 2:
             if (field.Type == TType.Struct) {
-              Stock = new StockId();
-              Stock.Read(iprot);
+              Equity = new EquityId();
+              Equity.Read(iprot);
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -188,27 +133,6 @@ public partial class StockOption : TBase
           case 4:
             if (field.Type == TType.Double) {
               Price = iprot.ReadDouble();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 5:
-            if (field.Type == TType.I64) {
-              Maturity = iprot.ReadI64();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 6:
-            if (field.Type == TType.I32) {
-              Transaction_type = (StockOptionTransactionType)iprot.ReadI32();
-            } else { 
-              TProtocolUtil.Skip(iprot, field.Type);
-            }
-            break;
-          case 7:
-            if (field.Type == TType.I32) {
-              Type = (StockBuyTransactionType)iprot.ReadI32();
             } else { 
               TProtocolUtil.Skip(iprot, field.Type);
             }
@@ -231,7 +155,7 @@ public partial class StockOption : TBase
     oprot.IncrementRecursionDepth();
     try
     {
-      TStruct struc = new TStruct("StockOption");
+      TStruct struc = new TStruct("EquityBuy");
       oprot.WriteStructBegin(struc);
       TField field = new TField();
       if (__isset.date) {
@@ -242,12 +166,12 @@ public partial class StockOption : TBase
         oprot.WriteI64(Date);
         oprot.WriteFieldEnd();
       }
-      if (Stock != null && __isset.stock) {
-        field.Name = "stock";
+      if (Equity != null && __isset.equity) {
+        field.Name = "equity";
         field.Type = TType.Struct;
         field.ID = 2;
         oprot.WriteFieldBegin(field);
-        Stock.Write(oprot);
+        Equity.Write(oprot);
         oprot.WriteFieldEnd();
       }
       if (__isset.shares) {
@@ -266,30 +190,6 @@ public partial class StockOption : TBase
         oprot.WriteDouble(Price);
         oprot.WriteFieldEnd();
       }
-      if (__isset.maturity) {
-        field.Name = "maturity";
-        field.Type = TType.I64;
-        field.ID = 5;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI64(Maturity);
-        oprot.WriteFieldEnd();
-      }
-      if (__isset.transaction_type) {
-        field.Name = "transaction_type";
-        field.Type = TType.I32;
-        field.ID = 6;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI32((int)Transaction_type);
-        oprot.WriteFieldEnd();
-      }
-      if (__isset.type) {
-        field.Name = "type";
-        field.Type = TType.I32;
-        field.ID = 7;
-        oprot.WriteFieldBegin(field);
-        oprot.WriteI32((int)Type);
-        oprot.WriteFieldEnd();
-      }
       oprot.WriteFieldStop();
       oprot.WriteStructEnd();
     }
@@ -300,7 +200,7 @@ public partial class StockOption : TBase
   }
 
   public override string ToString() {
-    StringBuilder __sb = new StringBuilder("StockOption(");
+    StringBuilder __sb = new StringBuilder("EquityBuy(");
     bool __first = true;
     if (__isset.date) {
       if(!__first) { __sb.Append(", "); }
@@ -308,11 +208,11 @@ public partial class StockOption : TBase
       __sb.Append("Date: ");
       __sb.Append(Date);
     }
-    if (Stock != null && __isset.stock) {
+    if (Equity != null && __isset.equity) {
       if(!__first) { __sb.Append(", "); }
       __first = false;
-      __sb.Append("Stock: ");
-      __sb.Append(Stock== null ? "<null>" : Stock.ToString());
+      __sb.Append("Equity: ");
+      __sb.Append(Equity== null ? "<null>" : Equity.ToString());
     }
     if (__isset.shares) {
       if(!__first) { __sb.Append(", "); }
@@ -325,24 +225,6 @@ public partial class StockOption : TBase
       __first = false;
       __sb.Append("Price: ");
       __sb.Append(Price);
-    }
-    if (__isset.maturity) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Maturity: ");
-      __sb.Append(Maturity);
-    }
-    if (__isset.transaction_type) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Transaction_type: ");
-      __sb.Append(Transaction_type);
-    }
-    if (__isset.type) {
-      if(!__first) { __sb.Append(", "); }
-      __first = false;
-      __sb.Append("Type: ");
-      __sb.Append(Type);
     }
     __sb.Append(")");
     return __sb.ToString();
