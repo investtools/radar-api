@@ -14,3 +14,4 @@ rb/gen: *.proto
 
 release: js/lib
 	cd js && npm run sync-version && npm publish
+  cd rb && bundle exec rake release
