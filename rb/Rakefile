@@ -1,1 +1,5 @@
 require "bundler/gem_tasks"
+
+task :compile do
+  system 'grpc_tools_ruby_protoc --ruby_out=gen --grpc_out=gen -I .. ../*.proto'
+end

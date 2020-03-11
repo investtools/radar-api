@@ -19,5 +19,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "guard-rake", "0.0.9"
-  spec.add_dependency "thrift", "~> 0.9.0"
+  spec.add_development_dependency "grpc-tools", "~> 1.27.0"
+  spec.add_dependency "grpc", "~> 1.27.0"
 end

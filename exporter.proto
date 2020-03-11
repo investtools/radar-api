@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package Radar;
+
+message Chunk { bytes Content = 1; }
+service ReportGenerator {
+  rpc generate(google.protobuf.Empty) returns (stream Chunk) {}
+}

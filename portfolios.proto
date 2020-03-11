@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package Radar;
+
+message Event {
+  message CashFlow {
+    enum Type {
+      DIVIDEND = 0;
+      INTEREST_ON_OWN_CAPITAL = 1;
+    }
+    Type type = 1;
+    uint32 value = 2;
+    string source = 3;
+  }
+  message Portfolio {
+    message Position {
+      string id = 1;
+      uint32 shares = 2;
+      double value = 3;
+      double avg_price = 4;
+    }
+    message Provision {
+      uint32 value = 1;
+      string source = 2;
+    }
+    repeated Position positions = 1;
+    repeated Provision provisions = 2;
+  }
+  google.protobuf.Timestamp date = 1;
+  oneof type {
+    CashFlow cash_flow = 20;
+    Portfolio portfolio = 21;
+  }
+}
+
+message RunReq {
+  enum Events { CASH_FLOW = 0; }
+  string user_id = 1;
+  Events events = 2;
+}
+
+service Portfolios {
+  rpc Run(RunReq) returns (stream Event) {}
+}

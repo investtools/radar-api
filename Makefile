@@ -1,30 +1,16 @@
-#THRIFT=thrift
-THRIFT=docker run --rm --user `id -u`:`id -g` -w /radar-api -v `pwd`:/radar-api thrift thrift
-SOURCE=radar.thrift
+all: js/*_pb.js rb/gen html
 
-all: js/lib csharp/src rb/gen java/src html
+js/node_modules: js/package.json
+	cd js && npm install
+	touch js/node_modules
 
-js/lib: *.thrift
-	rm -rf js/lib/*
-	$(THRIFT) -r --gen js:node                             -out js/lib     $(SOURCE)
+js/*_pb.*: js/node_modules *.proto
+	rm -rf js/*_pb.*
+	cd js && npm run build
 
-csharp/src: *.thrift
-	rm -rf csharp/src/*
-	$(THRIFT) -r --gen csharp                              -out csharp/src $(SOURCE)
-
-rb/gen: *.thrift 
+rb/gen: *.proto
 	rm -rf rb/gen/*
-	$(THRIFT) -r --gen rb:namespaced                       -out rb/gen     $(SOURCE)
-
-java/src: *.thrift 
-	rm -rf java/src/*
-	$(THRIFT) -r --gen java:generated_annotations=suppress -out java/src   $(SOURCE)
-
-html: *.thrift 
-	rm -rf html/*
-	$(THRIFT) -r --gen html                                -out html       $(SOURCE)
+	cd rb && bundle install && bundle exec rake compile
 
 release: js/lib
-	#git diff --exit-code
-	#git diff --cached --exit-code
-	cd js && npm publish
+	cd js && npm run sync-version && npm publish
