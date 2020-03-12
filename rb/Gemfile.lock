@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    radar-api (0.14.0)
+    radar-api-legacy (0.14.0)
       thrift (~> 0.9.0)
 
 GEM
@@ -51,7 +51,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.5)
   guard-rake (= 0.0.9)
-  radar-api!
+  radar-api-legacy!
 
 BUNDLED WITH
    1.17.3
