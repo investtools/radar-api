@@ -1,4 +1,4 @@
-all: js/*_pb.js rb/gen html
+all: js/*_pb.js rb/gen
 
 js/node_modules: js/package.json
 	cd js && npm install
@@ -12,6 +12,10 @@ rb/gen: *.proto
 	rm -rf rb/gen/*
 	cd rb && bundle install && bundle exec rake compile
 
-release: js/lib
+release: release-rb release-js
+
+release-rb: rb/gen
+	cd rb && bundle exec rake release
+
+release-js: js/*_pb.*
 	cd js && npm run sync-version && npm publish
-  cd rb && bundle exec rake release
