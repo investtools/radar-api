@@ -4,14 +4,27 @@ import "google/protobuf/timestamp.proto";
 
 package Radar;
 
+message EquitySource { string equity = 1; }
+message InterestOnOwnCapital { string equity = 1; }
+
 message Event {
+  enum PositionType {
+    SWING_TRADE = 0;
+    DAY_TRADE = 1;
+  }
+  enum TransactionType {
+    STOCK = 0;
+    OPTION = 1;
+    REIT = 2;
+  }
   message CashFlow {
     enum Type {
-      DIVIDEND = 0;
-      INTEREST_ON_OWN_CAPITAL = 1;
+      OTHER = 0;
+      DIVIDEND = 1;
+      INTEREST_ON_OWN_CAPITAL = 2;
     }
     Type type = 1;
-    uint32 value = 2;
+    double value = 2;
     string source = 3;
   }
   message Portfolio {
@@ -25,20 +38,27 @@ message Event {
       uint32 value = 1;
       string source = 2;
     }
-    repeated Position positions = 1;
-    repeated Provision provisions = 2;
+    repeated Position position = 1;
+    repeated Provision provision = 2;
+  }
+  message PositionMonthTax {
+    PositionType position_type = 1;
+    TransactionType transaction_type = 2;
+    double value = 3;
   }
   google.protobuf.Timestamp date = 1;
   oneof type {
     CashFlow cash_flow = 20;
     Portfolio portfolio = 21;
+    PositionMonthTax position_month_tax = 22;
   }
 }
 
 message RunReq {
   enum Events { CASH_FLOW = 0; }
   string user_id = 1;
-  Events events = 2;
+  string portfolio_id = 2;
+  Events events = 3;
 }
 
 service Portfolios {

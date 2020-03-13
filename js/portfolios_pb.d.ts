@@ -7,6 +7,48 @@
 import * as jspb from "google-protobuf";
 import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
 
+export class EquitySource extends jspb.Message { 
+    getEquity(): string;
+    setEquity(value: string): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): EquitySource.AsObject;
+    static toObject(includeInstance: boolean, msg: EquitySource): EquitySource.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: EquitySource, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): EquitySource;
+    static deserializeBinaryFromReader(message: EquitySource, reader: jspb.BinaryReader): EquitySource;
+}
+
+export namespace EquitySource {
+    export type AsObject = {
+        equity: string,
+    }
+}
+
+export class InterestOnOwnCapital extends jspb.Message { 
+    getEquity(): string;
+    setEquity(value: string): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): InterestOnOwnCapital.AsObject;
+    static toObject(includeInstance: boolean, msg: InterestOnOwnCapital): InterestOnOwnCapital.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: InterestOnOwnCapital, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): InterestOnOwnCapital;
+    static deserializeBinaryFromReader(message: InterestOnOwnCapital, reader: jspb.BinaryReader): InterestOnOwnCapital;
+}
+
+export namespace InterestOnOwnCapital {
+    export type AsObject = {
+        equity: string,
+    }
+}
+
 export class Event extends jspb.Message { 
 
     hasDate(): boolean;
@@ -27,6 +69,12 @@ export class Event extends jspb.Message {
     setPortfolio(value?: Event.Portfolio): void;
 
 
+    hasPositionMonthTax(): boolean;
+    clearPositionMonthTax(): void;
+    getPositionMonthTax(): Event.PositionMonthTax | undefined;
+    setPositionMonthTax(value?: Event.PositionMonthTax): void;
+
+
     getTypeCase(): Event.TypeCase;
 
     serializeBinary(): Uint8Array;
@@ -44,6 +92,7 @@ export namespace Event {
         date?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         cashFlow?: Event.CashFlow.AsObject,
         portfolio?: Event.Portfolio.AsObject,
+        positionMonthTax?: Event.PositionMonthTax.AsObject,
     }
 
 
@@ -76,22 +125,23 @@ export namespace Event {
         }
 
         export enum Type {
-    DIVIDEND = 0,
-    INTEREST_ON_OWN_CAPITAL = 1,
+    OTHER = 0,
+    DIVIDEND = 1,
+    INTEREST_ON_OWN_CAPITAL = 2,
         }
 
     }
 
     export class Portfolio extends jspb.Message { 
-        clearPositionsList(): void;
-        getPositionsList(): Array<Event.Portfolio.Position>;
-        setPositionsList(value: Array<Event.Portfolio.Position>): void;
-        addPositions(value?: Event.Portfolio.Position, index?: number): Event.Portfolio.Position;
+        clearPositionList(): void;
+        getPositionList(): Array<Event.Portfolio.Position>;
+        setPositionList(value: Array<Event.Portfolio.Position>): void;
+        addPosition(value?: Event.Portfolio.Position, index?: number): Event.Portfolio.Position;
 
-        clearProvisionsList(): void;
-        getProvisionsList(): Array<Event.Portfolio.Provision>;
-        setProvisionsList(value: Array<Event.Portfolio.Provision>): void;
-        addProvisions(value?: Event.Portfolio.Provision, index?: number): Event.Portfolio.Provision;
+        clearProvisionList(): void;
+        getProvisionList(): Array<Event.Portfolio.Provision>;
+        setProvisionList(value: Array<Event.Portfolio.Provision>): void;
+        addProvision(value?: Event.Portfolio.Provision, index?: number): Event.Portfolio.Provision;
 
 
         serializeBinary(): Uint8Array;
@@ -106,8 +156,8 @@ export namespace Event {
 
     export namespace Portfolio {
         export type AsObject = {
-            positionsList: Array<Event.Portfolio.Position.AsObject>,
-            provisionsList: Array<Event.Portfolio.Provision.AsObject>,
+            positionList: Array<Event.Portfolio.Position.AsObject>,
+            provisionList: Array<Event.Portfolio.Provision.AsObject>,
         }
 
 
@@ -171,6 +221,47 @@ export namespace Event {
 
     }
 
+    export class PositionMonthTax extends jspb.Message { 
+        getPositionType(): Event.PositionType;
+        setPositionType(value: Event.PositionType): void;
+
+        getTransactionType(): Event.TransactionType;
+        setTransactionType(value: Event.TransactionType): void;
+
+        getValue(): number;
+        setValue(value: number): void;
+
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): PositionMonthTax.AsObject;
+        static toObject(includeInstance: boolean, msg: PositionMonthTax): PositionMonthTax.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: PositionMonthTax, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): PositionMonthTax;
+        static deserializeBinaryFromReader(message: PositionMonthTax, reader: jspb.BinaryReader): PositionMonthTax;
+    }
+
+    export namespace PositionMonthTax {
+        export type AsObject = {
+            positionType: Event.PositionType,
+            transactionType: Event.TransactionType,
+            value: number,
+        }
+    }
+
+
+    export enum PositionType {
+    SWING_TRADE = 0,
+    DAY_TRADE = 1,
+    }
+
+    export enum TransactionType {
+    STOCK = 0,
+    OPTION = 1,
+    REIT = 2,
+    }
+
 
     export enum TypeCase {
         TYPE_NOT_SET = 0,
@@ -179,6 +270,8 @@ export namespace Event {
 
     PORTFOLIO = 21,
 
+    POSITION_MONTH_TAX = 22,
+
     }
 
 }
@@ -186,6 +279,9 @@ export namespace Event {
 export class RunReq extends jspb.Message { 
     getUserId(): string;
     setUserId(value: string): void;
+
+    getPortfolioId(): string;
+    setPortfolioId(value: string): void;
 
     getEvents(): RunReq.Events;
     setEvents(value: RunReq.Events): void;
@@ -204,6 +300,7 @@ export class RunReq extends jspb.Message {
 export namespace RunReq {
     export type AsObject = {
         userId: string,
+        portfolioId: string,
         events: RunReq.Events,
     }
 

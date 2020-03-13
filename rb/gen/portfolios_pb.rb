@@ -6,25 +6,33 @@ require 'google/protobuf'
 require 'google/protobuf/timestamp_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("portfolios.proto", :syntax => :proto3) do
+    add_message "Radar.EquitySource" do
+      optional :equity, :string, 1
+    end
+    add_message "Radar.InterestOnOwnCapital" do
+      optional :equity, :string, 1
+    end
     add_message "Radar.Event" do
       optional :date, :message, 1, "google.protobuf.Timestamp"
       oneof :type do
         optional :cash_flow, :message, 20, "Radar.Event.CashFlow"
         optional :portfolio, :message, 21, "Radar.Event.Portfolio"
+        optional :position_month_tax, :message, 22, "Radar.Event.PositionMonthTax"
       end
     end
     add_message "Radar.Event.CashFlow" do
       optional :type, :enum, 1, "Radar.Event.CashFlow.Type"
-      optional :value, :uint32, 2
+      optional :value, :double, 2
       optional :source, :string, 3
     end
     add_enum "Radar.Event.CashFlow.Type" do
-      value :DIVIDEND, 0
-      value :INTEREST_ON_OWN_CAPITAL, 1
+      value :OTHER, 0
+      value :DIVIDEND, 1
+      value :INTEREST_ON_OWN_CAPITAL, 2
     end
     add_message "Radar.Event.Portfolio" do
-      repeated :positions, :message, 1, "Radar.Event.Portfolio.Position"
-      repeated :provisions, :message, 2, "Radar.Event.Portfolio.Provision"
+      repeated :position, :message, 1, "Radar.Event.Portfolio.Position"
+      repeated :provision, :message, 2, "Radar.Event.Portfolio.Provision"
     end
     add_message "Radar.Event.Portfolio.Position" do
       optional :id, :string, 1
@@ -36,9 +44,24 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :value, :uint32, 1
       optional :source, :string, 2
     end
+    add_message "Radar.Event.PositionMonthTax" do
+      optional :position_type, :enum, 1, "Radar.Event.PositionType"
+      optional :transaction_type, :enum, 2, "Radar.Event.TransactionType"
+      optional :value, :double, 3
+    end
+    add_enum "Radar.Event.PositionType" do
+      value :SWING_TRADE, 0
+      value :DAY_TRADE, 1
+    end
+    add_enum "Radar.Event.TransactionType" do
+      value :STOCK, 0
+      value :OPTION, 1
+      value :REIT, 2
+    end
     add_message "Radar.RunReq" do
       optional :user_id, :string, 1
-      optional :events, :enum, 2, "Radar.RunReq.Events"
+      optional :portfolio_id, :string, 2
+      optional :events, :enum, 3, "Radar.RunReq.Events"
     end
     add_enum "Radar.RunReq.Events" do
       value :CASH_FLOW, 0
@@ -47,12 +70,17 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
 end
 
 module Radar
+  EquitySource = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.EquitySource").msgclass
+  InterestOnOwnCapital = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.InterestOnOwnCapital").msgclass
   Event = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event").msgclass
   Event::CashFlow = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.CashFlow").msgclass
   Event::CashFlow::Type = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.CashFlow.Type").enummodule
   Event::Portfolio = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.Portfolio").msgclass
   Event::Portfolio::Position = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.Portfolio.Position").msgclass
   Event::Portfolio::Provision = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.Portfolio.Provision").msgclass
+  Event::PositionMonthTax = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.PositionMonthTax").msgclass
+  Event::PositionType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.PositionType").enummodule
+  Event::TransactionType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.TransactionType").enummodule
   RunReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.RunReq").msgclass
   RunReq::Events = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.RunReq.Events").enummodule
 end

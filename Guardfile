@@ -1,7 +1,7 @@
 guard :shell do
-  watch(%r{\.thrift$}) do |m|
+  watch(%r{\.proto$}) do |m|
     success = system 'make all'
-    n 'Build failed!', 'radar.thrift', :failed unless success
+    n 'Build failed!', 'radar-api', :failed unless success
     nil
   end
 end
