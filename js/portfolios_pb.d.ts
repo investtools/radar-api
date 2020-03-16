@@ -283,8 +283,10 @@ export class RunReq extends jspb.Message {
     getPortfolioId(): string;
     setPortfolioId(value: string): void;
 
-    getEvents(): RunReq.Events;
-    setEvents(value: RunReq.Events): void;
+    clearEventsList(): void;
+    getEventsList(): Array<RunReq.Event>;
+    setEventsList(value: Array<RunReq.Event>): void;
+    addEvents(value: RunReq.Event, index?: number): RunReq.Event;
 
 
     serializeBinary(): Uint8Array;
@@ -301,11 +303,12 @@ export namespace RunReq {
     export type AsObject = {
         userId: string,
         portfolioId: string,
-        events: RunReq.Events,
+        eventsList: Array<RunReq.Event>,
     }
 
-    export enum Events {
+    export enum Event {
     CASH_FLOW = 0,
+    EACH_DAY = 1,
     }
 
 }

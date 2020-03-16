@@ -30,12 +30,12 @@ message Event {
   message Portfolio {
     message Position {
       string id = 1;
-      uint32 shares = 2;
+      int32 shares = 2;
       double value = 3;
       double avg_price = 4;
     }
     message Provision {
-      uint32 value = 1;
+      double value = 1;
       string source = 2;
     }
     repeated Position position = 1;
@@ -55,10 +55,13 @@ message Event {
 }
 
 message RunReq {
-  enum Events { CASH_FLOW = 0; }
+  enum Event {
+    CASH_FLOW = 0;
+    EACH_DAY = 1;
+  }
   string user_id = 1;
   string portfolio_id = 2;
-  Events events = 3;
+  repeated Event events = 3;
 }
 
 service Portfolios {

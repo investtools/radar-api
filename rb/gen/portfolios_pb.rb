@@ -36,12 +36,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "Radar.Event.Portfolio.Position" do
       optional :id, :string, 1
-      optional :shares, :uint32, 2
+      optional :shares, :int32, 2
       optional :value, :double, 3
       optional :avg_price, :double, 4
     end
     add_message "Radar.Event.Portfolio.Provision" do
-      optional :value, :uint32, 1
+      optional :value, :double, 1
       optional :source, :string, 2
     end
     add_message "Radar.Event.PositionMonthTax" do
@@ -61,10 +61,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     add_message "Radar.RunReq" do
       optional :user_id, :string, 1
       optional :portfolio_id, :string, 2
-      optional :events, :enum, 3, "Radar.RunReq.Events"
+      repeated :events, :enum, 3, "Radar.RunReq.Event"
     end
-    add_enum "Radar.RunReq.Events" do
+    add_enum "Radar.RunReq.Event" do
       value :CASH_FLOW, 0
+      value :EACH_DAY, 1
     end
   end
 end
@@ -82,5 +83,5 @@ module Radar
   Event::PositionType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.PositionType").enummodule
   Event::TransactionType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.TransactionType").enummodule
   RunReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.RunReq").msgclass
-  RunReq::Events = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.RunReq.Events").enummodule
+  RunReq::Event = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.RunReq.Event").enummodule
 end
