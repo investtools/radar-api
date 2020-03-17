@@ -290,7 +290,6 @@ export namespace Event {
     OPTION = 2,
     REIT = 3,
     SUBSCRIPTION_RIGHT = 4,
-    ETF = 5,
     }
 
 

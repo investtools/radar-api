@@ -63,7 +63,6 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :OPTION, 2
       value :REIT, 3
       value :SUBSCRIPTION_RIGHT, 4
-      value :ETF, 5
     end
     add_message "Radar.RunReq" do
       optional :user_id, :string, 1

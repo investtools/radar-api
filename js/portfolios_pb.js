@@ -540,8 +540,7 @@ proto.Radar.Event.TransactionType = {
   STOCK: 1,
   OPTION: 2,
   REIT: 3,
-  SUBSCRIPTION_RIGHT: 4,
-  ETF: 5
+  SUBSCRIPTION_RIGHT: 4
 };
 
 
