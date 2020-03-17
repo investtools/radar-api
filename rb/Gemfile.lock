@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    radar-api (2.0.2)
+    radar-api (2.1.0)
       grpc
 
 GEM
@@ -15,10 +15,10 @@ GEM
     coderay (1.1.0)
     ffi (1.11.1)
     formatador (0.2.4)
-    google-protobuf (3.11.4)
+    google-protobuf (3.11.4-universal-darwin)
     googleapis-common-protos-types (1.0.4)
       google-protobuf (~> 3.0)
-    grpc (1.27.0)
+    grpc (1.27.0-universal-darwin)
       google-protobuf (~> 3.11)
       googleapis-common-protos-types (~> 1.0)
     grpc-tools (1.27.0)
