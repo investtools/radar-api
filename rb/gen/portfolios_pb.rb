@@ -54,9 +54,11 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :DAY_TRADE, 1
     end
     add_enum "Radar.Event.TransactionType" do
-      value :STOCK, 0
-      value :OPTION, 1
-      value :REIT, 2
+      value :OTHER, 0
+      value :STOCK, 1
+      value :OPTION, 2
+      value :REIT, 3
+      value :SUBSCRIPTION_RIGHT, 4
     end
     add_message "Radar.RunReq" do
       optional :user_id, :string, 1

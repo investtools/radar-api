@@ -257,9 +257,11 @@ export namespace Event {
     }
 
     export enum TransactionType {
-    STOCK = 0,
-    OPTION = 1,
-    REIT = 2,
+    OTHER = 0,
+    STOCK = 1,
+    OPTION = 2,
+    REIT = 3,
+    SUBSCRIPTION_RIGHT = 4,
     }
 
 
