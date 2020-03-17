@@ -48,11 +48,15 @@ message Event {
     TransactionType transaction_type = 2;
     double value = 3;
   }
+  message StockExemptMonthTax { 
+    double value = 1;
+  }
   google.protobuf.Timestamp date = 1;
   oneof type {
     CashFlow cash_flow = 20;
     Portfolio portfolio = 21;
     PositionMonthTax position_month_tax = 22;
+    StockExemptMonthTax stock_exempt_month_tax = 23;
   }
 }
 

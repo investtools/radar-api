@@ -75,6 +75,12 @@ export class Event extends jspb.Message {
     setPositionMonthTax(value?: Event.PositionMonthTax): void;
 
 
+    hasStockExemptMonthTax(): boolean;
+    clearStockExemptMonthTax(): void;
+    getStockExemptMonthTax(): Event.StockExemptMonthTax | undefined;
+    setStockExemptMonthTax(value?: Event.StockExemptMonthTax): void;
+
+
     getTypeCase(): Event.TypeCase;
 
     serializeBinary(): Uint8Array;
@@ -93,6 +99,7 @@ export namespace Event {
         cashFlow?: Event.CashFlow.AsObject,
         portfolio?: Event.Portfolio.AsObject,
         positionMonthTax?: Event.PositionMonthTax.AsObject,
+        stockExemptMonthTax?: Event.StockExemptMonthTax.AsObject,
     }
 
 
@@ -250,6 +257,27 @@ export namespace Event {
         }
     }
 
+    export class StockExemptMonthTax extends jspb.Message { 
+        getValue(): number;
+        setValue(value: number): void;
+
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): StockExemptMonthTax.AsObject;
+        static toObject(includeInstance: boolean, msg: StockExemptMonthTax): StockExemptMonthTax.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: StockExemptMonthTax, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): StockExemptMonthTax;
+        static deserializeBinaryFromReader(message: StockExemptMonthTax, reader: jspb.BinaryReader): StockExemptMonthTax;
+    }
+
+    export namespace StockExemptMonthTax {
+        export type AsObject = {
+            value: number,
+        }
+    }
+
 
     export enum PositionType {
     SWING_TRADE = 0,
@@ -262,6 +290,7 @@ export namespace Event {
     OPTION = 2,
     REIT = 3,
     SUBSCRIPTION_RIGHT = 4,
+    ETF = 5,
     }
 
 
@@ -273,6 +302,8 @@ export namespace Event {
     PORTFOLIO = 21,
 
     POSITION_MONTH_TAX = 22,
+
+    STOCK_EXEMPT_MONTH_TAX = 23,
 
     }
 
