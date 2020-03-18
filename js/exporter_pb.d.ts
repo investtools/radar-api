@@ -5,7 +5,6 @@
 /* eslint-disable */
 
 import * as jspb from "google-protobuf";
-import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
 
 export class Chunk extends jspb.Message { 
     getContent(): Uint8Array | string;
@@ -27,5 +26,30 @@ export class Chunk extends jspb.Message {
 export namespace Chunk {
     export type AsObject = {
         content: Uint8Array | string,
+    }
+}
+
+export class GenerateReq extends jspb.Message { 
+    getUserId(): string;
+    setUserId(value: string): void;
+
+    getPortfolioId(): string;
+    setPortfolioId(value: string): void;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GenerateReq.AsObject;
+    static toObject(includeInstance: boolean, msg: GenerateReq): GenerateReq.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GenerateReq, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GenerateReq;
+    static deserializeBinaryFromReader(message: GenerateReq, reader: jspb.BinaryReader): GenerateReq;
+}
+
+export namespace GenerateReq {
+    export type AsObject = {
+        userId: string,
+        portfolioId: string,
     }
 }

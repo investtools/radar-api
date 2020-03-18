@@ -1,10 +1,14 @@
 syntax = "proto3";
 
-import "google/protobuf/empty.proto";
-
 package Radar;
 
 message Chunk { bytes Content = 1; }
+
+message GenerateReq {
+  string user_id = 1;
+  string portfolio_id = 2;
+}
+
 service ReportGenerator {
-  rpc generate(google.protobuf.Empty) returns (stream Chunk) {}
+  rpc generate(GenerateReq) returns (stream Chunk) {}
 }

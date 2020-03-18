@@ -3,15 +3,19 @@
 
 require 'google/protobuf'
 
-require 'google/protobuf/empty_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("exporter.proto", :syntax => :proto3) do
     add_message "Radar.Chunk" do
       optional :Content, :bytes, 1
+    end
+    add_message "Radar.GenerateReq" do
+      optional :user_id, :string, 1
+      optional :portfolio_id, :string, 2
     end
   end
 end
 
 module Radar
   Chunk = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Chunk").msgclass
+  GenerateReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.GenerateReq").msgclass
 end

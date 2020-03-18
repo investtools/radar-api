@@ -14,7 +14,7 @@ module Radar
       self.unmarshal_class_method = :decode
       self.service_name = 'Radar.ReportGenerator'
 
-      rpc :generate, Google::Protobuf::Empty, stream(Chunk)
+      rpc :generate, GenerateReq, stream(Chunk)
     end
 
     Stub = Service.rpc_stub_class

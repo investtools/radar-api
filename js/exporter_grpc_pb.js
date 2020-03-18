@@ -3,7 +3,6 @@
 'use strict';
 var grpc = require('grpc');
 var exporter_pb = require('./exporter_pb.js');
-var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
 
 function serialize_Radar_Chunk(arg) {
   if (!(arg instanceof exporter_pb.Chunk)) {
@@ -16,15 +15,15 @@ function deserialize_Radar_Chunk(buffer_arg) {
   return exporter_pb.Chunk.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_google_protobuf_Empty(arg) {
-  if (!(arg instanceof google_protobuf_empty_pb.Empty)) {
-    throw new Error('Expected argument of type google.protobuf.Empty');
+function serialize_Radar_GenerateReq(arg) {
+  if (!(arg instanceof exporter_pb.GenerateReq)) {
+    throw new Error('Expected argument of type Radar.GenerateReq');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_google_protobuf_Empty(buffer_arg) {
-  return google_protobuf_empty_pb.Empty.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_Radar_GenerateReq(buffer_arg) {
+  return exporter_pb.GenerateReq.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
@@ -33,10 +32,10 @@ var ReportGeneratorService = exports.ReportGeneratorService = {
     path: '/Radar.ReportGenerator/generate',
     requestStream: false,
     responseStream: true,
-    requestType: google_protobuf_empty_pb.Empty,
+    requestType: exporter_pb.GenerateReq,
     responseType: exporter_pb.Chunk,
-    requestSerialize: serialize_google_protobuf_Empty,
-    requestDeserialize: deserialize_google_protobuf_Empty,
+    requestSerialize: serialize_Radar_GenerateReq,
+    requestDeserialize: deserialize_Radar_GenerateReq,
     responseSerialize: serialize_Radar_Chunk,
     responseDeserialize: deserialize_Radar_Chunk,
   },
