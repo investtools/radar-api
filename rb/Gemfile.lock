@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    radar-api (2.2.2)
+    radar-api (2.3.0)
       grpc
 
 GEM

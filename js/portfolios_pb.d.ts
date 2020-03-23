@@ -81,6 +81,12 @@ export class Event extends jspb.Message {
     setStockExemptMonthTax(value?: Event.StockExemptMonthTax): void;
 
 
+    hasAccumulatedTaxCredit(): boolean;
+    clearAccumulatedTaxCredit(): void;
+    getAccumulatedTaxCredit(): Event.AccumulatedTaxCredit | undefined;
+    setAccumulatedTaxCredit(value?: Event.AccumulatedTaxCredit): void;
+
+
     getTypeCase(): Event.TypeCase;
 
     serializeBinary(): Uint8Array;
@@ -100,6 +106,7 @@ export namespace Event {
         portfolio?: Event.Portfolio.AsObject,
         positionMonthTax?: Event.PositionMonthTax.AsObject,
         stockExemptMonthTax?: Event.StockExemptMonthTax.AsObject,
+        accumulatedTaxCredit?: Event.AccumulatedTaxCredit.AsObject,
     }
 
 
@@ -278,6 +285,35 @@ export namespace Event {
         }
     }
 
+    export class AccumulatedTaxCredit extends jspb.Message { 
+        getSwingTrade(): number;
+        setSwingTrade(value: number): void;
+
+        getDayTrade(): number;
+        setDayTrade(value: number): void;
+
+        getReit(): number;
+        setReit(value: number): void;
+
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): AccumulatedTaxCredit.AsObject;
+        static toObject(includeInstance: boolean, msg: AccumulatedTaxCredit): AccumulatedTaxCredit.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: AccumulatedTaxCredit, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): AccumulatedTaxCredit;
+        static deserializeBinaryFromReader(message: AccumulatedTaxCredit, reader: jspb.BinaryReader): AccumulatedTaxCredit;
+    }
+
+    export namespace AccumulatedTaxCredit {
+        export type AsObject = {
+            swingTrade: number,
+            dayTrade: number,
+            reit: number,
+        }
+    }
+
 
     export enum PositionType {
     SWING_TRADE = 0,
@@ -303,6 +339,8 @@ export namespace Event {
     POSITION_MONTH_TAX = 22,
 
     STOCK_EXEMPT_MONTH_TAX = 23,
+
+    ACCUMULATED_TAX_CREDIT = 24,
 
     }
 
