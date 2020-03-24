@@ -87,6 +87,12 @@ export class Event extends jspb.Message {
     setAccumulatedTaxCredit(value?: Event.AccumulatedTaxCredit): void;
 
 
+    hasMonthlySell(): boolean;
+    clearMonthlySell(): void;
+    getMonthlySell(): Event.MonthlySell | undefined;
+    setMonthlySell(value?: Event.MonthlySell): void;
+
+
     getTypeCase(): Event.TypeCase;
 
     serializeBinary(): Uint8Array;
@@ -107,6 +113,7 @@ export namespace Event {
         positionMonthTax?: Event.PositionMonthTax.AsObject,
         stockExemptMonthTax?: Event.StockExemptMonthTax.AsObject,
         accumulatedTaxCredit?: Event.AccumulatedTaxCredit.AsObject,
+        monthlySell?: Event.MonthlySell.AsObject,
     }
 
 
@@ -314,6 +321,31 @@ export namespace Event {
         }
     }
 
+    export class MonthlySell extends jspb.Message { 
+        getSwingTrade(): number;
+        setSwingTrade(value: number): void;
+
+        getReit(): number;
+        setReit(value: number): void;
+
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): MonthlySell.AsObject;
+        static toObject(includeInstance: boolean, msg: MonthlySell): MonthlySell.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: MonthlySell, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): MonthlySell;
+        static deserializeBinaryFromReader(message: MonthlySell, reader: jspb.BinaryReader): MonthlySell;
+    }
+
+    export namespace MonthlySell {
+        export type AsObject = {
+            swingTrade: number,
+            reit: number,
+        }
+    }
+
 
     export enum PositionType {
     SWING_TRADE = 0,
@@ -341,6 +373,8 @@ export namespace Event {
     STOCK_EXEMPT_MONTH_TAX = 23,
 
     ACCUMULATED_TAX_CREDIT = 24,
+
+    MONTHLY_SELL = 25,
 
     }
 
