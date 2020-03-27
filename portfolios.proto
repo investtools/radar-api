@@ -60,6 +60,9 @@ message Event {
     double swing_trade = 1;
     double reit = 2;
   }
+  message MonthlyStockExemptionPeriodProfit {
+    double value = 1;
+  }
   google.protobuf.Timestamp date = 1;
   oneof type {
     CashFlow cash_flow = 20;
@@ -68,6 +71,7 @@ message Event {
     StockExemptMonthTax stock_exempt_month_tax = 23;
     AccumulatedTaxCredit accumulated_tax_credit = 24;
     MonthlySell monthly_sell = 25;
+    MonthlyStockExemptionPeriodProfit monthly_stock_exemption_period_profit = 26;
   }
 }
 

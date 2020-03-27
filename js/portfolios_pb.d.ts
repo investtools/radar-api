@@ -93,6 +93,12 @@ export class Event extends jspb.Message {
     setMonthlySell(value?: Event.MonthlySell): void;
 
 
+    hasMonthlyStockExemptionPeriodProfit(): boolean;
+    clearMonthlyStockExemptionPeriodProfit(): void;
+    getMonthlyStockExemptionPeriodProfit(): Event.MonthlyStockExemptionPeriodProfit | undefined;
+    setMonthlyStockExemptionPeriodProfit(value?: Event.MonthlyStockExemptionPeriodProfit): void;
+
+
     getTypeCase(): Event.TypeCase;
 
     serializeBinary(): Uint8Array;
@@ -114,6 +120,7 @@ export namespace Event {
         stockExemptMonthTax?: Event.StockExemptMonthTax.AsObject,
         accumulatedTaxCredit?: Event.AccumulatedTaxCredit.AsObject,
         monthlySell?: Event.MonthlySell.AsObject,
+        monthlyStockExemptionPeriodProfit?: Event.MonthlyStockExemptionPeriodProfit.AsObject,
     }
 
 
@@ -346,6 +353,27 @@ export namespace Event {
         }
     }
 
+    export class MonthlyStockExemptionPeriodProfit extends jspb.Message { 
+        getValue(): number;
+        setValue(value: number): void;
+
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): MonthlyStockExemptionPeriodProfit.AsObject;
+        static toObject(includeInstance: boolean, msg: MonthlyStockExemptionPeriodProfit): MonthlyStockExemptionPeriodProfit.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: MonthlyStockExemptionPeriodProfit, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): MonthlyStockExemptionPeriodProfit;
+        static deserializeBinaryFromReader(message: MonthlyStockExemptionPeriodProfit, reader: jspb.BinaryReader): MonthlyStockExemptionPeriodProfit;
+    }
+
+    export namespace MonthlyStockExemptionPeriodProfit {
+        export type AsObject = {
+            value: number,
+        }
+    }
+
 
     export enum PositionType {
     SWING_TRADE = 0,
@@ -375,6 +403,8 @@ export namespace Event {
     ACCUMULATED_TAX_CREDIT = 24,
 
     MONTHLY_SELL = 25,
+
+    MONTHLY_STOCK_EXEMPTION_PERIOD_PROFIT = 26,
 
     }
 

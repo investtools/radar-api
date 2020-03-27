@@ -21,6 +21,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :stock_exempt_month_tax, :message, 23, "Radar.Event.StockExemptMonthTax"
         optional :accumulated_tax_credit, :message, 24, "Radar.Event.AccumulatedTaxCredit"
         optional :monthly_sell, :message, 25, "Radar.Event.MonthlySell"
+        optional :monthly_stock_exemption_period_profit, :message, 26, "Radar.Event.MonthlyStockExemptionPeriodProfit"
       end
     end
     add_message "Radar.Event.CashFlow" do
@@ -64,6 +65,9 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :swing_trade, :double, 1
       optional :reit, :double, 2
     end
+    add_message "Radar.Event.MonthlyStockExemptionPeriodProfit" do
+      optional :value, :double, 1
+    end
     add_enum "Radar.Event.PositionType" do
       value :SWING_TRADE, 0
       value :DAY_TRADE, 1
@@ -100,6 +104,7 @@ module Radar
   Event::StockExemptMonthTax = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.StockExemptMonthTax").msgclass
   Event::AccumulatedTaxCredit = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.AccumulatedTaxCredit").msgclass
   Event::MonthlySell = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.MonthlySell").msgclass
+  Event::MonthlyStockExemptionPeriodProfit = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.MonthlyStockExemptionPeriodProfit").msgclass
   Event::PositionType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.PositionType").enummodule
   Event::TransactionType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.TransactionType").enummodule
   RunReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.RunReq").msgclass
