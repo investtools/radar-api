@@ -202,6 +202,9 @@ export namespace Event {
             getAvgPrice(): number;
             setAvgPrice(value: number): void;
 
+            getEquityType(): Event.EquityType;
+            setEquityType(value: Event.EquityType): void;
+
 
             serializeBinary(): Uint8Array;
             toObject(includeInstance?: boolean): Position.AsObject;
@@ -219,6 +222,7 @@ export namespace Event {
                 shares: number,
                 value: number,
                 avgPrice: number,
+                equityType: Event.EquityType,
             }
         }
 
@@ -253,8 +257,8 @@ export namespace Event {
         getPositionType(): Event.PositionType;
         setPositionType(value: Event.PositionType): void;
 
-        getTransactionType(): Event.TransactionType;
-        setTransactionType(value: Event.TransactionType): void;
+        getEquityType(): Event.EquityType;
+        setEquityType(value: Event.EquityType): void;
 
         getValue(): number;
         setValue(value: number): void;
@@ -273,7 +277,7 @@ export namespace Event {
     export namespace PositionMonthTax {
         export type AsObject = {
             positionType: Event.PositionType,
-            transactionType: Event.TransactionType,
+            equityType: Event.EquityType,
             value: number,
         }
     }
@@ -384,7 +388,7 @@ export namespace Event {
     DAY_TRADE = 1,
     }
 
-    export enum TransactionType {
+    export enum EquityType {
     OTHER = 0,
     STOCK = 1,
     OPTION = 2,

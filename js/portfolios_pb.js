@@ -18,6 +18,7 @@ goog.exportSymbol('proto.Radar.Event', null, global);
 goog.exportSymbol('proto.Radar.Event.AccumulatedTaxCredit', null, global);
 goog.exportSymbol('proto.Radar.Event.CashFlow', null, global);
 goog.exportSymbol('proto.Radar.Event.CashFlow.Type', null, global);
+goog.exportSymbol('proto.Radar.Event.EquityType', null, global);
 goog.exportSymbol('proto.Radar.Event.MonthlySell', null, global);
 goog.exportSymbol('proto.Radar.Event.MonthlyStockExemptionPeriodProfit', null, global);
 goog.exportSymbol('proto.Radar.Event.Portfolio', null, global);
@@ -26,7 +27,6 @@ goog.exportSymbol('proto.Radar.Event.Portfolio.Provision', null, global);
 goog.exportSymbol('proto.Radar.Event.PositionMonthTax', null, global);
 goog.exportSymbol('proto.Radar.Event.PositionType', null, global);
 goog.exportSymbol('proto.Radar.Event.StockExemptMonthTax', null, global);
-goog.exportSymbol('proto.Radar.Event.TransactionType', null, global);
 goog.exportSymbol('proto.Radar.InterestOnOwnCapital', null, global);
 goog.exportSymbol('proto.Radar.RunReq', null, global);
 goog.exportSymbol('proto.Radar.RunReq.Event', null, global);
@@ -583,7 +583,7 @@ proto.Radar.Event.PositionType = {
 /**
  * @enum {number}
  */
-proto.Radar.Event.TransactionType = {
+proto.Radar.Event.EquityType = {
   OTHER: 0,
   STOCK: 1,
   OPTION: 2,
@@ -998,7 +998,8 @@ proto.Radar.Event.Portfolio.Position.toObject = function(includeInstance, msg) {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     shares: jspb.Message.getFieldWithDefault(msg, 2, 0),
     value: +jspb.Message.getFieldWithDefault(msg, 3, 0.0),
-    avgPrice: +jspb.Message.getFieldWithDefault(msg, 4, 0.0)
+    avgPrice: +jspb.Message.getFieldWithDefault(msg, 4, 0.0),
+    equityType: jspb.Message.getFieldWithDefault(msg, 5, 0)
   };
 
   if (includeInstance) {
@@ -1050,6 +1051,10 @@ proto.Radar.Event.Portfolio.Position.deserializeBinaryFromReader = function(msg,
     case 4:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setAvgPrice(value);
+      break;
+    case 5:
+      var value = /** @type {!proto.Radar.Event.EquityType} */ (reader.readEnum());
+      msg.setEquityType(value);
       break;
     default:
       reader.skipField();
@@ -1105,6 +1110,13 @@ proto.Radar.Event.Portfolio.Position.serializeBinaryToWriter = function(message,
   if (f !== 0.0) {
     writer.writeDouble(
       4,
+      f
+    );
+  }
+  f = message.getEquityType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      5,
       f
     );
   }
@@ -1168,6 +1180,21 @@ proto.Radar.Event.Portfolio.Position.prototype.getAvgPrice = function() {
 /** @param {number} value */
 proto.Radar.Event.Portfolio.Position.prototype.setAvgPrice = function(value) {
   jspb.Message.setProto3FloatField(this, 4, value);
+};
+
+
+/**
+ * optional EquityType equity_type = 5;
+ * @return {!proto.Radar.Event.EquityType}
+ */
+proto.Radar.Event.Portfolio.Position.prototype.getEquityType = function() {
+  return /** @type {!proto.Radar.Event.EquityType} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {!proto.Radar.Event.EquityType} value */
+proto.Radar.Event.Portfolio.Position.prototype.setEquityType = function(value) {
+  jspb.Message.setProto3EnumField(this, 5, value);
 };
 
 
@@ -1450,7 +1477,7 @@ proto.Radar.Event.PositionMonthTax.prototype.toObject = function(opt_includeInst
 proto.Radar.Event.PositionMonthTax.toObject = function(includeInstance, msg) {
   var f, obj = {
     positionType: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    transactionType: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    equityType: jspb.Message.getFieldWithDefault(msg, 2, 0),
     value: +jspb.Message.getFieldWithDefault(msg, 3, 0.0)
   };
 
@@ -1493,8 +1520,8 @@ proto.Radar.Event.PositionMonthTax.deserializeBinaryFromReader = function(msg, r
       msg.setPositionType(value);
       break;
     case 2:
-      var value = /** @type {!proto.Radar.Event.TransactionType} */ (reader.readEnum());
-      msg.setTransactionType(value);
+      var value = /** @type {!proto.Radar.Event.EquityType} */ (reader.readEnum());
+      msg.setEquityType(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readDouble());
@@ -1536,7 +1563,7 @@ proto.Radar.Event.PositionMonthTax.serializeBinaryToWriter = function(message, w
       f
     );
   }
-  f = message.getTransactionType();
+  f = message.getEquityType();
   if (f !== 0.0) {
     writer.writeEnum(
       2,
@@ -1569,16 +1596,16 @@ proto.Radar.Event.PositionMonthTax.prototype.setPositionType = function(value) {
 
 
 /**
- * optional TransactionType transaction_type = 2;
- * @return {!proto.Radar.Event.TransactionType}
+ * optional EquityType equity_type = 2;
+ * @return {!proto.Radar.Event.EquityType}
  */
-proto.Radar.Event.PositionMonthTax.prototype.getTransactionType = function() {
-  return /** @type {!proto.Radar.Event.TransactionType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+proto.Radar.Event.PositionMonthTax.prototype.getEquityType = function() {
+  return /** @type {!proto.Radar.Event.EquityType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
-/** @param {!proto.Radar.Event.TransactionType} value */
-proto.Radar.Event.PositionMonthTax.prototype.setTransactionType = function(value) {
+/** @param {!proto.Radar.Event.EquityType} value */
+proto.Radar.Event.PositionMonthTax.prototype.setEquityType = function(value) {
   jspb.Message.setProto3EnumField(this, 2, value);
 };
 

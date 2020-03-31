@@ -43,6 +43,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :shares, :int32, 2
       optional :value, :double, 3
       optional :avg_price, :double, 4
+      optional :equity_type, :enum, 5, "Radar.Event.EquityType"
     end
     add_message "Radar.Event.Portfolio.Provision" do
       optional :value, :double, 1
@@ -50,7 +51,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "Radar.Event.PositionMonthTax" do
       optional :position_type, :enum, 1, "Radar.Event.PositionType"
-      optional :transaction_type, :enum, 2, "Radar.Event.TransactionType"
+      optional :equity_type, :enum, 2, "Radar.Event.EquityType"
       optional :value, :double, 3
     end
     add_message "Radar.Event.StockExemptMonthTax" do
@@ -73,7 +74,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :SWING_TRADE, 0
       value :DAY_TRADE, 1
     end
-    add_enum "Radar.Event.TransactionType" do
+    add_enum "Radar.Event.EquityType" do
       value :OTHER, 0
       value :STOCK, 1
       value :OPTION, 2
@@ -109,7 +110,7 @@ module Radar
   Event::MonthlySell = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.MonthlySell").msgclass
   Event::MonthlyStockExemptionPeriodProfit = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.MonthlyStockExemptionPeriodProfit").msgclass
   Event::PositionType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.PositionType").enummodule
-  Event::TransactionType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.TransactionType").enummodule
+  Event::EquityType = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.EquityType").enummodule
   RunReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.RunReq").msgclass
   RunReq::Event = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.RunReq.Event").enummodule
 end

@@ -12,7 +12,7 @@ message Event {
     SWING_TRADE = 0;
     DAY_TRADE = 1;
   }
-  enum TransactionType {
+  enum EquityType {
     OTHER = 0;
     STOCK = 1;
     OPTION = 2;
@@ -35,6 +35,7 @@ message Event {
       int32 shares = 2;
       double value = 3;
       double avg_price = 4;
+      EquityType equity_type = 5;
     }
     message Provision {
       double value = 1;
@@ -45,7 +46,7 @@ message Event {
   }
   message PositionMonthTax {
     PositionType position_type = 1;
-    TransactionType transaction_type = 2;
+    EquityType equity_type = 2;
     double value = 3;
   }
   message StockExemptMonthTax { double value = 1; }
