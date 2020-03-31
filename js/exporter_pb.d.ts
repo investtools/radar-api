@@ -6,26 +6,28 @@
 
 import * as jspb from "google-protobuf";
 
-export class Chunk extends jspb.Message { 
-    getContent(): Uint8Array | string;
-    getContent_asU8(): Uint8Array;
-    getContent_asB64(): string;
-    setContent(value: Uint8Array | string): void;
+export class Metadata extends jspb.Message { 
+    getFilename(): string;
+    setFilename(value: string): void;
+
+    getPassword(): string;
+    setPassword(value: string): void;
 
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): Chunk.AsObject;
-    static toObject(includeInstance: boolean, msg: Chunk): Chunk.AsObject;
+    toObject(includeInstance?: boolean): Metadata.AsObject;
+    static toObject(includeInstance: boolean, msg: Metadata): Metadata.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: Chunk, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): Chunk;
-    static deserializeBinaryFromReader(message: Chunk, reader: jspb.BinaryReader): Chunk;
+    static serializeBinaryToWriter(message: Metadata, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Metadata;
+    static deserializeBinaryFromReader(message: Metadata, reader: jspb.BinaryReader): Metadata;
 }
 
-export namespace Chunk {
+export namespace Metadata {
     export type AsObject = {
-        content: Uint8Array | string,
+        filename: string,
+        password: string,
     }
 }
 
@@ -52,4 +54,49 @@ export namespace GenerateReq {
         userId: string,
         portfolioId: string,
     }
+}
+
+export class GenerateResp extends jspb.Message { 
+
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): Metadata | undefined;
+    setMetadata(value?: Metadata): void;
+
+
+    hasChunk(): boolean;
+    clearChunk(): void;
+    getChunk(): Uint8Array | string;
+    getChunk_asU8(): Uint8Array;
+    getChunk_asB64(): string;
+    setChunk(value: Uint8Array | string): void;
+
+
+    getTypeCase(): GenerateResp.TypeCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GenerateResp.AsObject;
+    static toObject(includeInstance: boolean, msg: GenerateResp): GenerateResp.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GenerateResp, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GenerateResp;
+    static deserializeBinaryFromReader(message: GenerateResp, reader: jspb.BinaryReader): GenerateResp;
+}
+
+export namespace GenerateResp {
+    export type AsObject = {
+        metadata?: Metadata.AsObject,
+        chunk: Uint8Array | string,
+    }
+
+    export enum TypeCase {
+        TYPE_NOT_SET = 0,
+    
+    METADATA = 1,
+
+    CHUNK = 2,
+
+    }
+
 }

@@ -2,13 +2,23 @@ syntax = "proto3";
 
 package Radar;
 
-message Chunk { bytes Content = 1; }
+message Metadata {
+  string filename = 1;
+  string password = 2;
+}
 
 message GenerateReq {
   string user_id = 1;
   string portfolio_id = 2;
 }
 
+message GenerateResp {
+  oneof type {
+    Metadata metadata = 1;
+    bytes chunk = 2;
+  }
+}
+
 service ReportGenerator {
-  rpc generate(GenerateReq) returns (stream Chunk) {}
+  rpc Generate(GenerateReq) returns (stream GenerateResp) {}
 }
