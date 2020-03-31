@@ -357,6 +357,9 @@ export namespace Event {
         getValue(): number;
         setValue(value: number): void;
 
+        getSource(): string;
+        setSource(value: string): void;
+
 
         serializeBinary(): Uint8Array;
         toObject(includeInstance?: boolean): MonthlyStockExemptionPeriodProfit.AsObject;
@@ -371,6 +374,7 @@ export namespace Event {
     export namespace MonthlyStockExemptionPeriodProfit {
         export type AsObject = {
             value: number,
+            source: string,
         }
     }
 
