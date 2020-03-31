@@ -84,10 +84,12 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :user_id, :string, 1
       optional :portfolio_id, :string, 2
       repeated :events, :enum, 3, "Radar.RunReq.Event"
+      optional :upto, :message, 4, "google.protobuf.Timestamp"
     end
     add_enum "Radar.RunReq.Event" do
       value :CASH_FLOW, 0
       value :EACH_DAY, 1
+      value :EACH_MONTH, 2
     end
   end
 end

@@ -427,6 +427,12 @@ export class RunReq extends jspb.Message {
     addEvents(value: RunReq.Event, index?: number): RunReq.Event;
 
 
+    hasUpto(): boolean;
+    clearUpto(): void;
+    getUpto(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setUpto(value?: google_protobuf_timestamp_pb.Timestamp): void;
+
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RunReq.AsObject;
     static toObject(includeInstance: boolean, msg: RunReq): RunReq.AsObject;
@@ -442,11 +448,13 @@ export namespace RunReq {
         userId: string,
         portfolioId: string,
         eventsList: Array<RunReq.Event>,
+        upto?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     }
 
     export enum Event {
     CASH_FLOW = 0,
     EACH_DAY = 1,
+    EACH_MONTH = 2,
     }
 
 }

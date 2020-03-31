@@ -48,9 +48,7 @@ message Event {
     TransactionType transaction_type = 2;
     double value = 3;
   }
-  message StockExemptMonthTax { 
-    double value = 1;
-  }
+  message StockExemptMonthTax { double value = 1; }
   message AccumulatedTaxCredit {
     double swing_trade = 1;
     double day_trade = 2;
@@ -72,7 +70,8 @@ message Event {
     StockExemptMonthTax stock_exempt_month_tax = 23;
     AccumulatedTaxCredit accumulated_tax_credit = 24;
     MonthlySell monthly_sell = 25;
-    MonthlyStockExemptionPeriodProfit monthly_stock_exemption_period_profit = 26;
+    MonthlyStockExemptionPeriodProfit monthly_stock_exemption_period_profit =
+        26;
   }
 }
 
@@ -80,10 +79,12 @@ message RunReq {
   enum Event {
     CASH_FLOW = 0;
     EACH_DAY = 1;
+    EACH_MONTH = 2;
   }
   string user_id = 1;
   string portfolio_id = 2;
   repeated Event events = 3;
+  google.protobuf.Timestamp upto = 4;
 }
 
 service Portfolios {

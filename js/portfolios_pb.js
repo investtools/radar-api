@@ -2570,7 +2570,8 @@ proto.Radar.RunReq.toObject = function(includeInstance, msg) {
   var f, obj = {
     userId: jspb.Message.getFieldWithDefault(msg, 1, ""),
     portfolioId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    eventsList: jspb.Message.getRepeatedField(msg, 3)
+    eventsList: jspb.Message.getRepeatedField(msg, 3),
+    upto: (f = msg.getUpto()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2618,6 +2619,11 @@ proto.Radar.RunReq.deserializeBinaryFromReader = function(msg, reader) {
     case 3:
       var value = /** @type {!Array<!proto.Radar.RunReq.Event>} */ (reader.readPackedEnum());
       msg.setEventsList(value);
+      break;
+    case 4:
+      var value = new google_protobuf_timestamp_pb.Timestamp;
+      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
+      msg.setUpto(value);
       break;
     default:
       reader.skipField();
@@ -2669,6 +2675,14 @@ proto.Radar.RunReq.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
+  f = message.getUpto();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -2677,7 +2691,8 @@ proto.Radar.RunReq.serializeBinaryToWriter = function(message, writer) {
  */
 proto.Radar.RunReq.Event = {
   CASH_FLOW: 0,
-  EACH_DAY: 1
+  EACH_DAY: 1,
+  EACH_MONTH: 2
 };
 
 /**
@@ -2736,6 +2751,36 @@ proto.Radar.RunReq.prototype.addEvents = function(value, opt_index) {
 
 proto.Radar.RunReq.prototype.clearEventsList = function() {
   this.setEventsList([]);
+};
+
+
+/**
+ * optional google.protobuf.Timestamp upto = 4;
+ * @return {?proto.google.protobuf.Timestamp}
+ */
+proto.Radar.RunReq.prototype.getUpto = function() {
+  return /** @type{?proto.google.protobuf.Timestamp} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 4));
+};
+
+
+/** @param {?proto.google.protobuf.Timestamp|undefined} value */
+proto.Radar.RunReq.prototype.setUpto = function(value) {
+  jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+proto.Radar.RunReq.prototype.clearUpto = function() {
+  this.setUpto(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.Radar.RunReq.prototype.hasUpto = function() {
+  return jspb.Message.getField(this, 4) != null;
 };
 
 
