@@ -2152,7 +2152,8 @@ proto.Radar.Event.MonthlyStockExemptionPeriodProfit.prototype.toObject = functio
  */
 proto.Radar.Event.MonthlyStockExemptionPeriodProfit.toObject = function(includeInstance, msg) {
   var f, obj = {
-    value: +jspb.Message.getFieldWithDefault(msg, 1, 0.0)
+    value: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
+    source: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -2193,6 +2194,10 @@ proto.Radar.Event.MonthlyStockExemptionPeriodProfit.deserializeBinaryFromReader 
       var value = /** @type {number} */ (reader.readDouble());
       msg.setValue(value);
       break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSource(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2229,6 +2234,13 @@ proto.Radar.Event.MonthlyStockExemptionPeriodProfit.serializeBinaryToWriter = fu
       f
     );
   }
+  f = message.getSource();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -2244,6 +2256,21 @@ proto.Radar.Event.MonthlyStockExemptionPeriodProfit.prototype.getValue = functio
 /** @param {number} value */
 proto.Radar.Event.MonthlyStockExemptionPeriodProfit.prototype.setValue = function(value) {
   jspb.Message.setProto3FloatField(this, 1, value);
+};
+
+
+/**
+ * optional string source = 2;
+ * @return {string}
+ */
+proto.Radar.Event.MonthlyStockExemptionPeriodProfit.prototype.getSource = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.Radar.Event.MonthlyStockExemptionPeriodProfit.prototype.setSource = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

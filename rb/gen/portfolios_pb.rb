@@ -67,6 +67,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "Radar.Event.MonthlyStockExemptionPeriodProfit" do
       optional :value, :double, 1
+      optional :source, :string, 2
     end
     add_enum "Radar.Event.PositionType" do
       value :SWING_TRADE, 0

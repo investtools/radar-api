@@ -62,6 +62,7 @@ message Event {
   }
   message MonthlyStockExemptionPeriodProfit {
     double value = 1;
+    string source = 2;
   }
   google.protobuf.Timestamp date = 1;
   oneof type {
