@@ -24,6 +24,7 @@ message Event {
       OTHER = 0;
       DIVIDEND = 1;
       INTEREST_ON_OWN_CAPITAL = 2;
+      BONUS = 3;
     }
     Type type = 1;
     double value = 2;

@@ -748,7 +748,8 @@ proto.Radar.Event.CashFlow.serializeBinaryToWriter = function(message, writer) {
 proto.Radar.Event.CashFlow.Type = {
   OTHER: 0,
   DIVIDEND: 1,
-  INTEREST_ON_OWN_CAPITAL: 2
+  INTEREST_ON_OWN_CAPITAL: 2,
+  BONUS: 3
 };
 
 /**

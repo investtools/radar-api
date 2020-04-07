@@ -156,6 +156,7 @@ export namespace Event {
     OTHER = 0,
     DIVIDEND = 1,
     INTEREST_ON_OWN_CAPITAL = 2,
+    BONUS = 3,
         }
 
     }

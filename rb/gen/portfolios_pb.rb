@@ -33,6 +33,7 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       value :OTHER, 0
       value :DIVIDEND, 1
       value :INTEREST_ON_OWN_CAPITAL, 2
+      value :BONUS, 3
     end
     add_message "Radar.Event.Portfolio" do
       repeated :position, :message, 1, "Radar.Event.Portfolio.Position"
