@@ -124,6 +124,74 @@ export namespace Event {
     }
 
 
+    export class EquitySource extends jspb.Message { 
+        getSymbol(): string;
+        setSymbol(value: string): void;
+
+        getType(): Event.EquityType;
+        setType(value: Event.EquityType): void;
+
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): EquitySource.AsObject;
+        static toObject(includeInstance: boolean, msg: EquitySource): EquitySource.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: EquitySource, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): EquitySource;
+        static deserializeBinaryFromReader(message: EquitySource, reader: jspb.BinaryReader): EquitySource;
+    }
+
+    export namespace EquitySource {
+        export type AsObject = {
+            symbol: string,
+            type: Event.EquityType,
+        }
+    }
+
+    export class Source extends jspb.Message { 
+
+        hasOther(): boolean;
+        clearOther(): void;
+        getOther(): string;
+        setOther(value: string): void;
+
+
+        hasEquity(): boolean;
+        clearEquity(): void;
+        getEquity(): Event.EquitySource | undefined;
+        setEquity(value?: Event.EquitySource): void;
+
+
+        getTypeCase(): Source.TypeCase;
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): Source.AsObject;
+        static toObject(includeInstance: boolean, msg: Source): Source.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: Source, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): Source;
+        static deserializeBinaryFromReader(message: Source, reader: jspb.BinaryReader): Source;
+    }
+
+    export namespace Source {
+        export type AsObject = {
+            other: string,
+            equity?: Event.EquitySource.AsObject,
+        }
+
+        export enum TypeCase {
+            TYPE_NOT_SET = 0,
+        
+    OTHER = 1,
+
+    EQUITY = 2,
+
+        }
+
+    }
+
     export class CashFlow extends jspb.Message { 
         getType(): Event.CashFlow.Type;
         setType(value: Event.CashFlow.Type): void;
@@ -131,8 +199,11 @@ export namespace Event {
         getValue(): number;
         setValue(value: number): void;
 
-        getSource(): string;
-        setSource(value: string): void;
+
+        hasSource(): boolean;
+        clearSource(): void;
+        getSource(): Event.Source | undefined;
+        setSource(value?: Event.Source): void;
 
 
         serializeBinary(): Uint8Array;
@@ -149,7 +220,7 @@ export namespace Event {
         export type AsObject = {
             type: Event.CashFlow.Type,
             value: number,
-            source: string,
+            source?: Event.Source.AsObject,
         }
 
         export enum Type {

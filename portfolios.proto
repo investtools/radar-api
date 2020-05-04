@@ -19,6 +19,16 @@ message Event {
     REIT = 3;
     SUBSCRIPTION_RIGHT = 4;
   }
+  message EquitySource {
+    string symbol = 1;
+    EquityType type = 2;
+  }
+  message Source {
+    oneof type {
+      string other = 1;
+      EquitySource equity = 2;
+    }
+  }
   message CashFlow {
     enum Type {
       OTHER = 0;
@@ -28,7 +38,7 @@ message Event {
     }
     Type type = 1;
     double value = 2;
-    string source = 3;
+    Source source = 3;
   }
   message Portfolio {
     message Position {

@@ -24,10 +24,20 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
         optional :monthly_stock_exemption_period_profit, :message, 26, "Radar.Event.MonthlyStockExemptionPeriodProfit"
       end
     end
+    add_message "Radar.Event.EquitySource" do
+      optional :symbol, :string, 1
+      optional :type, :enum, 2, "Radar.Event.EquityType"
+    end
+    add_message "Radar.Event.Source" do
+      oneof :type do
+        optional :other, :string, 1
+        optional :equity, :message, 2, "Radar.Event.EquitySource"
+      end
+    end
     add_message "Radar.Event.CashFlow" do
       optional :type, :enum, 1, "Radar.Event.CashFlow.Type"
       optional :value, :double, 2
-      optional :source, :string, 3
+      optional :source, :message, 3, "Radar.Event.Source"
     end
     add_enum "Radar.Event.CashFlow.Type" do
       value :OTHER, 0
@@ -100,6 +110,8 @@ module Radar
   EquitySource = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.EquitySource").msgclass
   InterestOnOwnCapital = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.InterestOnOwnCapital").msgclass
   Event = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event").msgclass
+  Event::EquitySource = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.EquitySource").msgclass
+  Event::Source = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.Source").msgclass
   Event::CashFlow = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.CashFlow").msgclass
   Event::CashFlow::Type = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.CashFlow.Type").enummodule
   Event::Portfolio = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Radar.Event.Portfolio").msgclass

@@ -18,6 +18,7 @@ goog.exportSymbol('proto.Radar.Event', null, global);
 goog.exportSymbol('proto.Radar.Event.AccumulatedTaxCredit', null, global);
 goog.exportSymbol('proto.Radar.Event.CashFlow', null, global);
 goog.exportSymbol('proto.Radar.Event.CashFlow.Type', null, global);
+goog.exportSymbol('proto.Radar.Event.EquitySource', null, global);
 goog.exportSymbol('proto.Radar.Event.EquityType', null, global);
 goog.exportSymbol('proto.Radar.Event.MonthlySell', null, global);
 goog.exportSymbol('proto.Radar.Event.MonthlyStockExemptionPeriodProfit', null, global);
@@ -26,6 +27,7 @@ goog.exportSymbol('proto.Radar.Event.Portfolio.Position', null, global);
 goog.exportSymbol('proto.Radar.Event.Portfolio.Provision', null, global);
 goog.exportSymbol('proto.Radar.Event.PositionMonthTax', null, global);
 goog.exportSymbol('proto.Radar.Event.PositionType', null, global);
+goog.exportSymbol('proto.Radar.Event.Source', null, global);
 goog.exportSymbol('proto.Radar.Event.StockExemptMonthTax', null, global);
 goog.exportSymbol('proto.Radar.InterestOnOwnCapital', null, global);
 goog.exportSymbol('proto.Radar.RunReq', null, global);
@@ -602,6 +604,401 @@ proto.Radar.Event.EquityType = {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.Radar.Event.EquitySource = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.Radar.Event.EquitySource, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.Radar.Event.EquitySource.displayName = 'proto.Radar.Event.EquitySource';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.Radar.Event.EquitySource.prototype.toObject = function(opt_includeInstance) {
+  return proto.Radar.Event.EquitySource.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.Radar.Event.EquitySource} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.Radar.Event.EquitySource.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    symbol: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    type: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.Radar.Event.EquitySource}
+ */
+proto.Radar.Event.EquitySource.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.Radar.Event.EquitySource;
+  return proto.Radar.Event.EquitySource.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.Radar.Event.EquitySource} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.Radar.Event.EquitySource}
+ */
+proto.Radar.Event.EquitySource.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSymbol(value);
+      break;
+    case 2:
+      var value = /** @type {!proto.Radar.Event.EquityType} */ (reader.readEnum());
+      msg.setType(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.Radar.Event.EquitySource.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.Radar.Event.EquitySource.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.Radar.Event.EquitySource} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.Radar.Event.EquitySource.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getSymbol();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string symbol = 1;
+ * @return {string}
+ */
+proto.Radar.Event.EquitySource.prototype.getSymbol = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.Radar.Event.EquitySource.prototype.setSymbol = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional EquityType type = 2;
+ * @return {!proto.Radar.Event.EquityType}
+ */
+proto.Radar.Event.EquitySource.prototype.getType = function() {
+  return /** @type {!proto.Radar.Event.EquityType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {!proto.Radar.Event.EquityType} value */
+proto.Radar.Event.EquitySource.prototype.setType = function(value) {
+  jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.Radar.Event.Source = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.Radar.Event.Source.oneofGroups_);
+};
+goog.inherits(proto.Radar.Event.Source, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.Radar.Event.Source.displayName = 'proto.Radar.Event.Source';
+}
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.Radar.Event.Source.oneofGroups_ = [[1,2]];
+
+/**
+ * @enum {number}
+ */
+proto.Radar.Event.Source.TypeCase = {
+  TYPE_NOT_SET: 0,
+  OTHER: 1,
+  EQUITY: 2
+};
+
+/**
+ * @return {proto.Radar.Event.Source.TypeCase}
+ */
+proto.Radar.Event.Source.prototype.getTypeCase = function() {
+  return /** @type {proto.Radar.Event.Source.TypeCase} */(jspb.Message.computeOneofCase(this, proto.Radar.Event.Source.oneofGroups_[0]));
+};
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.Radar.Event.Source.prototype.toObject = function(opt_includeInstance) {
+  return proto.Radar.Event.Source.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.Radar.Event.Source} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.Radar.Event.Source.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    other: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    equity: (f = msg.getEquity()) && proto.Radar.Event.EquitySource.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.Radar.Event.Source}
+ */
+proto.Radar.Event.Source.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.Radar.Event.Source;
+  return proto.Radar.Event.Source.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.Radar.Event.Source} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.Radar.Event.Source}
+ */
+proto.Radar.Event.Source.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOther(value);
+      break;
+    case 2:
+      var value = new proto.Radar.Event.EquitySource;
+      reader.readMessage(value,proto.Radar.Event.EquitySource.deserializeBinaryFromReader);
+      msg.setEquity(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.Radar.Event.Source.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.Radar.Event.Source.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.Radar.Event.Source} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.Radar.Event.Source.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = /** @type {string} */ (jspb.Message.getField(message, 1));
+  if (f != null) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getEquity();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      proto.Radar.Event.EquitySource.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string other = 1;
+ * @return {string}
+ */
+proto.Radar.Event.Source.prototype.getOther = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.Radar.Event.Source.prototype.setOther = function(value) {
+  jspb.Message.setOneofField(this, 1, proto.Radar.Event.Source.oneofGroups_[0], value);
+};
+
+
+proto.Radar.Event.Source.prototype.clearOther = function() {
+  jspb.Message.setOneofField(this, 1, proto.Radar.Event.Source.oneofGroups_[0], undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.Radar.Event.Source.prototype.hasOther = function() {
+  return jspb.Message.getField(this, 1) != null;
+};
+
+
+/**
+ * optional EquitySource equity = 2;
+ * @return {?proto.Radar.Event.EquitySource}
+ */
+proto.Radar.Event.Source.prototype.getEquity = function() {
+  return /** @type{?proto.Radar.Event.EquitySource} */ (
+    jspb.Message.getWrapperField(this, proto.Radar.Event.EquitySource, 2));
+};
+
+
+/** @param {?proto.Radar.Event.EquitySource|undefined} value */
+proto.Radar.Event.Source.prototype.setEquity = function(value) {
+  jspb.Message.setOneofWrapperField(this, 2, proto.Radar.Event.Source.oneofGroups_[0], value);
+};
+
+
+proto.Radar.Event.Source.prototype.clearEquity = function() {
+  this.setEquity(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.Radar.Event.Source.prototype.hasEquity = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.Radar.Event.CashFlow = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -640,7 +1037,7 @@ proto.Radar.Event.CashFlow.toObject = function(includeInstance, msg) {
   var f, obj = {
     type: jspb.Message.getFieldWithDefault(msg, 1, 0),
     value: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
-    source: jspb.Message.getFieldWithDefault(msg, 3, "")
+    source: (f = msg.getSource()) && proto.Radar.Event.Source.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -686,7 +1083,8 @@ proto.Radar.Event.CashFlow.deserializeBinaryFromReader = function(msg, reader) {
       msg.setValue(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readString());
+      var value = new proto.Radar.Event.Source;
+      reader.readMessage(value,proto.Radar.Event.Source.deserializeBinaryFromReader);
       msg.setSource(value);
       break;
     default:
@@ -733,10 +1131,11 @@ proto.Radar.Event.CashFlow.serializeBinaryToWriter = function(message, writer) {
     );
   }
   f = message.getSource();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f != null) {
+    writer.writeMessage(
       3,
-      f
+      f,
+      proto.Radar.Event.Source.serializeBinaryToWriter
     );
   }
 };
@@ -783,17 +1182,32 @@ proto.Radar.Event.CashFlow.prototype.setValue = function(value) {
 
 
 /**
- * optional string source = 3;
- * @return {string}
+ * optional Source source = 3;
+ * @return {?proto.Radar.Event.Source}
  */
 proto.Radar.Event.CashFlow.prototype.getSource = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type{?proto.Radar.Event.Source} */ (
+    jspb.Message.getWrapperField(this, proto.Radar.Event.Source, 3));
 };
 
 
-/** @param {string} value */
+/** @param {?proto.Radar.Event.Source|undefined} value */
 proto.Radar.Event.CashFlow.prototype.setSource = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.Radar.Event.CashFlow.prototype.clearSource = function() {
+  this.setSource(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.Radar.Event.CashFlow.prototype.hasSource = function() {
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
