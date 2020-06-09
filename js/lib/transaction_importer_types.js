@@ -119,3 +119,85 @@ SystemUnavailableError.prototype.write = function(output) {
   return;
 };
 
+var FetchedPortfolio = module.exports.FetchedPortfolio = function(args) {
+  this.date = null;
+  this.portfolio = null;
+  if (args) {
+    if (args.date !== undefined && args.date !== null) {
+      this.date = args.date;
+    }
+    if (args.portfolio !== undefined && args.portfolio !== null) {
+      this.portfolio = Thrift.copyMap(args.portfolio, [null]);
+    }
+  }
+};
+FetchedPortfolio.prototype = {};
+FetchedPortfolio.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true) {
+    var ret = input.readFieldBegin();
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid) {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.MAP) {
+        this.portfolio = {};
+        var _rtmp31 = input.readMapBegin();
+        var _size0 = _rtmp31.size || 0;
+        for (var _i2 = 0; _i2 < _size0; ++_i2) {
+          var key3 = null;
+          var val4 = null;
+          key3 = new common_ttypes.SecurityId();
+          key3.read(input);
+          val4 = input.readI32();
+          this.portfolio[key3] = val4;
+        }
+        input.readMapEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+FetchedPortfolio.prototype.write = function(output) {
+  output.writeStructBegin('FetchedPortfolio');
+  if (this.date !== null && this.date !== undefined) {
+    output.writeFieldBegin('date', Thrift.Type.I64, 1);
+    output.writeI64(this.date);
+    output.writeFieldEnd();
+  }
+  if (this.portfolio !== null && this.portfolio !== undefined) {
+    output.writeFieldBegin('portfolio', Thrift.Type.MAP, 2);
+    output.writeMapBegin(Thrift.Type.STRUCT, Thrift.Type.I32, Thrift.objectLength(this.portfolio));
+    for (var kiter5 in this.portfolio) {
+      if (this.portfolio.hasOwnProperty(kiter5)) {
+        var viter6 = this.portfolio[kiter5];
+        kiter5.write(output);
+        output.writeI32(viter6);
+      }
+    }
+    output.writeMapEnd();
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+

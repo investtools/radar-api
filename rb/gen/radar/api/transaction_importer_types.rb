@@ -14,6 +14,8 @@ module Radar
 
     class SystemUnavailableError < ::Thrift::Exception; end
 
+    class FetchedPortfolio; end
+
     class AuthenticationError < ::Thrift::Exception
       include ::Thrift::Struct, ::Thrift::Struct_Union
       def initialize(message=nil)
@@ -46,6 +48,24 @@ module Radar
 
       FIELDS = {
         MESSAGE => {:type => ::Thrift::Types::STRING, :name => 'message'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class FetchedPortfolio
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      DATE = 1
+      PORTFOLIO = 2
+
+      FIELDS = {
+        DATE => {:type => ::Thrift::Types::I64, :name => 'date'},
+        PORTFOLIO => {:type => ::Thrift::Types::MAP, :name => 'portfolio', :key => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::SecurityId}, :value => {:type => ::Thrift::Types::I32}}
       }
 
       def struct_fields; FIELDS; end

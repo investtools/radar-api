@@ -19,7 +19,7 @@ public partial class TransactionImporter {
   public interface ISync {
     bool authenticate(string username, string password, string user);
     void fetch(string username, string password, string user, long last_transaction_date);
-    Dictionary<SecurityId, int> fetch_portfolio(string username, string password, long stock_position_date, long option_position_date);
+    FetchedPortfolio fetch_portfolio(string username, string password, long date);
   }
 
   public interface Iface : ISync {
@@ -32,8 +32,8 @@ public partial class TransactionImporter {
     void End_fetch(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long stock_position_date, long option_position_date);
-    Dictionary<SecurityId, int> End_fetch_portfolio(IAsyncResult asyncResult);
+    IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long date);
+    FetchedPortfolio End_fetch_portfolio(IAsyncResult asyncResult);
     #endif
   }
 
@@ -259,12 +259,12 @@ public partial class TransactionImporter {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long stock_position_date, long option_position_date)
+    public IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long date)
     {
-      return send_fetch_portfolio(callback, state, username, password, stock_position_date, option_position_date);
+      return send_fetch_portfolio(callback, state, username, password, date);
     }
 
-    public Dictionary<SecurityId, int> End_fetch_portfolio(IAsyncResult asyncResult)
+    public FetchedPortfolio End_fetch_portfolio(IAsyncResult asyncResult)
     {
       oprot_.Transport.EndFlush(asyncResult);
       return recv_fetch_portfolio();
@@ -272,27 +272,26 @@ public partial class TransactionImporter {
 
     #endif
 
-    public Dictionary<SecurityId, int> fetch_portfolio(string username, string password, long stock_position_date, long option_position_date)
+    public FetchedPortfolio fetch_portfolio(string username, string password, long date)
     {
       #if SILVERLIGHT
-      var asyncResult = Begin_fetch_portfolio(null, null, username, password, stock_position_date, option_position_date);
+      var asyncResult = Begin_fetch_portfolio(null, null, username, password, date);
       return End_fetch_portfolio(asyncResult);
 
       #else
-      send_fetch_portfolio(username, password, stock_position_date, option_position_date);
+      send_fetch_portfolio(username, password, date);
       return recv_fetch_portfolio();
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long stock_position_date, long option_position_date)
+    public IAsyncResult send_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long date)
     {
       oprot_.WriteMessageBegin(new TMessage("fetch_portfolio", TMessageType.Call, seqid_));
       fetch_portfolio_args args = new fetch_portfolio_args();
       args.Username = username;
       args.Password = password;
-      args.Stock_position_date = stock_position_date;
-      args.Option_position_date = option_position_date;
+      args.Date = date;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       return oprot_.Transport.BeginFlush(callback, state);
@@ -300,21 +299,20 @@ public partial class TransactionImporter {
 
     #else
 
-    public void send_fetch_portfolio(string username, string password, long stock_position_date, long option_position_date)
+    public void send_fetch_portfolio(string username, string password, long date)
     {
       oprot_.WriteMessageBegin(new TMessage("fetch_portfolio", TMessageType.Call, seqid_));
       fetch_portfolio_args args = new fetch_portfolio_args();
       args.Username = username;
       args.Password = password;
-      args.Stock_position_date = stock_position_date;
-      args.Option_position_date = option_position_date;
+      args.Date = date;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       oprot_.Transport.Flush();
     }
     #endif
 
-    public Dictionary<SecurityId, int> recv_fetch_portfolio()
+    public FetchedPortfolio recv_fetch_portfolio()
     {
       TMessage msg = iprot_.ReadMessageBegin();
       if (msg.Type == TMessageType.Exception) {
@@ -476,7 +474,7 @@ public partial class TransactionImporter {
       {
         try
         {
-          result.Success = iface_.fetch_portfolio(args.Username, args.Password, args.Stock_position_date, args.Option_position_date);
+          result.Success = iface_.fetch_portfolio(args.Username, args.Password, args.Date);
         }
         catch (ApplicationError app_error)
         {
@@ -1326,8 +1324,7 @@ public partial class TransactionImporter {
   {
     private string _username;
     private string _password;
-    private long _stock_position_date;
-    private long _option_position_date;
+    private long _date;
 
     public string Username
     {
@@ -1355,29 +1352,16 @@ public partial class TransactionImporter {
       }
     }
 
-    public long Stock_position_date
+    public long Date
     {
       get
       {
-        return _stock_position_date;
+        return _date;
       }
       set
       {
-        __isset.stock_position_date = true;
-        this._stock_position_date = value;
-      }
-    }
-
-    public long Option_position_date
-    {
-      get
-      {
-        return _option_position_date;
-      }
-      set
-      {
-        __isset.option_position_date = true;
-        this._option_position_date = value;
+        __isset.date = true;
+        this._date = value;
       }
     }
 
@@ -1389,8 +1373,7 @@ public partial class TransactionImporter {
     public struct Isset {
       public bool username;
       public bool password;
-      public bool stock_position_date;
-      public bool option_position_date;
+      public bool date;
     }
 
     public fetch_portfolio_args() {
@@ -1427,14 +1410,7 @@ public partial class TransactionImporter {
               break;
             case 3:
               if (field.Type == TType.I64) {
-                Stock_position_date = iprot.ReadI64();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 4:
-              if (field.Type == TType.I64) {
-                Option_position_date = iprot.ReadI64();
+                Date = iprot.ReadI64();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1476,20 +1452,12 @@ public partial class TransactionImporter {
           oprot.WriteString(Password);
           oprot.WriteFieldEnd();
         }
-        if (__isset.stock_position_date) {
-          field.Name = "stock_position_date";
+        if (__isset.date) {
+          field.Name = "date";
           field.Type = TType.I64;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI64(Stock_position_date);
-          oprot.WriteFieldEnd();
-        }
-        if (__isset.option_position_date) {
-          field.Name = "option_position_date";
-          field.Type = TType.I64;
-          field.ID = 4;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI64(Option_position_date);
+          oprot.WriteI64(Date);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -1516,17 +1484,11 @@ public partial class TransactionImporter {
         __sb.Append("Password: ");
         __sb.Append(Password);
       }
-      if (__isset.stock_position_date) {
+      if (__isset.date) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Stock_position_date: ");
-        __sb.Append(Stock_position_date);
-      }
-      if (__isset.option_position_date) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Option_position_date: ");
-        __sb.Append(Option_position_date);
+        __sb.Append("Date: ");
+        __sb.Append(Date);
       }
       __sb.Append(")");
       return __sb.ToString();
@@ -1540,12 +1502,12 @@ public partial class TransactionImporter {
   #endif
   public partial class fetch_portfolio_result : TBase
   {
-    private Dictionary<SecurityId, int> _success;
+    private FetchedPortfolio _success;
     private ApplicationError _app_error;
     private AuthenticationError _auth_error;
     private SystemUnavailableError _system_unavailable;
 
-    public Dictionary<SecurityId, int> Success
+    public FetchedPortfolio Success
     {
       get
       {
@@ -1628,21 +1590,9 @@ public partial class TransactionImporter {
           switch (field.ID)
           {
             case 0:
-              if (field.Type == TType.Map) {
-                {
-                  Success = new Dictionary<SecurityId, int>();
-                  TMap _map0 = iprot.ReadMapBegin();
-                  for( int _i1 = 0; _i1 < _map0.Count; ++_i1)
-                  {
-                    SecurityId _key2;
-                    int _val3;
-                    _key2 = new SecurityId();
-                    _key2.Read(iprot);
-                    _val3 = iprot.ReadI32();
-                    Success[_key2] = _val3;
-                  }
-                  iprot.ReadMapEnd();
-                }
+              if (field.Type == TType.Struct) {
+                Success = new FetchedPortfolio();
+                Success.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1696,18 +1646,10 @@ public partial class TransactionImporter {
         if (this.__isset.success) {
           if (Success != null) {
             field.Name = "Success";
-            field.Type = TType.Map;
+            field.Type = TType.Struct;
             field.ID = 0;
             oprot.WriteFieldBegin(field);
-            {
-              oprot.WriteMapBegin(new TMap(TType.Struct, TType.I32, Success.Count));
-              foreach (SecurityId _iter4 in Success.Keys)
-              {
-                _iter4.Write(oprot);
-                oprot.WriteI32(Success[_iter4]);
-              }
-              oprot.WriteMapEnd();
-            }
+            Success.Write(oprot);
             oprot.WriteFieldEnd();
           }
         } else if (this.__isset.auth_error) {
@@ -1754,7 +1696,7 @@ public partial class TransactionImporter {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("Success: ");
-        __sb.Append(Success);
+        __sb.Append(Success== null ? "<null>" : Success.ToString());
       }
       if (App_error != null && __isset.app_error) {
         if(!__first) { __sb.Append(", "); }

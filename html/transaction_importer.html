@@ -17,6 +17,7 @@
 </ul>
 </td>
 <td><a href="#Struct_AuthenticationError">AuthenticationError</a><br/>
+<a href="#Struct_FetchedPortfolio">FetchedPortfolio</a><br/>
 <a href="#Struct_SystemUnavailableError">SystemUnavailableError</a><br/>
 </td>
 <td></code></td>
@@ -28,6 +29,10 @@
 </table><br/></div><div class="definition"><h3 id="Struct_SystemUnavailableError">Exception: SystemUnavailableError</h3>
 <table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
 <tr><td>1</td><td>message</td><td><code>string</code></td><td></td><td>default</td><td></td></tr>
+</table><br/></div><div class="definition"><h3 id="Struct_FetchedPortfolio">Struct: FetchedPortfolio</h3>
+<table class="table-bordered table-striped table-condensed"><thead><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></thead>
+<tr><td>1</td><td>date</td><td><code><a href="common.html#Struct_Date">common.Date</a></code></td><td></td><td>default</td><td></td></tr>
+<tr><td>2</td><td>portfolio</td><td><code>map&lt;<code><a href="common.html#Struct_SecurityId">common.SecurityId</a></code>, <code>i32</code>&gt;</code></td><td></td><td>default</td><td></td></tr>
 </table><br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_TransactionImporter">Service: TransactionImporter</h3>
 <div class="definition"><h4 id="Fn_TransactionImporter_authenticate">Function: TransactionImporter.authenticate</h4>
@@ -42,9 +47,8 @@
            <code><a href="common.html#Struct_Date">common.Date</a></code> last_transaction_date)
     throws <code><a href="common.html#Struct_ApplicationError">common.ApplicationError</a></code>, <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>, <code><a href="#Struct_SystemUnavailableError">SystemUnavailableError</a></code>
 </pre></div><div class="definition"><h4 id="Fn_TransactionImporter_fetch_portfolio">Function: TransactionImporter.fetch_portfolio</h4>
-<pre><code>map&lt;<code><a href="common.html#Struct_SecurityId">common.SecurityId</a></code>, <code>i32</code>&gt;</code> fetch_portfolio(<code>string</code> username,
-                                          <code>string</code> password,
-                                          <code><a href="common.html#Struct_Date">common.Date</a></code> stock_position_date,
-                                          <code><a href="common.html#Struct_Date">common.Date</a></code> option_position_date)
+<pre><code><a href="#Struct_FetchedPortfolio">FetchedPortfolio</a></code> fetch_portfolio(<code>string</code> username,
+                                 <code>string</code> password,
+                                 <code><a href="common.html#Struct_Date">common.Date</a></code> date)
     throws <code><a href="common.html#Struct_ApplicationError">common.ApplicationError</a></code>, <code><a href="#Struct_AuthenticationError">AuthenticationError</a></code>, <code><a href="#Struct_SystemUnavailableError">SystemUnavailableError</a></code>
 </pre></div></div></body></html>

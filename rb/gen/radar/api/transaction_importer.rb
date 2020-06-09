@@ -48,13 +48,13 @@ module Radar
           return
         end
 
-        def fetch_portfolio(username, password, stock_position_date, option_position_date)
-          send_fetch_portfolio(username, password, stock_position_date, option_position_date)
+        def fetch_portfolio(username, password, date)
+          send_fetch_portfolio(username, password, date)
           return recv_fetch_portfolio()
         end
 
-        def send_fetch_portfolio(username, password, stock_position_date, option_position_date)
-          send_message('fetch_portfolio', Fetch_portfolio_args, :username => username, :password => password, :stock_position_date => stock_position_date, :option_position_date => option_position_date)
+        def send_fetch_portfolio(username, password, date)
+          send_message('fetch_portfolio', Fetch_portfolio_args, :username => username, :password => password, :date => date)
         end
 
         def recv_fetch_portfolio()
@@ -105,7 +105,7 @@ module Radar
           args = read_args(iprot, Fetch_portfolio_args)
           result = Fetch_portfolio_result.new()
           begin
-            result.success = @handler.fetch_portfolio(args.username, args.password, args.stock_position_date, args.option_position_date)
+            result.success = @handler.fetch_portfolio(args.username, args.password, args.date)
           rescue ::Radar::Api::ApplicationError => app_error
             result.app_error = app_error
           rescue ::Radar::Api::AuthenticationError => auth_error
@@ -208,14 +208,12 @@ module Radar
         include ::Thrift::Struct, ::Thrift::Struct_Union
         USERNAME = 1
         PASSWORD = 2
-        STOCK_POSITION_DATE = 3
-        OPTION_POSITION_DATE = 4
+        DATE = 3
 
         FIELDS = {
           USERNAME => {:type => ::Thrift::Types::STRING, :name => 'username'},
           PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'},
-          STOCK_POSITION_DATE => {:type => ::Thrift::Types::I64, :name => 'stock_position_date'},
-          OPTION_POSITION_DATE => {:type => ::Thrift::Types::I64, :name => 'option_position_date'}
+          DATE => {:type => ::Thrift::Types::I64, :name => 'date'}
         }
 
         def struct_fields; FIELDS; end
@@ -234,7 +232,7 @@ module Radar
         SYSTEM_UNAVAILABLE = 2
 
         FIELDS = {
-          SUCCESS => {:type => ::Thrift::Types::MAP, :name => 'success', :key => {:type => ::Thrift::Types::STRUCT, :class => ::Radar::Api::SecurityId}, :value => {:type => ::Thrift::Types::I32}},
+          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Radar::Api::FetchedPortfolio},
           APP_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'app_error', :class => ::Radar::Api::ApplicationError},
           AUTH_ERROR => {:type => ::Thrift::Types::STRUCT, :name => 'auth_error', :class => ::Radar::Api::AuthenticationError},
           SYSTEM_UNAVAILABLE => {:type => ::Thrift::Types::STRUCT, :name => 'system_unavailable', :class => ::Radar::Api::SystemUnavailableError}
