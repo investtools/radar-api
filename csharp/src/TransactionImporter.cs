@@ -19,7 +19,7 @@ public partial class TransactionImporter {
   public interface ISync {
     bool authenticate(string username, string password, string user);
     void fetch(string username, string password, string user, long last_transaction_date);
-    Dictionary<SecurityId, int> fetch_portfolio(string username, string password, long date);
+    Dictionary<SecurityId, int> fetch_portfolio(string username, string password, long stock_position_date, long option_position_date);
   }
 
   public interface Iface : ISync {
@@ -32,7 +32,7 @@ public partial class TransactionImporter {
     void End_fetch(IAsyncResult asyncResult);
     #endif
     #if SILVERLIGHT
-    IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long date);
+    IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long stock_position_date, long option_position_date);
     Dictionary<SecurityId, int> End_fetch_portfolio(IAsyncResult asyncResult);
     #endif
   }
@@ -259,9 +259,9 @@ public partial class TransactionImporter {
     
     #if SILVERLIGHT
     
-    public IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long date)
+    public IAsyncResult Begin_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long stock_position_date, long option_position_date)
     {
-      return send_fetch_portfolio(callback, state, username, password, date);
+      return send_fetch_portfolio(callback, state, username, password, stock_position_date, option_position_date);
     }
 
     public Dictionary<SecurityId, int> End_fetch_portfolio(IAsyncResult asyncResult)
@@ -272,26 +272,27 @@ public partial class TransactionImporter {
 
     #endif
 
-    public Dictionary<SecurityId, int> fetch_portfolio(string username, string password, long date)
+    public Dictionary<SecurityId, int> fetch_portfolio(string username, string password, long stock_position_date, long option_position_date)
     {
       #if SILVERLIGHT
-      var asyncResult = Begin_fetch_portfolio(null, null, username, password, date);
+      var asyncResult = Begin_fetch_portfolio(null, null, username, password, stock_position_date, option_position_date);
       return End_fetch_portfolio(asyncResult);
 
       #else
-      send_fetch_portfolio(username, password, date);
+      send_fetch_portfolio(username, password, stock_position_date, option_position_date);
       return recv_fetch_portfolio();
 
       #endif
     }
     #if SILVERLIGHT
-    public IAsyncResult send_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long date)
+    public IAsyncResult send_fetch_portfolio(AsyncCallback callback, object state, string username, string password, long stock_position_date, long option_position_date)
     {
       oprot_.WriteMessageBegin(new TMessage("fetch_portfolio", TMessageType.Call, seqid_));
       fetch_portfolio_args args = new fetch_portfolio_args();
       args.Username = username;
       args.Password = password;
-      args.Date = date;
+      args.Stock_position_date = stock_position_date;
+      args.Option_position_date = option_position_date;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       return oprot_.Transport.BeginFlush(callback, state);
@@ -299,13 +300,14 @@ public partial class TransactionImporter {
 
     #else
 
-    public void send_fetch_portfolio(string username, string password, long date)
+    public void send_fetch_portfolio(string username, string password, long stock_position_date, long option_position_date)
     {
       oprot_.WriteMessageBegin(new TMessage("fetch_portfolio", TMessageType.Call, seqid_));
       fetch_portfolio_args args = new fetch_portfolio_args();
       args.Username = username;
       args.Password = password;
-      args.Date = date;
+      args.Stock_position_date = stock_position_date;
+      args.Option_position_date = option_position_date;
       args.Write(oprot_);
       oprot_.WriteMessageEnd();
       oprot_.Transport.Flush();
@@ -474,7 +476,7 @@ public partial class TransactionImporter {
       {
         try
         {
-          result.Success = iface_.fetch_portfolio(args.Username, args.Password, args.Date);
+          result.Success = iface_.fetch_portfolio(args.Username, args.Password, args.Stock_position_date, args.Option_position_date);
         }
         catch (ApplicationError app_error)
         {
@@ -1324,7 +1326,8 @@ public partial class TransactionImporter {
   {
     private string _username;
     private string _password;
-    private long _date;
+    private long _stock_position_date;
+    private long _option_position_date;
 
     public string Username
     {
@@ -1352,16 +1355,29 @@ public partial class TransactionImporter {
       }
     }
 
-    public long Date
+    public long Stock_position_date
     {
       get
       {
-        return _date;
+        return _stock_position_date;
       }
       set
       {
-        __isset.date = true;
-        this._date = value;
+        __isset.stock_position_date = true;
+        this._stock_position_date = value;
+      }
+    }
+
+    public long Option_position_date
+    {
+      get
+      {
+        return _option_position_date;
+      }
+      set
+      {
+        __isset.option_position_date = true;
+        this._option_position_date = value;
       }
     }
 
@@ -1373,7 +1389,8 @@ public partial class TransactionImporter {
     public struct Isset {
       public bool username;
       public bool password;
-      public bool date;
+      public bool stock_position_date;
+      public bool option_position_date;
     }
 
     public fetch_portfolio_args() {
@@ -1410,7 +1427,14 @@ public partial class TransactionImporter {
               break;
             case 3:
               if (field.Type == TType.I64) {
-                Date = iprot.ReadI64();
+                Stock_position_date = iprot.ReadI64();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 4:
+              if (field.Type == TType.I64) {
+                Option_position_date = iprot.ReadI64();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -1452,12 +1476,20 @@ public partial class TransactionImporter {
           oprot.WriteString(Password);
           oprot.WriteFieldEnd();
         }
-        if (__isset.date) {
-          field.Name = "date";
+        if (__isset.stock_position_date) {
+          field.Name = "stock_position_date";
           field.Type = TType.I64;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI64(Date);
+          oprot.WriteI64(Stock_position_date);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.option_position_date) {
+          field.Name = "option_position_date";
+          field.Type = TType.I64;
+          field.ID = 4;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI64(Option_position_date);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -1484,11 +1516,17 @@ public partial class TransactionImporter {
         __sb.Append("Password: ");
         __sb.Append(Password);
       }
-      if (__isset.date) {
+      if (__isset.stock_position_date) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Date: ");
-        __sb.Append(Date);
+        __sb.Append("Stock_position_date: ");
+        __sb.Append(Stock_position_date);
+      }
+      if (__isset.option_position_date) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Option_position_date: ");
+        __sb.Append(Option_position_date);
       }
       __sb.Append(")");
       return __sb.ToString();

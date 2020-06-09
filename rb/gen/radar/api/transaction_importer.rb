@@ -48,13 +48,13 @@ module Radar
           return
         end
 
-        def fetch_portfolio(username, password, date)
-          send_fetch_portfolio(username, password, date)
+        def fetch_portfolio(username, password, stock_position_date, option_position_date)
+          send_fetch_portfolio(username, password, stock_position_date, option_position_date)
           return recv_fetch_portfolio()
         end
 
-        def send_fetch_portfolio(username, password, date)
-          send_message('fetch_portfolio', Fetch_portfolio_args, :username => username, :password => password, :date => date)
+        def send_fetch_portfolio(username, password, stock_position_date, option_position_date)
+          send_message('fetch_portfolio', Fetch_portfolio_args, :username => username, :password => password, :stock_position_date => stock_position_date, :option_position_date => option_position_date)
         end
 
         def recv_fetch_portfolio()
@@ -105,7 +105,7 @@ module Radar
           args = read_args(iprot, Fetch_portfolio_args)
           result = Fetch_portfolio_result.new()
           begin
-            result.success = @handler.fetch_portfolio(args.username, args.password, args.date)
+            result.success = @handler.fetch_portfolio(args.username, args.password, args.stock_position_date, args.option_position_date)
           rescue ::Radar::Api::ApplicationError => app_error
             result.app_error = app_error
           rescue ::Radar::Api::AuthenticationError => auth_error
@@ -208,12 +208,14 @@ module Radar
         include ::Thrift::Struct, ::Thrift::Struct_Union
         USERNAME = 1
         PASSWORD = 2
-        DATE = 3
+        STOCK_POSITION_DATE = 3
+        OPTION_POSITION_DATE = 4
 
         FIELDS = {
           USERNAME => {:type => ::Thrift::Types::STRING, :name => 'username'},
           PASSWORD => {:type => ::Thrift::Types::STRING, :name => 'password'},
-          DATE => {:type => ::Thrift::Types::I64, :name => 'date'}
+          STOCK_POSITION_DATE => {:type => ::Thrift::Types::I64, :name => 'stock_position_date'},
+          OPTION_POSITION_DATE => {:type => ::Thrift::Types::I64, :name => 'option_position_date'}
         }
 
         def struct_fields; FIELDS; end
