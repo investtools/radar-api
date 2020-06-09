@@ -396,7 +396,8 @@ TransactionImporter_fetch_result.prototype.write = function(output) {
 var TransactionImporter_fetch_portfolio_args = function(args) {
   this.username = null;
   this.password = null;
-  this.date = null;
+  this.stock_position_date = null;
+  this.option_position_date = null;
   if (args) {
     if (args.username !== undefined && args.username !== null) {
       this.username = args.username;
@@ -404,8 +405,11 @@ var TransactionImporter_fetch_portfolio_args = function(args) {
     if (args.password !== undefined && args.password !== null) {
       this.password = args.password;
     }
-    if (args.date !== undefined && args.date !== null) {
-      this.date = args.date;
+    if (args.stock_position_date !== undefined && args.stock_position_date !== null) {
+      this.stock_position_date = args.stock_position_date;
+    }
+    if (args.option_position_date !== undefined && args.option_position_date !== null) {
+      this.option_position_date = args.option_position_date;
     }
   }
 };
@@ -436,7 +440,14 @@ TransactionImporter_fetch_portfolio_args.prototype.read = function(input) {
       break;
       case 3:
       if (ftype == Thrift.Type.I64) {
-        this.date = input.readI64();
+        this.stock_position_date = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 4:
+      if (ftype == Thrift.Type.I64) {
+        this.option_position_date = input.readI64();
       } else {
         input.skip(ftype);
       }
@@ -462,9 +473,14 @@ TransactionImporter_fetch_portfolio_args.prototype.write = function(output) {
     output.writeString(this.password);
     output.writeFieldEnd();
   }
-  if (this.date !== null && this.date !== undefined) {
-    output.writeFieldBegin('date', Thrift.Type.I64, 3);
-    output.writeI64(this.date);
+  if (this.stock_position_date !== null && this.stock_position_date !== undefined) {
+    output.writeFieldBegin('stock_position_date', Thrift.Type.I64, 3);
+    output.writeI64(this.stock_position_date);
+    output.writeFieldEnd();
+  }
+  if (this.option_position_date !== null && this.option_position_date !== undefined) {
+    output.writeFieldBegin('option_position_date', Thrift.Type.I64, 4);
+    output.writeI64(this.option_position_date);
     output.writeFieldEnd();
   }
   output.writeFieldStop();
@@ -749,7 +765,7 @@ TransactionImporterClient.prototype.recv_fetch = function(input,mtype,rseqid) {
   callback(null);
 };
 
-TransactionImporterClient.prototype.fetch_portfolio = function(username, password, date, callback) {
+TransactionImporterClient.prototype.fetch_portfolio = function(username, password, stock_position_date, option_position_date, callback) {
   this._seqid = this.new_seqid();
   if (callback === undefined) {
     var _defer = Q.defer();
@@ -760,20 +776,21 @@ TransactionImporterClient.prototype.fetch_portfolio = function(username, passwor
         _defer.resolve(result);
       }
     };
-    this.send_fetch_portfolio(username, password, date);
+    this.send_fetch_portfolio(username, password, stock_position_date, option_position_date);
     return _defer.promise;
   } else {
     this._reqs[this.seqid()] = callback;
-    this.send_fetch_portfolio(username, password, date);
+    this.send_fetch_portfolio(username, password, stock_position_date, option_position_date);
   }
 };
 
-TransactionImporterClient.prototype.send_fetch_portfolio = function(username, password, date) {
+TransactionImporterClient.prototype.send_fetch_portfolio = function(username, password, stock_position_date, option_position_date) {
   var output = new this.pClass(this.output);
   var params = {
     username: username,
     password: password,
-    date: date
+    stock_position_date: stock_position_date,
+    option_position_date: option_position_date
   };
   var args = new TransactionImporter_fetch_portfolio_args(params);
   try {
@@ -928,11 +945,12 @@ TransactionImporterProcessor.prototype.process_fetch_portfolio = function(seqid,
   var args = new TransactionImporter_fetch_portfolio_args();
   args.read(input);
   input.readMessageEnd();
-  if (this._handler.fetch_portfolio.length === 3) {
+  if (this._handler.fetch_portfolio.length === 4) {
     Q.fcall(this._handler.fetch_portfolio.bind(this._handler),
       args.username,
       args.password,
-      args.date
+      args.stock_position_date,
+      args.option_position_date
     ).then(function(result) {
       var result_obj = new TransactionImporter_fetch_portfolio_result({success: result});
       output.writeMessageBegin("fetch_portfolio", Thrift.MessageType.REPLY, seqid);
@@ -953,7 +971,7 @@ TransactionImporterProcessor.prototype.process_fetch_portfolio = function(seqid,
       output.flush();
     });
   } else {
-    this._handler.fetch_portfolio(args.username, args.password, args.date, function (err, result) {
+    this._handler.fetch_portfolio(args.username, args.password, args.stock_position_date, args.option_position_date, function (err, result) {
       var result_obj;
       if ((err === null || typeof err === 'undefined') || err instanceof common_ttypes.ApplicationError || err instanceof ttypes.AuthenticationError || err instanceof ttypes.SystemUnavailableError) {
         result_obj = new TransactionImporter_fetch_portfolio_result((err !== null || typeof err === 'undefined') ? err : {success: result});

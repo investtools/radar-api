@@ -3,7 +3,7 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name          = "radar-api"
+  spec.name          = "radar-api-legacy"
   spec.version       = File.read(File.expand_path('../../version.txt', __FILE__))
   spec.authors       = ["André Aizim Kelmanson"]
   spec.email         = ["andre@investtools.com.br"]
