@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:. --grpc_out=. -I .. ../*.proto && protoc --ts_out=. -I .. ../*.proto",
+    "build": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:. --grpc_out=. --ts_out=. -I .. ../*.proto",
     "sync-version": "npm version $(cat ../version.txt) --allow-same-version"
   },
   "repository": {
@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/investtools/radar-api",
   "dependencies": {
-    "grpc-tools": "^1.8.1",
-    "grpc_tools_node_protoc_ts": "^2.5.10"
+    "grpc-promise-ts-generator-plugin": "^0.1.2"
+  },
+  "devDependencies": {
+    "grpc_tools_node_protoc_ts": "^4.1.0",
+    "grpc-tools": "^1.9.0"
   }
 }

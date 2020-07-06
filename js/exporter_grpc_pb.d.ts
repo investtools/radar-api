@@ -13,8 +13,8 @@ interface IReportGeneratorService extends grpc.ServiceDefinition<grpc.UntypedSer
 
 interface IReportGeneratorService_IGenerate extends grpc.MethodDefinition<exporter_pb.GenerateReq, exporter_pb.GenerateResp> {
     path: string; // "/Radar.ReportGenerator/Generate"
-    requestStream: boolean; // false
-    responseStream: boolean; // true
+    requestStream: false;
+    responseStream: true;
     requestSerialize: grpc.serialize<exporter_pb.GenerateReq>;
     requestDeserialize: grpc.deserialize<exporter_pb.GenerateReq>;
     responseSerialize: grpc.serialize<exporter_pb.GenerateResp>;

@@ -14,8 +14,8 @@ interface IPortfoliosService extends grpc.ServiceDefinition<grpc.UntypedServiceI
 
 interface IPortfoliosService_IRun extends grpc.MethodDefinition<portfolios_pb.RunReq, portfolios_pb.Event> {
     path: string; // "/Radar.Portfolios/Run"
-    requestStream: boolean; // false
-    responseStream: boolean; // true
+    requestStream: false;
+    responseStream: true;
     requestSerialize: grpc.serialize<portfolios_pb.RunReq>;
     requestDeserialize: grpc.deserialize<portfolios_pb.RunReq>;
     responseSerialize: grpc.serialize<portfolios_pb.Event>;

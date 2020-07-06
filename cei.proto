@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message SolveReq {}
+
+message SolveResp {
+  string text = 1;
+  map<string, string> cookies = 2;
+}
+
+service CaptchaCracker {
+  rpc Solve(SolveReq) returns (SolveResp) {}
+}

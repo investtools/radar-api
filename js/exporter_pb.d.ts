@@ -8,10 +8,10 @@ import * as jspb from "google-protobuf";
 
 export class Metadata extends jspb.Message { 
     getFilename(): string;
-    setFilename(value: string): void;
+    setFilename(value: string): Metadata;
 
     getPassword(): string;
-    setPassword(value: string): void;
+    setPassword(value: string): Metadata;
 
 
     serializeBinary(): Uint8Array;
@@ -33,10 +33,10 @@ export namespace Metadata {
 
 export class GenerateReq extends jspb.Message { 
     getUserId(): string;
-    setUserId(value: string): void;
+    setUserId(value: string): GenerateReq;
 
     getPortfolioId(): string;
-    setPortfolioId(value: string): void;
+    setPortfolioId(value: string): GenerateReq;
 
 
     serializeBinary(): Uint8Array;
@@ -61,7 +61,7 @@ export class GenerateResp extends jspb.Message {
     hasMetadata(): boolean;
     clearMetadata(): void;
     getMetadata(): Metadata | undefined;
-    setMetadata(value?: Metadata): void;
+    setMetadata(value?: Metadata): GenerateResp;
 
 
     hasChunk(): boolean;
@@ -69,7 +69,7 @@ export class GenerateResp extends jspb.Message {
     getChunk(): Uint8Array | string;
     getChunk_asU8(): Uint8Array;
     getChunk_asB64(): string;
-    setChunk(value: Uint8Array | string): void;
+    setChunk(value: Uint8Array | string): GenerateResp;
 
 
     getTypeCase(): GenerateResp.TypeCase;

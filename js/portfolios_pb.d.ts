@@ -9,7 +9,7 @@ import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/t
 
 export class EquitySource extends jspb.Message { 
     getEquity(): string;
-    setEquity(value: string): void;
+    setEquity(value: string): EquitySource;
 
 
     serializeBinary(): Uint8Array;
@@ -30,7 +30,7 @@ export namespace EquitySource {
 
 export class InterestOnOwnCapital extends jspb.Message { 
     getEquity(): string;
-    setEquity(value: string): void;
+    setEquity(value: string): InterestOnOwnCapital;
 
 
     serializeBinary(): Uint8Array;
@@ -54,49 +54,49 @@ export class Event extends jspb.Message {
     hasDate(): boolean;
     clearDate(): void;
     getDate(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setDate(value?: google_protobuf_timestamp_pb.Timestamp): void;
+    setDate(value?: google_protobuf_timestamp_pb.Timestamp): Event;
 
 
     hasCashFlow(): boolean;
     clearCashFlow(): void;
     getCashFlow(): Event.CashFlow | undefined;
-    setCashFlow(value?: Event.CashFlow): void;
+    setCashFlow(value?: Event.CashFlow): Event;
 
 
     hasPortfolio(): boolean;
     clearPortfolio(): void;
     getPortfolio(): Event.Portfolio | undefined;
-    setPortfolio(value?: Event.Portfolio): void;
+    setPortfolio(value?: Event.Portfolio): Event;
 
 
     hasPositionMonthTax(): boolean;
     clearPositionMonthTax(): void;
     getPositionMonthTax(): Event.PositionMonthTax | undefined;
-    setPositionMonthTax(value?: Event.PositionMonthTax): void;
+    setPositionMonthTax(value?: Event.PositionMonthTax): Event;
 
 
     hasStockExemptMonthTax(): boolean;
     clearStockExemptMonthTax(): void;
     getStockExemptMonthTax(): Event.StockExemptMonthTax | undefined;
-    setStockExemptMonthTax(value?: Event.StockExemptMonthTax): void;
+    setStockExemptMonthTax(value?: Event.StockExemptMonthTax): Event;
 
 
     hasAccumulatedTaxCredit(): boolean;
     clearAccumulatedTaxCredit(): void;
     getAccumulatedTaxCredit(): Event.AccumulatedTaxCredit | undefined;
-    setAccumulatedTaxCredit(value?: Event.AccumulatedTaxCredit): void;
+    setAccumulatedTaxCredit(value?: Event.AccumulatedTaxCredit): Event;
 
 
     hasMonthlySell(): boolean;
     clearMonthlySell(): void;
     getMonthlySell(): Event.MonthlySell | undefined;
-    setMonthlySell(value?: Event.MonthlySell): void;
+    setMonthlySell(value?: Event.MonthlySell): Event;
 
 
     hasMonthlyStockExemptionPeriodProfit(): boolean;
     clearMonthlyStockExemptionPeriodProfit(): void;
     getMonthlyStockExemptionPeriodProfit(): Event.MonthlyStockExemptionPeriodProfit | undefined;
-    setMonthlyStockExemptionPeriodProfit(value?: Event.MonthlyStockExemptionPeriodProfit): void;
+    setMonthlyStockExemptionPeriodProfit(value?: Event.MonthlyStockExemptionPeriodProfit): Event;
 
 
     getTypeCase(): Event.TypeCase;
@@ -126,10 +126,10 @@ export namespace Event {
 
     export class EquitySource extends jspb.Message { 
         getSymbol(): string;
-        setSymbol(value: string): void;
+        setSymbol(value: string): EquitySource;
 
         getType(): Event.EquityType;
-        setType(value: Event.EquityType): void;
+        setType(value: Event.EquityType): EquitySource;
 
 
         serializeBinary(): Uint8Array;
@@ -154,13 +154,13 @@ export namespace Event {
         hasOther(): boolean;
         clearOther(): void;
         getOther(): string;
-        setOther(value: string): void;
+        setOther(value: string): Source;
 
 
         hasEquity(): boolean;
         clearEquity(): void;
         getEquity(): Event.EquitySource | undefined;
-        setEquity(value?: Event.EquitySource): void;
+        setEquity(value?: Event.EquitySource): Source;
 
 
         getTypeCase(): Source.TypeCase;
@@ -194,16 +194,16 @@ export namespace Event {
 
     export class CashFlow extends jspb.Message { 
         getType(): Event.CashFlow.Type;
-        setType(value: Event.CashFlow.Type): void;
+        setType(value: Event.CashFlow.Type): CashFlow;
 
         getValue(): number;
-        setValue(value: number): void;
+        setValue(value: number): CashFlow;
 
 
         hasSource(): boolean;
         clearSource(): void;
         getSource(): Event.Source | undefined;
-        setSource(value?: Event.Source): void;
+        setSource(value?: Event.Source): CashFlow;
 
 
         serializeBinary(): Uint8Array;
@@ -235,12 +235,12 @@ export namespace Event {
     export class Portfolio extends jspb.Message { 
         clearPositionList(): void;
         getPositionList(): Array<Event.Portfolio.Position>;
-        setPositionList(value: Array<Event.Portfolio.Position>): void;
+        setPositionList(value: Array<Event.Portfolio.Position>): Portfolio;
         addPosition(value?: Event.Portfolio.Position, index?: number): Event.Portfolio.Position;
 
         clearProvisionList(): void;
         getProvisionList(): Array<Event.Portfolio.Provision>;
-        setProvisionList(value: Array<Event.Portfolio.Provision>): void;
+        setProvisionList(value: Array<Event.Portfolio.Provision>): Portfolio;
         addProvision(value?: Event.Portfolio.Provision, index?: number): Event.Portfolio.Provision;
 
 
@@ -263,19 +263,19 @@ export namespace Event {
 
         export class Position extends jspb.Message { 
             getId(): string;
-            setId(value: string): void;
+            setId(value: string): Position;
 
             getShares(): number;
-            setShares(value: number): void;
+            setShares(value: number): Position;
 
             getValue(): number;
-            setValue(value: number): void;
+            setValue(value: number): Position;
 
             getAvgPrice(): number;
-            setAvgPrice(value: number): void;
+            setAvgPrice(value: number): Position;
 
             getEquityType(): Event.EquityType;
-            setEquityType(value: Event.EquityType): void;
+            setEquityType(value: Event.EquityType): Position;
 
 
             serializeBinary(): Uint8Array;
@@ -300,10 +300,10 @@ export namespace Event {
 
         export class Provision extends jspb.Message { 
             getValue(): number;
-            setValue(value: number): void;
+            setValue(value: number): Provision;
 
             getSource(): string;
-            setSource(value: string): void;
+            setSource(value: string): Provision;
 
 
             serializeBinary(): Uint8Array;
@@ -327,13 +327,13 @@ export namespace Event {
 
     export class PositionMonthTax extends jspb.Message { 
         getPositionType(): Event.PositionType;
-        setPositionType(value: Event.PositionType): void;
+        setPositionType(value: Event.PositionType): PositionMonthTax;
 
         getEquityType(): Event.EquityType;
-        setEquityType(value: Event.EquityType): void;
+        setEquityType(value: Event.EquityType): PositionMonthTax;
 
         getValue(): number;
-        setValue(value: number): void;
+        setValue(value: number): PositionMonthTax;
 
 
         serializeBinary(): Uint8Array;
@@ -356,7 +356,7 @@ export namespace Event {
 
     export class StockExemptMonthTax extends jspb.Message { 
         getValue(): number;
-        setValue(value: number): void;
+        setValue(value: number): StockExemptMonthTax;
 
 
         serializeBinary(): Uint8Array;
@@ -377,13 +377,13 @@ export namespace Event {
 
     export class AccumulatedTaxCredit extends jspb.Message { 
         getSwingTrade(): number;
-        setSwingTrade(value: number): void;
+        setSwingTrade(value: number): AccumulatedTaxCredit;
 
         getDayTrade(): number;
-        setDayTrade(value: number): void;
+        setDayTrade(value: number): AccumulatedTaxCredit;
 
         getReit(): number;
-        setReit(value: number): void;
+        setReit(value: number): AccumulatedTaxCredit;
 
 
         serializeBinary(): Uint8Array;
@@ -406,10 +406,10 @@ export namespace Event {
 
     export class MonthlySell extends jspb.Message { 
         getSwingTrade(): number;
-        setSwingTrade(value: number): void;
+        setSwingTrade(value: number): MonthlySell;
 
         getReit(): number;
-        setReit(value: number): void;
+        setReit(value: number): MonthlySell;
 
 
         serializeBinary(): Uint8Array;
@@ -431,10 +431,10 @@ export namespace Event {
 
     export class MonthlyStockExemptionPeriodProfit extends jspb.Message { 
         getValue(): number;
-        setValue(value: number): void;
+        setValue(value: number): MonthlyStockExemptionPeriodProfit;
 
         getSource(): string;
-        setSource(value: string): void;
+        setSource(value: string): MonthlyStockExemptionPeriodProfit;
 
 
         serializeBinary(): Uint8Array;
@@ -492,21 +492,21 @@ export namespace Event {
 
 export class RunReq extends jspb.Message { 
     getUserId(): string;
-    setUserId(value: string): void;
+    setUserId(value: string): RunReq;
 
     getPortfolioId(): string;
-    setPortfolioId(value: string): void;
+    setPortfolioId(value: string): RunReq;
 
     clearEventsList(): void;
     getEventsList(): Array<RunReq.Event>;
-    setEventsList(value: Array<RunReq.Event>): void;
+    setEventsList(value: Array<RunReq.Event>): RunReq;
     addEvents(value: RunReq.Event, index?: number): RunReq.Event;
 
 
     hasUpto(): boolean;
     clearUpto(): void;
     getUpto(): google_protobuf_timestamp_pb.Timestamp | undefined;
-    setUpto(value?: google_protobuf_timestamp_pb.Timestamp): void;
+    setUpto(value?: google_protobuf_timestamp_pb.Timestamp): RunReq;
 
 
     serializeBinary(): Uint8Array;
