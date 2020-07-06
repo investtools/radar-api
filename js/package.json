@@ -1,6 +1,6 @@
 {
   "name": "radar-api",
-  "version": "2.7.3",
+  "version": "2.8.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,9 +17,7 @@
     "url": "https://github.com/investtools/radar-api/issues"
   },
   "homepage": "https://github.com/investtools/radar-api",
-  "dependencies": {
-    "grpc-promise-ts-generator-plugin": "^0.1.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "grpc_tools_node_protoc_ts": "^4.1.0",
     "grpc-tools": "^1.9.0"
