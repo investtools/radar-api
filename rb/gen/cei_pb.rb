@@ -3,6 +3,7 @@
 
 require 'google/protobuf'
 
+require 'google/protobuf/timestamp_pb'
 Google::Protobuf::DescriptorPool.generated_pool.build do
   add_file("cei.proto", :syntax => :proto3) do
     add_message "SolveReq" do
@@ -11,8 +12,26 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :text, :string, 1
       map :cookies, :string, :string, 2
     end
+    add_message "VerifyAccountReq" do
+      optional :username, :string, 1
+      optional :birthdate, :message, 2, "google.protobuf.Timestamp"
+    end
+    add_message "VerifyAccountResp" do
+      optional :exist, :bool, 1
+      optional :partial_email, :string, 2
+    end
+    add_message "RecoverPasswordReq" do
+      optional :username, :string, 1
+      optional :birthdate, :message, 2, "google.protobuf.Timestamp"
+    end
+    add_message "RecoverPasswordResp" do
+    end
   end
 end
 
 SolveReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("SolveReq").msgclass
 SolveResp = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("SolveResp").msgclass
+VerifyAccountReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("VerifyAccountReq").msgclass
+VerifyAccountResp = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("VerifyAccountResp").msgclass
+RecoverPasswordReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("RecoverPasswordReq").msgclass
+RecoverPasswordResp = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("RecoverPasswordResp").msgclass

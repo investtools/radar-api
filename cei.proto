@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 message SolveReq {}
 
 message SolveResp {
@@ -9,4 +11,26 @@ message SolveResp {
 
 service CaptchaCracker {
   rpc Solve(SolveReq) returns (SolveResp) {}
+}
+
+message VerifyAccountReq {
+  string username = 1;
+  google.protobuf.Timestamp birthdate = 2;
+}
+
+message VerifyAccountResp {
+  bool exist = 1;
+  string partial_email = 2;
+}
+
+message RecoverPasswordReq {
+  string username = 1;
+  google.protobuf.Timestamp birthdate = 2;
+}
+
+message RecoverPasswordResp {}
+
+service Account {
+  rpc VerifyAccount(VerifyAccountReq) returns (VerifyAccountResp) {}
+  rpc RecoverPassword(RecoverPasswordReq) returns (RecoverPasswordResp) {}
 }

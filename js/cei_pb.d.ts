@@ -5,6 +5,7 @@
 /* eslint-disable */
 
 import * as jspb from "google-protobuf";
+import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
 
 export class SolveReq extends jspb.Message { 
 
@@ -47,5 +48,103 @@ export namespace SolveResp {
         text: string,
 
         cookiesMap: Array<[string, string]>,
+    }
+}
+
+export class VerifyAccountReq extends jspb.Message { 
+    getUsername(): string;
+    setUsername(value: string): VerifyAccountReq;
+
+
+    hasBirthdate(): boolean;
+    clearBirthdate(): void;
+    getBirthdate(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setBirthdate(value?: google_protobuf_timestamp_pb.Timestamp): VerifyAccountReq;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): VerifyAccountReq.AsObject;
+    static toObject(includeInstance: boolean, msg: VerifyAccountReq): VerifyAccountReq.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: VerifyAccountReq, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): VerifyAccountReq;
+    static deserializeBinaryFromReader(message: VerifyAccountReq, reader: jspb.BinaryReader): VerifyAccountReq;
+}
+
+export namespace VerifyAccountReq {
+    export type AsObject = {
+        username: string,
+        birthdate?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
+}
+
+export class VerifyAccountResp extends jspb.Message { 
+    getExist(): boolean;
+    setExist(value: boolean): VerifyAccountResp;
+
+    getPartialEmail(): string;
+    setPartialEmail(value: string): VerifyAccountResp;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): VerifyAccountResp.AsObject;
+    static toObject(includeInstance: boolean, msg: VerifyAccountResp): VerifyAccountResp.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: VerifyAccountResp, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): VerifyAccountResp;
+    static deserializeBinaryFromReader(message: VerifyAccountResp, reader: jspb.BinaryReader): VerifyAccountResp;
+}
+
+export namespace VerifyAccountResp {
+    export type AsObject = {
+        exist: boolean,
+        partialEmail: string,
+    }
+}
+
+export class RecoverPasswordReq extends jspb.Message { 
+    getUsername(): string;
+    setUsername(value: string): RecoverPasswordReq;
+
+
+    hasBirthdate(): boolean;
+    clearBirthdate(): void;
+    getBirthdate(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setBirthdate(value?: google_protobuf_timestamp_pb.Timestamp): RecoverPasswordReq;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): RecoverPasswordReq.AsObject;
+    static toObject(includeInstance: boolean, msg: RecoverPasswordReq): RecoverPasswordReq.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: RecoverPasswordReq, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RecoverPasswordReq;
+    static deserializeBinaryFromReader(message: RecoverPasswordReq, reader: jspb.BinaryReader): RecoverPasswordReq;
+}
+
+export namespace RecoverPasswordReq {
+    export type AsObject = {
+        username: string,
+        birthdate?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    }
+}
+
+export class RecoverPasswordResp extends jspb.Message { 
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): RecoverPasswordResp.AsObject;
+    static toObject(includeInstance: boolean, msg: RecoverPasswordResp): RecoverPasswordResp.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: RecoverPasswordResp, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RecoverPasswordResp;
+    static deserializeBinaryFromReader(message: RecoverPasswordResp, reader: jspb.BinaryReader): RecoverPasswordResp;
+}
+
+export namespace RecoverPasswordResp {
+    export type AsObject = {
     }
 }

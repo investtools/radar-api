@@ -18,3 +18,18 @@ module CaptchaCracker
 
   Stub = Service.rpc_stub_class
 end
+module Account
+  class Service
+
+    include GRPC::GenericService
+
+    self.marshal_class_method = :encode
+    self.unmarshal_class_method = :decode
+    self.service_name = 'Account'
+
+    rpc :VerifyAccount, VerifyAccountReq, VerifyAccountResp
+    rpc :RecoverPassword, RecoverPasswordReq, RecoverPasswordResp
+  end
+
+  Stub = Service.rpc_stub_class
+end
