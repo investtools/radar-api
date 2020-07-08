@@ -30,7 +30,17 @@ message RecoverPasswordReq {
 
 message RecoverPasswordResp {}
 
+message DefinePermanentPasswordReq {
+  string username = 1;
+  string temporary_password = 2;
+}
+
+message DefinePermanentPasswordResp {
+  string permanent_password = 1;
+}
+
 service Account {
   rpc VerifyAccount(VerifyAccountReq) returns (VerifyAccountResp) {}
   rpc RecoverPassword(RecoverPasswordReq) returns (RecoverPasswordResp) {}
+  rpc DefinePermanentPassword(DefinePermanentPasswordReq) returns (DefinePermanentPasswordResp) {}
 }

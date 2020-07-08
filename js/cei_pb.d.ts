@@ -148,3 +148,49 @@ export namespace RecoverPasswordResp {
     export type AsObject = {
     }
 }
+
+export class DefinePermanentPasswordReq extends jspb.Message { 
+    getUsername(): string;
+    setUsername(value: string): DefinePermanentPasswordReq;
+
+    getTemporaryPassword(): string;
+    setTemporaryPassword(value: string): DefinePermanentPasswordReq;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DefinePermanentPasswordReq.AsObject;
+    static toObject(includeInstance: boolean, msg: DefinePermanentPasswordReq): DefinePermanentPasswordReq.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DefinePermanentPasswordReq, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DefinePermanentPasswordReq;
+    static deserializeBinaryFromReader(message: DefinePermanentPasswordReq, reader: jspb.BinaryReader): DefinePermanentPasswordReq;
+}
+
+export namespace DefinePermanentPasswordReq {
+    export type AsObject = {
+        username: string,
+        temporaryPassword: string,
+    }
+}
+
+export class DefinePermanentPasswordResp extends jspb.Message { 
+    getPermanentPassword(): string;
+    setPermanentPassword(value: string): DefinePermanentPasswordResp;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DefinePermanentPasswordResp.AsObject;
+    static toObject(includeInstance: boolean, msg: DefinePermanentPasswordResp): DefinePermanentPasswordResp.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DefinePermanentPasswordResp, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DefinePermanentPasswordResp;
+    static deserializeBinaryFromReader(message: DefinePermanentPasswordResp, reader: jspb.BinaryReader): DefinePermanentPasswordResp;
+}
+
+export namespace DefinePermanentPasswordResp {
+    export type AsObject = {
+        permanentPassword: string,
+    }
+}

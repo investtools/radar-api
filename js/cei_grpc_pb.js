@@ -5,6 +5,28 @@ var grpc = require('grpc');
 var cei_pb = require('./cei_pb.js');
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 
+function serialize_DefinePermanentPasswordReq(arg) {
+  if (!(arg instanceof cei_pb.DefinePermanentPasswordReq)) {
+    throw new Error('Expected argument of type DefinePermanentPasswordReq');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_DefinePermanentPasswordReq(buffer_arg) {
+  return cei_pb.DefinePermanentPasswordReq.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_DefinePermanentPasswordResp(arg) {
+  if (!(arg instanceof cei_pb.DefinePermanentPasswordResp)) {
+    throw new Error('Expected argument of type DefinePermanentPasswordResp');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_DefinePermanentPasswordResp(buffer_arg) {
+  return cei_pb.DefinePermanentPasswordResp.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_RecoverPasswordReq(arg) {
   if (!(arg instanceof cei_pb.RecoverPasswordReq)) {
     throw new Error('Expected argument of type RecoverPasswordReq');
@@ -109,6 +131,17 @@ var AccountService = exports.AccountService = {
     requestDeserialize: deserialize_RecoverPasswordReq,
     responseSerialize: serialize_RecoverPasswordResp,
     responseDeserialize: deserialize_RecoverPasswordResp,
+  },
+  definePermanentPassword: {
+    path: '/Account/DefinePermanentPassword',
+    requestStream: false,
+    responseStream: false,
+    requestType: cei_pb.DefinePermanentPasswordReq,
+    responseType: cei_pb.DefinePermanentPasswordResp,
+    requestSerialize: serialize_DefinePermanentPasswordReq,
+    requestDeserialize: deserialize_DefinePermanentPasswordReq,
+    responseSerialize: serialize_DefinePermanentPasswordResp,
+    responseDeserialize: deserialize_DefinePermanentPasswordResp,
   },
 };
 

@@ -29,6 +29,7 @@ module Account
 
     rpc :VerifyAccount, VerifyAccountReq, VerifyAccountResp
     rpc :RecoverPassword, RecoverPasswordReq, RecoverPasswordResp
+    rpc :DefinePermanentPassword, DefinePermanentPasswordReq, DefinePermanentPasswordResp
   end
 
   Stub = Service.rpc_stub_class

@@ -26,6 +26,13 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
     end
     add_message "RecoverPasswordResp" do
     end
+    add_message "DefinePermanentPasswordReq" do
+      optional :username, :string, 1
+      optional :temporary_password, :string, 2
+    end
+    add_message "DefinePermanentPasswordResp" do
+      optional :permanent_password, :string, 1
+    end
   end
 end
 
@@ -35,3 +42,5 @@ VerifyAccountReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("Ver
 VerifyAccountResp = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("VerifyAccountResp").msgclass
 RecoverPasswordReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("RecoverPasswordReq").msgclass
 RecoverPasswordResp = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("RecoverPasswordResp").msgclass
+DefinePermanentPasswordReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("DefinePermanentPasswordReq").msgclass
+DefinePermanentPasswordResp = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("DefinePermanentPasswordResp").msgclass
