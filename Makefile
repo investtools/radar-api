@@ -1,18 +1,27 @@
-all: js rb
+all: js node rb
 
-
-js: js/package-lock.json js/node_modules js/*_pb.*
+js: js/node_modules js/generated/*_pb.*
 
 js/node_modules: js/package.json
 	cd js && npm install
 	touch js/node_modules
 
-js/package-lock.json: version.txt
-	cd js && npm run sync-version
-
-js/*_pb.*: js/node_modules *.proto
-	rm -rf js/*_pb.*
+js/generated/*_pb.*: js/node_modules *.proto
+	rm -rf js/generated/*
 	cd js && npm run build
+
+node: node/package-lock.json node/node_modules node/*_pb.*
+
+node/node_modules: node/package.json
+	cd node && npm install
+	touch node/node_modules
+
+node/package-lock.json: version.txt
+	cd node && npm run sync-version
+
+node/*_pb.*: node/node_modules *.proto
+	rm -rf node/*_pb.*
+	cd node && npm run build
 
 rb: rb/Gemfile.lock rb/gen
 
@@ -24,10 +33,10 @@ rb/Gemfile.lock: version.txt
 	cd rb && bundle install
 	touch rb/Gemfile.lock
 
-release: release-rb release-js
+release: release-rb release-node
 
 release-rb: rb
 	cd rb && bundle exec rake release
 
-release-js: js
-	cd js && npm run sync-version && npm publish
+release-node: node
+	cd node && npm run sync-version && npm publish

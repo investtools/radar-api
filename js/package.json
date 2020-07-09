@@ -1,25 +1,14 @@
 {
-  "name": "radar-api",
-  "version": "2.9.1",
+  "name": "radar-api-js",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:. --grpc_out=. --ts_out=. -I .. ../*.proto",
-    "sync-version": "npm version $(cat ../version.txt) --allow-same-version"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/investtools/radar-api.git"
+    "build": "./bin/build"
   },
   "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/investtools/radar-api/issues"
-  },
-  "homepage": "https://github.com/investtools/radar-api",
-  "dependencies": {},
-  "devDependencies": {
-    "grpc_tools_node_protoc_ts": "^4.1.0",
-    "grpc-tools": "^1.9.0"
+  "license": "ISC",
+  "dependencies": {
+    "ts-protoc-gen": "^0.12.0"
   }
 }
