@@ -12,6 +12,15 @@ Google::Protobuf::DescriptorPool.generated_pool.build do
       optional :text, :string, 1
       map :cookies, :string, :string, 2
     end
+    add_message "AuthenticateReq" do
+      optional :username, :string, 1
+      optional :password, :string, 2
+      optional :partial_email, :string, 3
+    end
+    add_message "AuthenticateResp" do
+      optional :user_full_name, :string, 1
+      optional :user_full_email, :string, 2
+    end
     add_message "VerifyAccountReq" do
       optional :username, :string, 1
       optional :birthdate, :message, 2, "google.protobuf.Timestamp"
@@ -38,6 +47,8 @@ end
 
 SolveReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("SolveReq").msgclass
 SolveResp = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("SolveResp").msgclass
+AuthenticateReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("AuthenticateReq").msgclass
+AuthenticateResp = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("AuthenticateResp").msgclass
 VerifyAccountReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("VerifyAccountReq").msgclass
 VerifyAccountResp = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("VerifyAccountResp").msgclass
 RecoverPasswordReq = ::Google::Protobuf::DescriptorPool.generated_pool.lookup("RecoverPasswordReq").msgclass

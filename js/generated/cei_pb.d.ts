@@ -43,6 +43,58 @@ export namespace SolveResp {
   }
 }
 
+export class AuthenticateReq extends jspb.Message {
+  getUsername(): string;
+  setUsername(value: string): void;
+
+  getPassword(): string;
+  setPassword(value: string): void;
+
+  getPartialEmail(): string;
+  setPartialEmail(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AuthenticateReq.AsObject;
+  static toObject(includeInstance: boolean, msg: AuthenticateReq): AuthenticateReq.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: AuthenticateReq, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AuthenticateReq;
+  static deserializeBinaryFromReader(message: AuthenticateReq, reader: jspb.BinaryReader): AuthenticateReq;
+}
+
+export namespace AuthenticateReq {
+  export type AsObject = {
+    username: string,
+    password: string,
+    partialEmail: string,
+  }
+}
+
+export class AuthenticateResp extends jspb.Message {
+  getUserFullName(): string;
+  setUserFullName(value: string): void;
+
+  getUserFullEmail(): string;
+  setUserFullEmail(value: string): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): AuthenticateResp.AsObject;
+  static toObject(includeInstance: boolean, msg: AuthenticateResp): AuthenticateResp.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: AuthenticateResp, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): AuthenticateResp;
+  static deserializeBinaryFromReader(message: AuthenticateResp, reader: jspb.BinaryReader): AuthenticateResp;
+}
+
+export namespace AuthenticateResp {
+  export type AsObject = {
+    userFullName: string,
+    userFullEmail: string,
+  }
+}
+
 export class VerifyAccountReq extends jspb.Message {
   getUsername(): string;
   setUsername(value: string): void;

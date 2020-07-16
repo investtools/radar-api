@@ -27,6 +27,7 @@ module Account
     self.unmarshal_class_method = :decode
     self.service_name = 'Account'
 
+    rpc :Authenticate, AuthenticateReq, AuthenticateResp
     rpc :VerifyAccount, VerifyAccountReq, VerifyAccountResp
     rpc :RecoverPassword, RecoverPasswordReq, RecoverPasswordResp
     rpc :DefinePermanentPassword, DefinePermanentPasswordReq, DefinePermanentPasswordResp

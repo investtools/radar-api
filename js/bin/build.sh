@@ -2,7 +2,7 @@
 
 PROTOC_GEN_TS_PATH="./node_modules/.bin/protoc-gen-ts"
 
-OUT_DIR="./test"
+OUT_DIR="./generated"
 
 protoc \
     --plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" \

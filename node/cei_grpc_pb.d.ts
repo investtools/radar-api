@@ -42,11 +42,21 @@ export class CaptchaCrackerClient extends grpc.Client implements ICaptchaCracker
 }
 
 interface IAccountService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
+    authenticate: IAccountService_IAuthenticate;
     verifyAccount: IAccountService_IVerifyAccount;
     recoverPassword: IAccountService_IRecoverPassword;
     definePermanentPassword: IAccountService_IDefinePermanentPassword;
 }
 
+interface IAccountService_IAuthenticate extends grpc.MethodDefinition<cei_pb.AuthenticateReq, cei_pb.AuthenticateResp> {
+    path: string; // "/.Account/Authenticate"
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<cei_pb.AuthenticateReq>;
+    requestDeserialize: grpc.deserialize<cei_pb.AuthenticateReq>;
+    responseSerialize: grpc.serialize<cei_pb.AuthenticateResp>;
+    responseDeserialize: grpc.deserialize<cei_pb.AuthenticateResp>;
+}
 interface IAccountService_IVerifyAccount extends grpc.MethodDefinition<cei_pb.VerifyAccountReq, cei_pb.VerifyAccountResp> {
     path: string; // "/.Account/VerifyAccount"
     requestStream: false;
@@ -78,12 +88,16 @@ interface IAccountService_IDefinePermanentPassword extends grpc.MethodDefinition
 export const AccountService: IAccountService;
 
 export interface IAccountServer {
+    authenticate: grpc.handleUnaryCall<cei_pb.AuthenticateReq, cei_pb.AuthenticateResp>;
     verifyAccount: grpc.handleUnaryCall<cei_pb.VerifyAccountReq, cei_pb.VerifyAccountResp>;
     recoverPassword: grpc.handleUnaryCall<cei_pb.RecoverPasswordReq, cei_pb.RecoverPasswordResp>;
     definePermanentPassword: grpc.handleUnaryCall<cei_pb.DefinePermanentPasswordReq, cei_pb.DefinePermanentPasswordResp>;
 }
 
 export interface IAccountClient {
+    authenticate(request: cei_pb.AuthenticateReq, callback: (error: grpc.ServiceError | null, response: cei_pb.AuthenticateResp) => void): grpc.ClientUnaryCall;
+    authenticate(request: cei_pb.AuthenticateReq, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: cei_pb.AuthenticateResp) => void): grpc.ClientUnaryCall;
+    authenticate(request: cei_pb.AuthenticateReq, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: cei_pb.AuthenticateResp) => void): grpc.ClientUnaryCall;
     verifyAccount(request: cei_pb.VerifyAccountReq, callback: (error: grpc.ServiceError | null, response: cei_pb.VerifyAccountResp) => void): grpc.ClientUnaryCall;
     verifyAccount(request: cei_pb.VerifyAccountReq, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: cei_pb.VerifyAccountResp) => void): grpc.ClientUnaryCall;
     verifyAccount(request: cei_pb.VerifyAccountReq, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: cei_pb.VerifyAccountResp) => void): grpc.ClientUnaryCall;
@@ -97,6 +111,9 @@ export interface IAccountClient {
 
 export class AccountClient extends grpc.Client implements IAccountClient {
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
+    public authenticate(request: cei_pb.AuthenticateReq, callback: (error: grpc.ServiceError | null, response: cei_pb.AuthenticateResp) => void): grpc.ClientUnaryCall;
+    public authenticate(request: cei_pb.AuthenticateReq, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: cei_pb.AuthenticateResp) => void): grpc.ClientUnaryCall;
+    public authenticate(request: cei_pb.AuthenticateReq, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: cei_pb.AuthenticateResp) => void): grpc.ClientUnaryCall;
     public verifyAccount(request: cei_pb.VerifyAccountReq, callback: (error: grpc.ServiceError | null, response: cei_pb.VerifyAccountResp) => void): grpc.ClientUnaryCall;
     public verifyAccount(request: cei_pb.VerifyAccountReq, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: cei_pb.VerifyAccountResp) => void): grpc.ClientUnaryCall;
     public verifyAccount(request: cei_pb.VerifyAccountReq, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: cei_pb.VerifyAccountResp) => void): grpc.ClientUnaryCall;

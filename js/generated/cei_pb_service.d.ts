@@ -18,6 +18,15 @@ export class CaptchaCracker {
   static readonly Solve: CaptchaCrackerSolve;
 }
 
+type AccountAuthenticate = {
+  readonly methodName: string;
+  readonly service: typeof Account;
+  readonly requestStream: false;
+  readonly responseStream: false;
+  readonly requestType: typeof cei_pb.AuthenticateReq;
+  readonly responseType: typeof cei_pb.AuthenticateResp;
+};
+
 type AccountVerifyAccount = {
   readonly methodName: string;
   readonly service: typeof Account;
@@ -47,6 +56,7 @@ type AccountDefinePermanentPassword = {
 
 export class Account {
   static readonly serviceName: string;
+  static readonly Authenticate: AccountAuthenticate;
   static readonly VerifyAccount: AccountVerifyAccount;
   static readonly RecoverPassword: AccountRecoverPassword;
   static readonly DefinePermanentPassword: AccountDefinePermanentPassword;
@@ -99,6 +109,15 @@ export class AccountClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
+  authenticate(
+    requestMessage: cei_pb.AuthenticateReq,
+    metadata: grpc.Metadata,
+    callback: (error: ServiceError|null, responseMessage: cei_pb.AuthenticateResp|null) => void
+  ): UnaryResponse;
+  authenticate(
+    requestMessage: cei_pb.AuthenticateReq,
+    callback: (error: ServiceError|null, responseMessage: cei_pb.AuthenticateResp|null) => void
+  ): UnaryResponse;
   verifyAccount(
     requestMessage: cei_pb.VerifyAccountReq,
     metadata: grpc.Metadata,

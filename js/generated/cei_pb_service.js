@@ -65,6 +65,15 @@ var Account = (function () {
   return Account;
 }());
 
+Account.Authenticate = {
+  methodName: "Authenticate",
+  service: Account,
+  requestStream: false,
+  responseStream: false,
+  requestType: cei_pb.AuthenticateReq,
+  responseType: cei_pb.AuthenticateResp
+};
+
 Account.VerifyAccount = {
   methodName: "VerifyAccount",
   service: Account,
@@ -98,6 +107,37 @@ function AccountClient(serviceHost, options) {
   this.serviceHost = serviceHost;
   this.options = options || {};
 }
+
+AccountClient.prototype.authenticate = function authenticate(requestMessage, metadata, callback) {
+  if (arguments.length === 2) {
+    callback = arguments[1];
+  }
+  var client = grpc.unary(Account.Authenticate, {
+    request: requestMessage,
+    host: this.serviceHost,
+    metadata: metadata,
+    transport: this.options.transport,
+    debug: this.options.debug,
+    onEnd: function (response) {
+      if (callback) {
+        if (response.status !== grpc.Code.OK) {
+          var err = new Error(response.statusMessage);
+          err.code = response.status;
+          err.metadata = response.trailers;
+          callback(err, null);
+        } else {
+          callback(null, response.message);
+        }
+      }
+    }
+  });
+  return {
+    cancel: function () {
+      callback = null;
+      client.close();
+    }
+  };
+};
 
 AccountClient.prototype.verifyAccount = function verifyAccount(requestMessage, metadata, callback) {
   if (arguments.length === 2) {

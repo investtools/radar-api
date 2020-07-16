@@ -5,6 +5,28 @@ var grpc = require('grpc');
 var cei_pb = require('./cei_pb.js');
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 
+function serialize_AuthenticateReq(arg) {
+  if (!(arg instanceof cei_pb.AuthenticateReq)) {
+    throw new Error('Expected argument of type AuthenticateReq');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_AuthenticateReq(buffer_arg) {
+  return cei_pb.AuthenticateReq.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_AuthenticateResp(arg) {
+  if (!(arg instanceof cei_pb.AuthenticateResp)) {
+    throw new Error('Expected argument of type AuthenticateResp');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_AuthenticateResp(buffer_arg) {
+  return cei_pb.AuthenticateResp.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_DefinePermanentPasswordReq(arg) {
   if (!(arg instanceof cei_pb.DefinePermanentPasswordReq)) {
     throw new Error('Expected argument of type DefinePermanentPasswordReq');
@@ -110,6 +132,17 @@ var CaptchaCrackerService = exports.CaptchaCrackerService = {
 
 exports.CaptchaCrackerClient = grpc.makeGenericClientConstructor(CaptchaCrackerService);
 var AccountService = exports.AccountService = {
+  authenticate: {
+    path: '/Account/Authenticate',
+    requestStream: false,
+    responseStream: false,
+    requestType: cei_pb.AuthenticateReq,
+    responseType: cei_pb.AuthenticateResp,
+    requestSerialize: serialize_AuthenticateReq,
+    requestDeserialize: deserialize_AuthenticateReq,
+    responseSerialize: serialize_AuthenticateResp,
+    responseDeserialize: deserialize_AuthenticateResp,
+  },
   verifyAccount: {
     path: '/Account/VerifyAccount',
     requestStream: false,
