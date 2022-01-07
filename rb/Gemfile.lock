@@ -15,7 +15,7 @@ GEM
     coderay (1.1.0)
     ffi (1.11.1)
     formatador (0.2.4)
-    google-protobuf (3.12.2)
+    google-protobuf (3.19.2)
     googleapis-common-protos-types (1.0.5)
       google-protobuf (~> 3.11)
     grpc (1.30.1)
